@@ -1,0 +1,209 @@
+﻿SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/**** Updade Social sharing Tokens ****/
+UPDATE {databaseOwner}[{objectQualifier}EasyDNNNewsSystemTokens]
+   SET [TokenContent] = N'<div class="addthis_toolbox addthis_default_style"><a addthis:url="[EasyDNNnews:ArticleLink]" class="addthis_button_facebook_like" fb:like:layout="button_count"></a><a addthis:url="[EasyDNNnews:ArticleLink]" class="addthis_button_tweet"></a><a addthis:url="[EasyDNNnews:ArticleLink]" class="addthis_button_linkedin_counter"></a><a addthis:url="[EasyDNNnews:ArticleLink]" class="addthis_button_google_plusone" g:plusone:size="medium"></a><a addthis:url="[EasyDNNnews:ArticleLink]" class="addthis_counter addthis_pill_style"></a></div><script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>'
+ WHERE [TokenTitle] = N'SysAddThisFbTwGoLiArticleList'
+GO
+/**** Updade Social sharing Tokens ****/
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyGalleryImageSizes]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyGalleryImageSizes](
+	[PictureID] [int] NOT NULL,
+	[Width] [int] NOT NULL,
+	[Height] [int] NOT NULL,
+	[ResizeMethod] [tinyint] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyGalleryImageSizes] PRIMARY KEY CLUSTERED 
+(
+	[PictureID] ASC,
+	[Width] ASC,
+	[Height] ASC,
+	[ResizeMethod] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyGalleryImageSizes_EasyGalleryPictures]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyGalleryImageSizes]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyGalleryImageSizes]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyGalleryImageSizes_EasyGalleryPictures] FOREIGN KEY([PictureID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyGalleryPictures] ([PictureID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyGalleryImageSizes_EasyGalleryPictures]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyGalleryImageSizes]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyGalleryImageSizes] CHECK CONSTRAINT [FK_{objectQualifier}EasyGalleryImageSizes_EasyGalleryPictures]
+GO
+
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'GetAlreadyIndexedContent')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD GetAlreadyIndexedContent BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_GetAlreadyIndexedContent DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'GetAlreadyIndexedContent')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD GetAlreadyIndexedContent BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_GetAlreadyIndexedContent DEFAULT(0) NOT NULL
+END
+GO
+
+-- ADD event registration permissions per article
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArticleRolePermissions' and column_name = 'DocumentDownload')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArticleRolePermissions] ADD DocumentDownload BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArticleRolePermissions_DocumentDownload DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArticleUserPermissions' and column_name = 'DocumentDownload')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArticleUserPermissions] ADD DocumentDownload BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArticleUserPermissions_DocumentDownload DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsEventsUserItems' and column_name = 'UserStatus')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] ADD UserStatus TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsEventsUserItems_UserStatus DEFAULT(1) NOT NULL
+END
+GO
+
+/*** new table for widget event social ***/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWidgetsSocialEvents]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWidgetsSocialEvents](
+	[ModuleID] [int] NOT NULL,
+	[NewsModuleID] [int] NOT NULL,
+	[HTMLTemplate] [nvarchar](256) NOT NULL,
+	[Theme] [nvarchar](256) NOT NULL,
+	[ThemeStyle] [nvarchar](256) NOT NULL,
+	[ShowActionBar] [bit] NOT NULL,
+	[ShowGoingUsers] [bit] NOT NULL,
+	[ShowNotGoingUsers] [bit] NOT NULL,
+	[ShowMaybeGoingUsers] [bit] NOT NULL,
+	[Imported] [bit] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWidgetsSocialEvents] PRIMARY KEY CLUSTERED 
+(
+	[ModuleID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWidgetsSocialEvents_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWidgetsSocialEvents]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWidgetsSocialEvents]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWidgetsSocialEvents_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWidgetsSocialEvents_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWidgetsSocialEvents]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWidgetsSocialEvents] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWidgetsSocialEvents_Modules]
+GO
+
+/*** end new table for widget event social ***/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]
+(
+	@ArticleID int,
+	@numOfHistory int   
+)
+AS
+	DECLARE @latestValue int;
+	SET @latestValue = 0;
+	DECLARE @numOfHistoryDB int;
+	SET @numOfHistoryDB = 0;
+
+        SET NOCOUNT ON;      
+        BEGIN
+		IF @numOfHistory = 0
+			BEGIN
+				DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID = @ArticleID;
+			END
+        ELSE
+			BEGIN
+				SELECT @numOfHistoryDB = CASE WHEN Count(HistoryVersion) IS NULL THEN 0 ELSE Count(HistoryVersion) END FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID=@ArticleID;
+				IF @numOfHistoryDB <> 0 AND @numOfHistoryDB >= @numOfHistory -- if contains history items and if need to delete overflow items
+				BEGIN
+					DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID = @ArticleID AND HistoryEntryID IN
+						 (SELECT TOP(@numOfHistoryDB - @numOfHistory + 1) HistoryEntryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArchive]
+						  WHERE ArticleID = @ArticleID ORDER BY HistoryVersion ASC);
+					With cte As
+						(
+						SELECT ArticleID, HistoryVersion, ROW_NUMBER() OVER (ORDER BY HistoryVersion ASC) AS RN FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID=@ArticleID
+						)
+						UPDATE cte SET HistoryVersion=RN  WHERE ArticleID=@ArticleID;
+				END
+			END
+				
+		IF @numOfHistory <> 0
+		BEGIN
+			SELECT @latestValue = CASE WHEN max(HistoryVersion) IS NULL THEN 1 ELSE max(HistoryVersion) + 1 END FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID = @ArticleID;	
+
+			INSERT INTO {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] 
+				([PortalID]
+				  ,[UserID]
+				  ,[Title]
+				  ,[SubTitle]
+				  ,[Summary]
+				  ,[Article]
+				  ,[ArticleImage]
+				  ,[LastModified]
+				  ,[PublishDate]
+				  ,[ExpireDate]
+				  ,[Featured]
+				  ,[AllowComments]
+				  ,[TitleLink]
+				  ,[DetailType]
+				  ,[DetailTypeData]
+				  ,[DetailsTemplate]
+				  ,[DetailsTheme]
+				  ,[GalleryPosition]
+				  ,[GalleryDisplayType]
+				  ,[ShowMainImage]
+				  ,[ShowMainImageFront]
+				  ,[CommentsTheme]
+				  ,[ArticleImageFolder]
+				  ,[HistoryVersion]
+				  ,n.[ArticleID])
+			SELECT
+				   n.[PortalID]
+				  ,n.[UserID]
+				  ,n.[Title]
+				  ,n.[SubTitle]
+				  ,n.[Summary]
+				  ,n.[Article]
+				  ,n.[ArticleImage]
+				  ,n.[LastModified]
+				  ,n.[PublishDate]
+				  ,n.[ExpireDate]
+				  ,n.[Featured]
+				  ,n.[AllowComments]
+				  ,n.[TitleLink]
+				  ,n.[DetailType]
+				  ,n.[DetailTypeData]
+				  ,n.[DetailsTemplate]
+				  ,n.[DetailsTheme]
+				  ,n.[GalleryPosition]
+				  ,n.[GalleryDisplayType]
+				  ,n.[ShowMainImage]
+				  ,n.[ShowMainImageFront]
+				  ,n.[CommentsTheme]
+				  ,n.[ArticleImageFolder]
+				  ,[HistoryVersion] = @latestValue
+				  ,n.[ArticleID]
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n WHERE ArticleID = @ArticleID;
+		 END
+        END
+' 
+END
+GO

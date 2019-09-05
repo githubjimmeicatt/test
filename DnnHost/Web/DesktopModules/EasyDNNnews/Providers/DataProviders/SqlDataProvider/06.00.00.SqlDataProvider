@@ -1,0 +1,1152 @@
+﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'CustomFields')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD CustomFields BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsRolePremissionSettings_CustomFields DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'CustomFields')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD CustomFields BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsUserPremissionSettings_CustomFields DEFAULT(0) NOT NULL
+END
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfielsType]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfielsType]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfielsType](
+	[ControlTypeID] [int] NOT NULL,
+	[Name] [nvarchar](150) NOT NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfielsType] PRIMARY KEY CLUSTERED ( [ControlTypeID] ASC ) WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings](
+	[ACodeBase] [nvarchar](5) NOT NULL,
+	[PortalID] [int] NOT NULL,
+	[ServiceUrl] [nvarchar](300) NULL,
+	[UpdateRate] [datetime] NULL,
+	[UpdateSource] [bit] NOT NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsCurrencySettings] PRIMARY KEY CLUSTERED ( [ACodeBase] ASC, [PortalID] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate](
+	[FieldsTemplateID] [int] IDENTITY(1,1) NOT NULL,
+	[PortalID] [int] NOT NULL,
+	[Name] [nvarchar](250) NOT NULL,
+	[Description] [nvarchar](1000) NOT NULL,
+	[CssURL] [nvarchar](500) NOT NULL,
+	[HTMLURL] [nvarchar](500) NOT NULL,
+	[Position] [int] NOT NULL
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsTemplate] PRIMARY KEY CLUSTERED  ( [FieldsTemplateID] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency](
+	[ACode] [nvarchar](5) NOT NULL,
+	[NCode] [int] NOT NULL,
+	[Currency] [nvarchar](250) NOT NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsCurrency] PRIMARY KEY CLUSTERED  ([ACode] ASC) WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfields]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfields]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfields](
+	[CustomFieldID] [int] IDENTITY(1,1) NOT NULL,
+	[ControlTypeID] [int] NOT NULL,
+	[CFParentID] [int] NULL,
+	[IsParent] [bit] NOT NULL,
+	[Name] [nvarchar](300) NOT NULL,
+	[PortalID] [int] NOT NULL,
+	[Token] [nvarchar](250) NOT NULL,
+	[DefText] [nvarchar](300) NULL,
+	[DefRichText] [nvarchar](max) NULL,
+	[DefDecimal] [nvarchar](250) NULL,
+	[DefInteger] [int] NULL,
+	[DefBool] [bit] NOT NULL,
+	[ShowLabel] [bit] NOT NULL,
+	[LabelValue] [nvarchar](500) NOT NULL,
+	[LabelHelp] [nvarchar](500) NOT NULL,
+	[IconURL] [nvarchar](350) NULL,
+	[IsPublished] [bit] NOT NULL,
+	[IsHidden] [bit] NOT NULL,
+	[IsSearchable] [bit] NOT NULL,
+	[IsRequired] [bit] NOT NULL,
+	[ValidationType] [int] NOT NULL,
+	[RegularExpression] [nvarchar](150) NOT NULL,
+	[ValidationErrorMsg] [nvarchar](300) NULL,
+	[ValidationFocusOnError] [bit] NULL,
+	[DefDtime] [datetime] NULL,
+	[FromValue] [int] NULL,
+	[ToValue] [int] NULL,
+	[ACode] [nvarchar](5) NULL,
+	[RangeSource] [bit] NULL,
+	[FromLabel] [nvarchar](250) NULL,
+	[ToLabel] [nvarchar](250) NULL,
+	[DisplayFormat] [nvarchar](10) NULL,
+	[CommonDataID] [int] NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfields] PRIMARY KEY CLUSTERED ( [CustomFieldID] ASC ) WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF),
+	CONSTRAINT [IX_{objectQualifier}EasyDNNfields_PortalID_Token] UNIQUE NONCLUSTERED ([PortalID] ASC, [Token] ASC)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsValues]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsValues]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsValues](
+	[CustomFieldID] [int] NOT NULL,
+	[ArticleID] [int] NOT NULL,
+	[RText] [nvarchar](max) NULL,
+	[Decimal] [decimal](18, 4) NULL,
+	[Int] [int] NULL,
+	[Text] [nvarchar](300) NULL,
+	[Bit] [bit] NULL,
+	[DateTime] [datetime] NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsValues] PRIMARY KEY CLUSTERED ( [CustomFieldID] ASC, [ArticleID] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems](
+	[FieldsTemplateID] [int] NOT NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[Position] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsTemplateItems] PRIMARY KEY CLUSTERED ( [FieldsTemplateID] ASC, [CustomFieldID] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate](
+	[ACodeBase] [nvarchar](5) NOT NULL,
+	[PortalID] [int] NOT NULL,
+	[ACode] [nvarchar](5) NOT NULL,
+	[Unit] [int] NOT NULL,
+	[ExchangeRate] [decimal](19, 6) NOT NULL,
+	[DateTime] [datetime] NOT NULL,
+	[Position] [int] NOT NULL,
+	[DisplayOnReport] [bit] NOT NULL,
+	[DisplayFormat] [nvarchar](10) NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsCurrencyRate] PRIMARY KEY CLUSTERED ( [ACodeBase] ASC, [PortalID] ASC,[ACode] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements](
+	[FieldElementID] [int] IDENTITY(1,1) NOT NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[FEParentID] [int] NULL,
+	[Text] [nvarchar](300) NOT NULL,
+	[Position] [int] NOT NULL,
+	[DefSelected] [bit] NOT NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsMultiElements] PRIMARY KEY CLUSTERED ( [FieldElementID] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+ )
+END
+GO
+/****** Object:  Trigger [EasyDNNnewsTCurrencyBaseCorrectOnUpdate]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsTCurrencyBaseCorrectOnUpdate]'))
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER {databaseOwner}[{objectQualifier}EasyDNNnewsTCurrencyBaseCorrectOnUpdate] ON {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency]
+	AFTER UPDATE
+AS
+DECLARE @CodeNew AS nvarchar(5);
+DECLARE @CodeOld AS nvarchar(5);
+DECLARE @CodeNewExists AS nvarchar(5);
+BEGIN
+	SET NOCOUNT ON;
+	SET @CodeNew = (SELECT [ACode] FROM inserted)
+	SET @CodeOld = (SELECT [ACode] FROM deleted)
+	SET @CodeNewExists = (SELECT [ACode] FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] WHERE [ACode] = @CodeNew)
+	IF(@CodeNewExists IS NOT NULL)
+	BEGIN
+		IF(@CodeNew <> @CodeOld)
+		BEGIN
+			UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings] SET [ACodeBase] = @CodeNew WHERE [ACodeBase] = @CodeOld
+		END
+	END
+END;
+'
+GO
+/****** Object:  Trigger [EasyDNNnewsTCurrencyBaseCorrectOnDelete]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsTCurrencyBaseCorrectOnDelete]'))
+EXEC dbo.sp_executesql @statement = N'
+CREATE TRIGGER {databaseOwner}[{objectQualifier}EasyDNNnewsTCurrencyBaseCorrectOnDelete] ON {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency]
+	AFTER DELETE
+AS
+DECLARE @CodeOld AS nvarchar(5);
+DECLARE @CodeBase AS nvarchar(5);
+BEGIN
+	SET NOCOUNT ON;
+	SET @CodeOld = (SELECT [ACode] FROM deleted)
+	SET @CodeBase = (SELECT [ACodeBase] FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings] WHERE [ACodeBase] = @CodeOld)
+	IF(@CodeBase IS NOT NULL)
+	BEGIN
+		DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings] WHERE [ACodeBase] = @CodeOld
+	END
+END;
+'
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected](
+	[FieldElementID] [int] NOT NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[ArticleID] [int] NOT NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsMultiSelected] PRIMARY KEY CLUSTERED ( [FieldElementID] ASC, [CustomFieldID] ASC, [ArticleID] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Table {databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems]    Script Date: 07/11/2013 14:34:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems](
+	[ACodeBase] [nvarchar](5) NOT NULL,
+	[ACode] [nvarchar](5) NOT NULL,
+	[PortalID] [int] NOT NULL,
+	[LocaleKey] [nvarchar](10) NOT NULL,
+	[LocaleName] [nvarchar](250) NOT NULL,
+	[DisplayFormat] [nvarchar](10) NOT NULL,
+	CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsLocalesCurrencyItems] PRIMARY KEY CLUSTERED ( [LocaleKey] ASC, [PortalID] ASC, [ACode] ASC )WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Default [DF_EasyDNNfieldsCurrencySettings_UpdateSource]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE object_id = OBJECT_ID(N'[DF_{objectQualifier}EasyDNNfieldsCurrencySettings_UpdateSource]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings]'))
+Begin
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[DF_{objectQualifier}EasyDNNfieldsCurrencySettings_UpdateSource]') AND type = 'D')
+BEGIN
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings] ADD CONSTRAINT [DF_{objectQualifier}EasyDNNfieldsCurrencySettings_UpdateSource]  DEFAULT ((0)) FOR [UpdateSource]
+END
+
+
+End
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfields_EasyDNNfields]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfields_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfields]'))
+BEGIN
+	IF EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNfields' and column_name = 'CFParentID')
+	BEGIN
+		ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfields]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfields_EasyDNNfields] FOREIGN KEY([CFParentID]) REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+	END
+END
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfields_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfields]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfields] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfields_EasyDNNfields]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfields_EasyDNNfielsType]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfields_EasyDNNfielsType]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfields]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfields]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfields_EasyDNNfielsType] FOREIGN KEY([ControlTypeID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfields_EasyDNNfielsType]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfields]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfields] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfields_EasyDNNfielsType]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrency]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrency]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrency] FOREIGN KEY([ACode])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode]) ON UPDATE CASCADE ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrency]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrency]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrencySettings]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrencySettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrencySettings] FOREIGN KEY([ACodeBase], [PortalID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrencySettings] ([ACodeBase], [PortalID]) ON UPDATE CASCADE ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrencySettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsExchangeRate_EasyDNNfieldsCurrencySettings]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsLocalesCurrencyItems_EasyDNNfieldsExchangeRate]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsLocalesCurrencyItems_EasyDNNfieldsExchangeRate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsLocalesCurrencyItems_EasyDNNfieldsExchangeRate] FOREIGN KEY([ACodeBase], [PortalID], [ACode])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate] ([ACodeBase], [PortalID], [ACode]) ON UPDATE CASCADE ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsLocalesCurrencyItems_EasyDNNfieldsExchangeRate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsLocalesCurrencyItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsLocalesCurrencyItems_EasyDNNfieldsExchangeRate]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfields]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfields]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfieldsMultiElements]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfieldsMultiElements]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfieldsMultiElements] FOREIGN KEY([FEParentID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] ([FieldElementID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfieldsMultiElements]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiElements_EasyDNNfieldsMultiElements]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNfieldsMultiElements1]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNfieldsMultiElements1]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNfieldsMultiElements1] FOREIGN KEY([FieldElementID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] ([FieldElementID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNfieldsMultiElements1]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNfieldsMultiElements1]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNNews]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNNews] FOREIGN KEY([ArticleID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNews] ([ArticleID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiSelected] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsMultiSelected_EasyDNNNews]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfields]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfields]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfieldsTemplate]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfieldsTemplate] FOREIGN KEY([FieldsTemplateID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate] ([FieldsTemplateID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsTemplateItems_EasyDNNfieldsTemplate]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNfields]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsValues]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsValues]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsValues]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsValues] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNfields]
+GO
+/****** Object:  ForeignKey [FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNNews]    Script Date: 07/11/2013 14:34:56 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsValues]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsValues]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNNews] FOREIGN KEY([ArticleID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNews] ([ArticleID]) ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsValues]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsValues] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsValues_EasyDNNNews]
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 1)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (1, N'Text')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 2)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (2, N'Rich Text (HTML)')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 3)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (3, N'Integer')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 4)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (4, N'Decimal')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 5)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (5, N'Money')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 6)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (6, N'Email')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 7)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (7, N'Color picker')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 8)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (8, N'Password')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 9)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (9, N'Date time picker')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 15)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (15, N'CheckBox')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 20)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (20, N'DropDownList')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 21)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (21, N'RadioButtonList')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 22)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (22, N'ListBox')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 23)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (23, N'CheckBoxList')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 100)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (100, N'CommonPortalItems')
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNews' and column_name = 'CFGroupeID')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews] ADD CFGroupeID int CONSTRAINT DF_{objectQualifier}EasyDNNNews_CFGroupeID NULL
+END
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency]') AND type in (N'U'))
+BEGIN
+	IF NOT EXISTS (SELECT * FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] WHERE ACode = 'AFN' )
+	BEGIN TRY
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'AFN', 971, N'Afghani')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ALL', 8, N'Lek')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'AMD', 51, N'Armenian Dram')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ANG', 532, N'Netherlands Antillean Guilder')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'AOA', 973, N'Kwanza')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ARS', 32, N'Argentine Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'AUD', 36, N'Australian Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'AWG', 533, N'Aruban Florin')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'AZN', 944, N'Azerbaijanian Manat')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BAM', 977, N'Convertible Mark')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BBD', 52, N'Barbados Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BDT', 50, N'Taka')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BGN', 975, N'Bulgarian Lev')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BHD', 48, N'Bahraini Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BIF', 108, N'Burundi Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BMD', 60, N'Bermudian Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BND', 96, N'Brunei Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BOB', 68, N'Boliviano')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BOV', 984, N'Mvdol')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BRL', 986, N'Brazilian Real')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BSD', 44, N'Bahamian Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BTN', 64, N'Ngultrum')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BWP', 72, N'Pula')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BYR', 974, N'Belarussian Ruble')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'BZD', 84, N'Belize Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CAD', 124, N'Canadian Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CDF', 976, N'Congolese Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CHE', 947, N'WIR Euro')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CHF', 756, N'Swiss Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CHW', 948, N'WIR Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CLF', 990, N'Unidades de fomento')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CLP', 152, N'Chilean Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CNY', 156, N'Yuan Renminbi')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'COP', 170, N'Colombian Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'COU', 970, N'Unidad de Valor Real')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CRC', 188, N'Costa Rican Colon')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CUC', 931, N'Peso Convertible')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CUP', 192, N'Cuban Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CVE', 132, N'Cape Verde Escudo')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'CZK', 203, N'Czech Koruna')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'DJF', 262, N'Djibouti Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'DKK', 208, N'Danish Krone')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'DOP', 214, N'Dominican Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'DZD', 12, N'Algerian Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'EGP', 818, N'Egyptian Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ERN', 232, N'Nakfa')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ETB', 230, N'Ethiopian Birr')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'EUR', 978, N'Euro')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'FJD', 242, N'Fiji Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'FKP', 238, N'Falkland Islands Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GBP', 826, N'Pound Sterling')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GEL', 981, N'Lari')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GHS', 936, N'Ghana Cedi')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GIP', 292, N'Gibraltar Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GMD', 270, N'Dalasi')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GNF', 324, N'Guinea Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GTQ', 320, N'Quetzal')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'GYD', 328, N'Guyana Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'HKD', 344, N'Hong Kong Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'HNL', 340, N'Lempira')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'HRK', 191, N'Croatian Kuna')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'HTG', 332, N'Gourde')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'HUF', 348, N'Forint')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'IDR', 360, N'Rupiah')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ILS', 376, N'New Israeli Sheqel')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'INR', 356, N'Indian Rupee')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'IQD', 368, N'Iraqi Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'IRR', 364, N'Iranian Rial')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ISK', 352, N'Iceland Krona')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'JMD', 388, N'Jamaican Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'JOD', 400, N'Jordanian Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'JPY', 392, N'Yen')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KES', 404, N'Kenyan Shilling')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KGS', 417, N'Som')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KHR', 116, N'Riel')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KMF', 174, N'Comoro Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KPW', 408, N'North Korean Won')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KRW', 410, N'Won')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KWD', 414, N'Kuwaiti Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KYD', 136, N'Cayman Islands Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'KZT', 398, N'Tenge')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LAK', 418, N'Kip')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LBP', 422, N'Lebanese Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LKR', 144, N'Sri Lanka Rupee')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LRD', 430, N'Liberian Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LSL', 426, N'Loti')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LTL', 440, N'Lithuanian Litas')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LVL', 428, N'Latvian Lats')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'LYD', 434, N'Libyan Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MAD', 504, N'Moroccan Dirham')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MDL', 498, N'Moldovan Leu')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MGA', 969, N'Malagasy Ariary')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MKD', 807, N'Denar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MMK', 104, N'Kyat')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MNT', 496, N'Tugrik')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MOP', 446, N'Pataca')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MRO', 478, N'Ouguiya')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MUR', 480, N'Mauritius Rupee')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MVR', 462, N'Rufiyaa')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MWK', 454, N'Kwacha')
+
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MXN', 484, N'Mexican Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MXV', 979, N'Mexican Unidad de Inversion (UDI)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MYR', 458, N'Malaysian Ringgit')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'MZN', 943, N'Mozambique Metical')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'NAD', 516, N'Namibia Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'NGN', 566, N'Naira')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'NIO', 558, N'Cordoba Oro')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'NOK', 578, N'Norwegian Krone')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'NPR', 524, N'Nepalese Rupee')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'NZD', 554, N'New Zealand Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'OMR', 512, N'Rial Omani')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PAB', 590, N'Balboa')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PEN', 604, N'Nuevo Sol')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PGK', 598, N'Kina')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PHP', 608, N'Philippine Peso')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PKR', 586, N'Pakistan Rupee')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PLN', 985, N'Zloty')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'PYG', 600, N'Guarani')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'QAR', 634, N'Qatari Rial')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'RON', 946, N'New Romanian Leu')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'RSD', 941, N'Serbian Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'RUB', 643, N'Russian Ruble')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'RWF', 646, N'Rwanda Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SAR', 682, N'Saudi Riyal')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SBD', 90, N'Solomon Islands Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SCR', 690, N'Seychelles Rupee')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SDG', 938, N'Sudanese Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SEK', 752, N'Swedish Krona')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SGD', 702, N'Singapore Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SHP', 654, N'Saint Helena Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SLL', 694, N'Leone')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SOS', 706, N'Somali Shilling')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SRD', 968, N'Surinam Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SSP', 728, N'South Sudanese Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'STD', 678, N'Dobra')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SVC', 222, N'El Salvador Colon')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SYP', 760, N'Syrian Pound')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'SZL', 748, N'Lilangeni')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'THB', 764, N'Baht')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TJS', 972, N'Somoni')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TMT', 934, N'Turkmenistan New Manat')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TND', 788, N'Tunisian Dinar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TOP', 776, N'Pa’anga')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TRY', 949, N'Turkish Lira')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TTD', 780, N'Trinidad and Tobago Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TWD', 901, N'New Taiwan Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'TZS', 834, N'Tanzanian Shilling')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'UAH', 980, N'Hryvnia')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'UGX', 800, N'Uganda Shilling')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'USD', 840, N'US Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'USN', 997, N'US Dollar (Next day)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'USS', 998, N'US Dollar (Same day)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'UYI', 940, N'Uruguay Peso en Unidades Indexadas (URUIURUI)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'UYU', 858, N'Peso Uruguayo')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'UZS', 860, N'Uzbekistan Sum')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'VEF', 937, N'Bolivar Fuerte')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'VND', 704, N'Dong')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'VUV', 548, N'Vatu')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'WST', 882, N'Tala')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XAF', 950, N'CFA Franc BEAC')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XAG', 961, N'Silver')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XAU', 959, N'Gold')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XBA', 955, N'Bond Markets Unit European Composite Unit (EURCO)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XBB', 956, N'Bond Markets Unit European Monetary Unit (E.M.U.-6)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XBC', 957, N'Bond Markets Unit European Unit of Account 9 (E.U.A.-9)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XBD', 958, N'Bond Markets Unit European Unit of Account 17 (E.U.A.-17)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XCD', 951, N'East Caribbean Dollar')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XDR', 960, N'SDR (Special Drawing Right)')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XFU', 0, N'UIC-Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XOF', 952, N'CFA Franc BCEAO')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XPD', 964, N'Palladium')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XPF', 953, N'CFP Franc')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XPT', 962, N'Platinum')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XSU', 994, N'Sucre')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XTS', 963, N'Codes specifically reserved for testing purposes')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XUA', 965, N'ADB Unit of Account')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'XXX', 999, N'The codes assigned for transactions where no currency is involved')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'YER', 886, N'Yemeni Rial')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ZAR', 710, N'Rand')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ZMK', 894, N'Zambian Kwacha')
+		INSERT {databaseOwner}[{objectQualifier}EasyDNNfieldsCurrency] ([ACode], [NCode], [Currency]) VALUES (N'ZWL', 932, N'Zimbabwe Dollar')
+	END TRY
+	BEGIN CATCH
+	END CATCH
+END
+GO
+
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsAddCustomFieldToTemplate]    Script Date: 07/11/2013 16:50:22 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsAddCustomFieldToTemplate]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsAddCustomFieldToTemplate]
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsAddToExchangeRateList]    Script Date: 07/11/2013 16:50:22 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsAddToExchangeRateList]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsAddToExchangeRateList]
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsIUElementsList]    Script Date: 07/11/2013 16:50:22 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsIUElementsList]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsIUElementsList]
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeElementsPosition]    Script Date: 07/11/2013 16:50:22 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeElementsPosition]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeElementsPosition]
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeGroupCFPosition]    Script Date: 07/11/2013 16:50:22 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeGroupCFPosition]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeGroupCFPosition]
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeGroupCFPosition]    Script Date: 07/11/2013 16:50:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeGroupCFPosition]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeGroupCFPosition]
+(
+@ComandType	int,
+@FieldsTemplateID	int,
+@CustomFieldID	int       
+)
+AS
+DECLARE @CurrentPosition int;
+SET @CurrentPosition = 0;
+DECLARE @MaxMinPosition int;
+SET @MaxMinPosition = 0;
+DECLARE @ContentUpDownID int;
+SET @ContentUpDownID = 0;
+DECLARE @PositionOneUpDown int;
+SET @PositionOneUpDown = 0;
+BEGIN TRANSACTION;
+BEGIN TRY
+        SET NOCOUNT ON;      
+        IF (@ComandType = 1) -- ovo je za pomicanje gore, prema vrhu, tj prema prvome koji je dodan u listu
+        BEGIN
+			SELECT @CurrentPosition = Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID AND CustomFieldID = @CustomFieldID;
+			SELECT @MaxMinPosition = min(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID;
+			IF (@CurrentPosition <> @MaxMinPosition) -- tu se može usporediti kad je to min value
+				BEGIN
+					SELECT @PositionOneUpDown = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID AND Position < @CurrentPosition;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] SET Position = @CurrentPosition WHERE Position = @PositionOneUpDown AND FieldsTemplateID = @FieldsTemplateID;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] SET Position = @PositionOneUpDown WHERE FieldsTemplateID = @FieldsTemplateID AND CustomFieldID = @CustomFieldID;
+				END
+        END
+        ELSE IF(@ComandType = 0) -- ovo je za pomicanje dolje -- znači da je commandType jednako 0, ali budemo mi to provjerili za svaki slučaj
+		BEGIN
+			SELECT @CurrentPosition = Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID AND CustomFieldID = @CustomFieldID;
+			SELECT @MaxMinPosition = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID;
+			IF (@CurrentPosition <> @MaxMinPosition)
+				BEGIN
+					SELECT @PositionOneUpDown = min(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID AND Position > @CurrentPosition;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] SET Position = @CurrentPosition WHERE Position = @PositionOneUpDown AND FieldsTemplateID = @FieldsTemplateID;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] SET Position = @PositionOneUpDown WHERE FieldsTemplateID = @FieldsTemplateID AND CustomFieldID = @CustomFieldID;
+				END
+		END        
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+END CATCH;
+
+IF @@TRANCOUNT > 0
+    COMMIT TRANSACTION;
+' 
+END
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeElementsPosition]    Script Date: 07/11/2013 16:50:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeElementsPosition]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeElementsPosition]
+(
+@ComandType	int,
+@FieldElementID	int,
+@CustomFieldID	int       
+)
+AS
+DECLARE @CurrentPosition int;
+SET @CurrentPosition = 0;
+DECLARE @MaxMinPosition int;
+SET @MaxMinPosition = 0;
+DECLARE @ContentUpDownID int;
+SET @ContentUpDownID = 0;
+DECLARE @PositionOneUpDown int;
+SET @PositionOneUpDown = 0;
+BEGIN TRANSACTION;
+BEGIN TRY
+        SET NOCOUNT ON;      
+        IF (@ComandType = 1) -- ovo je za pomicanje gore, prema vrhu, tj prema prvome koj ije dodan u listu
+        BEGIN
+			SELECT @CurrentPosition = Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE FieldElementID = @FieldElementID AND CustomFieldID = @CustomFieldID;
+			SELECT @MaxMinPosition = min(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE CustomFieldID = @CustomFieldID;
+			IF (@CurrentPosition <> @MaxMinPosition) -- tu se može usporediti kad je to min value
+				BEGIN
+					SELECT @PositionOneUpDown = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE CustomFieldID = @CustomFieldID AND Position < @CurrentPosition;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] SET Position = @CurrentPosition WHERE Position = @PositionOneUpDown AND CustomFieldID = @CustomFieldID;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] SET Position = @PositionOneUpDown WHERE FieldElementID = @FieldElementID AND CustomFieldID = @CustomFieldID;
+				END
+        END
+        ELSE IF(@ComandType = 0) -- ovo je za pomicanje dolje -- znači da je commandType jednako 0, ali budemo mi to provjerili za svaki slučaj
+		BEGIN
+			SELECT @CurrentPosition = Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE FieldElementID = @FieldElementID AND CustomFieldID = @CustomFieldID;
+			SELECT @MaxMinPosition = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE CustomFieldID = @CustomFieldID;
+			IF (@CurrentPosition <> @MaxMinPosition)
+				BEGIN
+					SELECT @PositionOneUpDown = min(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE CustomFieldID = @CustomFieldID AND Position > @CurrentPosition;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] SET Position = @CurrentPosition WHERE Position = @PositionOneUpDown AND CustomFieldID = @CustomFieldID;
+					UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] SET Position = @PositionOneUpDown WHERE FieldElementID = @FieldElementID AND CustomFieldID = @CustomFieldID;
+				END
+		END        
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+END CATCH;
+
+IF @@TRANCOUNT > 0
+    COMMIT TRANSACTION;
+' 
+END
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsIUElementsList]    Script Date: 07/11/2013 16:50:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsIUElementsList]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsIUElementsList]
+	@CustomFieldID int,
+	@FieldElementID int = 0,
+	@FEParentID int = null,
+    @Text nvarchar(300), 
+    @DefSelected bit = 0      
+AS 
+DECLARE @NewPosition int;
+DECLARE @DateCreated datetime;
+DECLARE @inserted int;
+SET @inserted = 0;
+SET @NewPosition = ''0'';
+SET @DateCreated = GETUTCDATE();
+BEGIN TRANSACTION;
+BEGIN TRY
+    SET NOCOUNT ON;
+    -- Get last position
+    IF @FieldElementID = 0 -- onda je insert
+		BEGIN
+			IF exists (SELECT Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE CustomFieldID=@CustomFieldID)
+				BEGIN
+				    SELECT @NewPosition = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] WHERE CustomFieldID=@CustomFieldID;
+					SET @NewPosition = @NewPosition + 10;
+				END
+			ELSE
+				BEGIN
+					SET @NewPosition = 10; 
+				END
+			INSERT INTO {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements]([CustomFieldID],[FEParentID],[Text],[Position],[DefSelected])VALUES(@CustomFieldID,@FEParentID,@Text,@NewPosition,@DefSelected)
+			SET @inserted = SCOPE_IDENTITY();
+		END
+	ELSE -- onda je update
+	BEGIN
+		UPDATE {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] SET [FEParentID] = @FEParentID, [Text] = @Text WHERE FieldElementID=@FieldElementID AND CustomFieldID = @CustomFieldID; 	
+	END       
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+END CATCH;
+
+IF @@TRANCOUNT > 0
+    COMMIT TRANSACTION;
+
+return @inserted;
+' 
+END
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsAddToExchangeRateList]    Script Date: 07/11/2013 16:50:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsAddToExchangeRateList]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsAddToExchangeRateList]
+	@ACodeBase nvarchar(5),
+	@PortalID int,
+	@ACode nvarchar(5),
+    @ExchangeRate decimal(19,6), 
+    @UnitOf int,
+    @DisplayOnReport bit,
+    @DisplayFormat nvarchar(10)
+AS 
+DECLARE @NewPosition int;
+DECLARE @DateCreated datetime;
+DECLARE @inserted int;
+SET @inserted = 0;
+SET @NewPosition = 0;
+SET @DateCreated = GETUTCDATE();
+BEGIN TRANSACTION;
+BEGIN TRY
+    SET NOCOUNT ON 
+	IF exists (SELECT Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate] WHERE PortalID = @PortalID)
+	BEGIN
+		SELECT @NewPosition = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate] WHERE PortalID = @PortalID;
+	SET @NewPosition = @NewPosition + 10;
+	END
+	ELSE
+	BEGIN
+		SET @NewPosition = 10; 
+	END
+	INSERT INTO {databaseOwner}[{objectQualifier}EasyDNNfieldsExchangeRate] ([ACodeBase],[PortalID],[ACode],[Unit],[ExchangeRate],[DateTime],[Position],[DisplayOnReport],[DisplayFormat]) VALUES (@ACodeBase, @PortalID, @ACode,@UnitOf, @ExchangeRate, @DateCreated, @NewPosition, @DisplayOnReport, @DisplayFormat)
+	SET @inserted = SCOPE_IDENTITY();
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+END CATCH;
+
+IF @@TRANCOUNT > 0
+    COMMIT TRANSACTION;
+
+return @inserted;
+' 
+END
+GO
+/****** Object:  StoredProcedure {databaseOwner}[{objectQualifier}EasyDNNfieldsAddCustomFieldToTemplate]    Script Date: 07/11/2013 16:50:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsAddCustomFieldToTemplate]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsAddCustomFieldToTemplate]
+	@FieldsTemplateID int,
+	@CustomFieldID int   
+AS 
+	DECLARE @NewPosition int;
+	DECLARE @DateCreated datetime;
+	DECLARE @inserted int;
+	SET @inserted = 0;
+	SET @NewPosition = ''0'';
+	SET @DateCreated = GETDATE();
+BEGIN TRANSACTION;
+BEGIN TRY
+    SET NOCOUNT ON;
+    IF NOT exists (SELECT CustomFieldID FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID AND CustomFieldID=@CustomFieldID)
+    BEGIN
+		IF exists (SELECT Position FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID)
+		BEGIN
+		    SELECT @NewPosition = max(Position) FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] WHERE FieldsTemplateID = @FieldsTemplateID;
+			SET @NewPosition = @NewPosition + 10;
+		END
+		ELSE
+		BEGIN
+			SET @NewPosition = 10; 
+		END
+		INSERT INTO {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] ([FieldsTemplateID],[CustomFieldID],[Position]) VALUES (@FieldsTemplateID,@CustomFieldID, @NewPosition);
+		SET @inserted = SCOPE_IDENTITY();  
+	END
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+END CATCH;
+
+IF @@TRANCOUNT > 0
+    COMMIT TRANSACTION;
+
+return @inserted;
+' 
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'PublishDateValueType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD PublishDateValueType tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_PublishDateValueType DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'PublishDateValue')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD PublishDateValue datetime NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ExpireDateValueType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ExpireDateValueType tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ExpireDateValueType DEFAULT(3) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ExpireDateValueToAdd')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ExpireDateValueToAdd int CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ExpireDateValueToAdd DEFAULT(1000) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ExpireDateValue')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ExpireDateValue datetime NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'CustomFieldsPMSource')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD CustomFieldsPMSource tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_CustomFieldsPMSource DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'CFUserSelectionType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD CFUserSelectionType tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_CFUserSelectionType DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'CFSelectedGroup')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD CFSelectedGroup int NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'CFEnableGroupSelection')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD CFEnableGroupSelection BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_CFEnableGroupSelection DEFAULT(1) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'PublishDateValueType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD PublishDateValueType tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_PublishDateValueType DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'PublishDateValue')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD PublishDateValue datetime NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ExpireDateValueType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ExpireDateValueType tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ExpireDateValueType DEFAULT(3) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ExpireDateValueToAdd')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ExpireDateValueToAdd int CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ExpireDateValueToAdd DEFAULT(1000) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ExpireDateValue')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ExpireDateValue datetime NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'CFUserSelectionType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD CFUserSelectionType tinyint CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_CFUserSelectionType DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'CFSelectedGroup')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD CFSelectedGroup int NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'CFEnableGroupSelection')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD CFEnableGroupSelection BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_CFEnableGroupSelection DEFAULT(1) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'CustomFields')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD CustomFields BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsRolePremissionSettings_CustomFields DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'CustomFields')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD CustomFields BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsUserPremissionSettings_CustomFields DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'CFGroupeID')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD CFGroupeID BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsUserPremissionSettings_CFGroupeID DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsDocuments' and column_name = 'NumberOfDownloads')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsDocuments] ADD NumberOfDownloads int CONSTRAINT DF_{objectQualifier}EasyDNNNewsDocuments_NumberOfDownloads DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsDocuments' and column_name = 'FileSize')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsDocuments] ADD FileSize bigint CONSTRAINT DF_{objectQualifier}EasyDNNNewsDocuments_FileSize DEFAULT(0) NOT NULL
+END
+GO
+
+/****** Object:  ForeignKey [{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate]    Script Date: 07/16/2013 15:30:09 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNews]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate] FOREIGN KEY([CFGroupeID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate] ([FieldsTemplateID]) ON DELETE SET NULL
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNews]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate]
+GO
+/****** Object:  ForeignKey [{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate]    Script Date: 07/16/2013 15:30:09 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate] FOREIGN KEY([CFSelectedGroup])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate] ([FieldsTemplateID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate]
+GO
+/****** Object:  ForeignKey [{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate]    Script Date: 07/16/2013 15:30:09 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate] FOREIGN KEY([CFSelectedGroup])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplate] ([FieldsTemplateID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate]
+GO
+/****New table Document Download Info ****/
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo](
+	[DownloadInfoID] [int] IDENTITY(1,1) NOT NULL,
+	[DocEntryID] [int] NOT NULL,
+	[UserID] [int] NULL,
+	[DateDownload] [datetime] NOT NULL,
+	[DownloadIP] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo] PRIMARY KEY CLUSTERED 
+(
+	[DownloadInfoID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+/****** Object:  Default [DF_EasyDNNnewsDocumentDownloadInfo_DateDownload]    Script Date: 07/24/2013 09:46:15 ******/
+IF Not EXISTS (SELECT * FROM sys.default_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[DF_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}DateDownload]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]'))
+Begin
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[DF_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}DateDownload]') AND type = 'D')
+BEGIN
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo] ADD  CONSTRAINT [DF_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}DateDownload]  DEFAULT (getutcdate()) FOR [DateDownload]
+END
+
+
+End
+GO
+/****** Object:  ForeignKey [FK_EasyDNNnewsDocumentDownloadInfo_EasyDNNNewsDocuments]    Script Date: 07/24/2013 09:46:15 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}EasyDNNNewsDocuments]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}EasyDNNNewsDocuments] FOREIGN KEY([DocEntryID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsDocuments] ([DocEntryID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}EasyDNNNewsDocuments]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}EasyDNNNewsDocuments]
+GO
+
+/****** Object:  ForeignKey [FK_EasyDNNnewsDocumentDownloadInfo_Users]    Script Date: 07/24/2013 09:46:15 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}Users] FOREIGN KEY([UserID])
+REFERENCES {databaseOwner}[{objectQualifier}Users] ([UserID])
+ON DELETE SET NULL
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsDocumentDownloadInfo] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsDocumentDownloadInfo_{objectQualifier}Users]
+GO

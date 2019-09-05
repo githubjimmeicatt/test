@@ -1,0 +1,64 @@
+<!--TemplateGroup:listArticleDefault-->
+<!--ArticleRepeat:Before:-->
+<script src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/sss/sss.js"></script>
+<div class="[EasyDNNnews:ArticleListWrapperClass]">
+<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+<article class="edn_article edn_clearFix">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	[EasyDNNnews:IfExists:Image]
+	<div class="edn_mediaContainer">
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"></a>
+		<div class="edn_galleryImagesContainer edn_slider_[EasyDNNnews:ModuleID]_[EasyDNNnews:ArticleID]" style="width:[EasyDNNnews:MainArticleImageWidth]">
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/>
+			[EasyDNNnews:IfExists:GalleryImage:2]
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:GalleryImage:2]"/>
+			[EasyDNNnews:EndIf:GalleryImage]
+			[EasyDNNnews:IfExists:GalleryImage:3]
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:GalleryImage:3]"/>
+			[EasyDNNnews:EndIf:GalleryImage]
+		</div>
+	</div>
+	<script>
+	jQuery(function($) {
+		$('.edn_slider_[EasyDNNnews:ModuleID]_[EasyDNNnews:ArticleID]').edn_sss({
+			slideShow : false, // Set to false to prevent edn_sss from automatically animating.
+			startOn : 0, // Slide to display first. Uses array notation (0 = first slide).
+			transition : 300, // Length (in milliseconds) of the fade transition.
+			speed : 3500, // Slideshow speed in milliseconds.
+			arrows : true, // Set to false to hide navigation arrows.
+			keyboardNavigation : false // Set to false to disable keyboard navigation.
+		});
+	});
+	</script>
+	[EasyDNNnews:EndIf:Image]
+	<h2 class="edn_articleTitle"><a href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+	[EasyDNNnews:IfExists:SubTitle]
+	<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+	[EasyDNNnews:EndIf:SubTitle]
+	<div class="edn_metaDetails">
+		[EasyDNNnews:Author:Link]
+		<time> / [EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event]</time>
+		<span class="edn_numberComments">[EasyDNNnews:Comments]</span>
+		<span class="edn_numberOfVievs">[EasyDNNnews:NumberOfViews]</span>
+		[EasyDNNnews:ArticleRating]
+	</div>
+	<div class="edn_articleSummary">[EasyDNNnews:Summary]</div>
+	<div class="edn_readMoreButtonWrapper"><a class="edn_readMore edn_readMoreButton" href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:IfNotExists:EventRegistration][EasyDNNnewsLocalizedText:Read][EasyDNNnews:EndIf:EventRegistration][EasyDNNnews:IfExists:EventRegistration][EasyDNNnewsLocalizedText:Register][EasyDNNnews:EndIf:EventRegistration]</a></div>
+</article>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+</div>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

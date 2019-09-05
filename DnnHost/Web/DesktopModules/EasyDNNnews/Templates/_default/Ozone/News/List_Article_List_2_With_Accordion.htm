@@ -1,0 +1,67 @@
+<!--TemplateGroup:listArticle2WithAccordion-->
+<!--ArticleRepeat:Before:-->
+<div class="edn_accordionWrapper_[EasyDNNnews:ModuleID] edn_articleAccordion">
+<script src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/edsAccordion/edsAccordion-1.1.js"></script>
+<script>
+	jQuery(function ($) {
+		$('div.edn_accordionWrapper_[EasyDNNnews:ModuleID]').edsAccordion_1();
+		//For first opened article remove comment tag from lines bellow
+		//$('> .edn_article', $('div.edn_[EasyDNNnews:ModuleID]_article_list_wrapper'))
+		//	.eq(0)
+		//		.addClass('edsAccordion_active');
+	});
+</script>
+<div class="[EasyDNNnews:ArticleListWrapperClass]">
+<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+	<article class="edn_article edn_clearFix edn_listArticle2 edsAccordion_section">
+		[EasyDNNnews:HasArticlePermissions]
+		<div class="edn_adminActions">
+			[EasyDNNnews:ArticlePermissions:Edit]
+			[EasyDNNnews:ArticlePermissions:Publish]
+			[EasyDNNnews:ArticlePermissions:Approve]
+		</div>
+		[EasyDNNnews:HasArticlePermissionsEnd]
+		<h3 class="edn_articleTitle edsAccordion_title">[EasyDNNnews:Title]</h3>
+		<div class="edsAccordion_contentWrapper">
+			<div class="edsAccordion_content">
+				<div class="edn_mediaContainer edn_withTime">
+					[EasyDNNnews:IfNotExists:Event]
+					<time><span>[EasyDNNnews:PublishDay]</span><span class="edn_monthName">[EasyDNNnews:PublishMonthString]</span><span>[EasyDNNnews:PublishYear]</span></time>
+					[EasyDNNnews:EndIf:Event]
+					[EasyDNNnews:IfExists:Event]
+					<time><span>[EasyDNNnews:EventStartDay]</span><span class="edn_monthName">[EasyDNNnews:EventStartMonthNameShort]</span><span>[EasyDNNnews:EventStartYear]</span></time>
+					[EasyDNNnews:EndIf:Event]
+					<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">
+						[EasyDNNnews:IfExists:Image]<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/>[EasyDNNnews:EndIf:Image]
+						[EasyDNNnews:IfNotExists:Image]
+						<img alt="[EasyDNNnews:Title]" style="width:[EasyDNNnews:MainArticleImageWidth]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png"/>
+						[EasyDNNnews:EndIf:Image]
+						<span class="edn_mediaLink">[EasyDNNnews:IfNotExists:EventRegistration][EasyDNNnewsLocalizedText:Read][EasyDNNnews:EndIf:EventRegistration][EasyDNNnews:IfExists:EventRegistration][EasyDNNnewsLocalizedText:Register][EasyDNNnews:EndIf:EventRegistration]</span>
+					</a>
+				</div>
+				[EasyDNNnews:IfExists:Event]
+				<p class="edn_listEventDetails">
+					[EasyDNNnews:IfExists:EventLocation]
+					<span class="edn_eventLocation">[EasyDNNnews:EventLocation]</span>
+					[EasyDNNnews:EndIf:EventLocation]
+					<span class="edn_eventDate">[EasyDNNnews:EventDate]</span>
+				</p>
+				[EasyDNNnews:EndIf:Event]
+				<div class="edn_articleSummary">[EasyDNNnews:Summary]</div>
+				[EasyDNNnews:DocumentList]
+				<div class="edn_readMoreButtonWrapper"><a class="edn_readMore edn_readMoreButton" href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:IfNotExists:EventRegistration][EasyDNNnewsLocalizedText:Read][EasyDNNnews:EndIf:EventRegistration][EasyDNNnews:IfExists:EventRegistration][EasyDNNnewsLocalizedText:Register][EasyDNNnews:EndIf:EventRegistration]</a></div>
+			</div>
+		</div>
+	</article>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+</div>
+</div>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

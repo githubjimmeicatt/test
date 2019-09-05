@@ -1,0 +1,92 @@
+/*
+'//Author: A.Reinermann
+'//Company: ICATT interactive media
+'//Date: 2009/02/24
+*/
+
+/**************************/
+/*** STORED PROCEDURES  ***/
+/**************************/
+
+	--// News List
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_List_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_List_Get]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_List_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_List_Add]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_List_Insert]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_List_Insert]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_List_Update]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_List_Update]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_List_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_List_Delete]
+	GO
+
+	--// News Lists
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Lists_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Lists_Get]
+	GO
+
+	--// News Item
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Get]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Add]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Insert]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Insert]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Update]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Update]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Delete]
+	GO
+
+	--// News Items
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Items_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Items_Get]
+	GO
+
+	--// News Item Classification
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Classification_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Classification_Get]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Classification_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Classification_Add]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Classification_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_News_Item_Classification_Delete]
+	GO
+
+
+
+/**************************/
+/*** TABLES             ***/
+/**************************/
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item_Classification]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+		DROP TABLE {databaseOwner}[{objectQualifier}Icatt_News_Item_Classification] 
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_Item]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+		DROP TABLE {databaseOwner}[{objectQualifier}Icatt_News_Item] 
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_News_List]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+		DROP TABLE {databaseOwner}[{objectQualifier}Icatt_News_List] 
+	GO
+

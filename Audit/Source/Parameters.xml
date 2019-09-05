@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- https://blogs.iis.net/elliotth/web-deploy-xml-file-parameterization -->
+
+<parameters >
+  <parameter name="SksAuditKey" description="Some Custom param 2" defaultValue="__$SksAuditKey$__" tags="">
+    <parameterEntry kind="TextFile" scope="\\web.config$" match="@@SksAuditKey@@" />
+  </parameter>
+  <parameter name="accessRoles" description="Some Custom param 2" defaultValue="__$accessRoles$__" tags="">
+    <parameterEntry kind="TextFile" scope="\\web.config$" match="@@accessRoles@@" />
+  </parameter>
+  <parameter name="clientCertificate" description="Some Custom param 2" defaultValue="__$clientCertificate$__" tags="">
+    <parameterEntry kind="TextFile" scope="\\web.config$" match="@@clientCertificate@@" />
+  </parameter>
+
+  <parameter name="KeyVaultApplicationId" description="" defaultValue="__$KeyVaultApplicationId$__" tags="">
+    <parameterEntry kind="TextFile" scope="\\web.config$" match="@@KeyVaultApplicationId@@" />
+  </parameter>
+  <parameter name="KeyVaultCertificateThumbprint" description="" defaultValue="__$KeyVaultCertificateThumbprint$__" tags="">
+    <parameterEntry kind="TextFile" scope="\\web.config$" match="@@KeyVaultCertificateThumbprint@@" />
+  </parameter>
+  <parameter name="KeyVaultAuditSecrect" description="" defaultValue="__$KeyVaultAuditSecrect$__" tags="">
+    <parameterEntry kind="TextFile" scope="\\web.config$" match="@@KeyVaultAuditSecrect@@" />
+  </parameter>
+  
+</parameters>

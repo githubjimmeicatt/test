@@ -1,0 +1,37 @@
+//
+// COMPONENT: SLATS
+// ------------------------------------------------------------------
+//
+
+$slat-spacing: 24;
+
+.slat {
+    @include clearfix;
+    padding-top: em($slat-spacing);
+    border-top: 1px solid $color-primary-dark-blue-50;
+    margin-top: em($slat-spacing);
+}
+
+.slat .DNNModuleContent img {
+    float: left;
+    width: em(60);
+    height: auto;
+    margin-top: em(4);
+}
+
+.slat .DNNModuleContent img ~ p,
+.slat .DNNModuleContent img ~ a {
+    margin-left: em(74);
+}
+
+.slat .DNNModuleContent img ~ a {
+    display: block;
+}
+
+.slat .DNNModuleContent img:not(:first-child) {
+    margin-top: em(28);
+}
+
+.slat .DNNModuleContent img:not(:first-child) + p {
+    margin-top: em(24);
+}

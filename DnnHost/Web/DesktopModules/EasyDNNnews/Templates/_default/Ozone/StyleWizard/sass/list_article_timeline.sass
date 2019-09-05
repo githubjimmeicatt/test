@@ -1,0 +1,170 @@
+#{$baseThemeClass}
+
+	&.eds_subCollection_news
+
+		.edn_article
+
+			&.edn_timeline
+				display: table
+				margin: 0
+				@include small-device-width
+					display: block
+
+				.edn_timelineTimeLocation
+					display: table-cell
+					vertical-align: top
+					width: 140px
+					@include small-device-width
+						display: inline-block
+						vertical-align: top
+
+					> time
+						display: block
+						font-family: $headingsFont
+						line-height: 1
+
+						&.edn_timelineDate
+							color: $primaryColor
+
+						&.edn_timelineClock
+							color: #666161
+							font-size: 40px
+							margin: 5px 0
+
+					.edn_eventPrice
+						font-family: $headingsFont
+						font-size: 18px
+						display: inline-block
+						margin-top: 5px
+
+				.edn_timeLineImage
+					display: table-cell
+					position: relative
+					vertical-align: top
+					text-align: center
+					max-width: 100%
+					font-size: 0
+					line-height: 0
+					background: url("_-StyleAssetsClientRoot-_images/timeLineImage/guideline/predefined/timelineLine.png") center top repeat-y
+					@include small-device-width
+						background: none
+						display: inline-block
+						margin-top: 10px
+						vertical-align: top
+
+					&.edn_noImage
+						box-sizing: content-box
+						-moz-box-sizing: border-box
+						padding: 0 8px
+
+						> a
+							width: 29px
+							height: 29px
+							@include small-device-width
+								display: none
+
+					> a
+						display: inline-block
+						position: relative
+						z-index: 2
+						border-radius: 50%
+						border: solid 8px #e2e2e2
+						overflow: hidden
+						margin-top: -5px
+						max-width: 100%
+
+						> img
+							width: 100%
+							border-radius: 50%
+
+				.edn_timeLineContent
+					margin-left: 30px
+					background-color: #dadada
+					border: solid 1px #bcbcbc
+						radius: 6px
+					margin-bottom: 35px
+					margin-top: -5px
+					position: relative
+					@include small-device-width
+						margin-left: 0
+						margin-top: 10px
+
+					&:before
+						position: absolute
+						content: ""
+						top: 15px
+						left: -11px
+						width: 20px
+						height: 20px
+						background-color: #dadada
+						border: solid 1px #bcbcbc
+						border-right: none !important
+						border-top: none !Important
+						-ms-transform: rotate(45deg)
+						-webkit-transform: rotate(45deg)
+						transform: rotate(45deg)
+						@include small-device-width
+							display: none
+
+					> header
+						border-bottom: solid 1px #bcbcbc
+						box-shadow: 0 1px 0 0 #eee
+						padding: 10px 25px
+
+						> time
+							float: right
+
+							&:before
+								content: "\f017"
+								color: $primaryColor
+								margin-right: 5px
+								font-family: $icon
+								font-style: normal
+								font-weight: normal
+
+						.edn_calendarExport
+							margin-right: 20px
+							float: right
+
+							&:after
+								color: $primaryColor
+
+							&:hover
+
+								&:after
+									color: $defaultColor
+
+						.edn_articleTitle
+							font-size: 18px
+
+							> a
+								color: #666161
+								text-shadow: 1px 1px 1px rgba(255, 255, 255, .6)
+
+								&:hover
+									color: $primaryColor
+
+					> div
+						padding: 5px 25px
+
+					.edn_articleSummary
+						padding-top: 10px
+						padding-bottom: 10px
+						color: #8a8a8a
+
+				&:last-child
+
+					.edn_timeLineImage
+						background: none !important
+
+				&:nth-child(even)
+
+					.edn_timeLineContent
+						background-color: #ececec
+
+						&:before
+							background-color: #ececec
+
+
+
+

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D277BA9C-7EB6-4E98-93A4-29D3036890DF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sphdhv.KlantPortaal.Enging.Claims.ServiceTest</RootNamespace>
+    <AssemblyName>Sphdhv.KlantPortaal.Enging.Claims.ServiceTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Accept|AnyCPU'">
+    <OutputPath>bin\Accept\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Icatt.OAuth.Contract, Version=1.0.2.536, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.OAuth.Contract.1.0.2.536\lib\net461\Icatt.OAuth.Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.ServiceModel, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.ServiceModel.1.2.3\lib\net461\Icatt.ServiceModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MSTest.TestFramework.1.1.18\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MSTest.TestFramework.1.1.18\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClaimsEngineService_Poco.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Icatt.Auditing.Manager.AuditWriter.Contract\Icatt.Auditing.Manager.AuditTrailWriter.Contract.csproj">
+      <Project>{8C86A0A1-CD9A-4E83-928E-EEB338A3AFA9}</Project>
+      <Name>Icatt.Auditing.Manager.AuditTrailWriter.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Icatt.Digid.Access.Contract\Icatt.Digid.Access.Contract.csproj">
+      <Project>{BD1B1F78-E960-474C-A15B-8BA4EA821680}</Project>
+      <Name>Icatt.Digid.Access.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Spdhv.KlantPortaal.Access.AuthToken.Contract\Sphdhv.KlantPortaal.Access.AuthToken.Contract.csproj">
+      <Project>{4887730F-B311-4D63-826E-95D0E3ED0A89}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.AuthToken.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.Klanportaal.Engine.Claims.Service\Sphdhv.Klantportaal.Engine.Claims.Service.csproj">
+      <Project>{6B8BD1AE-3081-4BF3-89CA-63C15259EDB9}</Project>
+      <Name>Sphdhv.Klantportaal.Engine.Claims.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.Pensioen.Contract\Sphdhv.KlantPortaal.Access.Pensioen.Contract.csproj">
+      <Project>{4BC516DD-8163-4068-8612-8C9DBC77E0AC}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Common\Sphdhv.KlantPortaal.Common.csproj">
+      <Project>{3D4888B2-356F-45BB-A314-01851818C170}</Project>
+      <Name>Sphdhv.KlantPortaal.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.Klantportaal.Engine.Claims.Contract\Sphdhv.Klantportaal.Engine.Claims.Contract.csproj">
+      <Project>{69187D81-14ED-49DF-AAB4-90C9AA417659}</Project>
+      <Name>Sphdhv.Klantportaal.Engine.Claims.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Engine.Notification.Contract\Sphdhv.KlantPortaal.Engine.Notification.Contract.csproj">
+      <Project>{439D90B5-F5A5-4E68-BC23-6307ED539F48}</Project>
+      <Name>Sphdhv.KlantPortaal.Engine.Notification.Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props'))" />
+    <Error Condition="!Exists('..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets')" />
+</Project>

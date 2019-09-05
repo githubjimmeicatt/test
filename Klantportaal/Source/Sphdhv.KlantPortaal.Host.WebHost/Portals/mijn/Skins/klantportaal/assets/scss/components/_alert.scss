@@ -1,0 +1,84 @@
+﻿//
+// Component: Alert
+//
+
+.alert {
+    position: relative;
+    padding: em(16,16);
+    border: 1px solid;
+    color: #333;
+    font-size: rem(16);
+}
+
+//
+// Close icon
+
+.alert-close {
+    position: absolute;
+    top: rem(16);
+    right: rem(16);
+    display: block;
+    width: rem(24);
+    height: rem(24);
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.alert-close svg {
+    width: rem(24);
+    height: rem(24);
+    fill: currentColor;
+}
+
+//
+// Variants & States
+
+// Variants
+
+.alert--default {
+    background-color: rgb(229,243,246);
+    border-color: rgb(0,134,168);
+}
+
+.alert--error {
+    background-color: rgb(252,230,220);
+    border-color: rgb(228,31,24);
+}
+
+.alert--success {
+    background-color: rgb(246,248,231);
+    border-color: rgb(199,211,0);
+}
+
+.alert--warning {
+    background-color: rgb(254,241,226);
+    border-color: rgb(243,151,31);
+}
+
+// States
+
+.alert.is-dismissable > :first-child { padding-right: rem(40); } // prevent text under close button
+
+//
+// Typography within alert
+
+// Headers are the same
+
+.alert h1,
+.alert h2,
+.alert h3 {
+    margin-top: 0 !important;
+    margin-bottom: em(12) !important;
+    color: inherit;
+    font-size: inherit;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+// Paragraph margins
+
+.alert p:first-of-type { margin-top: em(12); }
+.alert p:first-child { margin-top: 0; }
+.alert p:last-of-type { margin-bottom: 0; }

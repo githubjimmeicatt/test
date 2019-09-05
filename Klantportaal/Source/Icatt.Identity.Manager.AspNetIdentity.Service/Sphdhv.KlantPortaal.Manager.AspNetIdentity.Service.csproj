@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B557587C-DEB5-45EE-B14A-886DBE185D16}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Icatt.Identity.Manager.AspNetIdentity.Service</RootNamespace>
+    <AssemblyName>Icatt.Identity.Manager.AspNetIdentity.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Accept|AnyCPU'">
+    <OutputPath>bin\Accept\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Icatt.OAuth.Contract, Version=1.0.2.536, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.OAuth.Contract.1.0.2.536\lib\net461\Icatt.OAuth.Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.ServiceModel, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.ServiceModel.1.2.3\lib\net461\Icatt.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AspNetIdentityManagerService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Icatt.Identity.Manager.AspNetIdentity.Contract\Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract.csproj">
+      <Project>{6B21BC98-5137-4EFB-9623-158100C89288}</Project>
+      <Name>Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Icatt.Membership.Access.User.Contract\Icatt.Membership.Access.User.Contract.csproj">
+      <Project>{904E5F70-FFA5-4030-8F23-D27E977C17E5}</Project>
+      <Name>Icatt.Membership.Access.User.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spdhv.KlantPortaal.Access.AuthToken.Contract\Sphdhv.KlantPortaal.Access.AuthToken.Contract.csproj">
+      <Project>{4887730F-B311-4D63-826E-95D0E3ED0A89}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.AuthToken.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.DeelnemerPortalApi.Contract\Sphdhv.DeelnemerPortalApi.Contract.csproj">
+      <Project>{9D61E4D5-808A-486A-958F-B6D53E3A9771}</Project>
+      <Name>Sphdhv.DeelnemerPortalApi.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.KlantPortaal.Access.Pensioen.Contract\Sphdhv.KlantPortaal.Access.Pensioen.Contract.csproj">
+      <Project>{4BC516DD-8163-4068-8612-8C9DBC77E0AC}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.KlantPortaal.Common\Sphdhv.KlantPortaal.Common.csproj">
+      <Project>{3D4888B2-356F-45BB-A314-01851818C170}</Project>
+      <Name>Sphdhv.KlantPortaal.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

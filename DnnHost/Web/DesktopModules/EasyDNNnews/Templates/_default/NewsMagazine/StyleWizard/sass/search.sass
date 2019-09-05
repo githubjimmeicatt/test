@@ -1,0 +1,798 @@
+#{$baseThemeClass}
+
+	&.eds_subCollection_search
+		float: none
+		height: auto
+		min-width: 0
+		width: auto
+		overflow: visible
+		transition: none 0 none
+		font-size: 13px
+		line-height: 1.3
+
+		.acInput
+
+			&.acLoading
+				background-image: url("_-StyleAssetsClientRoot-_images/common/indicator.gif") !important
+				background-repeat: no-repeat !important
+				background-position: 95% 50% !important
+
+		.search_input
+			border: solid 1px #d4d4d4
+				radius: 4px
+			background-color: #fff
+
+			&:after
+				display: block
+				content: ""
+				clear: both
+				font-size: 0
+				line-height: 0
+				height: 0
+
+			.input
+				float: left
+				padding: 0 10px
+				line-height: 0
+				font-size: 0
+				width: 85%
+
+				input[type="text"],
+				input[type="text"]:hover,
+				input[type="text"]:focus
+					border: none
+					background: none #fff
+					box-shadow: none
+					-webkit-appearance: none
+					color: #848484
+					line-height: 28px
+					height: 30px
+					font-size: 13px
+					width: 100%
+					margin: 0
+					padding: 0
+
+			.do_search
+				padding: 0 5px
+				line-height: 29px
+				float: right
+				min-width: 35px
+				width: 10%
+				text-align: center
+				text-decoration: none
+				border: solid 1px #d4d4d4
+				border-top: none !important
+				border-right: none !important
+				border-bottom: none !important
+
+				&:hover
+					text-decoration: none
+
+				> span
+					display: none
+
+				&:before
+					content: "\f002"
+					display: inline-block
+					vertical-align: middle
+					font-family: $icon
+					font-size: 21px
+					font-style: normal
+					font-weight: normal
+
+			&.button_outside
+				border: none !important
+					radius: 0 !important
+				background: none transparent !important
+				box-shadow: none !important
+
+				.input
+					float: none
+					width: auto
+					padding: 0
+
+					input[type="text"],
+					input[type="text"]:hover,
+					input[type="text"]:focus
+						border: solid 1px #d4d4d4
+							radius: 4px
+						padding: 0 10px
+
+				.do_search
+					width: auto
+					clear: both
+					border: 1px solid $primaryColor !important
+					background: none #fff
+					text-shadow: none
+					text-decoration: none
+					font-family: $headingsFont
+					font-size: 12px
+					text-transform: uppercase
+					padding: 0 18px
+					border-radius: 4px
+					box-shadow: none
+					margin-top: 10px
+					color: $primaryColor
+					transition: all 200ms linear
+
+					> span
+						display: inline-block
+						padding-left: 10px
+
+					&:hover
+						color: #fff
+						background-color: $primaryColor
+
+			.acInput
+
+				&.acLoading
+					background-image: url("_-StyleAssetsClientRoot-_images/common/indicator.gif")
+					background-repeat: none
+					background-position: 90% 10%
+
+		.edncf_AdvancedSearch
+
+			.edncf_container
+				position: relative
+				padding: 5px 0 20px
+
+				> span
+					display: block
+					margin-bottom: 10px
+
+				> div
+					margin-bottom: 10px
+
+				label
+					font-weight: normal
+					margin: 0
+					padding: 0
+					line-height: 1
+
+				.edncf_DropDownList
+
+					> span
+						border: solid 1px #d4d4d4
+						border-radius: 4px
+						display: block
+						position: relative
+						overflow: hidden
+						background-color: #fff
+						line-height: 28px
+						padding-right: 35px
+
+						&:after
+							position: absolute
+							top: 0
+							bottom: 0
+							right: 0
+							content: "\f107"
+							color: $primaryColor
+							font-size: 20px
+							font-weight: bold
+							width: 35px
+							z-index: 1
+							font-family: $icon
+							text-align: center
+							border: solid 1px #d4d4d4
+							border-top: none !important
+							border-right: none !important
+							border-bottom: none !important
+
+						select
+							border: none
+							background: none transparent
+							box-shadow: none
+							-webkit-appearance: none
+							outline: none
+							width: 125%
+							position: relative
+							z-index: 2
+							padding: 0 10px
+							color: #848484
+							font-size: 13px
+							font-family: $defaultFont
+							margin: 0
+							height: 28px
+
+							&:focus
+								outline: none
+
+							&:disabled
+								color: #ccc !important
+
+				.edncf_Multiselect
+
+					.edncf_MultiselectGroup
+
+						.ms-parent
+							width: 100% !important
+							display: block
+							position: relative
+
+						.ms-choice
+							display: block
+							width: 100%
+							border: solid 1px #d4d4d4
+							border-radius: 4px
+							display: block
+							position: relative
+							overflow: hidden
+							background-color: #fff
+							line-height: 28px
+							text-align: left
+							padding: 0 45px 0 10px
+							box-shadow: none
+							-webkit-appearance: none
+							outline: none
+
+							> span
+								white-space: nowrap
+								overflow: hidden
+								text-overflow: ellipsis
+								display: block
+								line-height: 28px
+								color: #848484
+
+							> div
+								position: absolute
+								top: 0
+								bottom: 0
+								right: 0
+								width: 35px
+								z-index: 1
+								text-align: center
+								border: solid 1px #d4d4d4
+								border-top: none !important
+								border-right: none !important
+								border-bottom: none !important
+
+								&:before
+									content: "\f107"
+									color: $primaryColor
+									font-size: 20px
+									font-weight: bold
+									font-family: $icon
+
+								&.open
+
+									&:before
+										content: "\f106"
+
+							&.disabled
+								cursor: default
+
+						.ms-drop
+							display: none
+							overflow: hidden
+							position: absolute
+							width: 100%
+							z-index: 1000
+							border: solid 1px #d4d4d4
+							border-radius: 4px
+							margin-top: 1px
+							background-color: #fff
+
+							ul
+								margin: 0
+								padding: 10px
+								overflow: auto
+
+								> li
+									background-image: none
+									display: list-item
+									list-style: outside none none
+									position: static
+									padding: 0
+									margin: 0 0 3px
+
+									label
+										display: block
+										white-space: nowrap
+
+										> input
+											display: none
+
+										> span
+											display: inline-block
+											vertical-align: middle
+											font-weight: normal
+
+											&:before
+												display: inline-block
+												vertical-align: middle
+												content: ""
+												width: 24px
+												height: 24px
+												line-height: 24px
+												text-align: center
+												background-repeat: no-repeat
+												background-position: 0 0
+												margin-right: 5px
+												font-family: $icon
+												font-size: 11px
+												color: #8e1003
+												text-shadow: 1px 1px 1px rgba(255, 255, 255, .8)
+												background-image: url("_-StyleAssetsClientRoot-_images/advancedSearch/checkBoxes/background/predefined/checkBoxBg.png")
+
+									&.selected
+
+										label
+
+											> span
+
+												&:before
+													background-position: 0 bottom
+													content: "\f00c"
+
+							&.bottom
+								top: 100%
+
+							&.top
+								bottom: 100%
+
+				.edncf_Text
+
+					.edncf_TextInput
+
+						input
+							border: solid 1px #d4d4d4
+								radius: 4px
+							padding: 0 10px
+							line-height: 28px
+							height: 30px
+							color: #848484
+							font-size: 13px
+							width: 100%
+							background: none #fff
+							font-family: $defaultFont
+							margin: 0
+							padding: 0 10px
+							box-shadow: none
+							-webkit-appearance: none
+							outline: none
+
+				.edncf_Text,
+				.edncf_dateSearchField
+
+					label
+						display: block
+						margin-bottom: 5px
+
+				.edncf_RangeSliderInput
+
+					> span
+
+						> label
+							display: block
+							margin-bottom: 10px
+
+					.irs
+						height: 45px
+						position: relative
+						display: block
+
+						.irs-line
+							display: block
+							position: relative
+							padding: 2px
+							background-color: #d6d6d6
+							height: 13px
+							border-style: solid
+							border-width: 1px
+							border-color: #c7c7c7 #c7c7c7 #d3d3d3
+							border-radius: 6px
+
+							.irs-line-left,
+							.irs-line-right
+								display: none
+
+							.irs-line-mid
+								display: block
+								height: 7px
+								border-radius: 4px
+								background-color: #c3c3c3
+								border: solid 1px #bcbcbc
+								box-shadow: 0 1px 0 0 rgba(255, 255, 255, .35), 0 1px 3px 0 rgba(0, 0, 0, .24) inset
+
+						.irs-diapason
+							top: 3px
+							position: absolute
+							display: block
+							left: 0
+							width: 100%
+							height: 7px
+							background-color: #c81704
+							border-style: solid
+							border-width: 1px
+							border-color: #931103 #931103 #bf1604
+							box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .24) inset
+
+						.irs-slider
+							border: solid 1px #eeeff0
+							border: solid 1px rgba(0, 0, 0, .2)
+							background-color: #d4d8de
+							height: 20px
+							width: 20px
+							cursor: default
+							display: block
+							position: absolute
+							z-index: 1
+							top: -3px
+							border-radius: 50%
+							box-shadow: 0 6px 6px 0px rgba(255, 255, 255, .8) inset
+
+							&:before
+								position: absolute
+								content: ""
+								display: inline-block
+								width: 8px
+								height: 8px
+								border-radius: 50%
+								background-color: #c71704
+								box-shadow: 0 1px 1px 0 rgba(255, 255, 255, .35), 0 1px 2px 0 rgba(0, 0, 0, .5) inset
+								top: 50%
+								left: 50%
+								margin: -4px 0 0 -4px
+
+						.irs-from,
+						.irs-to,
+						.irs-single
+							color: $primaryColor
+							position: absolute
+							white-space: nowrap
+							top: 25px
+							font-size: 12px
+							line-height: 1
+
+						.irs-min,
+						.irs-max
+							top: 25px
+							font-size: 12px
+							line-height: 1
+							color: #a8a8a8
+							position: absolute
+
+						.irs-min
+							left: 0
+
+						.irs-max
+							right: 0
+
+				.edncf_CheckBox .edncf_ltIE,
+				.edncf_CheckBoxList .edncf_CheckBoxListGroup .edncf_ltIE .edncf_CheckBox,
+
+					input[type="checkbox"]
+						display: inline
+
+					label
+						padding-left: 0
+
+						&:before
+							display: none
+
+				.edncf_RadioButtonList .edncf_RadioButtonGroup .edncf_ltIE .edncf_RadioButton
+
+					input[type="radio"]
+						display: inline
+
+					label
+						padding-left: 0
+
+						&:before
+							display: none
+
+				.edncf_CheckBox,
+				.edncf_RadioButton
+					display: block
+					margin: 4px 0
+
+					> input
+						display: none
+
+					> label
+						display: inline-block
+						vertical-align: middle
+						font-weight: normal
+
+						&:before
+							display: inline-block
+							vertical-align: middle
+							content: ""
+							width: 24px
+							height: 24px
+							line-height: 24px
+							text-align: center
+							background-repeat: no-repeat
+							background-position: 0 0
+							margin-right: 5px
+							font-family: $icon
+							font-size: 11px
+							color: #8e1003
+							text-shadow: 1px 1px 1px rgba(255, 255, 255, .8)
+
+				.edncf_CheckBox
+
+					> label
+
+						&:before
+							background-image: url("_-StyleAssetsClientRoot-_images/advancedSearch/checkBoxes/background/predefined/checkBoxBg.png")
+
+					input[type="checkbox"]
+
+						&:checked
+
+							& + label
+
+								&:before
+									background-position: 0 bottom
+									content: "\f00c"
+
+				.edncf_RadioButton
+
+					> label
+
+						&:before
+							background-image: url("_-StyleAssetsClientRoot-_images/advancedSearch/radioButtons/background/predefined/radioButtonBg.png")
+
+					input[type="radio"]
+
+						&:checked
+
+							& + label
+
+								&:before
+									background-position: 0 bottom
+									content: "\f111"
+									font-size: 8px
+
+				.edncf_dateSearchField
+
+					.input-group
+						margin: 0
+
+						+ .input-group
+							margin-top: 5px
+
+					.glyphicon
+						font-family: "Glyphicons Halflings"
+
+					.form-control
+						border: solid 1px #d4d4d4
+							radius: 4px
+						border-top-right-radius: 0
+						border-bottom-right-radius: 0
+						box-shadow: none
+						-webkit-appearance: none
+						outline: none
+						color: #848484
+						font-size: 13px
+						font-family: $defaultFont
+						height: 30px
+						line-height: 28px
+						margin: 0
+						background-color: #fff
+						padding: 0 6px
+
+					.input-group-addon
+						border: solid 1px #d4d4d4
+							radius: 4px
+							left: none
+						background-color: #fff
+						border-top-left-radius: 0
+						border-bottom-left-radius: 0
+						height: 30px
+						padding: 0 11px
+						color: $primaryColor
+						line-height: 26px
+						vertical-align: top
+
+				.edncf_CheckBoxList,
+				.edncf_RadioButtonList
+
+					> span
+						display: block
+						font-weight: bold
+						margin-bottom: 5px
+
+				.edncf_submitContainer
+					text-align: right
+					padding-top: 20px
+					margin: 0
+
+					> a
+						display: inline-block
+						background: none #fff
+						text-shadow: none
+						text-decoration: none
+						font-family: $headingsFont
+						font-size: 12px
+						line-height: 29px
+						text-transform: uppercase
+						padding: 0 18px
+						border-radius: 4px
+						box-shadow: none
+						color: $primaryColor
+						transition: all 200ms linear
+
+						&:hover
+							text-decoration: none
+
+						&.edncf_submit
+							border: 1px solid $primaryColor
+
+							&:hover
+								color: #fff
+								background-color: $primaryColor
+
+							&:before
+								content: "\f002"
+								display: inline-block
+								vertical-align: top
+								font-family: $icon
+								font-size: 21px
+								margin-right: 10px
+								font-style: normal
+								font-weight: normal
+								line-height: 26px
+
+						&.edncf_reset
+							border: solid 1px #ddd
+							color: $primaryColor
+
+							&:hover
+								color: $defaultColor
+								border: solid 1px $primaryColor
+
+						& + a
+							margin-left: 5px
+
+				.edncf_searchInProgressOverlay
+					position: absolute
+					top: 0
+					bottom: 0
+					left: 0
+					right: 0
+					background: #fff url("_-StyleAssetsClientRoot-_images/common/searchInProgress.gif") center center no-repeat
+					opacity: 0.7
+					z-index: 999
+
+			&.edncf_horizontalOrientation
+
+				.edncf_container
+					padding-bottom: 0
+
+					> span
+						display: inline-block
+						vertical-align: middle
+						margin: 0 30px 15px 0
+
+					.edncf_DropDownList
+
+						> span
+							min-width: 145px
+
+							select
+								width: 160%
+
+					.edncf_Multiselect
+
+						.edncf_MultiselectGroup
+
+							.ms-parent
+								width: 180px !important
+								display: inline-block
+
+							.ms-choice
+								min-width: 145px
+
+					.edncf_RangeSliderInput
+						display: block
+						margin-right: 0
+
+					.edncf_CheckBoxList > span,
+					.edncf_RadioButtonList > span
+						display: inline-block
+						margin-bottom: 0
+
+					.edncf_CheckBoxList,
+					.edncf_RadioButtonList
+						display: inline-block
+						margin-right: 15px
+
+						.edncf_CheckBox,
+						.edncf_RadioButton
+							display: inline-block
+							margin: 4px 10px
+
+					.edncf_dateSearchField
+						display: block
+						margin-right: 0
+
+						> .input-group
+							float: left
+							width: 49%
+
+							& + .input-group
+								float: right
+								margin: 0
+
+						&:after
+							content: ""
+							display: table
+							width: 100%
+							height: 0
+							overflow: hidden
+							clear: both
+
+					.edncf_Text
+
+						> span
+							display: inline-block
+							vertical-align: middle
+
+							& + span
+								margin-left: 15px
+
+					.edncf_submitContainer
+						display: inline-block
+						vertical-align: top
+						padding: 0
+
+	.edn_searchInfoResults
+		margin: 30px 0 !important
+		padding: 10px 15px !important
+		background-color: #efefef
+		border: solid 1px #e8e8e8
+		color: #4A4A4A !important
+		font-size: 14px !important
+		line-height: 1.3 !important
+
+		> span
+			font-weight: bold
+			color: #333
+			font-size: 14px !important
+			line-height: 1.3 !important
+
+.EDN_search
+
+	&.theme_#{$themeName}
+		padding: 0px
+		border: 1px solid $primaryColor
+		background-color: #fff
+		overflow: hidden
+		z-index: 9999999
+		margin: 0 20px
+
+		ul
+			margin: 0px
+			padding: 0px
+
+			li
+				list-style-type: none
+				margin: 0px
+				padding: 0
+
+				span
+
+					a
+						padding: 2px 10px
+						display: block
+						font-size: 12px
+						color: $defaultColor
+						text-decoration: none
+						border: solid 1px transparent
+						transition: all 300ms linear
+
+						&:hover
+							text-decoration: none
+
+				&.acSelect
+
+					a
+						background-color: #f8f8f8
+						border-color: #d4d4d4 transparent
+						color: $primaryColor
+						-ms-transform: scale(1.05)
+						-webkit-transform: scale(1.05)
+						transform: scale(1.05)

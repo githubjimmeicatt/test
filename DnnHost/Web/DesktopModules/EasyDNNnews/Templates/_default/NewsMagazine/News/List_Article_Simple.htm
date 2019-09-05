@@ -1,0 +1,35 @@
+<!--TemplateGroup:listArticleSimple-->
+<!--ArticleRepeat:Before:-->
+<div class="[EasyDNNnews:ArticleListWrapperClass]">
+<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+<article class="edn_article edn_clearFix edn_simpleArticle">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a>
+	[EasyDNNnews:IfExists:Image]
+	<div class="edn_mediaContainer">
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a>
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/>
+	</div>
+	[EasyDNNnews:EndIf:Image]
+	[EasyDNNnews:IfExists:SubTitle]
+	<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+	[EasyDNNnews:EndIf:SubTitle]
+	<h2 class="edn_articleTitle">[EasyDNNnews:Title]</h2>
+</article>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+</div>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

@@ -1,0 +1,156 @@
+<!--TemplateGroup:listArticleMulti4-->
+
+<!--ArticleRepeat:Before:-->
+<div class="[EasyDNNnews:ArticleListWrapperClass]">
+<!--RepeatEnd:Before:-->
+
+<!--MultiArticleTemplate-->
+<!--ArticleRepeat:1:-->
+	<article class="edn_article edn_multiArticle edn_multiArticle4Main eds_wideArticle">
+		[EasyDNNnews:HasArticlePermissions]
+		<div class="edn_adminActions">
+			[EasyDNNnews:ArticlePermissions:Edit]
+			[EasyDNNnews:ArticlePermissions:Publish]
+			[EasyDNNnews:ArticlePermissions:Approve]
+		</div>
+		[EasyDNNnews:HasArticlePermissionsEnd]
+		<figure>
+			<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title:Limit:75]</span></a>
+			[EasyDNNnews:IfExists:Image]
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:1100:Height:530:Resize:Crop]"/>
+			[EasyDNNnews:EndIf:Image]
+			[EasyDNNnews:IfNotExists:Image]
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="1100" height="530"/>
+			[EasyDNNnews:EndIf:Image]
+			<figcaption>
+				<div>
+					<span class="edn_category">[EasyDNNnews:Categories separator="" last]</span>
+				</div>
+				<h2 class="edn_articleTitle">[EasyDNNnews:Title]</h2>
+			</figcaption>
+			<span class="edn_numberCommentsBubble">[EasyDNNnews:Comments]</span>
+		</figure>
+	</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+
+<!--MultiArticleTemplate-->
+<!--Before:2:3:4:5:6:7:-->
+<div class="edn_clearFix eds_articlesSeparator">
+<!--BeforeEnd-->
+<!--ArticleRepeat:2:-->
+	<article class="edn_article edn_multiArticle edn_multiArticleMainSmall edn_multiArticle4Second" style="width:37%">
+		[EasyDNNnews:HasArticlePermissions]
+		<div class="edn_adminActions">
+			[EasyDNNnews:ArticlePermissions:Edit]
+			[EasyDNNnews:ArticlePermissions:Publish]
+			[EasyDNNnews:ArticlePermissions:Approve]
+		</div>
+		[EasyDNNnews:HasArticlePermissionsEnd]
+		<figure>
+			<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+			<div>
+				<span class="edn_category">[EasyDNNnews:Categories separator="" last]</span>
+				[EasyDNNnews:IfExists:Image]
+				<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:500:Height:300:Resize:Crop]"/>
+				[EasyDNNnews:EndIf:Image]
+				[EasyDNNnews:IfNotExists:Image]
+				<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="500" height="300"/>
+				[EasyDNNnews:EndIf:Image]
+			</div>
+			<figcaption>
+				<h2 class="edn_articleTitle">[EasyDNNnews:Title:Limit:75]</h2>
+				[EasyDNNnews:IfExists:SubTitle]
+				<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+				[EasyDNNnews:EndIf:SubTitle]
+				<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:150]</div>
+			</figcaption>
+			<span class="edn_numberCommentsBubble">[EasyDNNnews:Comments]</span>
+		</figure>
+	</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--Before:3:4:5:6:-->
+	<div class="edn_smallArticles" style="width:37%">
+		<div>
+<!--BeforeEnd-->
+<!--ArticleRepeat:3:4:5:6:-->
+			<article class="edn_article edn_multiArticle edn_multiArticleMainSmall edn_multiArticle4MainSmall" style="width:50%;">
+				[EasyDNNnews:HasArticlePermissions]
+				<div class="edn_adminActions">
+					[EasyDNNnews:ArticlePermissions:Edit]
+					[EasyDNNnews:ArticlePermissions:Publish]
+					[EasyDNNnews:ArticlePermissions:Approve]
+				</div>
+				[EasyDNNnews:HasArticlePermissionsEnd]
+				<figure>
+					<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+					<div>
+						<span class="edn_category">[EasyDNNnews:Categories separator="" last]</span>
+						[EasyDNNnews:IfExists:Image]
+						<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:200:Height:150:Resize:Crop]"/>
+						[EasyDNNnews:EndIf:Image]
+						[EasyDNNnews:IfNotExists:Image]
+						<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="200" height="150"/>
+						[EasyDNNnews:EndIf:Image]
+					</div>
+					<figcaption>
+						<h2 class="edn_articleTitle">[EasyDNNnews:Title:Limit:75]</h2>
+					</figcaption>
+					<span class="edn_numberCommentsBubble">[EasyDNNnews:Comments]</span>
+				</figure>
+			</article>
+<!--RepeatEnd-->
+<!--After:3:4:5:6:-->
+		</div>
+	</div>
+<!--AfterEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--ArticleRepeat:7:-->
+	<article class="edn_article edn_multiArticle edn_multiArticleMainSmall edn_multiArticle4MainSmall edn_multiArticle4MainSmallThirdRow" style="width:26%;">
+		[EasyDNNnews:HasArticlePermissions]
+		<div class="edn_adminActions">
+			[EasyDNNnews:ArticlePermissions:Edit]
+			[EasyDNNnews:ArticlePermissions:Publish]
+			[EasyDNNnews:ArticlePermissions:Approve]
+		</div>
+		[EasyDNNnews:HasArticlePermissionsEnd]
+		<figure>
+			<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+			<div>
+				<span class="edn_category">[EasyDNNnews:Categories separator="" last]</span>
+				[EasyDNNnews:IfExists:Image]
+				<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:300:Height:300:Resize:Crop]"/>
+				[EasyDNNnews:EndIf:Image]
+				[EasyDNNnews:IfNotExists:Image]
+				<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="300" height="300"/>
+				[EasyDNNnews:EndIf:Image]
+			</div>
+			<figcaption>
+				<h2 class="edn_articleTitle">[EasyDNNnews:Title:Limit:75]</h2>
+				[EasyDNNnews:IfExists:SubTitle]
+				<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+				[EasyDNNnews:EndIf:SubTitle]
+				<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:130]</div>
+			</figcaption>
+			<span class="edn_numberCommentsBubble">[EasyDNNnews:Comments]</span>
+		</figure>
+	</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+<!--After:2:3:4:5:6:7:-->
+</div>
+<!--AfterEnd-->
+<!--MultiArticleEnd-->
+
+
+<!--MultiArticleTemplate-->
+<!--ArticleRepeat:After:-->
+</div>
+<!--RepeatEnd:After:-->
+<!--MultiArticleEnd-->

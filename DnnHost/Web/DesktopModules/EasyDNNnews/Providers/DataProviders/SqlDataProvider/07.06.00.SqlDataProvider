@@ -1,0 +1,243 @@
+﻿IF NOT EXISTS (SELECT UpdateVersion FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate] WHERE UpdateVersion = '07.06.00')
+BEGIN
+	INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate]([UpdateVersion],[Finished],[InstallType]) VALUES(N'07.06.00',0, N'DNN')
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'ArticleLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD ArticleLimit INT NULL CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_ArticleLimit] CHECK ([ArticleLimit] >= 0 OR [ArticleLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'ImageLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD ImageLimit INT NULL CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_ImageLimit] CHECK ([ImageLimit] >= 0 OR [ImageLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'VideoLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD VideoLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_VideoLimit] CHECK ([VideoLimit] >= 0 OR [VideoLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'AudioLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD AudioLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_AudioLimit] CHECK ([AudioLimit] >= 0 OR [AudioLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'DocumentLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD DocumentLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_DocumentLimit] CHECK ([DocumentLimit] >= 0 OR [DocumentLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'LinkLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD LinkLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_LinkLimit] CHECK ([LinkLimit] >= 0 OR [LinkLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'TagLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD TagLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_TagLimit] CHECK ([TagLimit] >= 0 OR [TagLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'CategoryLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD CategoryLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_CategoryLimit] CHECK ([CategoryLimit] >= 1 OR [CategoryLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRolePremissionSettings' and column_name = 'ExpireDateLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] ADD ExpireDateLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsRolePremissionSettings_ExpireDateLimit] CHECK ([ExpireDateLimit] >= 0 OR [ExpireDateLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'ArticleLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD ArticleLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_ArticleLimit] CHECK ([ArticleLimit] >= 0 OR [ArticleLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'ImageLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD ImageLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_ImageLimit] CHECK ([ImageLimit] >= 0 OR [ImageLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'VideoLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD VideoLimit INT  CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_VideoLimit] CHECK ([VideoLimit] >= 0 OR [VideoLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'AudioLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD AudioLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_AudioLimit] CHECK ([AudioLimit] >= 0 OR [AudioLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'DocumentLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD DocumentLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_DocumentLimit] CHECK ([DocumentLimit] >= 0 OR [DocumentLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'LinkLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD LinkLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_LinkLimit] CHECK ([LinkLimit] >= 0 OR [LinkLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'TagLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD TagLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_TagLimit] CHECK ([TagLimit] >= 0 OR [TagLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'CategoryLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD CategoryLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_CategoryLimit] CHECK ([CategoryLimit] >= 1 OR [CategoryLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUserPremissionSettings' and column_name = 'ExpireDateLimit')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] ADD ExpireDateLimit INT CONSTRAINT [CK_{objectQualifier}EasyDNNNewsUserPremissionSettings_ExpireDateLimit] CHECK ([ExpireDateLimit] >= 0 OR [ExpireDateLimit] IS NULL)
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsCategoryList' and column_name = 'Color')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] ADD Color NVARCHAR(16) CONSTRAINT DF_{objectQualifier}EasyDNNNewsCategoryList_Color DEFAULT(N'default') NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsContentLocalization' and column_name = 'CleanArticleData')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsContentLocalization] ADD CleanArticleData NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsContentLocalization_CleanArticleData DEFAULT('') NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'CategoryInArticleLink')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD CategoryInArticleLink BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_CategoryInArticleLink DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'CategoryInArticleLink')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD CategoryInArticleLink BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_CategoryInArticleLink DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'CCEmailsForAuthors')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD CCEmailsForAuthors NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'CCEmailsForAuthors')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD CCEmailsForAuthors NVARCHAR(256)  NULL
+END
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsSearchAllContent]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsSearchAllContent]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsSearchArticles]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsSearchArticles]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsSearchEvents]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsSearchEvents]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EDS_EditCategories]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+DROP FUNCTION {databaseOwner}[{objectQualifier}EDS_EditCategories]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EDS_EditCategories]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+BEGIN
+execute dbo.sp_executesql @statement = N'
+CREATE FUNCTION {databaseOwner}[{objectQualifier}EDS_EditCategories]
+(	
+	@PortalID INT,
+	@ModuleID INT,
+	@UserID INT,
+	@AdminOrSuperUser BIT,
+	@CurrentDate DATETIME
+)
+RETURNS @UserEditCategories TABLE (CategoryID INT NOT NULL PRIMARY KEY)
+AS
+BEGIN
+	IF @AdminOrSuperUser = 1
+	BEGIN
+		INSERT INTO @UserEditCategories SELECT CategoryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] WHERE PortalID = @PortalID;
+		RETURN
+	END
+
+	DECLARE @PermissionSettingsSource BIT;	
+	SELECT @PermissionSettingsSource = PermissionsPMSource FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] WHERE ModuleID = @ModuleID;
+	
+	IF @PermissionSettingsSource IS NULL
+	RETURN;
+
+	IF @UserID = -1
+	BEGIN
+		IF @PermissionSettingsSource = 1
+		BEGIN
+			IF EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [PortalID] = @PortalID AND [ModuleID] IS NULL AND [RoleID] IS NULL AND [AddArticleToAll] = 1)
+			BEGIN
+				INSERT INTO @UserEditCategories SELECT CategoryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] WHERE PortalID = @PortalID;
+				RETURN
+			END
+			ELSE
+			BEGIN
+				INSERT INTO @UserEditCategories
+				SELECT rpatc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsAddToCategories] AS rpatc
+				WHERE rpatc.[PremissionSettingsID] IN (SELECT [PremissionSettingsID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [PortalID] = @PortalID AND [ModuleID] IS NULL AND [RoleID] IS NULL)
+				RETURN
+			END
+		END
+		ELSE -- by module
+		BEGIN
+			IF EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [PortalID] = @PortalID AND [ModuleID] = @ModuleID AND [RoleID] IS NULL AND [AddArticleToAll] = 1)
+			BEGIN
+				INSERT INTO @UserEditCategories SELECT CategoryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] WHERE PortalID = @PortalID;
+				RETURN
+			END
+			ELSE
+			BEGIN
+				INSERT INTO @UserEditCategories
+				SELECT rpatc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsAddToCategories] AS rpatc
+				WHERE rpatc.[PremissionSettingsID] IN (SELECT [PremissionSettingsID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [PortalID] = @PortalID AND [ModuleID] = @ModuleID AND [RoleID] IS NULL)
+				RETURN
+			END
+		END
+	END
+	ELSE
+	BEGIN
+		IF @PermissionSettingsSource = 1
+		BEGIN
+			IF EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [PortalID] = @PortalID AND [ModuleID] IS NULL AND RoleID IN (SELECT DISTINCT r.[RoleID] FROM {databaseOwner}[{objectQualifier}Roles] AS r INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = r.RoleID WHERE ur.UserID = @UserID AND r.PortalID = @PortalID AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > @CurrentDate) AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < @CurrentDate)) AND [AddArticleToAll] = 1)
+			OR EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] WHERE [PortalID] = @PortalID AND [UserID] = @UserID AND [ModuleID] IS NULL AND [AddArticleToAll] = 1)
+			BEGIN
+				INSERT INTO @UserEditCategories SELECT CategoryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] WHERE PortalID = @PortalID;
+				RETURN
+			END
+			ELSE
+			BEGIN
+				INSERT INTO @UserEditCategories
+				SELECT rpatc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsAddToCategories] AS rpatc
+				WHERE rpatc.[PremissionSettingsID] IN (SELECT [PremissionSettingsID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [PortalID] = @PortalID AND [ModuleID] IS NULL AND RoleID IN (SELECT DISTINCT r.[RoleID] FROM {databaseOwner}[{objectQualifier}Roles] AS r INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = r.RoleID WHERE ur.UserID = @UserID AND r.PortalID = @PortalID AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > @CurrentDate) AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < @CurrentDate)))
+				UNION
+				SELECT upatc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionsAddToCategories] AS upatc
+				WHERE upatc.[PremissionSettingsID] IN (SELECT [PremissionSettingsID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] WHERE [PortalID] = @PortalID AND [UserID] = @UserID AND [ModuleID] IS NULL)
+			END
+		END
+		ELSE
+		BEGIN
+			IF EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [ModuleID] = @ModuleID AND RoleID IN (SELECT DISTINCT r.[RoleID] FROM {databaseOwner}[{objectQualifier}Roles] AS r INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = r.RoleID WHERE ur.UserID = @UserID AND r.PortalID = @PortalID AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > @CurrentDate) AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < @CurrentDate)) AND [AddArticleToAll] = 1)
+			OR EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] WHERE [UserID] = @UserID AND [PortalID] = @PortalID AND [ModuleID] = @ModuleID AND [AddArticleToAll] = 1)
+			BEGIN
+				INSERT INTO @UserEditCategories SELECT CategoryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] WHERE PortalID = @PortalID;
+				RETURN
+			END
+			ELSE
+			BEGIN
+				INSERT INTO @UserEditCategories
+				SELECT rpatc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsAddToCategories] AS rpatc
+				WHERE rpatc.[PremissionSettingsID] IN (SELECT [PremissionSettingsID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] WHERE [ModuleID] = @ModuleID AND RoleID IN (SELECT DISTINCT r.[RoleID] FROM {databaseOwner}[{objectQualifier}Roles] AS r INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = r.RoleID WHERE ur.UserID = @UserID AND r.PortalID = @PortalID AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > @CurrentDate) AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < @CurrentDate)))
+				UNION
+				SELECT upatc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionsAddToCategories] AS upatc
+				WHERE upatc.[PremissionSettingsID] IN (SELECT [PremissionSettingsID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] WHERE [UserID] = @UserID AND [PortalID] = @PortalID AND [ModuleID] = @ModuleID)
+			END
+		END
+	END
+RETURN
+END' 
+END
+GO

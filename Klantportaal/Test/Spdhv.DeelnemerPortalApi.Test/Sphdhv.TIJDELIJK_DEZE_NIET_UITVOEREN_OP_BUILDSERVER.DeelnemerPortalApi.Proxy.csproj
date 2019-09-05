@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCF6AB03-F367-4CB6-B191-6526CF9817E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sphdhv.Test.DeelnemerPortalApi.Proxy</RootNamespace>
+    <AssemblyName>Sphdhv.TIJDELIJK_DEZE_NIET_UITVOEREN_OP_BUILDSERVER.DeelnemerPortalApi.Proxy</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Accept|AnyCPU'">
+    <OutputPath>bin\Accept\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.Ar.Manager.ApplicationAuthority.Contract, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.Ar.Manager.ApplicationAuthority.Contract.1.3.5\lib\net461\Icatt.Ar.Manager.ApplicationAuthority.Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.CoreLib, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.CoreLib.1.0.4\lib\net451\Icatt.CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.Log4Net, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.Log4Net.1.0.2.0\lib\net451\Icatt.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.Logging, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.Logging.2.1.0\lib\net451\Icatt.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.Logging.DataAccess, Version=2.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.Logging.DataAccess.2.1.0.1\lib\net461\Icatt.Logging.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.ServiceModel, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.ServiceModel.1.2.3\lib\net461\Icatt.ServiceModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Icatt.Test.Stubbing, Version=1.1.1.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Services" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="PiramideIntegratieTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Sphdhv.DeelnemerPortalApi.Contract\Sphdhv.DeelnemerPortalApi.Contract.csproj">
+      <Project>{9D61E4D5-808A-486A-958F-B6D53E3A9771}</Project>
+      <Name>Sphdhv.DeelnemerPortalApi.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.DeelnemerPortalApi.ProxyStub\Sphdhv.DeelnemerPortalApi.ProxyStub.csproj">
+      <Project>{0ed7dc0a-59ea-49d5-a83e-1723a9dc24b0}</Project>
+      <Name>Sphdhv.DeelnemerPortalApi.ProxyStub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.DeelnemerPortalApi.Proxy\Sphdhv.DeelnemerPortalApi.Proxy.csproj">
+      <Project>{3e1b00b3-411c-4538-85d8-86128b05f8cb}</Project>
+      <Name>Sphdhv.DeelnemerPortalApi.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.Correspondentie.ServiceStub\Sphdhv.KlantPortaal.Access.Correspondentie.ServiceStub.csproj">
+      <Project>{deee8497-90d3-4a83-b1e7-02d07e2ce3b5}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Correspondentie.ServiceStub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.Pensioen.Contract\Sphdhv.KlantPortaal.Access.Pensioen.Contract.csproj">
+      <Project>{4BC516DD-8163-4068-8612-8C9DBC77E0AC}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.Pensioen.Proxy\Sphdhv.KlantPortaal.Access.Pensioen.Proxy.csproj">
+      <Project>{378EA1F6-3952-48E2-A648-ACFA4F77C9E5}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.Pensioen.Service\Sphdhv.KlantPortaal.Access.Pensioen.Service.csproj">
+      <Project>{34e77a39-8ac4-4fd7-831d-1b7ee9394425}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.TerminatedSession.Contract\Sphdhv.KlantPortaal.Access.TerminatedSession.Contract.csproj">
+      <Project>{62E9BF32-75A5-4624-BDF6-BC9D8E24A96D}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.TerminatedSession.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Common\Sphdhv.KlantPortaal.Common.csproj">
+      <Project>{3D4888B2-356F-45BB-A314-01851818C170}</Project>
+      <Name>Sphdhv.KlantPortaal.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Engine.Pensioen.Contract\Sphdhv.KlantPortaal.Engine.Pensioen.Contract.csproj">
+      <Project>{CD730ECC-29D1-4A12-B83F-6F0E933F5D5F}</Project>
+      <Name>Sphdhv.KlantPortaal.Engine.Pensioen.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Host.WebHost\Sphdhv.KlantPortaal.Host.WebHost.csproj">
+      <Project>{0190940b-e66a-4698-abcf-432fb4c3649b}</Project>
+      <Name>Sphdhv.KlantPortaal.Host.WebHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.Security.Manager.Authentication.Contract\Sphdhv.Security.Manager.Authentication.Contract.csproj">
+      <Project>{B0A9D3FD-CF99-4551-9BC6-15E447670EFD}</Project>
+      <Name>Sphdhv.Security.Manager.Authentication.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.Test.KlantPortaal.Manager\Sphdhv.Test.KlantPortaal.Manager.csproj">
+      <Project>{60DC49BF-ACB6-41C2-AFCB-F4495D2D24E5}</Project>
+      <Name>Sphdhv.Test.KlantPortaal.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.MijnPensioen.Access.Pensioen.ServiceStub\Sphdhv.KlantPortaal.Access.Pensioen.ServiceStub.csproj">
+      <Project>{b8d20ee5-6772-46e0-b863-9d0a33b29516}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.ServiceStub</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LEES-MIJ.txt" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

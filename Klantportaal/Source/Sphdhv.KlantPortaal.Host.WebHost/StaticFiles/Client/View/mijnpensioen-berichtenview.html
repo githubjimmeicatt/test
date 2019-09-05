@@ -1,0 +1,57 @@
+﻿<script id="mijnpensioen-berichten" type="text/x-dust-template">
+
+    <div class="grid">
+
+        <div class="col-span-12-sm col-span-12-md col-span-12-lg">
+
+            <h2>Mijn documenten</h2>
+
+            {@eq key="{.StatusCode}" value="200"}
+            {#.Response}
+            
+            {?Items}
+                <table class="overview-table">
+                    <tbody>
+                    
+                        {#Items}
+
+                            <tr>
+                                <td width="60%">{Titel}</td>
+                                <td width="30%">{MutatieDatum}</td>
+                                <td>
+                                    <a class="button button--primary " href="{url}OpenFile?documentId={Id}" target="_blank">download</a>
+                                </td>
+                            </tr>
+                  
+                        {/Items}
+
+                    </tbody>
+             {:else}
+                <p>Er zijn geen documenten.</p>
+            {/Items}
+
+            {/.Response}
+            {:else}
+
+            <p>Je bent momenteel niet geautoriseerd om de inhoud van deze pagina te bekijken. <a href="/authentication/login">Log opnieuw in</a>.</p>
+
+            {/eq}
+        </div>
+
+    </div>
+
+</script>
+
+
+
+<script id="mijnpensioen-berichten-behaviour" type="text/javascript">
+    $.fn.jsmvc.view("mijnpensioen-berichten", {
+        events: ['downloadDocument'],
+        afterfirstrender: function () {
+        },
+        afterrender: function () {
+          
+        }
+    });
+    //# sourceURL=mijnpensioen-berichten-behaviour.js
+</script>

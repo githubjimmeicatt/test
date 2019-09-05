@@ -1,0 +1,102 @@
+﻿// DNN8 Admin bar fixes
+
+#ControlBar_ControlPanel,
+#ControlBar_ControlPanel * {
+    box-sizing: content-box !important;
+}
+
+#ControlBar_ControlPanel li {
+    list-style: none none !important;
+}
+
+// Remove 2SXC hovermenu
+
+.sc-content-block-quick-insert {
+    display: none !important;
+}
+
+// Dropdown 2SXC buttons
+
+.dropdown .sc-tb-show-hover {
+    display: block !important;
+}
+
+.dropdown .sc-menu li {
+    width: auto !important;
+    border: 0 !important;
+}
+
+.dropdown .sc-menu a {
+    padding: 0 !important;
+}
+
+.search a.SkinObject {
+    display: none !important;
+}
+
+.ModSearchResultsC {
+
+    .dnnSearchBoxPanel,
+    .dnnSearchResultPanel,
+    .dnnSearchResultItem-Subset,
+    .dnnSearchResultItem-Others {
+        display: none !important;
+    }
+
+}
+
+.ModSearchResultsC .dnnSearchResultItem {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #bfd5df;
+    margin-bottom: 16px;
+
+    a {
+        text-decoration: none;
+    }
+
+}
+
+.ModSearchResultsC .dnnSearchResultItem-Title {
+    margin: 0 0 em(10,24) 0 !important;
+    color: $color-primary-dark-blue;
+    font-size: rem(24) !important;
+    font-weight: 600 !important;
+    line-height: (30/24) !important;
+}
+
+.ModSearchResultsC .dnnSearchResultItem-Link a {
+    color: $color-primary-light-blue;
+}
+
+.ModSearchResultsC .dnnSearchResultItem-Description {
+    color: inherit !important;
+    margin-top: rem(10) !important;
+    margin-bottom: 0 !important;
+}
+
+.ModSearchResultsC .dnnSearchResultPager {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-top: 0;
+    margin-top: rem(24);
+
+    &.dnnSearchResultPagerTop {
+        border-bottom: 0;
+        margin-top: 0;
+        margin-bottom: rem(24);
+    }
+
+    > div {
+        flex: 1;
+    }
+
+    span {
+        margin: 0;
+    }
+
+}
+
+.ModSearchResultsC .dnnPager-current {
+    margin-right: rem(16) !important;
+}

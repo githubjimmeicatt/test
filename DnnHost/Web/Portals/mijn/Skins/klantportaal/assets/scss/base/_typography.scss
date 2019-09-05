@@ -1,0 +1,220 @@
+//
+// Type
+//
+
+@font-face {
+  font-family: 'The Sans Light';
+  src: url('../fonts/TheSans_B2_5_.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'The Sans Light Italic';
+  src: url('../fonts/TheSans_B2_5_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'The Sans Semibold';
+  src: url('../fonts/TheSans_B2_6_.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'The Sans Semibold Italic';
+  src: url('../fonts/TheSans_B2_6_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'The Sans Bold';
+  src: url('../fonts/TheSans_B2_7_.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'The Sans Bold Italic';
+  src: url('../fonts/TheSans_B2_7_italic.woff') format('woff');
+}
+
+html {
+    color: $color-text;
+    font-family: $font-family-base;
+    font-size: $font-size-base-md / 16 * 100%;
+    line-height: ($line-height-base-md/$font-size-base-md);
+}
+
+body {
+    color: inherit;
+    font-family: inherit;
+}
+
+//
+// Headings
+
+h1,
+h2,
+h3 {
+    font-weight: normal;
+}
+
+.h1,
+.h2,
+.h3 {
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+}
+
+h1, .h1 {
+    @include type-h1;
+}
+
+.h1-lg {
+    font-size: rem(36);
+    line-height: 1;
+
+    @media (min-width: $font-size-md-from) {
+        font-size: rem(48);
+    }
+
+}
+
+h2, .h2 {
+    @include type-h2;
+}
+
+h3, .h3 {
+    @include type-h3;
+}
+
+//
+// Paragraphs
+
+p {
+    @include type-base;
+}
+
+//
+// Lists
+
+ul,
+ol {
+    @include type-base;
+}
+
+//
+// Tables
+
+table {
+    @include type-base;
+}
+
+//
+// Definition lists
+
+dl {
+    border-top: 1px solid rgb(191,213,223);
+    margin-top: 0;
+    margin-bottom: rem(24);
+    font-family: inherit;
+    font-size: rem(16);
+    line-height: 1.5;
+
+    @media (min-width: 500px) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+}
+
+dt,
+dd {
+    display: block;
+    padding-top: rem(13);
+    padding-bottom: rem(13);
+}
+
+dt {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: rem(16);
+    padding-bottom: 0;
+    color: $color-primary-dark;
+    font-weight: 600;
+
+    @media (min-width: 500px) {
+        width: rem(320);
+        min-width: rem(320);
+        padding-bottom: rem(13);
+        border-bottom: 1px solid rgb(191,213,223);
+    }
+
+}
+
+dd {
+    padding-top: 0;
+    border-bottom: 1px solid rgb(191,213,223);
+
+    @media (min-width: 500px) {
+        width: calc(100% - #{rem(320)});
+        min-width: calc(100% - #{rem(320)});
+        padding-top: rem(13);
+    }
+
+}
+
+//
+// Tables
+
+table {
+    width: 100%;
+    // border-top: 1px solid map-get($colors, dark-4);
+    border-collapse: collapse;
+    font-size: rem(16);
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: top;
+}
+
+tr {
+    border-bottom: 1px solid map-get($colors, dark-4);
+}
+
+tr:first-child {
+    border-top: 1px solid map-get($colors, dark-4);
+}
+
+th, td {
+    padding: em(20) em(16);
+}
+
+//
+// Anchors
+
+a,
+a:link,
+a:visited {
+    color: $color-link;
+}
+
+a:hover,
+a:visited:hover {
+    color: $color-link-hover;
+}
+
+//
+// Text selection
+
+::selection {
+    background-color: $color-select-back;
+    color: $color-select-front;
+}
+
+::-moz-selection {
+    background-color: $color-select-back;
+    color: $color-select-front;
+}

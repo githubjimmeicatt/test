@@ -1,0 +1,31 @@
+﻿/*** ispravak naziva FK ***/
+
+BEGIN TRY
+	IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNews]'))
+	BEGIN
+		BEGIN TRY
+		EXECUTE sp_rename N'{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate', N'FK_{objectQualifier}EasyDNNNews_EasyDNNfieldsTemplate', 'OBJECT'
+		END TRY
+		BEGIN CATCH
+		END CATCH
+	END
+	IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]'))
+	BEGIN
+		BEGIN TRY
+		EXECUTE sp_rename N'{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate', N'FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNfieldsTemplate', 'OBJECT'
+		END TRY
+		BEGIN CATCH
+		END CATCH
+	END
+	IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]'))
+	BEGIN
+		BEGIN TRY
+		EXECUTE sp_rename N'{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate', N'FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNfieldsTemplate', 'OBJECT'
+		END TRY
+		BEGIN CATCH
+		END CATCH
+	END
+END TRY
+BEGIN CATCH
+END CATCH
+GO

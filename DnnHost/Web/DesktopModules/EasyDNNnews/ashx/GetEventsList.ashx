@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="GetEventsList.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNNews.ListContent.Services.GetEventsList" %>

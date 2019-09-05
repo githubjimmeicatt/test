@@ -1,0 +1,526 @@
+﻿IF NOT EXISTS (SELECT UpdateVersion FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate] WHERE UpdateVersion = '09.02.00')
+BEGIN
+	INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate]([UpdateVersion],[Finished],[InstallType]) VALUES(N'09.02.00',0, N'DNN')
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsCategoryList' and column_name = 'SearchableText')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] ADD SearchableText NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsCategoryList_SearchableText DEFAULT('') NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsCategoryLocalization' and column_name = 'SearchableText')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryLocalization] ADD SearchableText NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsCategoryLocalization_SearchableText DEFAULT('') NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsGravityGallerySettings' and column_name = 'JpegQuality')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsGravityGallerySettings] ADD JpegQuality INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsGravityGallerySettings_JpegQuality DEFAULT (97) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonSettings' and column_name = 'JpegQuality')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonSettings] ADD JpegQuality INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsChameleonSettings_JpegQuality DEFAULT (97) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonNestedSettings' and column_name = 'JpegQuality')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonNestedSettings] ADD JpegQuality INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsChameleonNestedSettings_JpegQuality DEFAULT (97) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsLightboxSettings' and column_name = 'JpegQuality')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] ADD JpegQuality INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsLightboxSettings_JpegQuality DEFAULT (97) NOT NULL
+END
+GO
+
+BEGIN TRY
+	IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsLightboxSettings' and column_name = 'PagerType')
+	BEGIN
+		DECLARE @ConstraintName nvarchar(200);
+		SELECT @ConstraintName = Name FROM SYS.DEFAULT_CONSTRAINTS WHERE PARENT_OBJECT_ID = OBJECT_ID('{objectQualifier}EasyDNNNewsLightboxSettings') AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = N'PagerType' AND object_id = OBJECT_ID(N'{objectQualifier}EasyDNNNewsLightboxSettings'))
+		IF @ConstraintName IS NOT NULL
+		BEGIN
+			EXEC('ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] DROP CONSTRAINT ' + @ConstraintName);
+		END
+			EXEC('ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] DROP COLUMN [PagerType]');
+	END
+END TRY
+BEGIN CATCH
+END CATCH
+GO
+BEGIN TRY
+	IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsVideoGallerySettings' and column_name = 'PagerType')
+	BEGIN
+		DECLARE @ConstraintName nvarchar(200);
+		SELECT @ConstraintName = Name FROM SYS.DEFAULT_CONSTRAINTS WHERE PARENT_OBJECT_ID = OBJECT_ID('{objectQualifier}EasyDNNNewsVideoGallerySettings') AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = N'PagerType' AND object_id = OBJECT_ID(N'{objectQualifier}EasyDNNNewsVideoGallerySettings'))
+		IF @ConstraintName IS NOT NULL
+		BEGIN
+			EXEC('ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsVideoGallerySettings] DROP CONSTRAINT ' + @ConstraintName);
+		END
+			EXEC('ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsVideoGallerySettings] DROP COLUMN [PagerType]');
+	END
+END TRY
+BEGIN CATCH
+END CATCH
+GO
+BEGIN TRY
+	IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAudioGallerySettings' and column_name = 'PagerType')
+	BEGIN
+		DECLARE @ConstraintName nvarchar(200);
+		SELECT @ConstraintName = Name FROM SYS.DEFAULT_CONSTRAINTS WHERE PARENT_OBJECT_ID = OBJECT_ID('{objectQualifier}EasyDNNNewsAudioGallerySettings') AND PARENT_COLUMN_ID = (SELECT column_id FROM sys.columns WHERE NAME = N'PagerType' AND object_id = OBJECT_ID(N'{objectQualifier}EasyDNNNewsAudioGallerySettings'))
+		IF @ConstraintName IS NOT NULL
+		BEGIN
+			EXEC('ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAudioGallerySettings] DROP CONSTRAINT ' + @ConstraintName);
+		END
+			EXEC('ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAudioGallerySettings] DROP COLUMN [PagerType]');
+	END
+END TRY
+BEGIN CATCH
+END CATCH
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks](
+	[PortalID] [int] NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[ModuleID] [int] NOT NULL,
+	[TabID] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks] PRIMARY KEY CLUSTERED 
+(
+	[PortalID] ASC,
+	[CategoryID] ASC,
+	[ModuleID] ASC,
+	[TabID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_EasyDNNNewsCategoryList]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_EasyDNNNewsCategoryList] FOREIGN KEY([CategoryID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] ([CategoryID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_EasyDNNNewsCategoryList]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_EasyDNNNewsCategoryList]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Modules]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Tabs]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Tabs] FOREIGN KEY([TabID])
+REFERENCES {databaseOwner}[{objectQualifier}Tabs] ([TabID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Tabs]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsNotificationCategoryLinks] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsNotificationCategoryLinks_Tabs]
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationsLinkWhereToOpen')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationsLinkWhereToOpen NVARCHAR(50) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationSubjectNewArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationSubjectNewArticle NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationSubjectNewEvent')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationSubjectNewEvent NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationSubjectEditArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationSubjectEditArticle NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationSubjectRequestForApproveArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationSubjectRequestForApproveArticle NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationSubjectNewComment')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationSubjectNewComment NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationSubjectRequestForApproveComment')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationSubjectRequestForApproveComment NVARCHAR(256) NULL
+END
+GO
+
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationTemplateNewArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationTemplateNewArticle NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationTemplateNewEvent')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationTemplateNewEvent NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationTemplateEditArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationTemplateEditArticle NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationTemplateRequestForApproveArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationTemplateRequestForApproveArticle NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationTemplateNewComment')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationTemplateNewComment NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationTemplateRequestForApproveComment')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationTemplateRequestForApproveComment NVARCHAR(MAX) NULL
+END
+GO
+
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationDefaultFromMail')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationDefaultFromMail NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationDefaultReplyTo')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationDefaultReplyTo NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'NotificationDefaultFromName')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationDefaultFromName NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (SELECT * FROM INFORMATION_SCHEMA.columns WHERE table_name = '{objectQualifier}EasyDNNNewsPortalSettings' AND column_name = 'NotificationProvider')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD NotificationProvider TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_NotificationProvider DEFAULT(0) NOT NULL
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsGetRegistratedUsers]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGetRegistratedUsers]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsGetRegistratedUsers]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGetRegistratedUsers] AS' 
+END
+GO
+ALTER PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGetRegistratedUsers]
+	@ArticleID INT,
+	@RecurringID INT,
+	@SupportsCustomFields BIT,
+	@SupportsPayment BIT
+AS
+SET NOCOUNT ON;
+DECLARE @query NVARCHAR(MAX);
+DECLARE @RegistrationCFtemplateID INT;
+DECLARE @singleValueColumns NVARCHAR(MAX);
+DECLARE @multiValueColumns NVARCHAR(MAX);
+
+IF @SupportsCustomFields = 1
+BEGIN
+
+	SELECT @RegistrationCFtemplateID = [RegistrationCFtemplateID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsEventsData] WHERE [RegistrationCFtemplateID] IS NOT NULL AND [ArticleID] = @ArticleID
+
+	SELECT @singleValueColumns = STUFF((
+		SELECT ',' + QUOTENAME(cf.[LabelValue])
+		FROM 
+		(
+			SELECT CASE WHEN Recency > 1 THEN LabelValue + CAST(Recency - 1 AS NVARCHAR(20)) ELSE LabelValue END AS LabelValue, Position
+			FROM (
+				SELECT cf.[LabelValue],cf.[ControlTypeID],gti.Position,
+				ROW_NUMBER() OVER (PARTITION BY cf.[LabelValue] ORDER BY gti.Position) AS Recency
+				FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gti ON cf.CustomFieldID = gti.CustomFieldID
+				WHERE gti.[FieldsTemplateID] = @RegistrationCFtemplateID AND cf.ControlTypeID IN (1,2,3,4,5,6,9,10,15,20,21,23,200)
+				GROUP BY cf.[LabelValue],cf.[ControlTypeID],gti.Position
+			) AS singleCF
+			WHERE ControlTypeID < 20 OR ControlTypeID = 200
+		) AS cf
+		ORDER BY Position
+		FOR XML PATH(''), TYPE
+		).value('.', 'NVARCHAR(MAX)')
+		,1,1,'');
+
+	SELECT @multiValueColumns = STUFF((
+		SELECT ',' + QUOTENAME(cf.[LabelValue])
+		FROM 
+		(
+			SELECT CASE WHEN Recency > 1 THEN LabelValue + CAST(Recency - 1 AS NVARCHAR(20)) ELSE LabelValue END AS LabelValue, Position
+			FROM (
+				SELECT cf.[LabelValue],cf.[ControlTypeID],gti.Position,
+				ROW_NUMBER() OVER (PARTITION BY cf.[LabelValue] ORDER BY gti.Position) AS Recency
+				FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gti ON cf.CustomFieldID = gti.CustomFieldID
+				WHERE gti.[FieldsTemplateID] = @RegistrationCFtemplateID AND cf.ControlTypeID IN (1,2,3,4,5,6,9,10,15,20,21,23,200)
+				GROUP BY cf.[LabelValue],cf.[ControlTypeID],gti.Position
+			) AS singleCF
+			WHERE ControlTypeID >= 20 AND ControlTypeID < 100
+		) AS cf
+		ORDER BY Position
+		FOR XML PATH(''), TYPE
+		).value('.', 'NVARCHAR(MAX)')
+		,1,1,'');
+END
+
+DECLARE @EUIWHERECLAUSE NVARCHAR(300);
+IF @RecurringID IS NULL
+	SET @EUIWHERECLAUSE = N' eui.ArticleID = @ArticleID '
+ELSE
+	SET @EUIWHERECLAUSE = N' eui.RecurringArticleID = @ArticleID AND eui.RecurringID = @RecurringID '
+
+SET @query = N'
+SET NOCOUNT ON;
+
+SELECT
+	 eui.[Id] AS RegistrationID
+	,rud.[FirstName]
+	,rud.[LastName]
+	,rud.[Email]
+	,eui.[ApproveStatus]
+	,eui.[UserStatus]
+	,eui.[CreatedOnDate]
+	,eui.[NumberOfTickets]
+	,eui.[Message]
+	,eui.[IsDeletedStatus]
+	,eui.[DeleteRequestDateUtc] '
+IF @RegistrationCFtemplateID IS NOT NULL -- prva i glavna provjera za CF
+BEGIN
+	IF @singleValueColumns IS NOT NULL AND @multiValueColumns IS NOT NULL 
+		SET @query = @query + N',' + @singleValueColumns + ',' +@multiValueColumns;
+	ELSE IF @singleValueColumns IS NOT NULL
+		SET @query = @query + N',' + @singleValueColumns;
+	ELSE IF @multiValueColumns IS NOT NULL
+		SET @query = @query + N',' + @multiValueColumns;
+	ELSE
+		SET @RegistrationCFtemplateID = NULL
+END
+
+IF @SupportsPayment = 1
+SET @query = @query + N'
+,ep.[SubTotal]
+,ep.[Discount]
+,ep.[TaxValue]
+,ep.[EstimatedTotal]
+,ep.[PaymentStatus]
+';
+
+SET @query = @query + N' FROM {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui '
+
+IF @SupportsPayment = 1
+SET @query = @query + N' LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsPayment] AS ep ON eui.Id = ep.EventUserItemID '
+
+SET @query = @query + N' 
+INNER JOIN (
+	SELECT eui.Id, au.[FirstName],au.[LastName],au.[Email]
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNewsEmailAuthenticatedUsers] AS au 
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventUsers] AS eu ON au.Id = eu.EmailAuthenticatedUserID
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui ON eui.EventUserID = eu.Id
+	WHERE' + @EUIWHERECLAUSE + N'
+	UNION ALL
+	SELECT eui.Id, u.[FirstName],u.[LastName],u.[Email]
+	FROM {databaseOwner}[{objectQualifier}Users] AS u
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventUsers] AS eu ON u.UserID = eu.DNNUserID
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui ON eui.EventUserID = eu.Id
+	WHERE' + @EUIWHERECLAUSE + N'
+)  AS rud ON rud.Id = eui.Id AND ' + @EUIWHERECLAUSE
+
+IF @RegistrationCFtemplateID IS NOT NULL AND @multiValueColumns IS NOT NULL AND (@singleValueColumns IS NOT NULL) 
+BEGIN
+SET @query = @query + N'
+ LEFT OUTER JOIN ( 
+	SELECT singleValues.glb_fix_id,' + @singleValueColumns + ',' + @multiValueColumns + ' FROM (
+		SELECT glb_fix_id,' + @singleValueColumns + ' 
+			FROM 
+			(
+				SELECT eui.Id AS glb_fix_id, cf.[LabelValue] AS ColumnName,
+				CASE cf.[ControlTypeID]
+					WHEN 1 THEN CAST(frv.[Text] AS NVARCHAR(max))
+					WHEN 2 THEN CAST(frv.[RText] AS NVARCHAR(max))
+					WHEN 3 THEN CAST(frv.[Int] AS NVARCHAR(max))
+					WHEN 4 THEN CAST(frv.[Decimal] AS NVARCHAR(max))
+					WHEN 5 THEN CAST(frv.[Decimal] AS NVARCHAR(max))
+					WHEN 6 THEN CAST(frv.[Text] AS NVARCHAR(max))
+					WHEN 9 THEN CAST(frv.[DateTime] AS NVARCHAR(max))
+					WHEN 10 THEN CAST(frv.[Text] AS NVARCHAR(max))
+					WHEN 15 THEN CAST(frv.[Bit] AS NVARCHAR(max))
+					WHEN 200 THEN CAST((SELECT frv.[Text] FOR XML RAW) AS NVARCHAR(max))
+					ELSE NULL
+				END AS ColumnValue
+				FROM (
+					SELECT [CustomFieldID],ControlTypeID, CASE WHEN Recency > 1 THEN LabelValue + CAST(Recency - 1 AS NVARCHAR(20)) ELSE LabelValue END AS LabelValue, Position,Recency
+					FROM (
+						SELECT cf.[CustomFieldID], cf.[LabelValue],cf.[ControlTypeID],gti.Position,
+						ROW_NUMBER() OVER (PARTITION BY cf.[LabelValue] ORDER BY gti.Position) AS Recency
+						FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+						INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gti ON cf.CustomFieldID = gti.CustomFieldID
+						WHERE gti.[FieldsTemplateID] = @RegistrationCFtemplateID AND cf.ControlTypeID IN (1,2,3,4,5,6,9,10,15,20,21,23,200)
+						GROUP BY cf.CustomFieldID,cf.[LabelValue],cf.[ControlTypeID],gti.Position
+					) AS singleCF
+					WHERE ControlTypeID < 20 OR ControlTypeID = 200
+					) AS cf
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationValues] AS frv ON cf.[CustomFieldID] = frv.[CustomFieldID]
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui ON eui.Id = frv.[EventUserItemID]
+				WHERE' + @EUIWHERECLAUSE + N'
+			) x
+			pivot
+			(
+				max(ColumnValue)
+				for ColumnName in (' + @singleValueColumns + ')
+			) p
+		) AS singleValues INNER JOIN (
+			SELECT glb_fix_id,' + @multiValueColumns + '
+			FROM
+			(
+				SELECT DISTINCT glb_fix_id, ColumnName,
+					(STUFF((SELECT '', '' + me.[Text] FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] AS me
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationMultiSelected] AS rms ON rms.[FieldElementID] = me.[FieldElementID]
+					WHERE me.[CustomFieldID] = AllUngrouped.CustomFieldID AND rms.EventUserItemID=glb_fix_id
+				FOR XML PATH('''')), 1, 1, '''')) AS ColumnValue
+				FROM (
+					SELECT eui.Id AS glb_fix_id, cf.[LabelValue] AS ColumnName,me.[Text] AS ColumnValue, me.FieldElementID,me.[CustomFieldID]
+					FROM (
+						SELECT [CustomFieldID],ControlTypeID, CASE WHEN Recency > 1 THEN LabelValue + CAST(Recency - 1 AS NVARCHAR(20)) ELSE LabelValue END AS LabelValue, Position,Recency
+						FROM (
+							SELECT cf.[CustomFieldID], cf.[LabelValue],cf.[ControlTypeID],gti.Position,
+							ROW_NUMBER() OVER (PARTITION BY cf.[LabelValue] ORDER BY gti.Position) AS Recency
+							FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+							INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gti ON cf.CustomFieldID = gti.CustomFieldID
+							WHERE gti.[FieldsTemplateID] = @RegistrationCFtemplateID AND cf.ControlTypeID IN (1,2,3,4,5,6,9,10,15,20,21,23,200)
+							GROUP BY cf.CustomFieldID,cf.[LabelValue],cf.[ControlTypeID],gti.Position
+							) AS singleCF
+						WHERE ControlTypeID >= 20 AND ControlTypeID < 100
+						) AS cf
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationMultiSelected] AS fme ON cf.[CustomFieldID] = fme.[CustomFieldID]
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui ON eui.Id = fme.[EventUserItemID]
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] AS me ON me.FieldElementID = fme.[FieldElementID]
+					WHERE' + @EUIWHERECLAUSE + N'
+				) AS AllUngrouped
+			) x
+			pivot
+			(
+				max(ColumnValue)
+				for ColumnName in (' + @multiValueColumns + ')
+			) p
+		) AS MultiValues ON singleValues.glb_fix_id = MultiValues.glb_fix_id
+	) AS cf_all ON cf_all.glb_fix_id = eui.Id AND ' + @EUIWHERECLAUSE;
+END
+ELSE IF @RegistrationCFtemplateID IS NOT NULL AND (@singleValueColumns IS NOT NULL)
+BEGIN
+SET @query = @query + N'
+LEFT OUTER JOIN (
+	SELECT glb_fix_id,' + @singleValueColumns + '
+	FROM
+		(
+			SELECT eui.Id AS glb_fix_id, cf.[LabelValue] AS ColumnName,
+			CASE cf.[ControlTypeID]
+				WHEN 1 THEN CAST(frv.[Text] AS NVARCHAR(max))
+				WHEN 2 THEN CAST(frv.[RText] AS NVARCHAR(max))
+				WHEN 3 THEN CAST(frv.[Int] AS NVARCHAR(max))
+				WHEN 4 THEN CAST(frv.[Decimal] AS NVARCHAR(max))
+				WHEN 5 THEN CAST(frv.[Decimal] AS NVARCHAR(max))
+				WHEN 6 THEN CAST(frv.[Text] AS NVARCHAR(max))
+				WHEN 9 THEN CAST(frv.[DateTime] AS NVARCHAR(max))
+				WHEN 10 THEN CAST(frv.[Text] AS NVARCHAR(max))
+				WHEN 15 THEN CAST(frv.[Bit] AS NVARCHAR(max))
+				WHEN 200 THEN CAST((SELECT frv.[Text] FOR XML RAW) AS NVARCHAR(max))
+				ELSE NULL
+			END AS ColumnValue
+			FROM (
+				SELECT [CustomFieldID],ControlTypeID, CASE WHEN Recency > 1 THEN LabelValue + CAST(Recency - 1 AS NVARCHAR(20)) ELSE LabelValue END AS LabelValue, Position,Recency
+				FROM (
+					SELECT cf.[CustomFieldID], cf.[LabelValue],cf.[ControlTypeID],gti.Position,
+					ROW_NUMBER() OVER (PARTITION BY cf.[LabelValue] ORDER BY gti.Position) AS Recency
+					FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gti ON cf.CustomFieldID = gti.CustomFieldID
+					WHERE gti.[FieldsTemplateID] = @RegistrationCFtemplateID AND cf.ControlTypeID IN (1,2,3,4,5,6,9,10,15,20,21,23,200)
+					GROUP BY cf.CustomFieldID,cf.[LabelValue],cf.[ControlTypeID],gti.Position
+				) AS singleCF
+				WHERE ControlTypeID < 20 OR ControlTypeID = 200
+				) AS cf
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationValues] AS frv ON cf.[CustomFieldID] = frv.[CustomFieldID]
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui ON eui.Id = frv.[EventUserItemID]
+			WHERE' + @EUIWHERECLAUSE + N'
+		) x
+	pivot
+	(
+		max(ColumnValue)
+		for ColumnName in (' + @singleValueColumns + ')
+	) p
+) AS cf_all ON cf_all.glb_fix_id = eui.Id AND ' + @EUIWHERECLAUSE;
+END
+ELSE IF @RegistrationCFtemplateID IS NOT NULL AND (@multiValueColumns IS NOT NULL)
+BEGIN
+SET @query = @query + N'
+LEFT OUTER JOIN (
+	SELECT glb_fix_id,' + @multiValueColumns + '
+	FROM
+	(
+		SELECT DISTINCT glb_fix_id, ColumnName,
+			(STUFF((SELECT '', '' + me.[Text] FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] AS me
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationMultiSelected] AS rms ON rms.[FieldElementID] = me.[FieldElementID]
+				WHERE me.[CustomFieldID] = AllUngrouped.CustomFieldID AND rms.EventUserItemID=glb_fix_id
+		FOR XML PATH('''')), 1, 1, '''')) AS ColumnValue
+		FROM (
+			SELECT eui.Id AS glb_fix_id, cf.[LabelValue] AS ColumnName,me.[Text] AS ColumnValue, me.FieldElementID,me.[CustomFieldID]
+			FROM (
+				SELECT [CustomFieldID],ControlTypeID, CASE WHEN Recency > 1 THEN LabelValue + CAST(Recency - 1 AS NVARCHAR(20)) ELSE LabelValue END AS LabelValue, Position,Recency
+				FROM (
+					SELECT cf.[CustomFieldID], cf.[LabelValue],cf.[ControlTypeID],gti.Position,
+					ROW_NUMBER() OVER (PARTITION BY cf.[LabelValue] ORDER BY gti.Position) AS Recency
+					FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gti ON cf.CustomFieldID = gti.CustomFieldID
+					WHERE gti.[FieldsTemplateID] = @RegistrationCFtemplateID AND cf.ControlTypeID IN (1,2,3,4,5,6,9,10,15,20,21,23,200)
+					GROUP BY cf.CustomFieldID,cf.[LabelValue],cf.[ControlTypeID],gti.Position
+					) AS singleCF
+				WHERE ControlTypeID >= 20 AND ControlTypeID < 100
+				) AS cf
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationMultiSelected] AS fme ON cf.[CustomFieldID] = fme.[CustomFieldID]
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsUserItems] AS eui ON eui.Id = fme.[EventUserItemID]
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] AS me ON me.FieldElementID = fme.[FieldElementID]
+			WHERE' + @EUIWHERECLAUSE + N'
+		) AS AllUngrouped
+	) x
+	pivot
+	(
+		max(ColumnValue)
+		for ColumnName in (' + @multiValueColumns + ')
+	) p
+) AS cf_all ON cf_all.glb_fix_id = eui.Id AND ' + @EUIWHERECLAUSE;
+END
+
+SET @query = @query + N' WHERE ' + @EUIWHERECLAUSE;
+SET @query = @query + N' ORDER BY FirstName;';
+
+DECLARE @paramList NVARCHAR(500);
+
+SET @paramList = N'@ArticleID INT
+	,@RecurringID INT
+	,@RegistrationCFtemplateID INT'
+
+exec sp_executesql @statement = @query
+	,@paramList = @paramList
+	,@ArticleID = @ArticleID
+	,@RecurringID = @RecurringID
+	,@RegistrationCFtemplateID = @RegistrationCFtemplateID
+GO

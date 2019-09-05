@@ -1,0 +1,64 @@
+﻿//
+// Component: Accordeon
+//
+
+.accordeon {
+    font-family: 'Open Sans', sans-serif;
+    font-size: rem(16);
+
+    @media (min-width: $font-size-md-from) {
+        font-size: rem(18);
+    }
+
+}
+
+.accordeon-title {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: em(15,16) em(14,16);
+    border: none;
+    margin-bottom: rem(22);
+    background-color: rgb(229,243,246);
+    border-radius: rem(6);
+    box-shadow: 0 1px 0 0 $color-primary-dark, 0 -1px 0 0 #fff;
+    color: $color-primary-dark;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1;
+    outline: none;
+    text-align: left;
+
+    @media (min-width: $font-size-md-from) {
+        padding: em(14,18);
+    }
+
+}
+
+.accordeon-icon {
+    position: absolute;
+    top: 50%;
+    right: rem(8);
+    display: block;
+    width: rem(25);
+    height: rem(25);
+    fill: currentColor;
+    transform: translateY(-50%);
+    transition: transform .3s ease-in-out 0s;
+
+    @media (min-width: $font-size-md-from) {
+        width: rem(34);
+        height: rem(34);
+    }
+
+}
+
+.is-active .accordeon-icon {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.accordeon-content {
+    display: none;
+    padding-bottom: rem(48);
+}

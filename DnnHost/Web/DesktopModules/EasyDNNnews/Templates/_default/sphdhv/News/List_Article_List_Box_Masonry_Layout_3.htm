@@ -1,0 +1,82 @@
+<!--TemplateGroup:listArticleListBox3-->
+<!--ArticleRepeat:Before:-->
+<script src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/isotope2/isotope.v2.0.0-beta.4.min.js"></script>
+<script src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/imagesLoaded/imagesLoaded_3.1.4.min.js"></script>
+<script>
+	eds1_8(function ($) {
+		var $articleListContainer = $('.edn_[EasyDNNnews:ModuleID]_article_list_wrapper'),
+			imageLoadedKey = 'imageLoaded';
+
+		$articleListContainer
+			.isotope({
+				itemSelector: '.edn_articleWrapper',
+				sortBy: 'original-order',
+				masonry: {
+					isFitWidth: true //set to true if you want to center the elements
+				}
+			})
+			.find('img').imagesLoaded()
+				.progress(function (instance, image) {
+					var $img = $(image.img);
+
+					if ($img.data(imageLoadedKey))
+						return;
+
+					$img.data(imageLoadedKey, true);
+
+					$articleListContainer.isotope('layout');
+				});
+	});
+</script>
+<div class="edn_isotopeLayout">
+<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+<article class="edn_article edn_articleInBox edn_articleInBox3 edn_articleWrapper">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	<section class="edn_clearFix" style="width:[EasyDNNnews:MainArticleImageWidth]">
+		<div class="edn_mediaContainer edn_withTime">
+			[EasyDNNnews:IfNotExists:Event]
+			<time><span>[EasyDNNnews:PublishDay]</span><span class="edn_monthName">[EasyDNNnews:PublishMonthString]</span><span>[EasyDNNnews:PublishYear]</span></time>
+			[EasyDNNnews:EndIf:Event]
+			[EasyDNNnews:IfExists:Event]
+			<time><span>[EasyDNNnews:EventStartDay]</span><span class="edn_monthName">[EasyDNNnews:EventStartMonthNameShort]</span><span>[EasyDNNnews:EventStartYear]</span></time>
+			[EasyDNNnews:EndIf:Event]
+			<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">
+				[EasyDNNnews:IfExists:Image]<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/>[EasyDNNnews:EndIf:Image]
+				[EasyDNNnews:IfNotExists:Image]
+				<img alt="[EasyDNNnews:Title]" style="height:[EasyDNNnews:MainArticleImageHeight]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png"/>
+				[EasyDNNnews:EndIf:Image]
+				<span class="edn_mediaLink">[EasyDNNnews:IfNotExists:EventRegistration][EasyDNNnewsLocalizedText:Read][EasyDNNnews:EndIf:EventRegistration][EasyDNNnews:IfExists:EventRegistration][EasyDNNnewsLocalizedText:Register][EasyDNNnews:EndIf:EventRegistration]</span>
+			</a>
+		</div>
+		<div class="edn_boxContent">
+			<h2 class="edn_articleTitle"><a href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title][EDNcf:IfExists:price] - [EDNcf:price][EDNcf:EndIf:price]</a></h2>
+			[EasyDNNnews:IfExists:Event]
+			<p class="edn_listEventDetails">
+				[EasyDNNnews:IfExists:EventLocation]
+				<span class="edn_eventLocation">[EasyDNNnews:EventLocation]</span>
+				[EasyDNNnews:EndIf:EventLocation]
+				<span class="edn_eventDate">[EasyDNNnews:EventDate]</span>
+			</p>
+			[EasyDNNnews:EndIf:Event]
+			<div class="edn_articleSummary">[EasyDNNnews:Summary]</div>
+			[EasyDNNnews:IfExists:EventRegistration]<div class="edn_readMoreButtonWrapper"><a class="edn_readMore edn_readMoreButton" href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnewsLocalizedText:Register]</a></div>[EasyDNNnews:EndIf:EventRegistration]
+		</div>
+	</section>
+</article>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+</div>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

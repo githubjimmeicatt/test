@@ -1,0 +1,212 @@
+#{$baseThemeClass}
+
+	&.eds_subCollection_news
+
+		.edn_article
+
+			&.edn_articleInBox
+				display: inline-block
+				vertical-align: top
+				box-sizing: content-box
+				padding: 1.5%
+				line-height: 0
+				font-size: 0
+				max-width: 97%
+				margin-bottom: 0
+
+				> figure
+					margin: 0
+					padding: 0
+					position: relative
+					max-width: 100%
+					overflow: hidden
+					min-height: 100px
+					background-color: #ddd
+
+					> img
+						max-width: 100%
+						height: auto
+						transition: all 300ms ease-in-out
+
+					> a
+						position: absolute
+						top: 0
+						bottom: 0
+						left: 0
+						right: 0
+						z-index: 1
+						background: transparent url("_-StyleAssetsClientRoot-_images/common/blank.png")
+
+						> span
+							display: none
+
+					> figcaption
+						position: absolute
+						z-index: 0
+						bottom: 0
+						left: 0
+						right: 0
+						background-color: rgba(0, 0, 0, .7)
+						padding: 15px
+
+						.edn_articleTitle,
+						.edn_articleSummary
+							color: #fff
+
+						h2.edn_articleTitle
+							font-size: 20px
+							position: relative
+							margin: 0 0 5px
+							padding: 0 0 5px
+
+							&:after
+								content: ""
+								position: absolute
+								border-bottom: solid 1px rgba(255, 255, 255, .5)
+								bottom: 0
+								left: 0
+								right: 0
+								width: 0
+								transition: all 400ms linear
+
+						.edn_articleSubTitle
+							display: none
+
+						.edn_articleSummary
+							max-height: 0
+							overflow: hidden
+							transition: all 300ms ease-in-out
+
+					.edn_metaDetails
+						position: absolute
+						top: 0
+						right: 0
+						background-color: #000
+						margin: 0
+						color: #fff
+						padding: 5px
+						border-radius: 0 0 0 5px
+						opacity: .7
+
+					&:hover
+
+						> img
+							-ms-transform: scale(1.05)
+							-webkit-transform: scale(1.05)
+							transform: scale(1.05)
+
+						> figcaption
+
+							.edn_articleSummary
+								max-height: 150px
+
+							h2.edn_articleTitle
+
+								&:after
+									width: 100%
+
+							.edn_articleSubTitle
+								display: block
+
+				.edn_mediaContainer
+
+					a
+						overflow: hidden
+						display: inline-block
+
+						&:after
+							content: ""
+							position: absolute
+							top: 0
+							bottom: 0
+							left: 0
+							right: 0
+							border: solid 0 rgba(255, 255, 255, .4)
+							transition: all 150ms ease-in-out
+
+						> img
+							border: none
+							padding: 0
+							max-width: 100%
+							height: auto
+							transition: all 200ms ease-in-out
+
+						&:hover
+
+							&:after
+								border-width: 3px
+
+							> img
+								-ms-transform: scale(1.05)
+								-webkit-transform: scale(1.05)
+								transform: scale(1.05)
+
+				h2.edn_articleTitle
+					font-size: 18px
+
+				.edn_metaDetails
+					overflow: hidden
+
+					> span
+						float: right
+						margin: 0 0 0 5px
+
+				.edn_articleSummary
+					padding: 0
+
+				&.edn_articleInBox3
+
+					> section
+						border: solid 1px $primaryColor
+
+						.edn_mediaContainer
+							margin: 0
+							float: none
+							border-top: none !important
+							border-left: none !important
+							border-right: none !important
+
+							> a
+								width: 100%
+
+								> img
+									width: 100%
+
+								&:hover:after
+									border: none
+
+						.edn_boxContent
+							padding: 10px
+
+							.edn_articleTitle
+								margin: 0 0 5px
+
+							.edn_articleSummary
+								margin-top: 10px
+
+							.edn_eventBoxLocation,
+							> time
+								line-height: 1
+								font-size: 13px
+								color: #969696
+
+							.edn_eventBoxLocation
+								margin-right: 20px
+
+								&:before
+									content: "\f041"
+									color: $primaryColor
+									display: inline-block
+									margin-right: 5px
+									font-family: $icon
+									font-size: 14px
+
+							> time
+
+								&:before
+									content: "\f017"
+									color: $primaryColor
+									display: inline-block
+									margin-right: 5px
+									font-family: $icon
+									font-size: 14px

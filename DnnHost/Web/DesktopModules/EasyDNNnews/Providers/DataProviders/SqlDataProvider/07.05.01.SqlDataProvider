@@ -1,0 +1,5 @@
+﻿IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsTreeView' and column_name = 'NodeExpandLevel')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsTreeView] ADD NodeExpandLevel INT NULL
+END
+GO

@@ -1,0 +1,217 @@
+<!--TemplateGroup:listArticleMulti2-->
+
+<!--ArticleRepeat:Before:-->
+<script src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/sss/sss.js"></script>
+<div class="[EasyDNNnews:ArticleListWrapperClass]">
+<!--RepeatEnd:Before:-->
+
+<!--MultiArticleTemplate-->
+<!--Before:1:2:-->
+<div class="edn_clearFix">
+<!--BeforeEnd-->
+<!--ArticleRepeat:1:-->
+<article class="edn_article edn_multiArticle edn_multiArticleMain" style="width:60%">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	<figure>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+		[EasyDNNnews:IfExists:Image]
+		<div class="edn_galleryImagesContainer edn_slider_[EasyDNNnews:ModuleID]_[EasyDNNnews:ArticleID]">
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:702:Height:462:Resize:Crop]"/>
+			[EasyDNNnews:IfExists:GalleryImage:2]
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:GalleryImage:2:Width:702:Height:462:Resize:Crop]"/>
+			[EasyDNNnews:EndIf:GalleryImage]
+			[EasyDNNnews:IfExists:GalleryImage:3]
+			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:GalleryImage:3:Width:702:Height:462:Resize:Crop]"/>
+			[EasyDNNnews:EndIf:GalleryImage]
+		</div>
+		[EasyDNNnews:EndIf:Image]
+		[EasyDNNnews:IfNotExists:Image]
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="702" height="462"/>
+		[EasyDNNnews:EndIf:Image]
+		<figcaption>
+			<h2 class="edn_articleTitle">[EasyDNNnews:Title]</h2>
+			[EasyDNNnews:IfExists:SubTitle]
+			<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+			[EasyDNNnews:EndIf:SubTitle]
+		</figcaption>
+	</figure>
+	<div class="edn_metaDetails">
+		<time>[EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event]</time>
+		<span class="edn_numberComments">[EasyDNNnews:Comments]</span>
+		<span class="edn_numberOfVievs">[EasyDNNnews:NumberOfViews]</span>
+	</div>
+	<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:600]</div>
+	<script>
+	jQuery(function($) {
+		$('.edn_slider_[EasyDNNnews:ModuleID]_[EasyDNNnews:ArticleID]').edn_sss({
+			slideShow : true, // Set to false to prevent edn_sss from automatically animating.
+			startOn : 0, // Slide to display first. Uses array notation (0 = first slide).
+			transition : 300, // Length (in milliseconds) of the fade transition.
+			speed : 3500, // Slideshow speed in milliseconds.
+			arrows : true, // Set to false to hide navigation arrows.
+			keyboardNavigation : true // Set to false to disable keyboard navigation.
+		});
+	});
+	</script>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--ArticleRepeat:2:-->
+<article class="edn_article edn_multiArticle edn_multiArticleMain edn_multiArticleMain2" style="width:36%">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	<figure>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+		[EasyDNNnews:IfExists:Image]
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:422:Height:462:Resize:Crop]"/>
+		[EasyDNNnews:EndIf:Image]
+		[EasyDNNnews:IfNotExists:Image]
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="422" height="462"/>
+		[EasyDNNnews:EndIf:Image]
+		<figcaption>
+			<h2 class="edn_articleTitle">[EasyDNNnews:Title:Limit:75]</h2>
+			[EasyDNNnews:IfExists:SubTitle]
+			<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+			[EasyDNNnews:EndIf:SubTitle]
+		</figcaption>
+	</figure>
+	<div class="edn_metaDetails">
+		<time>[EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event]</time>
+		<span class="edn_numberComments">[EasyDNNnews:Comments]</span>
+		<span class="edn_numberOfVievs">[EasyDNNnews:NumberOfViews]</span>
+	</div>
+	<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:350]</div>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+<!--After:1:2:-->
+</div>
+<!--AfterEnd-->
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--Before:3:4:5:-->
+<div class="edn_clearFix">
+<!--BeforeEnd-->
+<!--ArticleRepeat:3:4:5:-->
+<article class="edn_article edn_multiArticle edn_articleInBox">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	<figure>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+		[EasyDNNnews:IfExists:Image]<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:380:Height:462:Resize:Crop]"/>[EasyDNNnews:EndIf:Image]
+		[EasyDNNnews:IfNotExists:Image]
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="380" height="462"/>
+		[EasyDNNnews:EndIf:Image]
+		<figcaption>
+			<h2 class="edn_articleTitle">[EasyDNNnews:Title:Limit:75]</h2>
+			<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:150]</div>
+		</figcaption>
+		<div class="edn_metaDetails">
+			<time>[EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event]</time>
+			<span class="edn_numberComments">[EasyDNNnews:Comments]</span>
+			<span class="edn_numberOfVievs">[EasyDNNnews:NumberOfViews]</span>
+		</div>
+	</figure>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+<!--After:3:4:5:-->
+</div>
+<!--AfterEnd-->
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--Before:6:7:8:-->
+<div class="edn_clearFix">
+<!--BeforeEnd-->
+<!--ArticleRepeat:6:7:8:-->
+<article class="edn_article edn_multiArticle edn_articleInBox">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	<figure>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><span>[EasyDNNnews:Title]</span></a>
+		[EasyDNNnews:IfExists:Image]<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:380:Height:462:Resize:Crop]"/>[EasyDNNnews:EndIf:Image]
+		[EasyDNNnews:IfNotExists:Image]
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/common/images/blank-grey.png" width="380" height="462"/>
+		[EasyDNNnews:EndIf:Image]
+		<figcaption>
+			<h2 class="edn_articleTitle">[EasyDNNnews:Title:Limit:75]</h2>
+			<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:150]</div>
+		</figcaption>
+		<div class="edn_metaDetails">
+			<time>[EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event]</time>
+			<span class="edn_numberComments">[EasyDNNnews:Comments]</span>
+			<span class="edn_numberOfVievs">[EasyDNNnews:NumberOfViews]</span>
+		</div>
+	</figure>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+<!--After:6:7:8:-->
+</div>
+<!--AfterEnd-->
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+
+<!--ArticleRepeat:9:10:11:12:13:14:15:-->
+<article class="edn_article edn_clearFix edn_multiArticle edn_multiArticleList">
+	[EasyDNNnews:HasArticlePermissions]
+	<div class="edn_adminActions">
+		[EasyDNNnews:ArticlePermissions:Edit]
+		[EasyDNNnews:ArticlePermissions:Publish]
+		[EasyDNNnews:ArticlePermissions:Approve]
+	</div>
+	[EasyDNNnews:HasArticlePermissionsEnd]
+	[EasyDNNnews:IfExists:Image]
+	<div class="edn_mediaContainer">
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a>
+		<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:100:Height:70:Resize:Crop]"/>
+	</div>
+	[EasyDNNnews:EndIf:Image]
+	<div class="edn_metaDetails">
+		<time>[EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event]</time>
+	</div>
+	<h2 class="edn_articleTitle"><a href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+	<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:400]</div>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--ArticleRepeat:After:-->
+</div>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->
+<!--MultiArticleEnd-->

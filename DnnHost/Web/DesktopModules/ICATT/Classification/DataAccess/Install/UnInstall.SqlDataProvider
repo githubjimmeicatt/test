@@ -1,0 +1,64 @@
+/*
+'//Author: 
+'//Company: ICATT interactive media
+'//Date: yyyy/MM/dd
+*/
+
+/**************************/
+/*** STORED PROCEDURES  ***/
+/**************************/
+
+
+	--// Icatt_Classification
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Root_GetAll]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Root_GetAll]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_GetAll]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_GetAll]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Get]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Add]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Insert]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Insert]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Update]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Update]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Delete]
+	GO
+
+	--// Icatt_Classification Link
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Link_Get]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Link_Add]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Link_Delete]
+	GO
+
+
+/**************************/
+/*** TABLES             ***/
+/**************************/
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+		DROP TABLE {databaseOwner}[{objectQualifier}Icatt_Classification] 
+	GO
+	
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+		DROP TABLE {databaseOwner}[{objectQualifier}Icatt_Classification_Link] 
+	GO

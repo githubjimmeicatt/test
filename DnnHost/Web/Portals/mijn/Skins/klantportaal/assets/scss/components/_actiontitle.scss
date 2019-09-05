@@ -1,0 +1,42 @@
+﻿//
+// Component: Action title
+//
+
+.action-title {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: rem(20);
+
+    h2 {
+        margin-bottom: 0;
+    }
+
+    a {
+        align-self: flex-end;
+        margin-top: em(16);
+        font-family: $font-family-base;
+        font-size: rem(16);
+    }
+
+    @media (min-width: 500px) {
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+
+        a {
+            align-self: inherit;
+            margin-top: 0;
+        }
+
+    }
+
+    @media (min-width: $font-size-md-from) {
+        margin-bottom: rem(24);
+
+        a {
+            font-size: rem(18);
+        }
+
+    }
+
+}

@@ -1,0 +1,235 @@
+//
+// DNN RESET
+//
+
+.Normal, 
+.NormalDisabled, 
+.NormalDeleted {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+.Head {
+    display: block;
+    margin-bottom: 0;
+}
+
+//
+// GENERAL
+//
+
+body {
+    
+}
+
+body {
+    color: $color-primary-dark-blue;
+    font-family: $font-base;
+    font-size: 100%;
+    line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol {
+    margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+//
+// HEADINGS
+//
+
+h1 {
+    margin-bottom: em(20,32);
+    color: $color-primary-dark-blue;
+    font-family: $font-base;
+    font-size: em(32);
+    font-weight: 400;
+}
+
+h2 {
+    margin-bottom: em(16,24);
+    color: $color-primary-dark-blue;
+    font-family: $font-base;
+    font-size: em(24);
+}
+
+h3 {
+    margin-bottom: em(12,20);
+    color: $color-primary-light-blue;
+    font-family: $font-base;
+    font-size: em(20);
+}
+
+//
+// PARAGRAPHS
+//
+
+p {
+    margin-bottom: em(20);
+}
+
+//
+// LISTS
+//
+
+ul,
+ol {
+    padding-left: em(24);
+}
+
+.linklist {
+    padding: 0;
+    margin: 0 0 em(20) 0;
+}
+
+.linklist:last-child {
+    margin-bottom: 0;
+}
+
+.linklist li {
+    margin-bottom: em(8);
+    list-style: none none;
+}
+
+.linklist li:last-child {
+    margin-bottom: 0;
+}
+
+.linklist a {
+    @extend .important-link;
+}
+
+.linklist a[href^="mailto:"],
+.linklist a[href^="tel:"],
+.linklist a[href$=".doc"],
+.linklist a[href$=".docx"],
+.linklist a[href$=".xls"],
+.linklist a[href$=".xlsx"],
+.linklist a[href$=".pdf"],
+.linklist a[href*="veelgestelde-vragen"] {
+    display: block;
+    padding-left: em(30);
+    word-wrap: break-word;
+}
+
+.linklist a[href^="mailto:"] {
+    background: url(../img/icn_mail.svg) no-repeat left top 8px;
+    background-size: 16px 10px;
+}
+
+.linklist a[href^="tel:"] {
+    background: url(../img/icn_phone.svg) no-repeat left top 4px;
+    background-size: 15px 15px;
+}
+
+.linklist a[href$=".doc"],
+.linklist a[href$=".docx"],
+.linklist a[href$=".xls"],
+.linklist a[href$=".xlsx"],
+.linklist a[href$=".pdf"] {
+    background: url(../img/icn_file.svg) no-repeat left 2px top 4px;
+    background-size: 12px 16px;  
+}
+
+.linklist a[href*="veelgestelde-vragen"] {
+    background: url(../img/icn_help.svg) no-repeat left 2px top 4px;
+    background-size: 10px 16px;
+}
+
+.block--primary-dark-blue .linklist a,
+.block--primary-light-blue .linklist a {
+    color: #fff;
+    background-image: url(../img/icn_chevron_right_white.svg);
+    background-size: 7px 13px;
+}
+
+.questions-pane .linklist a {
+    padding-left: em(30);
+}
+
+.questions-pane .linklist li:nth-child(1) a {
+    background: url(../img/icn_help.svg) no-repeat left 2px center;
+    background-size: 10px 16px;
+}
+
+.questions-pane .linklist li:nth-child(2) a {
+    background: url(../img/icn_phone.svg) no-repeat left center;
+    background-size: 15px 15px;
+}
+
+.questions-pane .linklist li:nth-child(3) a {
+    background: url(../img/icn_mail.svg) no-repeat left center;
+    background-size: 16px 10px;
+}
+
+//
+// ANCHORS
+//
+
+a,
+a:hover,
+a:active,
+a:visited {
+    color: inherit;
+}
+
+a.important-link {
+    display: inline-block;
+    padding-left: em(20);
+    background: url(../img/icn_chevron_right_primary_dark_blue.svg) no-repeat left -1px top 6px;
+    background-size: 7px 13px;
+    color: $color-primary-light-blue;
+    text-decoration: none;
+
+    &:hover {
+        color: rgba($color-primary-light-blue,0.5);
+    }
+
+    @at-root .block--primary-light-blue &:hover {
+        color: rgba(255,255,255,0.5);
+    }
+
+}
+
+//
+// TABLES
+//
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 4px 8px;
+    border: 1px solid #d4d4d4;
+    text-align: left;
+}
+
+thead th {
+    border-color: #00567d;
+    background-color: #0086a8;
+    color: #fff;
+}
+
+th {
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: #f2f9fb;
+}

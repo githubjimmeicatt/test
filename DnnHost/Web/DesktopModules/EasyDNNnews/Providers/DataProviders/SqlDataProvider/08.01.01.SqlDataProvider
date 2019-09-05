@@ -1,0 +1,1395 @@
+﻿IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsSearchCFArticles]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsSearchCFArticles]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsSearchCFArticles]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsSearchCFArticles] AS' 
+END
+GO
+ALTER PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsSearchCFArticles]
+	@PortalID INT,
+	@ModuleID INT,
+	@UserID INT,
+	@OrderByColumnName NVARCHAR(30),
+	@OrderByDirection NVARCHAR(4),
+	@OrderByCustomFieldID INT = NULL,
+	@ItemsFrom INT,
+	@ItemsTo INT,
+	@DateRange BIT = 0,
+	@FromDate DATETIME = NULL,
+	@ToDate DATETIME = NULL,
+	@OnlyOneCategory INT = NULL,
+	@Featured BIT = 0,
+	@ShowAllAuthors BIT = 1,
+	@FilterByAuthor INT = 0,
+	@FilterByGroupID INT = 0,
+	@FilterByTags BIT = 0,
+	@FilterByArticles BIT = 0,
+	@FilterByDNNUserID INT = 0,
+	@FilterByDNNGroupID INT = 0,
+	@EditOnlyAsOwner BIT = 0,
+	@UserCanApprove BIT = 0,
+	@LocaleCode NVARCHAR(20) = NULL,
+	@IsSocialInstance BIT = 0,
+	@FirstOrderBy NVARCHAR(20) = NULL,
+	@Perm_ViewAllCategores BIT = 0,
+	@Perm_EditAllCategores BIT = 0,
+	@AdminOrSuperUser BIT = 0,
+	@CategoryFilterType TINYINT = 1,
+	@PermissionSettingsSource BIT = 1,
+	@FillterSettingsSource BIT = 1,
+	@OuterModuleID INT = NULL,
+	@HideUnlocalizedItems BIT = 0,
+	@NewsFilterCategories NVARCHAR(1000) = NULL,
+	@NewsFilterAuthors NVARCHAR(1000) = NULL,
+	@NewsFilterGroups NVARCHAR(1000) = NULL,
+	@FilterByTagID INT = NULL,
+	@AdminFuturePostsVisible BIT = 0,
+	@UseAndOperator BIT = NULL,
+	@GoogleMapsFilter TINYINT = NULL,
+	
+	@FieldsTemplateID INT = NULL,
+	@SearchOnlySelectedCFGroup BIT = 0,
+	@CFGeneratedSQL NVARCHAR(MAX) = NULL,
+	@SimpleSearchFindCondition NVARCHAR(300) = NULL,
+	@SimpleSearchType TINYINT = NULL,
+	@SysDatesWhereCondition NVARCHAR(1000) = NULL,
+	@OrderByID INT = NULL,
+	@IsPortalSharing BIT = 0,
+	@CanEditAllContent BIT = 0,
+	@QueryPermissionsPerArticles BIT = 1,
+	@QueryModulePermissions BIT = 1
+AS
+SET NOCOUNT ON;
+DECLARE @paramList NVARCHAR(2000);
+SET @paramList = N'
+	 @PortalID INT
+	,@ModuleID INT
+	,@UserID INT
+	,@OrderByCustomFieldID INT
+	,@ItemsFrom INT
+	,@ItemsTo INT
+	,@DateRange BIT
+	,@FromDate DATETIME
+	,@ToDate DATETIME
+	,@OnlyOneCategory INT
+	,@FilterByAuthor INT
+	,@FilterByGroupID INT
+	,@FilterByArticles BIT
+	,@FilterByDNNUserID INT
+	,@FilterByDNNGroupID INT
+	,@LocaleCode NVARCHAR(20)
+	,@Perm_ViewAllCategores BIT
+	,@Perm_EditAllCategores BIT
+	,@AdminOrSuperUser BIT
+	,@PermissionSettingsSource BIT
+	,@FillterSettingsSource BIT
+	,@OuterModuleID INT
+	,@NewsFilterCategories NVARCHAR(1000)
+	,@NewsFilterAuthors NVARCHAR(1000)
+	,@NewsFilterGroups NVARCHAR(1000)
+	,@FilterByTagID INT
+	,@FieldsTemplateID INT
+	,@SimpleSearchFindCondition NVARCHAR(300)
+	,@IsPortalSharing BIT
+	,@CanEditAllContent BIT
+	,@QueryPermissionsPerArticles BIT
+	,@QueryModulePermissions BIT'
+
+DECLARE @sqlcommand NVARCHAR(MAX);
+DECLARE @MainContentFilter NVARCHAR(MAX);
+DECLARE @TopInnerFilter NVARCHAR(MAX);
+DECLARE @sqlSharingPortal NVARCHAR(300);
+DECLARE @sqlSharingPortalAll NVARCHAR(300);
+
+SET @sqlcommand = N'
+SET NOCOUNT ON;
+SET DATEFIRST 1;
+DECLARE @CurrentDate DATETIME;
+SET @CurrentDate = GETUTCDATE();
+
+CREATE TABLE #UserInRoles (RoleID INT PRIMARY KEY);
+CREATE TABLE #ViewCategories (CategoryID INT PRIMARY KEY);
+CREATE TABLE #FilterCategories (CategoryID INT PRIMARY KEY);
+CREATE TABLE #ViewCategoriesWithFilter (CategoryID INT PRIMARY KEY); '
+
+IF @IsPortalSharing = 1
+BEGIN
+	SET @sqlCommand = @sqlCommand + N'
+	CREATE TABLE #SharingPortals (PortalID INT PRIMARY KEY);
+	INSERT INTO #SharingPortals
+	SELECT SharingPortalID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID;';
+
+	SET @sqlSharingPortal = N' EXISTS (SELECT PortalID FROM #SharingPortals AS sp WHERE sp.PortalID = na.PortalID) ';
+	SET @sqlSharingPortalAll = N'PortalID IN (SELECT PortalID FROM #SharingPortals) ';
+END
+ELSE
+BEGIN
+	SET @sqlSharingPortal = N' na.PortalID = @PortalID ';
+	SET @sqlSharingPortalAll = N'PortalID = @PortalID ';
+END
+
+IF @UserID <> -1
+BEGIN
+	SET @sqlCommand = @sqlCommand + N'
+	INSERT INTO #UserInRoles '
+
+	IF @IsPortalSharing = 0
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT DISTINCT r.[RoleID]
+		FROM {databaseOwner}[{objectQualifier}Roles] AS r
+		INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = r.RoleID
+		WHERE r.PortalID = @PortalID AND ur.UserID = @UserID
+			AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > @CurrentDate)
+			AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < @CurrentDate); '
+	ELSE
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT DISTINCT r.[RoleID]
+		FROM {databaseOwner}[{objectQualifier}Roles] AS r
+		INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = r.RoleID
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] AS mp ON mp.SharingPortalID = r.PortalID
+		WHERE mp.ModuleID = @ModuleID
+			AND ur.UserID = @UserID
+			AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > @CurrentDate)
+			AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < @CurrentDate); '
+END
+
+SET @sqlCommand = @sqlCommand + N'
+INSERT INTO #ViewCategories '
+
+IF @AdminOrSuperUser = 1 OR @Perm_ViewAllCategores = 1 OR @QueryModulePermissions = 0
+BEGIN
+	IF @IsPortalSharing = 1
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT [CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList]
+		WHERE PortalID IN (SELECT SharingPortalID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID); '
+	ELSE
+	SET @sqlCommand = @sqlCommand + N'
+		SELECT c.[CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS c
+		WHERE c.PortalID = @PortalID; '
+END
+ELSE IF @UserID = -1
+BEGIN
+	IF @PermissionSettingsSource = 1 -- by portal - ako je portal sharing to bi trebalo biti false
+	BEGIN
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT rpsc.[CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsShowCategories] AS rpsc
+		WHERE rpsc.PremissionSettingsID IN (
+			SELECT PremissionSettingsID
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] AS rps
+			WHERE rps.PortalID = @PortalID
+				AND rps.ModuleID IS NULL
+				AND rps.RoleID IS NULL); '
+	END
+	ELSE -- by module
+	BEGIN
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT rpsc.[CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsShowCategories] AS rpsc
+		WHERE rpsc.PremissionSettingsID IN (
+			SELECT PremissionSettingsID
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] AS rps
+			WHERE rps.PortalID = @PortalID
+				AND rps.ModuleID = @ModuleID
+				AND rps.RoleID IS NULL); '
+	END
+END
+ELSE -- registrirani korisnik
+BEGIN
+	IF @PermissionSettingsSource = 1 -- by portal
+	BEGIN
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT rpsc.[CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsShowCategories] AS rpsc
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] AS rps ON rps.PremissionSettingsID = rpsc.PremissionSettingsID
+		INNER JOIN #UserInRoles AS uir ON rps.RoleID = uir.RoleID
+		WHERE rps.PortalID = @PortalID AND rps.ModuleID IS NULL
+		UNION
+		SELECT upsc.[CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionsShowCategories] AS upsc
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] AS ups ON ups.PremissionSettingsID = upsc.PremissionSettingsID
+		WHERE ups.UserID = @UserID AND ups.PortalID = @PortalID AND ups.ModuleID IS NULL; '
+	END
+	ELSE -- by module
+	BEGIN
+		SET @sqlCommand = @sqlCommand + N'
+		SELECT rpsc.[CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsShowCategories] AS rpsc
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] AS rps ON rps.PremissionSettingsID = rpsc.PremissionSettingsID
+		INNER JOIN #UserInRoles AS uir ON rps.RoleID = uir.RoleID 
+		WHERE rps.ModuleID = @ModuleID
+		UNION
+		SELECT upsc.[CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionsShowCategories] AS upsc
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] AS ups ON ups.PremissionSettingsID = upsc.PremissionSettingsID
+		WHERE ups.UserID = @UserID AND ups.ModuleID = @ModuleID; '
+	END
+END
+
+IF @NewsFilterCategories IS NOT NULL
+	SET @sqlCommand = @sqlCommand + N'
+	INSERT INTO #FilterCategories
+	SELECT fc.KeyID
+	FROM {databaseOwner}[{objectQualifier}EDS_StringListToTable](@NewsFilterCategories) AS fc; '
+ELSE IF @OnlyOneCategory IS NOT NULL -- filtrira se po jednoj kategoriji
+	SET @sqlCommand = @sqlCommand + N'
+	INSERT INTO #FilterCategories
+	SELECT @OnlyOneCategory; '
+ELSE IF @CategoryFilterType = 0 -- 0 All categories
+	IF @IsPortalSharing = 1
+		SET @sqlCommand = @sqlCommand + N'
+		INSERT INTO #FilterCategories
+		SELECT [CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList]
+		WHERE PortalID IN (SELECT SharingPortalID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID); '
+	ELSE
+		SET @sqlCommand = @sqlCommand + N'
+		INSERT INTO #FilterCategories
+		SELECT [CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList]
+		WHERE PortalID = @PortalID; '
+ELSE IF @OuterModuleID IS NOT NULL
+BEGIN
+	IF @CategoryFilterType = 1 -- 1 - SELECTion
+		SET @sqlCommand = @sqlCommand + N'
+		INSERT INTO #FilterCategories
+		SELECT [CategoryID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleCategoryItems]
+		WHERE ModuleID = @OuterModuleID; '
+	ELSE IF @CategoryFilterType = 2 -- 2 - AutoAdd
+	BEGIN
+		IF @IsPortalSharing = 1
+			SET @sqlCommand = @sqlCommand + N'
+			;WITH hierarchy AS(
+				SELECT cl.[CategoryID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+				WHERE EXISTS (
+					SELECT [CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleCategoryItems] AS ci
+					WHERE ci.ModuleID = @OuterModuleID
+						AND (ci.CategoryID = cl.ParentCategory OR ci.CategoryID = cl.CategoryID)
+				)
+				AND cl.PortalID IN (SELECT SharingPortalID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID)
+				UNION ALL
+				SELECT cl.[CategoryID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+				INNER JOIN hierarchy AS p ON cl.ParentCategory = p.CategoryID
+			)
+			INSERT INTO #FilterCategories
+			SELECT DISTINCT CategoryID
+			FROM hierarchy; '
+		ELSE
+		SET @sqlCommand = @sqlCommand + N'
+			;WITH hierarchy AS(
+				SELECT cl.[CategoryID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+				WHERE EXISTS (
+					SELECT [CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleCategoryItems] AS ci
+					WHERE ci.ModuleID = @OuterModuleID
+						AND (ci.CategoryID = cl.ParentCategory OR ci.CategoryID = cl.CategoryID)
+				)
+				AND cl.PortalID = @PortalID
+				UNION ALL
+				SELECT cl.[CategoryID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+				INNER JOIN hierarchy AS p ON cl.ParentCategory = p.CategoryID
+			)
+			INSERT INTO #FilterCategories
+			SELECT DISTINCT CategoryID
+			FROM hierarchy; '
+	END
+END
+ELSE
+BEGIN
+	IF @CategoryFilterType = 1 -- 1 - SELECTion
+	BEGIN
+		IF @FillterSettingsSource = 1 -- portal
+			SET @sqlCommand = @sqlCommand + N'
+			INSERT INTO #FilterCategories
+			SELECT [CategoryID]
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsPortalCategoryItems]
+			WHERE PortalID = @PortalID; '
+		ELSE -- module
+			SET @sqlCommand = @sqlCommand + N'
+			INSERT INTO #FilterCategories
+			SELECT [CategoryID]
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleCategoryItems]
+			WHERE ModuleID = @ModuleID; '
+	END
+	ELSE IF @CategoryFilterType = 2 -- 2 - AutoAdd
+	BEGIN
+		IF @FillterSettingsSource = 1 -- portal
+		BEGIN
+			SET @sqlCommand = @sqlCommand + N'
+			;WITH hierarchy AS(
+				SELECT cl.[CategoryID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+				WHERE EXISTS (
+					SELECT [CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsPortalCategoryItems] AS ci
+					WHERE ci.PortalID = @PortalID
+						AND (ci.CategoryID = cl.ParentCategory OR ci.CategoryID = cl.CategoryID)
+				)
+				AND cl.PortalID = @PortalID
+				UNION ALL
+				SELECT cl.[CategoryID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+				INNER JOIN hierarchy AS p ON cl.ParentCategory = p.CategoryID
+			)
+			INSERT INTO #FilterCategories
+			SELECT DISTINCT CategoryID
+			FROM hierarchy; '
+		END
+		ELSE -- module
+		BEGIN
+			IF @IsPortalSharing = 1
+				SET @sqlCommand = @sqlCommand + N'
+				;WITH hierarchy AS(
+					SELECT cl.[CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+					WHERE EXISTS (
+						SELECT [CategoryID]
+						FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleCategoryItems] AS ci
+						WHERE ci.ModuleID = @ModuleID
+							AND (ci.CategoryID = cl.ParentCategory OR ci.CategoryID = cl.CategoryID)
+					)
+					AND cl.PortalID IN (SELECT SharingPortalID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID)
+					UNION ALL
+					SELECT cl.[CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+					INNER JOIN hierarchy AS p ON cl.ParentCategory = p.CategoryID
+				)
+				INSERT INTO #FilterCategories
+				SELECT DISTINCT CategoryID
+				FROM hierarchy; '
+			ELSE
+				SET @sqlCommand = @sqlCommand + N'
+				;WITH hierarchy AS(
+					SELECT cl.[CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+					WHERE EXISTS (
+						SELECT [CategoryID]
+						FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleCategoryItems] AS ci
+						WHERE ci.ModuleID = @ModuleID
+							AND (ci.CategoryID = cl.ParentCategory OR ci.CategoryID = cl.CategoryID)
+					)
+					AND cl.PortalID = @PortalID
+					UNION ALL
+					SELECT cl.[CategoryID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS cl
+					INNER JOIN hierarchy AS p ON cl.ParentCategory = p.CategoryID
+				)
+				INSERT INTO #FilterCategories
+				SELECT DISTINCT CategoryID
+				FROM hierarchy; '
+		END
+	END
+END
+
+SET @sqlCommand = @sqlCommand + N'
+INSERT INTO #ViewCategoriesWithFilter
+SELECT vc.CategoryID
+FROM #ViewCategories AS vc
+INTERSECT
+SELECT fc.CategoryID
+FROM #FilterCategories AS fc; '
+
+IF @LocaleCode IS NOT NULL
+	SET @sqlcommand = @sqlcommand + N' 
+	CREATE TABLE #LocalizedCategories (Id INT PRIMARY KEY, Name NVARCHAR(200), CategoryText NVARCHAR(MAX), CategoryURL NVARCHAR(1500)); '
+
+IF @CanEditAllContent = 0 AND @QueryModulePermissions = 1
+	SET @sqlcommand = @sqlcommand + N' 
+	CREATE TABLE #UserEditCategories (CategoryID INT PRIMARY KEY);
+	INSERT INTO #UserEditCategories
+	SELECT CategoryID
+	FROM {databaseOwner}[{objectQualifier}EDS_EditPermissions] (@PortalID,@ModuleID,@UserID,@AdminOrSuperUser,@Perm_EditAllCategores,@PermissionSettingsSource,@CurrentDate)
+
+	DECLARE @HasEditCategories BIT;
+
+	IF EXISTS (SELECT 1 FROM #UserEditCategories)
+		SET @HasEditCategories = 1;
+	ELSE
+		SET @HasEditCategories = 0; '
+
+IF @NewsFilterCategories IS NULL
+BEGIN
+	IF @OuterModuleID IS NULL AND @FilterByArticles = 1
+	SET @sqlcommand = @sqlcommand + N' 
+		DECLARE @FilterArticlesTable TABLE (ArticleID INT PRIMARY KEY);
+		IF @FillterSettingsSource = 1
+			INSERT INTO @FilterArticlesTable SELECT ArticleID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsPortalFilterByArticles] WHERE FilterPortalID = @PortalID;
+		ELSE
+			INSERT INTO @FilterArticlesTable SELECT ArticleID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsFilterByArticles] WHERE FilterModuleID = @ModuleID; '
+
+	IF @FilterByTagID IS NOT NULL
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		DECLARE @FilterTagsTable TABLE (TagID INT PRIMARY KEY);
+		INSERT INTO @FilterTagsTable SELECT @FilterByTagID '
+		SET @FilterByTags = 1
+	END
+	ELSE IF @OuterModuleID IS NULL AND @FilterByTags = 1
+		SET @sqlcommand = @sqlcommand + N' 
+		DECLARE @FilterTagsTable TABLE (TagID INT PRIMARY KEY);
+		IF @FillterSettingsSource = 1
+			INSERT INTO @FilterTagsTable SELECT TagID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsPortalFilterByTagID] WHERE FilterPortalID = @PortalID;
+		ELSE
+			INSERT INTO @FilterTagsTable SELECT TagID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsFilterByTagID] WHERE FilterModuleID = @ModuleID; '
+END
+
+DECLARE @sqlAuthors NVARCHAR(2000);
+
+IF @NewsFilterAuthors IS NULL AND @NewsFilterGroups IS NULL
+BEGIN
+	IF @IsSocialInstance = 1
+	BEGIN
+		IF @FilterByDNNGroupID <> 0 AND @FilterByAuthor <> 0
+			SET @sqlAuthors = N' 
+				SELECT ap.[UserID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap
+				WHERE ap.[AuthorProfileID] = @FilterByAuthor; '
+	END
+	ELSE
+	BEGIN
+		IF @OuterModuleID IS NOT NULL AND @ShowAllAuthors = 0
+			SET @sqlAuthors = N'
+			SELECT mai.[UserID]
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleAuthorsItems] AS mai
+			WHERE mai.ModuleID = @OuterModuleID
+			UNION 
+			SELECT ap.[UserID]
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap 
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON ap.AuthorProfileID = agi.AuthorProfileID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] AS mgi ON mgi.GroupID = agi.GroupID
+			WHERE mgi.ModuleID = @OuterModuleID; '
+		ELSE
+		BEGIN
+			IF @FilterByAuthor = 0 AND @FilterByGroupID = 0 AND @ShowAllAuthors = 0
+			BEGIN
+				IF @FillterSettingsSource = 1
+					SET @sqlAuthors = N'
+					SELECT pai.[UserID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsPortalAuthorsItems] AS pai
+					WHERE pai.PortalID = @PortalID
+					UNION 
+					SELECT [UserID]
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap 
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON ap.AuthorProfileID = agi.AuthorProfileID
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsPortalGroupItems] AS pgi ON pgi.GroupID = agi.GroupID
+					WHERE pgi.PortalID = @PortalID; '
+				ELSE
+					SET @sqlAuthors = N'
+					SELECT [UserID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModuleAuthorsItems] AS mai WHERE mai.ModuleID = @ModuleID
+					UNION 
+					SELECT [UserID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap 
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON ap.AuthorProfileID = agi.AuthorProfileID
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] AS mgi ON mgi.GroupID = agi.GroupID
+					WHERE mgi.ModuleID = @ModuleID; '
+			END
+			ELSE IF @FilterByAuthor <> 0
+				SET @sqlAuthors = N'
+				SELECT ap.[UserID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap
+				WHERE ap.[AuthorProfileID] = @FilterByAuthor; '
+			ELSE IF @FilterByGroupID <> 0
+				SET @sqlAuthors = N'
+				SELECT ap.[UserID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap 
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON ap.AuthorProfileID = agi.AuthorProfileID	
+				WHERE agi.GroupID = @FilterByGroupID; '
+		END
+	END
+END
+ELSE
+BEGIN
+	IF @NewsFilterAuthors IS NOT NULL AND @NewsFilterGroups IS NOT NULL
+		SET @sqlAuthors = N'
+		SELECT ap.[UserID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap
+		INNER JOIN {databaseOwner}[{objectQualifier}EDS_StringListToTable](@NewsFilterAuthors) AS af ON ap.AuthorProfileID = af.KeyID
+		WHERE ap.' + @sqlSharingPortalAll + '
+		UNION
+		SELECT ap.[UserID] 
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap 
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON ap.AuthorProfileID = agi.AuthorProfileID
+		INNER JOIN {databaseOwner}[{objectQualifier}EDS_StringListToTable](@NewsFilterGroups) AS a ON a.KeyID = agi.GroupID	
+		WHERE ap.' + @sqlSharingPortalAll + ' '
+	ELSE IF @NewsFilterAuthors IS NOT NULL
+		SET @sqlAuthors = N' 
+		SELECT ap.[UserID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap
+		INNER JOIN {databaseOwner}[{objectQualifier}EDS_StringListToTable](@NewsFilterAuthors) AS af ON ap.AuthorProfileID = af.KeyID
+		WHERE ap.' + @sqlSharingPortalAll + ' '
+	ELSE IF @NewsFilterGroups IS NOT NULL
+		SET @sqlAuthors = N' 
+		SELECT ap.[UserID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap 
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON ap.AuthorProfileID = agi.AuthorProfileID
+		INNER JOIN {databaseOwner}[{objectQualifier}EDS_StringListToTable](@NewsFilterGroups) AS a ON a.KeyID = agi.GroupID	
+		WHERE ap.' + @sqlSharingPortalAll + ' '
+END
+
+IF @sqlAuthors IS NOT NULL
+BEGIN
+	SET @sqlcommand = @sqlcommand + N'
+	CREATE TABLE #FilterAuthors (UserID INT PRIMARY KEY);
+	INSERT INTO #FilterAuthors ' + @sqlAuthors
+END
+
+IF @LocaleCode IS NOT NULL
+	SET @sqlcommand = @sqlcommand + N'
+	INSERT INTO #LocalizedCategories
+	SELECT c.CategoryID AS Id,
+	CASE WHEN cl.CategoryID IS NULL THEN c.CategoryName ELSE cl.Title END AS Name,
+	CASE WHEN cl.CategoryID IS NULL THEN c.CategoryText ELSE cl.CategoryText END AS CategoryText,
+	CASE WHEN cl.CategoryID IS NULL THEN c.CategoryURL ELSE cl.CategoryURL END AS CategoryURL
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS c
+	LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryLocalization] AS cl ON c.CategoryID = cl.CategoryID AND cl.LocaleCode = @LocaleCode
+	WHERE c.CategoryID IN (SELECT CategoryID FROM #ViewCategories) '
+	
+SET @sqlcommand = @sqlcommand + N' DECLARE @AllContentCount INT'
+
+IF @CFGeneratedSQL IS NOT NULL
+	SET @sqlcommand = @sqlcommand + N' DECLARE @tempArticles TABLE (ArticleID INT PRIMARY KEY); ' + @CFGeneratedSQL;
+
+IF @SimpleSearchFindCondition IS NOT NULL
+	SET @sqlcommand = @sqlcommand + N' 
+	DECLARE @SearchTable TABLE (Words NVARCHAR(100) NOT NULL);
+	DECLARE @word NVARCHAR(100), @PosWord INT
+	SET @SimpleSearchFindCondition = LTRIM(RTRIM(@SimpleSearchFindCondition))+ '':''
+	SET @PosWord = CHARINDEX('':'', @SimpleSearchFindCondition, 1)
+	IF REPLACE(@SimpleSearchFindCondition, '':'', '''') <> ''''
+	BEGIN
+		WHILE @PosWord > 0
+		BEGIN
+			SET @word = LTRIM(RTRIM(LEFT(@SimpleSearchFindCondition, @PosWord - 1)))
+			IF @word <> ''''
+			BEGIN
+				SET @word = replace( 
+							replace( 
+							replace( 
+							replace( @word
+							,''\'', ''\\'' )
+							,''%'', ''\%'' )
+							,''_'', ''\_'' )
+							,''['', ''\['' )
+				INSERT INTO @SearchTable (Words) VALUES (''% ''+@word+''%'')
+				INSERT INTO @SearchTable (Words) VALUES (@word+''%'')
+			END
+			SET @SimpleSearchFindCondition = RIGHT(@SimpleSearchFindCondition, LEN(@SimpleSearchFindCondition) - @PosWord)
+			SET @PosWord = CHARINDEX('':'', @SimpleSearchFindCondition, 1)
+		END
+	END ';
+
+SET @TopInnerFilter = N'';
+
+	IF @CFGeneratedSQL IS NOT NULL
+		SET @TopInnerFilter = @TopInnerFilter + N'
+		INNER JOIN @tempArticles AS ta ON na.ArticleID = ta.ArticleID '
+		
+	IF @GoogleMapsFilter = 2
+		SET @TopInnerFilter = @TopInnerFilter + N'
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsArticleGoogleMapConnection] AS gmc ON na.ArticleID = gmc.ArticleID
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNnewsGoogleMapsData] AS gmd ON gmc.GoogleMapID = gmd.GoogleMapID AND gmd.PointData <> N'''''
+	ELSE IF @GoogleMapsFilter = 1
+		SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsArticleGoogleMapConnection] AS gmc ON na.ArticleID = gmc.ArticleID '
+
+	IF @HideUnlocalizedItems = 1 OR (@LocaleCode IS NOT NULL AND @SimpleSearchFindCondition IS NOT NULL)
+		SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsContentLocalization] AS ncl ON ncl.ArticleID = na.ArticleID AND ncl.LocaleCode = @LocaleCode '
+	
+	IF @FilterByDNNGroupID <> 0 
+		SET @TopInnerFilter = @TopInnerFilter + N'
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsSocialSecurity] AS nss ON nss.ArticleID = na.ArticleID
+		INNER JOIN {databaseOwner}[{objectQualifier}Journal_User_Permissions](@PortalId,@UserID, @FilterByDNNGroupID) AS t ON t.seckey = nss.SecurityKey
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsSocialGroupItems] AS sgi ON sgi.ArticleID = na.ArticleID AND sgi.RoleID = @FilterByDNNGroupID '
+	ELSE IF @FilterByDNNUserID <> 0
+		SET @TopInnerFilter = @TopInnerFilter + N'
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsSocialSecurity] AS nss ON nss.ArticleID = na.ArticleID
+		INNER JOIN {databaseOwner}[{objectQualifier}Journal_User_Permissions](@PortalId,@UserID, @FilterByDNNGroupID) AS t ON t.seckey = nss.SecurityKey '
+
+	IF @SimpleSearchFindCondition IS NOT NULL
+	BEGIN
+		IF @LocaleCode IS NULL
+		BEGIN
+			IF @SimpleSearchType = 1
+				SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @SearchTable AS st ON (na.Title LIKE st.Words ESCAPE ''\'' OR na.SubTitle LIKE st.Words ESCAPE ''\'') '
+			ELSE IF @SimpleSearchType = 2
+				SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @SearchTable AS st ON (na.CleanArticleData LIKE st.Words ESCAPE ''\'') '
+			ELSE
+				SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @SearchTable AS st ON (na.Title LIKE st.Words ESCAPE ''\'' OR na.SubTitle LIKE st.Words ESCAPE ''\'' OR na.CleanArticleData LIKE st.Words ESCAPE ''\'') '
+		END
+		ELSE
+		BEGIN
+			IF @SimpleSearchType = 1
+				SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @SearchTable AS st ON (ncl.Title LIKE st.Words ESCAPE ''\'' OR ncl.SubTitle LIKE st.Words ESCAPE ''\'') '
+			ELSE IF @SimpleSearchType = 2
+				SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @SearchTable AS st ON (ncl.CleanArticleData LIKE st.Words ESCAPE ''\'') '
+			ELSE
+				SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @SearchTable AS st ON (ncl.Title LIKE st.Words ESCAPE ''\'' OR ncl.SubTitle LIKE st.Words ESCAPE ''\'' OR ncl.CleanArticleData LIKE st.Words ESCAPE ''\'') '
+		END
+	END
+
+	IF @FilterByTags = 1 SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsTagsItems] AS ti ON na.ArticleID = ti.ArticleID INNER JOIN @FilterTagsTable AS fbt ON ti.TagID = fbt.TagID '
+	IF @FilterByArticles = 1 SET @TopInnerFilter = @TopInnerFilter + N' INNER JOIN @FilterArticlesTable AS fba ON fba.ArticleID = na.ArticleID '
+SET @TopInnerFilter = @TopInnerFilter + N'
+WHERE ' + @sqlSharingPortal + '
+	AND na.EventArticle = 0 '
+	
+	IF @SysDatesWhereCondition IS NOT NULL
+		SET @TopInnerFilter = @TopInnerFilter + @SysDatesWhereCondition
+	
+	IF @AdminFuturePostsVisible = 1 AND @QueryModulePermissions = 1
+	BEGIN
+		IF @DateRange = 2 SET @TopInnerFilter = @TopInnerFilter + N' AND na.PublishDate >= @FromDate AND na.[ExpireDate] >= @CurrentDate '
+		ELSE SET @TopInnerFilter = @TopInnerFilter + N' AND @CurrentDate <= na.[ExpireDate] '
+	END
+	ELSE IF @DateRange = 2 OR @DateRange = 1 SET @TopInnerFilter = @TopInnerFilter + N' AND na.PublishDate BETWEEN @FromDate AND @ToDate AND @CurrentDate BETWEEN na.PublishDate AND na.[ExpireDate] '
+	ELSE SET @TopInnerFilter = @TopInnerFilter + N' AND @CurrentDate BETWEEN na.PublishDate AND na.[ExpireDate] '
+		
+	IF @LocaleCode IS NULL SET @TopInnerFilter = @TopInnerFilter + N' AND na.HideDefaultLocale = 0 '
+	IF @Featured = 1 SET @TopInnerFilter = @TopInnerFilter + N' AND na.Featured = 1 '
+	IF @FilterByDNNUserID <> 0
+		SET @TopInnerFilter = @TopInnerFilter + N' AND na.UserID = @FilterByDNNUserID '
+	ELSE IF @sqlAuthors IS NOT NULL
+		SET @TopInnerFilter = @TopInnerFilter + N' AND na.UserID IN (SELECT UserID FROM #FilterAuthors) '
+
+	IF @QueryModulePermissions = 0
+		SET @TopInnerFilter = @TopInnerFilter + N' AND na.Approved = 1 AND na.Active = 1 '
+	ELSE IF @CanEditAllContent = 0
+	BEGIN
+		IF @UserCanApprove = 0 SET @TopInnerFilter = @TopInnerFilter + N' AND na.Approved = 1 '
+		SET @TopInnerFilter = @TopInnerFilter + N' AND (na.Active = 1 OR na.UserID = @UserID) '
+	END
+
+IF @SimpleSearchFindCondition IS NOT NULL
+BEGIN
+
+	DECLARE @Top_TAG_InnerFilter NVARCHAR(MAX);
+	SET @Top_TAG_InnerFilter = N'';
+
+		IF @CFGeneratedSQL IS NOT NULL
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N'
+			INNER JOIN @tempArticles AS ta ON na.ArticleID = ta.ArticleID '
+			
+		IF @GoogleMapsFilter = 2
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N'
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsArticleGoogleMapConnection] AS gmc ON na.ArticleID = gmc.ArticleID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNnewsGoogleMapsData] AS gmd ON gmc.GoogleMapID = gmd.GoogleMapID AND gmd.PointData <> N'''''
+		ELSE IF @GoogleMapsFilter = 1
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsArticleGoogleMapConnection] AS gmc ON na.ArticleID = gmc.ArticleID '
+
+		IF @HideUnlocalizedItems = 1 OR (@LocaleCode IS NOT NULL AND @SimpleSearchFindCondition IS NOT NULL)
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsContentLocalization] AS ncl ON ncl.ArticleID = na.ArticleID AND ncl.LocaleCode = @LocaleCode '
+		
+		IF @FilterByDNNGroupID <> 0 
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N'
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsSocialSecurity] AS nss ON nss.ArticleID = na.ArticleID
+			INNER JOIN {databaseOwner}[{objectQualifier}Journal_User_Permissions](@PortalId,@UserID, @FilterByDNNGroupID) AS t ON t.seckey = nss.SecurityKey
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsSocialGroupItems] AS sgi ON sgi.ArticleID = na.ArticleID AND sgi.RoleID = @FilterByDNNGroupID '
+		ELSE IF @FilterByDNNUserID <> 0
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N'
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsSocialSecurity] AS nss ON nss.ArticleID = na.ArticleID
+			INNER JOIN {databaseOwner}[{objectQualifier}Journal_User_Permissions](@PortalId,@UserID, @FilterByDNNGroupID) AS t ON t.seckey = nss.SecurityKey '
+
+		IF @FilterByTags = 1 SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsTagsItems] AS ti ON na.ArticleID = ti.ArticleID INNER JOIN @FilterTagsTable AS fbt ON ti.TagID = fbt.TagID '
+		IF @FilterByArticles = 1 SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' INNER JOIN @FilterArticlesTable AS fba ON fba.ArticleID = na.ArticleID '
+	SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N'
+	WHERE ' + @sqlSharingPortal + '
+		AND na.EventArticle = 0 '
+		
+		IF @SysDatesWhereCondition IS NOT NULL
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + @SysDatesWhereCondition
+		
+		IF @AdminFuturePostsVisible = 1 AND @QueryModulePermissions = 1
+		BEGIN
+			IF @DateRange = 2 SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.PublishDate >= @FromDate AND na.[ExpireDate] >= @CurrentDate '
+			ELSE SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND @CurrentDate <= na.[ExpireDate] '
+		END
+		ELSE IF @DateRange = 2 OR @DateRange = 1 SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.PublishDate BETWEEN @FromDate AND @ToDate AND @CurrentDate BETWEEN na.PublishDate AND na.[ExpireDate] '
+		ELSE SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND @CurrentDate BETWEEN na.PublishDate AND na.[ExpireDate] '
+			
+		IF @LocaleCode IS NULL SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.HideDefaultLocale = 0 '
+		IF @Featured = 1 SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.Featured = 1 '
+		IF @FilterByDNNUserID <> 0
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.UserID = @FilterByDNNUserID '
+		ELSE IF @sqlAuthors IS NOT NULL
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.UserID IN (SELECT UserID FROM #FilterAuthors) '
+
+		IF @QueryModulePermissions = 0
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.Approved = 1 AND na.Active = 1 '
+		ELSE IF @CanEditAllContent = 0
+		BEGIN
+			IF @UserCanApprove = 0 SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND na.Approved = 1 '
+			SET @Top_TAG_InnerFilter = @Top_TAG_InnerFilter + N' AND (na.Active = 1 OR na.UserID = @UserID) '
+		END
+END
+
+DECLARE @CleanOrderColumnWithDirection NVARCHAR(35);
+DECLARE @ControlTypeID INT;
+
+IF @OrderByID IS NOT NULL
+BEGIN
+	DECLARE @CfOrderByID INT;
+	DECLARE @SysOrderByID INT;
+	DECLARE @SortOrder NCHAR(4);
+
+	SELECT @CfOrderByID = CfIdOrderable
+		,@SysOrderByID = SysIdOrderable
+		,@SortOrder = SortOrder
+	FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] AS obi
+	WHERE obi.Id = @OrderByID
+		--AND obi.CustomFieldID IN (
+		--	SELECT CustomFieldID
+		--	FROM {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems]
+		--	WHERE FieldsTemplateID = @FieldsTemplateID
+		--	)
+
+	IF @CfOrderByID IS NOT NULL
+	BEGIN
+
+		SELECT @ControlTypeID = [ControlTypeID]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNfields]
+		WHERE CustomFieldID = @CfOrderByID
+			AND IsOrderable = 1;
+
+		IF @ControlTypeID IS NOT NULL
+		BEGIN
+			SELECT @OrderByColumnName = CASE @ControlTypeID
+					WHEN 1
+						THEN N'[Text]'
+					WHEN 3
+						THEN N'[Int]'
+					WHEN 4
+						THEN N'[Decimal]'
+					WHEN 5
+						THEN N'[Decimal]'
+					WHEN 6
+						THEN N'[Text]'
+					WHEN 9
+						THEN N'[DateTime]'
+					WHEN 10
+						THEN N'[Text]'
+					ELSE NULL
+					END
+
+			IF @OrderByColumnName IS NULL
+			BEGIN
+				SET @OrderByID = NULL;
+				SET @CfOrderByID = NULL;
+				SET @OrderByCustomFieldID = NULL; -- ovo je zbog toga jer cforderby i taj parametar su isti!! slicni
+				SET @OrderByDirection = N'DESC';
+				SET @OrderByColumnName = N'[PublishDate]';
+			END
+			ELSE
+			BEGIN
+				SET @OrderByCustomFieldID = @CfOrderByID;
+				SET @OrderByDirection = @SortOrder;
+			END
+		END
+		ELSE
+		BEGIN
+			SET @OrderByID = NULL;
+			SET @CfOrderByID = NULL;
+			SET @OrderByCustomFieldID = NULL;
+			SET @OrderByDirection = N'DESC';
+			SET @OrderByColumnName = N'[PublishDate]';
+		END
+	END
+	ELSE
+		IF @SysOrderByID IS NOT NULL
+		BEGIN
+			SET @OrderByCustomFieldID = NULL;
+			
+			SELECT @OrderByColumnName = CASE @SysOrderByID
+					WHEN 0
+						THEN N'[DateAdded]'
+					WHEN 1
+						THEN N'[LastModified]'
+					WHEN 2
+						THEN N'[PublishDate]'
+					WHEN 3
+						THEN N'[ExpireDate]'
+					WHEN 4
+						THEN N'[NumberOfViews]'
+					WHEN 5
+						THEN N'[RatingValue]'
+					WHEN 6
+						THEN N'[Title]'
+					WHEN 7
+						THEN N'[PublishDate]'-- EventStartDate - only articles
+					WHEN 8
+						THEN N'CommentedDate'
+					WHEN 9
+						THEN N'[NumberOfComments]'
+					WHEN 10
+						THEN N'NEWID()'
+					ELSE N'[PublishDate]'
+					END
+			
+			SET @OrderByDirection = @SortOrder;
+		END
+		ELSE
+		BEGIN	
+			SET @OrderByID = NULL;
+			SET @CfOrderByID = NULL;
+			SET @OrderByCustomFieldID = NULL; -- ovo je zbog toga jer cforderby i taj parametar su isti!! slicni
+			SET @OrderByDirection = N'DESC';
+			SET @OrderByColumnName = N'[PublishDate]';
+		END
+END
+ELSE IF @OrderByCustomFieldID IS NOT NULL
+BEGIN
+	SELECT @ControlTypeID = [ControlTypeID] FROM {databaseOwner}[{objectQualifier}EasyDNNfields] WHERE CustomFieldID = @OrderByCustomFieldID AND IsOrderable = 1;
+	IF @ControlTypeID IS NOT NULL
+	BEGIN
+		SELECT @OrderByColumnName =
+			CASE @ControlTypeID
+				WHEN 1 THEN N'[Text]'
+				WHEN 3 THEN N'[Int]'
+				WHEN 4 THEN N'[Decimal]'
+				WHEN 5 THEN N'[Decimal]'
+				WHEN 6 THEN N'[Text]'
+				WHEN 9 THEN N'[DateTime]'
+				WHEN 10 THEN N'[Text]'
+				ELSE NULL
+			END
+		IF @OrderByColumnName IS NULL
+		BEGIN
+			SET @OrderByCustomFieldID = NULL;
+			SET @OrderByColumnName = N'[PublishDate]';
+		END
+	END
+	ELSE
+	BEGIN
+		SET @OrderByCustomFieldID = NULL;
+		SET @OrderByColumnName = N'[PublishDate]';
+	END
+END
+
+IF @OrderByColumnName = N'NEWID()'
+BEGIN
+	SET @CleanOrderColumnWithDirection = @OrderByColumnName
+	SET @OrderByDirection = N''
+END
+ELSE
+	SET @CleanOrderColumnWithDirection = @OrderByColumnName + N' ' + @OrderByDirection;
+	
+SET @MainContentFilter = N'
+;WITH AllContent AS( '
+	IF @OrderByColumnName = N'CommentedDate'
+	BEGIN
+		SET @MainContentFilter = @MainContentFilter + N'
+		SELECT ArticleID, CommentedDate FROM (
+		SELECT nc.[ArticleID]
+			,nc.[DateAdded] AS CommentedDate
+			,ROW_NUMBER() OVER(PARTITION BY nc.[ArticleID] ORDER BY '
+			
+			IF @FirstOrderBy = 'Featured DESC' SET @MainContentFilter = @MainContentFilter + N'n.Featured DESC, '
+			
+			SET @MainContentFilter = @MainContentFilter + N' nc.[DateAdded] ' + @OrderByDirection + ') AS OnlyFirstOccurance
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsComments] AS nc ON nc.ArticleID = n.ArticleID AND nc.Approved = ''True'' AND nc.' + @sqlSharingPortalAll + '
+		WHERE nc.ArticleID IN (';
+	END
+	
+	IF @UseAndOperator IS NOT NULL AND @NewsFilterCategories IS NOT NULL
+	BEGIN
+		SET @MainContentFilter = @MainContentFilter + N'
+		SELECT DISTINCT [ArticleID] FROM (
+			SELECT na.[ArticleID], ROW_NUMBER() OVER (PARTITION BY na.[ArticleID] ORDER BY na.[ArticleID] DESC ) AS Recency
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS na
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS cat ON na.ArticleID = cat.ArticleID
+			INNER JOIN #FilterCategories AS fbc ON fbc.CategoryID = cat.CategoryID
+			WHERE na.ArticleID IN ( ';
+	END
+	
+	SET @MainContentFilter = @MainContentFilter + N'
+	SELECT DISTINCT na.[ArticleID]
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS na
+	INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS cat ON na.ArticleID = cat.ArticleID AND cat.CategoryID IN (SELECT CategoryID FROM #ViewCategoriesWithFilter) '
+
+		SET @MainContentFilter = @MainContentFilter + @TopInnerFilter
+
+		IF @QueryPermissionsPerArticles = 1 SET @MainContentFilter = @MainContentFilter + N' AND na.HasPermissions = 0 '
+
+	IF @SimpleSearchFindCondition IS NOT NULL
+	BEGIN
+		SET @MainContentFilter = @MainContentFilter + N'
+		UNION
+		SELECT ArticleID
+		FROM (
+			SELECT ArticleID
+			FROM (
+				SELECT ti.[ArticleID]
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsTagsItems] AS ti
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsNewTags] AS t ON ti.TagID = t.TagID
+				INNER JOIN @SearchTable AS stt ON t.Name Like stt.Words
+				WHERE t.' + @sqlSharingPortalAll
+				IF @SimpleSearchType = 4
+				BEGIN
+					SET @MainContentFilter = @MainContentFilter + N'
+					UNION
+					SELECT di.ArticleID
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsDocuments] AS d
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsDocumentItems] AS di ON di.DocumentID = d.DocEntryID
+					INNER JOIN @SearchTable AS st ON (d.Title LIKE st.Words ESCAPE ''\'' OR d.Description LIKE st.Words ESCAPE ''\'')
+					WHERE d.' + @sqlSharingPortalAll + N'
+						AND d.Visible = 1
+					UNION
+					SELECT li.ArticleID
+					FROM {databaseOwner}[{objectQualifier}EasyDNNNewsLinks] AS l
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsLinkItems] AS li ON li.LinkID = l.LinkID
+					INNER JOIN @SearchTable AS st ON (l.Title LIKE st.Words ESCAPE ''\'' OR l.Description LIKE st.Words ESCAPE ''\'')
+					WHERE l.' + @sqlSharingPortalAll
+				END
+			SET @MainContentFilter = @MainContentFilter + N'
+			) AS allSearchFields
+			INTERSECT
+			SELECT na.[ArticleID]
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS na
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS cat ON na.ArticleID = cat.ArticleID AND cat.CategoryID IN (SELECT CategoryID FROM #ViewCategoriesWithFilter) '
+
+			SET @MainContentFilter = @MainContentFilter + @Top_TAG_InnerFilter
+
+			IF @QueryPermissionsPerArticles = 1 SET @MainContentFilter = @MainContentFilter + N' AND na.HasPermissions = 0 '
+
+		SET @MainContentFilter = @MainContentFilter + N') AS HasPermissionsFalse';
+	END
+	
+	IF @QueryPermissionsPerArticles = 1
+	BEGIN
+		SET @MainContentFilter = @MainContentFilter + N'
+		UNION ALL
+		SELECT ArticleID FROM (
+			SELECT ArticleID FROM (
+			SELECT aup.ArticleID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleUserPermissions] AS aup '
+				IF @CanEditAllContent = 0
+				BEGIN
+					SET @MainContentFilter = @MainContentFilter + N' WHERE aup.Show = 1 '
+					IF @UserID = -1 SET @MainContentFilter = @MainContentFilter + N' AND aup.UserID IS NULL '
+					ELSE SET @MainContentFilter = @MainContentFilter + N' AND aup.UserID = @UserID '
+				END
+			IF @UserID <> -1
+			BEGIN
+				SET @MainContentFilter = @MainContentFilter + N'
+				UNION
+				SELECT arp.ArticleID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleRolePermissions] AS arp '
+					IF @CanEditAllContent = 0
+					BEGIN
+						SET @MainContentFilter = @MainContentFilter + N' WHERE arp.Show = 1 AND arp.RoleID IN (SELECT [RoleID] FROM #UserInRoles) '
+					END
+			END
+			SET @MainContentFilter = @MainContentFilter + N'
+			) AS PermissionsByArticle
+			INTERSECT
+			SELECT na.[ArticleID] FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS na
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS cat ON na.ArticleID = cat.ArticleID AND cat.CategoryID IN (SELECT CategoryID FROM #FilterCategories) '
+
+			SET @MainContentFilter = @MainContentFilter + @TopInnerFilter + N'
+
+			AND na.HasPermissions = 1 ' 
+		
+			IF @SimpleSearchFindCondition IS NOT NULL
+			BEGIN
+			SET @MainContentFilter = @MainContentFilter + N'
+			UNION
+			SELECT ArticleID
+			FROM (
+				SELECT ArticleID
+				FROM (
+					SELECT ti.[ArticleID]
+						FROM {databaseOwner}[{objectQualifier}EasyDNNNewsTagsItems] AS ti
+						INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsNewTags] AS t ON ti.TagID = t.TagID
+						INNER JOIN @SearchTable AS stt ON t.Name Like stt.Words
+						WHERE t.' + @sqlSharingPortalAll
+						IF @SimpleSearchType = 4
+						BEGIN
+							SET @MainContentFilter = @MainContentFilter + N'
+							UNION
+							SELECT di.ArticleID
+							FROM {databaseOwner}[{objectQualifier}EasyDNNNewsDocuments] AS d
+							INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsDocumentItems] AS di ON di.DocumentID = d.DocEntryID
+							INNER JOIN @SearchTable AS st ON (d.Title LIKE st.Words ESCAPE ''\'' OR d.Description LIKE st.Words ESCAPE ''\'')
+							WHERE d.' + @sqlSharingPortalAll + N'
+								AND d.Visible = 1
+							UNION
+							SELECT li.ArticleID
+							FROM {databaseOwner}[{objectQualifier}EasyDNNNewsLinks] AS l
+							INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsLinkItems] AS li ON li.LinkID = l.LinkID
+							INNER JOIN @SearchTable AS st ON (l.Title LIKE st.Words ESCAPE ''\'' OR l.Description LIKE st.Words ESCAPE ''\'')
+							WHERE l.' + @sqlSharingPortalAll
+						END
+					SET @MainContentFilter = @MainContentFilter + N'
+					) AS allSearchFields
+					INTERSECT
+					SELECT ArticleID FROM (
+						SELECT ArticleID FROM (
+						SELECT aup.ArticleID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleUserPermissions] AS aup '
+							IF @CanEditAllContent = 0
+							BEGIN
+								SET @MainContentFilter = @MainContentFilter + N' WHERE aup.Show = 1 '
+								IF @UserID = -1 SET @MainContentFilter = @MainContentFilter + N' AND aup.UserID IS NULL '
+								ELSE SET @MainContentFilter = @MainContentFilter + N' AND aup.UserID = @UserID '
+							END
+						IF @UserID <> -1
+						BEGIN
+							SET @MainContentFilter = @MainContentFilter + N'
+							UNION
+							SELECT arp.ArticleID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleRolePermissions] AS arp '
+								IF @CanEditAllContent = 0
+								BEGIN
+									SET @MainContentFilter = @MainContentFilter + N' WHERE arp.Show = 1 AND arp.RoleID IN (SELECT [RoleID] FROM #UserInRoles) '
+								END
+						END
+						SET @MainContentFilter = @MainContentFilter + N'
+						) AS PermissionsByArticle
+						INTERSECT
+						SELECT na.[ArticleID] FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS na
+						INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS cat ON na.ArticleID = cat.ArticleID AND cat.CategoryID IN (SELECT CategoryID FROM #FilterCategories) '
+
+						SET @MainContentFilter = @MainContentFilter + @Top_TAG_InnerFilter + N'
+
+						AND na.HasPermissions = 1
+					) AS filterArticlesByArticlePermissiosn
+				) AS documentsLinks '
+			END
+
+		SET @MainContentFilter = @MainContentFilter + N'
+		) AS HasPermissionsTrue '
+	END
+	
+	IF @UseAndOperator IS NOT NULL AND @NewsFilterCategories IS NOT NULL
+	BEGIN
+		SET @MainContentFilter = @MainContentFilter + N'
+			)
+		) AS OnlyWithGoogleMaps
+		WHERE Recency >= (SELECT COUNT(*) FROM #FilterCategories) ';
+	END
+	
+	IF @OrderByColumnName = N'CommentedDate'
+	SET @MainContentFilter = @MainContentFilter + N'
+		)
+	) AS OnlyFirstRows
+	WHERE OnlyFirstOccurance = 1
+	'
+SET @MainContentFilter = @MainContentFilter + N'
+) '
+SET @sqlcommand = @sqlcommand + @MainContentFilter + N' SELECT @AllContentCount = COUNT(ArticleID) FROM AllContent '
+
+SET @sqlcommand = @sqlcommand + @MainContentFilter
+
+IF @LocaleCode IS NULL
+SET @sqlcommand = @sqlcommand + N'
+SELECT n.[ArticleID],n.[PortalID],n.[UserID],n.[Title],n.[SubTitle],n.[Summary],n.[Article],n.[ArticleImage],n.[DateAdded],n.[LastModified],n.[PublishDate]
+	,n.[ExpireDate],n.[Approved],n.[Featured],n.[NumberOfViews],n.[RatingValue],n.[RatingCount],n.[AllowComments],n.[Active]
+	,n.[TitleLink],n.[DetailType],n.[DetailTypeData],n.[DetailsTemplate],n.[DetailsTheme],n.[GalleryPosition],n.[GalleryDisplayType]
+	,n.[ShowMainImage],n.[ShowMainImageFront],n.[CommentsTheme],n.[ArticleImageFolder],n.[NumberOfComments]
+	,n.[ArticleImageSet],n.[MetaDecription],n.[MetaKeywords],n.[DisplayStyle],n.[DetailTarget]
+	,n.[ArticleFromRSS],n.[HasPermissions],n.[EventArticle],n.[DetailMediaType],n.[DetailMediaData],n.[AuthorAliasName],n.[ShowGallery],n.[ArticleGalleryID],n.[MainImageTitle],n.[MainImageDescription],n.[CFGroupeID],n.[ContactEmail], ';
+ELSE
+SET @sqlcommand = @sqlcommand + N'
+SELECT n.[ArticleID],n.[PortalID],n.[UserID]
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[Title] ELSE cl.[Title] END AS Title
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[SubTitle] ELSE cl.[SubTitle] END AS SubTitle
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[Summary] ELSE cl.[Summary] END AS Summary
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[Article] ELSE cl.[Article] END AS Article
+	,n.[ArticleImage],n.[DateAdded],n.[LastModified],n.[PublishDate]
+	,n.[ExpireDate],n.[Approved],n.[Featured],n.[NumberOfViews],n.[RatingValue],n.[RatingCount],n.[AllowComments],n.[Active]
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[TitleLink] ELSE cl.[clTitleLink] END AS TitleLink
+	,n.[DetailType]
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[DetailTypeData] ELSE cl.[DetailTypeData] END AS DetailTypeData
+	,n.[DetailsTemplate],n.[DetailsTheme],n.[GalleryPosition],n.[GalleryDisplayType]
+	,n.[ShowMainImage],n.[ShowMainImageFront],n.[CommentsTheme],n.[ArticleImageFolder],n.[NumberOfComments]
+	,n.[ArticleImageSet]
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[MetaDecription] ELSE cl.[MetaDecription] END AS MetaDecription
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[MetaKeywords] ELSE cl.[MetaKeywords] END AS MetaKeywords
+	,n.[DisplayStyle],n.[DetailTarget]
+	,n.[ArticleFromRSS],n.[HasPermissions],n.[EventArticle],n.[DetailMediaType],n.[DetailMediaData],n.[AuthorAliasName],n.[ShowGallery],n.[ArticleGalleryID]
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[MainImageTitle] ELSE cl.[MainImageTitle] END AS MainImageTitle
+	,CASE WHEN cl.ArticleID IS NULL THEN n.[MainImageDescription] ELSE cl.[MainImageDescription] END AS MainImageDescription
+	,n.[CFGroupeID],n.[ContactEmail], ';
+
+IF @QueryModulePermissions = 0
+	SET @sqlcommand = @sqlcommand + N'0 AS CanEdit, '
+ELSE IF @CanEditAllContent = 1
+	SET @sqlcommand = @sqlcommand + N'1 AS CanEdit, '
+ELSE
+BEGIN
+	SET @sqlcommand = @sqlcommand + N'
+	CASE WHEN @HasEditCategories = 0
+	THEN 
+		CASE WHEN EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleRolePermissions] AS arp
+			WHERE arp.ArticleID = n.ArticleID AND arp.Edit = 1 AND arp.RoleID IN (SELECT RoleID FROM #UserInRoles)
+		)
+		OR EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleUserPermissions] AS aup
+			WHERE aup.ArticleID = n.ArticleID AND aup.Edit = 1 AND aup.UserID = @UserID
+		)
+		THEN 1 ELSE 0
+		END
+	ELSE
+		CASE WHEN EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS c
+			WHERE '
+			IF @EditOnlyAsOwner = 1
+				SET @sqlcommand = @sqlcommand + N' n.UserID = @UserID AND '
+
+			SET @sqlcommand = @sqlcommand + N' c.ArticleID = n.ArticleID AND c.CategoryID IN (SELECT CategoryID FROM #UserEditCategories)
+		)
+		OR EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleRolePermissions] AS arp
+			WHERE arp.ArticleID = n.ArticleID AND arp.Edit = 1 AND arp.RoleID IN (SELECT RoleID FROM #UserInRoles)
+		)
+		OR EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNewsArticleUserPermissions] AS aup
+			WHERE aup.ArticleID = n.ArticleID AND aup.Edit = 1 AND aup.UserID = @UserID
+		)
+		THEN 1 ELSE 0
+		END
+	END
+	AS CanEdit, '
+END
+
+IF @LocaleCode IS NULL
+SET @sqlcommand = @sqlcommand + N'
+	(SELECT c.CategoryID AS "@id", c.PortalID AS "@portalid", c.CategoryName AS "@name", c.CategoryURL AS "@url", c.Color AS "@color", c.CategoryText AS "@description", c.CategoryImage AS "@image"
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS c
+	INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS ci ON c.CategoryID = ci.CategoryID
+	WHERE ci.ArticleID = n.ArticleID AND c.CategoryID IN (SELECT CategoryID FROM #ViewCategories)
+	ORDER BY c.Position
+	FOR XML PATH(''category''), ROOT(''categories'')) AS CatToShow, '
+ELSE
+SET @sqlcommand = @sqlcommand + N'
+	(SELECT c.CategoryID AS "@id", c.PortalID AS "@portalid", lc.Name AS "@name", lc.CategoryURL AS "@url", c.Color AS "@color", lc.CategoryText AS "@description", c.CategoryImage AS "@image"
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] AS c
+	INNER JOIN #LocalizedCategories AS lc ON c.CategoryID = lc.Id
+	INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS ci ON ci.CategoryID = c.CategoryID
+	WHERE ci.ArticleID = n.ArticleID
+	ORDER BY c.Position
+	FOR XML PATH(''category''), ROOT(''categories'')) AS CatToShow, '
+
+IF @QueryModulePermissions = 0
+	SET @sqlcommand = @sqlcommand + N' 0 AS Published, 0 AS Approve, '
+ELSE
+BEGIN
+	SET @sqlcommand = @sqlcommand + N'
+	CASE n.Active
+		WHEN 1 THEN 0
+		WHEN 0 THEN 1
+	END AS Published, '
+	IF @UserCanApprove = 0
+		SET @sqlcommand = @sqlcommand + N'0 AS Approve, '
+	ELSE
+		SET @sqlcommand = @sqlcommand + N'
+			CASE n.Approved
+				WHEN 1 THEN 0
+				WHEN 0 THEN n.Active
+			END AS Approve, '
+END
+
+SET @sqlcommand = @sqlcommand + N' @AllContentCount AS ContentCount '
+
+IF @LocaleCode IS NULL
+BEGIN
+	IF @OrderByColumnName = N'CommentedDate'
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		INNER JOIN (
+			SELECT finalSelection.[ArticleID],finalSelection.CommentedDate
+			FROM (
+				SELECT inner_n.[ArticleID],inner_ac.CommentedDate
+					,ROW_NUMBER() OVER (ORDER BY '
+					IF @FirstOrderBy = 'Featured DESC' SET @sqlcommand = @sqlcommand + N'inner_n.Featured DESC, '
+
+					SET @sqlcommand = @sqlcommand + @CleanOrderColumnWithDirection + N') AS Kulike
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS inner_n
+				INNER JOIN AllContent AS inner_ac ON inner_n.ArticleID = inner_ac.ArticleID
+			) AS finalSelection
+			WHERE finalSelection.Kulike BETWEEN @ItemsFrom AND @ItemsTo
+		) AS e_fsd ON n.ArticleID = e_fsd.ArticleID ';
+	END
+	ELSE IF @OrderByCustomFieldID IS NOT NULL
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		INNER JOIN (
+			SELECT finalSelection.[ArticleID],finalSelection.' + @OrderByColumnName + '
+			FROM (
+				SELECT inner_n.[ArticleID],fv.' + @OrderByColumnName + '
+				,ROW_NUMBER() OVER (ORDER BY '
+				IF @FirstOrderBy = 'Featured DESC' SET @sqlcommand = @sqlcommand + N'inner_n.Featured DESC, '
+
+				IF @OrderByDirection = 'ASC'
+					SET @sqlcommand = @sqlcommand + N'(CASE WHEN ' + @OrderByColumnName + ' IS NULL THEN 1 ELSE 0 END),'
+				
+				SET @sqlcommand = @sqlcommand + N'fv.'+ @CleanOrderColumnWithDirection + N') AS Kulike
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS inner_n
+				INNER JOIN AllContent AS inner_ac ON inner_n.ArticleID = inner_ac.ArticleID
+				LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsValues] AS fv ON fv.ArticleID = inner_n.ArticleID AND fv.CustomFieldID = @OrderByCustomFieldID
+			) AS finalSelection
+			WHERE finalSelection.Kulike BETWEEN @ItemsFrom AND @ItemsTo
+		) AS e_fsd ON n.ArticleID = e_fsd.ArticleID ';
+	END
+	ELSE
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		WHERE n.ArticleID IN (
+			SELECT finalSelection.ArticleID
+			FROM (
+				SELECT inner_n.ArticleID, ROW_NUMBER() OVER (ORDER BY '
+				IF @FirstOrderBy = 'inner_n.Featured DESC' SET @sqlcommand = @sqlcommand + N'inner_n.Featured DESC, '
+				
+				SET @sqlcommand = @sqlcommand + N' ' + @CleanOrderColumnWithDirection + N') AS Kulike
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS inner_n
+				WHERE inner_n.ArticleID IN (SELECT ArticleID FROM AllContent)
+			) AS finalSelection
+			WHERE finalSelection.Kulike BETWEEN @ItemsFrom AND @ItemsTo
+		)';
+	END
+END
+ELSE
+BEGIN
+	IF @OrderByColumnName = N'CommentedDate'
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		INNER JOIN  (
+			SELECT finalSelection.[ArticleID],finalSelection.CommentedDate
+			FROM (
+				SELECT inner_n.[ArticleID],inner_ac.CommentedDate
+					,ROW_NUMBER() OVER (ORDER BY '
+				IF @FirstOrderBy = 'Featured DESC' SET @sqlcommand = @sqlcommand + N'inner_n.Featured DESC, '
+
+				 SET @sqlcommand = @sqlcommand + @CleanOrderColumnWithDirection + N') AS Kulike
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS inner_n
+				INNER JOIN AllContent AS inner_ac ON inner_n.ArticleID = inner_ac.ArticleID
+			) AS finalSelection
+			WHERE finalSelection.Kulike BETWEEN @ItemsFrom AND @ItemsTo
+		) AS e_fsd ON n.ArticleID = e_fsd.ArticleID
+		LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsContentLocalization] AS cl ON n.ArticleID = cl.ArticleID AND cl.LocaleCode = @LocaleCode ';
+	END
+	ELSE IF @OrderByCustomFieldID IS NOT NULL
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		INNER JOIN (
+			SELECT finalSelection.[ArticleID],finalSelection.' + @OrderByColumnName + '
+			FROM (
+				SELECT inner_n.[ArticleID],fv.' + @OrderByColumnName + '
+					,ROW_NUMBER() OVER (ORDER BY '
+				IF @FirstOrderBy = 'Featured DESC' SET @sqlcommand = @sqlcommand + N'inner_n.Featured DESC, fv.'
+
+				IF @OrderByDirection = 'ASC'
+					SET @sqlcommand = @sqlcommand + N'(CASE WHEN ' + @OrderByColumnName + ' IS NULL THEN 1 ELSE 0 END),'
+
+				SET @sqlcommand = @sqlcommand + N'fv.'+ @CleanOrderColumnWithDirection + N') AS Kulike
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS inner_n
+				INNER JOIN AllContent AS inner_ac ON inner_n.ArticleID = inner_ac.ArticleID
+				LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsValues] AS fv ON fv.ArticleID = inner_n.ArticleID AND fv.CustomFieldID = @OrderByCustomFieldID
+			) AS finalSelection
+			WHERE finalSelection.Kulike BETWEEN @ItemsFrom AND @ItemsTo
+		) AS e_fsd ON n.ArticleID = e_fsd.ArticleID
+		LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsContentLocalization] AS cl ON n.ArticleID = cl.ArticleID AND cl.LocaleCode = @LocaleCode ';
+	END
+	ELSE
+	BEGIN
+		SET @sqlcommand = @sqlcommand + N'
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+		LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsContentLocalization] AS cl ON n.ArticleID = cl.ArticleID AND cl.LocaleCode = @LocaleCode
+		WHERE n.ArticleID IN (
+			SELECT finalSelection.ArticleID
+			FROM (
+				SELECT inner_n.ArticleID, ROW_NUMBER() OVER (ORDER BY '
+				IF @FirstOrderBy = 'inner_n.Featured DESC' SET @sqlcommand = @sqlcommand + N'inner_n.Featured DESC, '
+
+				SET @sqlcommand = @sqlcommand + N' ' + @CleanOrderColumnWithDirection + N') AS Kulike
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS inner_n
+				WHERE inner_n.ArticleID IN (SELECT ArticleID FROM AllContent)
+			) AS finalSelection
+			WHERE finalSelection.Kulike BETWEEN @ItemsFrom AND @ItemsTo
+		)';
+	END
+END
+
+SET @sqlcommand = @sqlcommand + N' ORDER BY '
+	IF @FirstOrderBy = 'Featured DESC' SET @sqlcommand = @sqlcommand + N'Featured DESC, '
+	IF @OrderByCustomFieldID IS NOT NULL AND @OrderByDirection = 'ASC'
+		SET @sqlcommand = @sqlcommand + N'(CASE WHEN ' + @OrderByColumnName + ' IS NULL THEN 1 ELSE 0 END),'
+	SET @sqlcommand = @sqlcommand + @CleanOrderColumnWithDirection
+
+SET @sqlcommand = @sqlcommand + N'
+IF OBJECT_ID(''tempdb..#UserInRoles'') IS NOT NULL
+	DROP TABLE #UserInRoles;
+IF OBJECT_ID(''tempdb..#ViewCategories'') IS NOT NULL
+	DROP TABLE #ViewCategories;
+IF OBJECT_ID(''tempdb..#ViewCategoriesWithFilter'') IS NOT NULL
+	DROP TABLE #ViewCategoriesWithFilter;
+IF OBJECT_ID(''tempdb..#FilterCategories'') IS NOT NULL
+	DROP TABLE #FilterCategories; '
+
+IF @IsPortalSharing = 1
+	SET @sqlcommand = @sqlcommand + N'
+	IF OBJECT_ID(''tempdb..#SharingPortals'') IS NOT NULL
+		DROP TABLE #SharingPortals; '
+
+IF @CanEditAllContent = 0 AND @QueryModulePermissions = 1
+	SET @sqlcommand = @sqlcommand + N'
+	IF OBJECT_ID(''tempdb..#UserEditCategories'') IS NOT NULL
+		DROP TABLE #UserEditCategories; '
+
+IF @LocaleCode IS NOT NULL
+	SET @sqlcommand = @sqlcommand + N'
+	IF OBJECT_ID(''tempdb..#LocalizedCategories'') IS NOT NULL
+		DROP TABLE #LocalizedCategories; '
+
+IF @sqlAuthors IS NOT NULL
+	SET @sqlcommand = @sqlcommand + N'
+	IF OBJECT_ID(''tempdb..#FilterAuthors'') IS NOT NULL
+		DROP TABLE #FilterAuthors; '
+
+EXEC SP_EXECUTESQL @statement = @sqlcommand
+	,@paramList = @paramList
+	,@PortalID = @PortalID
+	,@ModuleID = @ModuleID
+	,@UserID = @UserID
+	,@OrderByCustomFieldID = @OrderByCustomFieldID
+	,@ItemsFrom = @ItemsFrom
+	,@ItemsTo = @ItemsTo
+	,@DateRange = @DateRange
+	,@FromDate = @FromDate
+	,@ToDate = @ToDate
+	,@OnlyOneCategory = @OnlyOneCategory
+	,@FilterByAuthor = @FilterByAuthor
+	,@FilterByGroupID = @FilterByGroupID
+	,@FilterByArticles = @FilterByArticles
+	,@FilterByDNNUserID = @FilterByDNNUserID
+	,@FilterByDNNGroupID = @FilterByDNNGroupID
+	,@LocaleCode = @LocaleCode
+	,@Perm_ViewAllCategores = @Perm_ViewAllCategores
+	,@Perm_EditAllCategores = @Perm_EditAllCategores
+	,@AdminOrSuperUser = @AdminOrSuperUser
+	,@PermissionSettingsSource = @PermissionSettingsSource
+	,@FillterSettingsSource = @FillterSettingsSource
+	,@OuterModuleID = @OuterModuleID
+	,@NewsFilterCategories = @NewsFilterCategories
+	,@NewsFilterAuthors = @NewsFilterAuthors
+	,@NewsFilterGroups = @NewsFilterGroups
+	,@FilterByTagID = @FilterByTagID
+	,@FieldsTemplateID = @FieldsTemplateID
+	,@SimpleSearchFindCondition = @SimpleSearchFindCondition
+	,@IsPortalSharing = @IsPortalSharing
+	,@CanEditAllContent = @CanEditAllContent
+	,@QueryPermissionsPerArticles = @QueryPermissionsPerArticles
+	,@QueryModulePermissions = @QueryModulePermissions
+GO

@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="GetCalendarContent.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNnews.Calendar.Services.GetCalendarContent" %>

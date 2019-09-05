@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{37F81235-C234-4783-8D44-48E64AEE2A4D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Icatt.Membership.Access.User.ServiceTest</RootNamespace>
+    <AssemblyName>Icatt.Membership.Access.User.ServiceTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Accept|AnyCPU'">
+    <OutputPath>bin\Accept\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.Ar.Manager.ApplicationAuthority.Contract, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.Ar.Manager.ApplicationAuthority.Contract.1.3.5\lib\net461\Icatt.Ar.Manager.ApplicationAuthority.Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.CoreLib, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.CoreLib.1.0.4\lib\net451\Icatt.CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.ServiceModel, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.ServiceModel.1.2.3\lib\net461\Icatt.ServiceModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DummyProxyFactory.cs" />
+    <Compile Include="IT_MembershipAccessServiceTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UserAccessTestProxyFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Icatt.Auditing.Access.AuditTrail.Service\Icatt.Auditing.Access.AuditTrail.Service.csproj">
+      <Project>{4E810853-236B-460C-BBAB-9656B13FE0EB}</Project>
+      <Name>Icatt.Auditing.Access.AuditTrail.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Icatt.Identity.Manager.AspNetIdentity.Contract\Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract.csproj">
+      <Project>{6b21bc98-5137-4efb-9623-158100c89288}</Project>
+      <Name>Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Icatt.Membership.Access.User.Contract\Icatt.Membership.Access.User.Contract.csproj">
+      <Project>{904E5F70-FFA5-4030-8F23-D27E977C17E5}</Project>
+      <Name>Icatt.Membership.Access.User.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Icatt.Membership.Access.User.Proxy\Icatt.Membership.Access.User.Proxy.csproj">
+      <Project>{c96ca5cb-c805-4061-be2c-246209f738ee}</Project>
+      <Name>Icatt.Membership.Access.User.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Icatt.Membership.Access.User.Service\Icatt.Membership.Access.User.Service.csproj">
+      <Project>{E7AC9602-7ADE-41C3-B0E9-C00376C6B2E7}</Project>
+      <Name>Icatt.Membership.Access.User.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Icatt.Membership.Data.UserStore.DbContext\Icatt.Membership.Data.UserStore.DbContext.csproj">
+      <Project>{4919F928-972E-4018-99F0-8AFCE88BD9A1}</Project>
+      <Name>Icatt.Membership.Data.UserStore.DbContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.DeelnemerPortalApi.Contract\Sphdhv.DeelnemerPortalApi.Contract.csproj">
+      <Project>{9d61e4d5-808a-486a-958f-b6d53e3a9771}</Project>
+      <Name>Sphdhv.DeelnemerPortalApi.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Access.TerminatedSession.Contract\Sphdhv.KlantPortaal.Access.TerminatedSession.Contract.csproj">
+      <Project>{62E9BF32-75A5-4624-BDF6-BC9D8E24A96D}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.TerminatedSession.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Common\Sphdhv.KlantPortaal.Common.csproj">
+      <Project>{3D4888B2-356F-45BB-A314-01851818C170}</Project>
+      <Name>Sphdhv.KlantPortaal.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.KlantPortaal.Host.WebHost\Sphdhv.KlantPortaal.Host.WebHost.csproj">
+      <Project>{0190940B-E66A-4698-ABCF-432FB4C3649B}</Project>
+      <Name>Sphdhv.KlantPortaal.Host.WebHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Sphdhv.Security.Manager.Authentication.Contract\Sphdhv.Security.Manager.Authentication.Contract.csproj">
+      <Project>{B0A9D3FD-CF99-4551-9BC6-15E447670EFD}</Project>
+      <Name>Sphdhv.Security.Manager.Authentication.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spdhv.Test.Klantportaal.Host.WebHost\Spdhv.Test.Klantportaal.Host.WebHost.csproj">
+      <Project>{0FEC0E14-EE11-4E4D-AD20-9D75902D2096}</Project>
+      <Name>Spdhv.Test.Klantportaal.Host.WebHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.Klantportaal.Enging.Claims.ServiceTest\Sphdhv.Klantportaal.Enging.Claims.ServiceTest.csproj">
+      <Project>{d277ba9c-7eb6-4e98-93a4-29d3036890df}</Project>
+      <Name>Sphdhv.Klantportaal.Enging.Claims.ServiceTest</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

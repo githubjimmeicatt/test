@@ -1,0 +1,2 @@
+﻿<%@ control language="C#" autoeventwireup="true" inherits="EasyDNNSolutions.Modules.EasyDNNNews.Widgets.ViewTreeView, App_Web_view.ascx.c9cb6fcf" enableviewstate="false" %>
+<asp:Literal ID="ednMenu" runat="server" />

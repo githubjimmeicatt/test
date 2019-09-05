@@ -1,0 +1,355 @@
+/*
+'//Author: 
+'//Company: ICATT interactive media
+'//Date: yyyy/MM/dd
+*/
+
+/**************************/
+/*** TABLES             ***/
+/**************************/
+	IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+		CREATE TABLE {databaseOwner}[{objectQualifier}Icatt_Classification](
+			[ClassificationId] [int] IDENTITY(1,1) NOT NULL,
+			[ClassificationName] [nvarchar](200) NOT NULL,
+			[ParentId] [int] NULL,
+			 CONSTRAINT [PK_{objectQualifier}Icatt_Classification] PRIMARY KEY CLUSTERED 
+			(
+				[ClassificationId] ASC
+			)
+			WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+		)
+
+		ALTER TABLE {databaseOwner}[{objectQualifier}Icatt_Classification]  WITH CHECK ADD  CONSTRAINT [FK_Icatt_Classification_Icatt_Classification] FOREIGN KEY([ParentId])
+		REFERENCES {databaseOwner}[{objectQualifier}Icatt_Classification] ([ClassificationId])
+
+		ALTER TABLE {databaseOwner}[{objectQualifier}Icatt_Classification] CHECK CONSTRAINT [FK_Icatt_Classification_Icatt_Classification]
+
+	END
+	GO
+
+
+	IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+		CREATE TABLE {databaseOwner}[{objectQualifier}Icatt_Classification_Link] (
+			[Id] [int] IDENTITY (1, 1) NOT NULL ,
+			[ItemType] [varchar](255) NOT NULL,
+			[ItemId] [int] NOT NULL,
+			[ClassificationId] [int] NOT NULL,
+			[CreatedByUser] [int] NULL ,
+			[CreatedDate] [datetime] NULL ,
+			[ModifiedByUser] [int] NULL ,
+			[ModifiedDate] [datetime] NULL ,
+			[DeletedByUser] [int] NULL ,
+			[DeletedDate] [datetime] NULL ,
+			[Deleted] [bit] NULL
+		) ON [PRIMARY]
+		
+		CREATE  UNIQUE  CLUSTERED  INDEX [IX_{objectQualifier}Icatt_Classification_Link] ON {databaseOwner}[{objectQualifier}Icatt_Classification_Link]([ItemType], [ItemId], [ClassificationId]) ON [PRIMARY]
+		
+		ALTER TABLE {databaseOwner}[{objectQualifier}Icatt_Classification_Link] ADD 
+			CONSTRAINT [PK_{objectQualifier}Icatt_Classification_Link] PRIMARY KEY  NONCLUSTERED 
+			(
+				[ItemType] ASC,
+				[ItemId] ASC,
+				[ClassificationId] ASC
+			)  ON [PRIMARY]
+
+	END
+	GO
+/**************************/
+/*** STORED PROCEDURES  ***/
+/**************************/
+
+	--// Icatt_Classification
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Root_GetAll]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Root_GetAll]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_GetAll]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_GetAll]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Get]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_GetChildren]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_GetChildren]
+GO
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Add]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Insert]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Insert]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Update]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Update]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Delete]
+GO
+
+	--// Icatt_Classification Link
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Link_Get]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link_Add]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Link_Add]
+	GO
+
+	IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Icatt_Classification_Link_Delete]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+		DROP PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Link_Delete]
+	GO
+
+	--// Icatt_Classification
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Root_GetAll]
+	-- Add the parameters for the stored procedure here
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    SELECT * FROM {databaseOwner}[{objectQualifier}Icatt_Classification]
+    WHERE ParentId IS NULL
+END
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_GetAll]
+	-- Add the parameters for the stored procedure here
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    SELECT * FROM {databaseOwner}[{objectQualifier}Icatt_Classification]
+END
+GO
+
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Get]
+	-- Add the parameters for the stored procedure here
+	@ClassificationId int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    SELECT * FROM {databaseOwner}[{objectQualifier}Icatt_Classification] WHERE ClassificationId = @ClassificationId
+END
+GO
+
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_GetChildren]
+	-- Add the parameters for the stored procedure here
+	@parentId int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    SELECT * FROM {databaseOwner}[{objectQualifier}Icatt_Classification] WHERE parentId = @parentId OR (parentId IS Null AND @parentId IS NULL)
+END
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Add]
+	-- Add the parameters for the stored procedure here
+	@ClassificationName nvarchar(200),
+	@ParentId int = NULL
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    INSERT INTO {databaseOwner}[{objectQualifier}Icatt_Classification] (ClassificationName, ParentId) VALUES (@ClassificationName, @ParentId)
+    SELECT * FROM {databaseOwner}[{objectQualifier}Icatt_Classification] WHERE ClassificationId = @@IDENTITY
+END
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Insert]
+	-- Add the parameters for the stored procedure here
+	@ClassificationId int,
+	@ClassificationName nvarchar(200),
+	@ParentId int = NULL
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    SET IDENTITY_INSERT dnn_Icatt_Classification ON
+    INSERT INTO {databaseOwner}[{objectQualifier}Icatt_Classification] (ClassificationId, ClassificationName, ParentId) VALUES (@ClassificationId, @ClassificationName, @ParentId)
+    SET IDENTITY_INSERT dnn_Icatt_Classification OFF
+    SELECT * FROM dnn_Icatt_Classification WHERE ClassificationId = @ClassificationId
+END
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Update]
+	-- Add the parameters for the stored procedure here
+	@ClassificationId int,
+	@ClassificationName nvarchar(200),
+	@ParentId int = NULL
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    UPDATE {databaseOwner}[{objectQualifier}Icatt_Classification] SET ClassificationName = @ClassificationName, ParentId = @ParentId WHERE ClassificationId = @ClassificationId
+    SELECT * FROM {databaseOwner}[{objectQualifier}Icatt_Classification] WHERE ClassificationId = @ClassificationId
+END
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Icatt_Classification_Delete]
+	-- Add the parameters for the stored procedure here
+	@ClassificationId int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    DELETE FROM {databaseOwner}[{objectQualifier}Icatt_Classification] WHERE ClassificationId = @ClassificationId
+END
+GO
+
+	--// Icatt_Classification Link
+	CREATE PROCEDURE {databaseOwner}{objectQualifier}Icatt_Classification_Link_Get 
+		@ClassificationId int = null,
+		@ItemId int = null,
+		@ItemType varchar(255) = null
+	AS
+	BEGIN
+		-- SET NOCOUNT ON added to prevent extra result sets from
+		-- interfering with SELECT statements.
+		SET NOCOUNT ON;
+
+		-- Insert statements for procedure here
+		SELECT *
+		FROM {databaseOwner}{objectQualifier}Icatt_Classification_Link
+		WHERE (
+			ItemId = @ItemId
+			OR
+			@ItemId IS NULL
+		) AND (
+			ItemType = @ItemType
+			OR
+			@ItemType IS NULL
+		) AND (
+			ClassificationId = @ClassificationId
+			OR
+			@ClassificationId IS NULL
+		)
+		AND ISNULL(Deleted,0) = 0
+		
+	END
+	GO
+
+
+	CREATE PROCEDURE {databaseOwner}{objectQualifier}Icatt_Classification_Link_Add
+		@ClassificationId int,
+		@ItemId int,
+		@ItemType varchar(255),
+		@CreatedByUser int
+	AS
+	BEGIN
+		-- SET NOCOUNT ON added to prevent extra result sets from
+		-- interfering with SELECT statements.
+		SET NOCOUNT ON;
+		
+		DECLARE @Id int
+
+		SELECT @Id = Id
+		FROM {databaseOwner}{objectQualifier}Icatt_Classification_Link
+		WHERE ItemId = @ItemId
+		AND ItemType = @ItemType
+		AND ClassificationId = @ClassificationId
+		AND Deleted = 1
+		
+		IF NOT @Id IS NULL
+			BEGIN
+				UPDATE {databaseOwner}{objectQualifier}Icatt_Classification_Link
+				SET CreatedByUser = @CreatedByUser,
+					CreatedDate = getdate(),
+					Deleted = 0
+				WHERE Id = @Id
+			END
+		ELSE
+			BEGIN
+				-- Insert statements for procedure here
+				INSERT INTO {databaseOwner}{objectQualifier}Icatt_Classification_Link (
+					ClassificationId,
+					ItemId,
+					ItemType,
+					CreatedByUser,
+					CreatedDate
+				) VALUES (
+					@ClassificationId,
+					@ItemId, 
+					@ItemType, 
+					@CreatedByUser,
+					getdate()
+				)
+			END
+			
+		SELECT *
+		FROM {databaseOwner}{objectQualifier}Icatt_Classification_Link
+		WHERE ItemId = @ItemId
+		AND ItemType = @ItemType
+		AND ClassificationId = @ClassificationId
+		AND Deleted = 0
+
+	END
+	GO
+
+
+	CREATE PROCEDURE {databaseOwner}{objectQualifier}Icatt_Classification_Link_Delete
+		@ClassificationId int = null,
+		@ItemId int = null,
+		@ItemType varchar(255) = null,
+		@DeletedByUser int
+	AS
+	BEGIN
+		-- SET NOCOUNT ON added to prevent extra result sets from
+		-- interfering with SELECT statements.
+		SET NOCOUNT ON;
+
+		UPDATE {databaseOwner}{objectQualifier}Icatt_Classification_Link
+		SET Deleted = 1,
+			DeletedByUser = @DeletedByUser,
+			DeletedDate = getdate()
+		WHERE (
+			ItemId = @ItemId
+			OR
+			@ItemId IS NULL
+		) AND (
+			ItemType = @ItemType
+			OR
+			@ItemType IS NULL
+		) AND (
+			ClassificationId = @ClassificationId
+			OR
+			@ClassificationId IS NULL
+		)
+	END
+	GO
+

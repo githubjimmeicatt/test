@@ -1,0 +1,56 @@
+﻿<!--CategoriesTemplate-->
+<!--HeaderTemplate-->
+<div class="EDN_module_box edn_horizontalMenu">
+	<h3 class="edn_module_title">[EasyDNNnewsLocalizedText:Categories]</h3>
+	<div class="edn_scrollWrapper">
+		<span class="edn_scrollLeft"></span>
+		<ul class="edn_category_menu_wrapper">
+<!--HeaderEnd-->
+<!--CategoriesEnd-->
+
+<!--CategoriesTemplate-->
+<!--TemplateLevel:0:-->
+		<div>
+			<a class="edn_category" href="[EasyDNNcategories:Link]" title="[EasyDNNcategories:Title]"><span>[EasyDNNcategories:Title]</span></a>
+			<a class="expand_collapse icon" href="#"><span>Expand/Collapse</span></a>
+		</div>
+<!--TemplateEnd-->
+<!--CategoriesEnd-->
+
+<!--CategoriesTemplate-->
+<!--FooterTemplate-->
+		</ul>
+		<span class="edn_scrollRight"></span>
+	</div>
+	<script>
+		jQuery(function ($) {
+			var $scrollWrapper = $('.edn_scrollWrapper'),
+				$ul = $('> ul', $scrollWrapper),
+				main = function () {
+					var scrollLeft = $ul.scrollLeft(),
+						parentWidth = $ul.parent().width(),
+						scrollWidth = $ul[0].scrollWidth;
+
+					$scrollWrapper
+						.toggleClass('edn_leftOffset', scrollLeft > 0)
+						.toggleClass('edn_rightOffset', scrollLeft != scrollWidth - parentWidth);
+				};
+
+			$ul.on('scroll', main);
+
+			$scrollWrapper
+				.on('click', '.edn_scrollLeft', function () {
+					$ul.scrollLeft($ul.scrollLeft() - 100);
+				})
+				.on('click', '.edn_scrollRight', function () {
+					$ul.scrollLeft($ul.scrollLeft() + 100);
+				});
+
+			$(window).on('resize', main);
+
+			main();
+		});
+	</script>
+</div>
+<!--FooterEnd-->
+<!--CategoriesEnd-->

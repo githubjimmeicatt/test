@@ -1,0 +1,33 @@
+﻿@model Sphdhv.KlantPortaal.Host.WebHost.Models.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+<div>
+    
+   
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = @Model.Destination }))
+    {
+        foreach (var pair in Model.Parameters)
+        {
+            @Html.Hidden(pair.Name,pair.Value)
+        }
+    }
+
+ 
+    <script type="text/javascript">
+        document.forms[0].submit();
+    </script>
+      
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+//
+// REGION: FOOTER
+// ------------------------------------------------------------------
+//
+
+.page__footer {
+    padding: em(24) 0;
+    background-color: #00567D;
+    color: #fff;
+}
+
+.page__footer__inner {
+    @include clearfix;
+    @extend .container;
+    position: relative;
+}
+
+.page__footer .logo {
+    @include hide-text;
+    display: block;
+}
+
+.page__footer .logo.logo--primary {
+    width: em(256);
+    height: em(18);
+    margin-bottom: 16px;
+
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+    @media (min-width: 900px) {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+}
+
+.page__footer .logo.logo--secondary {
+    width: 212px;
+    height: 78px;
+    background: url(../img/logo_secondary.svg) no-repeat 0 0;
+    background-size: 100%;
+
+    @media (min-width: 720px) {
+        position: absolute;
+        top: 0;
+        right: 14px;
+    }
+
+    @media (min-width: 968px) {
+        right: 0;
+    }
+
+}
+
+.page__footer .address {
+
+    @media (min-width: 900px) {
+        @include shift(4);
+    }
+
+}
+
+.page__footer--bottom {
+    padding-top: em(17);
+    padding-bottom: em(17);
+    background-color: #004765;
+}

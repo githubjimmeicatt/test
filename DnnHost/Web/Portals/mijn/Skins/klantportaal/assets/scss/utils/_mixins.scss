@@ -1,0 +1,151 @@
+//
+// Mixins
+//
+
+//
+// Clearfix
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+//
+// Alignment
+
+// Align right
+
+@mixin align-right {
+    margin-left: auto;
+}
+
+// Align left
+
+@mixin align-left {
+    margin-right: auto;
+}
+
+// Align center
+
+@mixin align-center {
+    @include align-right;
+    @include align-left;
+}
+
+//
+// Layout
+
+// Container
+
+@mixin container($max-width: rem($max-container-width), $alignment: center) {
+    @if ($alignment == center) { @include align-center; }
+
+    @else if ($alignment == right) { @include align-right; }
+
+    @else if ($alignment == left) { @include align-left; }
+
+    @else { @warn "Invalid $alignment argument."; }
+
+    max-width: $max-width;
+}
+
+//
+// Typography
+
+// Base
+
+@mixin type-base {
+    margin-top: rem(24);
+    margin-bottom: rem(24);
+    font-size: rem($font-size-base-sm);
+    line-height: ($line-height-base-sm/$font-size-base-sm);
+
+    @media (min-width: $font-size-md-from) {
+        font-size: rem($font-size-base-md);
+        line-height: ($line-height-base-md/$font-size-base-md);
+    }
+
+}
+
+// Small
+
+@mixin type-small {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: rem($font-size-small);
+    line-height: ($line-height-small/$font-size-small);
+}
+
+// H1
+
+@mixin type-h1 {
+    margin-top: 0;
+    margin-bottom: em(16,$font-size-h1-sm);
+    color: $color-primary-dark;
+    font-family: $font-family-headings;
+    font-size: rem($font-size-h1-sm);
+    font-weight: 300;
+    line-height: ($line-height-h1-sm/$font-size-h1-sm);
+
+    @media (min-width: $font-size-md-from) {
+        margin-top: 0;
+        margin-bottom: em(40,$font-size-h1-md);
+        font-size: rem($font-size-h1-md);
+        line-height: ($line-height-h1-md/$font-size-h1-md);
+    }
+
+}
+
+// H2
+
+@mixin type-h2 {
+    margin-top: em(24,$font-size-h2-sm);
+    margin-bottom: em(8,$font-size-h2-sm);
+    color: $color-primary-dark;
+    font-family: $font-family-headings;
+    font-size: rem($font-size-h2-sm);
+    font-weight: 700;
+    line-height: ($line-height-h2-sm/$font-size-h2-sm);
+
+    @media (min-width: $font-size-md-from) {
+        margin-top: em(32,$font-size-h2-md);
+        margin-bottom: em(16,$font-size-h2-md);
+        font-size: rem($font-size-h2-md);
+        line-height: ($line-height-h2-md/$font-size-h2-md);
+    }
+
+}
+
+// H3
+
+@mixin type-h3 {
+    margin-top: rem(8);
+    margin-bottom: rem(8);
+    color: $color-primary-light;
+    font-family: $font-family-headings;
+    font-size: rem($font-size-h3-sm);
+    font-weight: 600;
+    line-height: ($line-height-h3-sm/$font-size-h3-sm);
+
+    @media (min-width: $font-size-md-from) {
+        font-size: rem($font-size-h3-md);
+        line-height: ($line-height-h3-md/$font-size-h3-md);
+    }
+
+}
+
+//
+// Reset list
+
+@mixin reset-list {
+    padding-left: 0;
+    margin-left: 0;
+
+    li {
+        list-style: none none;
+    }
+
+}

@@ -1,0 +1,230 @@
+﻿/**** Gallery lightbox ****/
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsLightboxSettings' and column_name = 'GalleryLightbox')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] ADD GalleryLightbox TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsLightboxSettings_GalleryLightbox DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonSettings' and column_name = 'GalleryLightbox')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonSettings] ADD GalleryLightbox TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsChameleonSettings_GalleryLightbox DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonNestedSettings' and column_name = 'GalleryLightbox')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonNestedSettings] ADD GalleryLightbox TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsChameleonNestedSettings_GalleryLightbox DEFAULT(0) NOT NULL
+END
+GO
+
+/**** Gallery lightbox ****/
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsEventRegistrationGetValues]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsEventRegistrationGetValues]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsCanAddEditArticles]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsCanAddEditArticles]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsCanAddEditArticles]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsCanAddEditArticles]
+    @UserID INT,
+    @PortalID INT,
+    @ModuleID INT,
+    @IsAdminOrSuperUser BIT,
+    @AddArticleToAll BIT,
+    @UserCanEditOnlyTheirArticles BIT
+AS 
+SET NOCOUNT ON;
+DECLARE @HasEditCategories BIT;
+SET @HasEditCategories = 0;
+DECLARE @ExistsEventWithRegistration BIT;
+SET @ExistsEventWithRegistration = 0;
+
+DECLARE @CheckModuleID bit;
+IF @ModuleID IS NULL
+	SET @CheckModuleID = 1;
+ELSE
+	SET @CheckModuleID = 0;
+
+
+IF @IsAdminOrSuperUser = 1 OR @AddArticleToAll = 1
+BEGIN
+	SET @HasEditCategories = 1;
+	IF EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS c ON n.ArticleID = c.ArticleID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsData] AS ed ON n.ArticleID = ed.ArticleID
+			WHERE c.CategoryID IN (SELECT [CategoryID] FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] WHERE PortalID = @PortalID)
+				AND n.PortalID=@PortalID
+				AND ed.EventType IS NOT NULL
+				AND n.EventArticle = 1
+				AND (@UserCanEditOnlyTheirArticles = 0 OR n.UserID = @UserID)
+		)
+		SET @ExistsEventWithRegistration = 1;
+END
+ELSE
+BEGIN
+	DECLARE @EditCategories TABLE (CategoryID INT NOT NULL PRIMARY KEY);
+	IF @UserID = -1
+	BEGIN
+		INSERT INTO @EditCategories
+		SELECT DISTINCT cat.CategoryID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] as cat INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsAddToCategories] AS rpac ON cat.CategoryID = rpac.CategoryID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] AS rps ON rpac.PremissionSettingsID = rps.PremissionSettingsID
+		WHERE rps.RoleID IS NULL AND ((@CheckModuleID = 1 AND (rps.ModuleID IS NULL)) OR (@CheckModuleID = 0 AND (rps.ModuleID = @ModuleID))) AND rps.PortalID = @PortalID;
+	END
+	ELSE
+	BEGIN
+		INSERT INTO @EditCategories
+		SELECT DISTINCT cat.CategoryID
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] as cat INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionsAddToCategories] AS rpac ON cat.CategoryID = rpac.CategoryID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsRolePremissionSettings] AS rps ON rpac.PremissionSettingsID = rps.PremissionSettingsID
+			INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.RoleID = rps.RoleID
+		WHERE ur.UserID = @UserID AND (ur.ExpiryDate IS NULL OR ur.ExpiryDate > GETUTCDATE()) AND (ur.EffectiveDate IS NULL OR ur.EffectiveDate < GETUTCDATE()) AND ((@CheckModuleID = 1 AND (rps.ModuleID IS NULL)) OR (@CheckModuleID = 0 AND (rps.ModuleID = @ModuleID))) AND rps.PortalID = @PortalID
+		UNION
+		SELECT DISTINCT cat.CategoryID
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] as cat INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionsAddToCategories] AS upac ON cat.CategoryID = upac.CategoryID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsUserPremissionSettings] AS ups ON upac.PremissionSettingsID = ups.PremissionSettingsID
+		WHERE ups.UserID = @UserID AND ((@CheckModuleID = 1 AND (ups.ModuleID IS NULL)) OR (@CheckModuleID = 0 AND (ups.ModuleID = @ModuleID))) AND ups.PortalID = @PortalID;
+	END
+
+	IF EXISTS (SELECT 1 FROM @EditCategories)
+	BEGIN
+		SET @HasEditCategories = 1;
+		IF EXISTS(
+			SELECT 1 FROM {databaseOwner}[{objectQualifier}EasyDNNNews] AS n
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsCategories] AS c ON n.ArticleID = c.ArticleID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsEventsData] AS ed ON n.ArticleID = ed.ArticleID
+			WHERE c.CategoryID IN (SELECT CategoryID FROM @EditCategories)
+				AND n.PortalID=@PortalID
+				AND ed.EventType IS NOT NULL
+				AND n.EventArticle = 1
+				AND (@UserCanEditOnlyTheirArticles = 0 OR n.UserID = @UserID)
+		)
+		SET @ExistsEventWithRegistration = 1;
+	END
+END
+
+SELECT @HasEditCategories AS HasEditCategories, @ExistsEventWithRegistration AS ExistsEventWithRegistration;' 
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsEventRegistrationGetValues]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsEventRegistrationGetValues]
+(
+	@EventUserItemID INT,
+	@FieldsTemplateID INT,
+	@LocaleCode	NVARCHAR(20) = NULL,
+	@ShowHiddenFields BIT
+)
+AS
+SET NOCOUNT ON;    
+SELECT fv.[EventUserItemID], cf.[CustomFieldID],cf.[ControlTypeID],cf.[Token],cf.[ShowLabel],cf.[LabelValue],cf.[LabelHelp],cf.[IsParent],cf.[IconURL],cf.[ACode],cf.[DisplayFormat],fv.[RText],fv.[Decimal],fv.[Int],fv.[Bit],NULL AS [FieldElementID],fv.[Text],gt.[Position],NULL AS [MEPosition]
+FROM {databaseOwner}[{objectQualifier}EasyDNNfields] AS cf
+	INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gt ON cf.[CustomFieldID] = gt.[CustomFieldID]
+	INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationValues] as fv ON cf.[CustomFieldID] = fv.[CustomFieldID]
+WHERE cf.[IsPublished] = 1 AND (@ShowHiddenFields = 1 OR cf.[IsHidden] = @ShowHiddenFields) AND gt.[FieldsTemplateID] = @FieldsTemplateID AND fv.[EventUserItemID] = @EventUserItemID
+UNION ALL
+SELECT fms.[EventUserItemID], cf.[CustomFieldID],cf.[ControlTypeID],cf.[Token],cf.[ShowLabel],cf.[LabelValue],cf.[LabelHelp],cf.[IsParent],cf.[IconURL],NULL AS [ACode],NULL AS [DisplayFormat],NULL as [RText], NULL AS [Decimal],NULL AS [Int],NULL AS [Bit],fme.[FieldElementID],fme.[Text],gt.[Position],fme.[Position] AS [MEPosition]
+FROM {databaseOwner}[{objectQualifier}EasyDNNfields] as cf INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsTemplateItems] AS gt ON cf.[CustomFieldID] = gt.[CustomFieldID]
+	INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] as fme ON cf.[CustomFieldID] = fme.[CustomFieldID]
+	LEFT OUTER JOIN {databaseOwner}[{objectQualifier}EasyDNNfieldsRegistrationMultiSelected] as fms ON cf.[CustomFieldID] = fms.[CustomFieldID] AND fme.[FieldElementID] = fms.[FieldElementID] AND ((cf.[ShowAllMultiElements] = 0 AND fms.[EventUserItemID] = @EventUserItemID) OR (cf.[ShowAllMultiElements] = 1 AND (fms.[EventUserItemID] = @EventUserItemID OR (fms.[EventUserItemID] IS NULL AND cf.[ControlTypeID] = 23))))
+WHERE cf.[IsPublished] = 1 AND (@ShowHiddenFields = 1 OR cf.[IsHidden] = @ShowHiddenFields) AND gt.[FieldsTemplateID] = @FieldsTemplateID AND ((cf.[ShowAllMultiElements] = 0 AND fms.[EventUserItemID] = @EventUserItemID) OR (cf.[ShowAllMultiElements] = 1 AND (fms.[EventUserItemID] = @EventUserItemID OR (fms.[EventUserItemID] IS NULL AND cf.[ControlTypeID] = 23))))
+ORDER BY [Position], [MEPosition];' 
+END
+GO
+
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'EventPostWhereToOpen')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD EventPostWhereToOpen NVARCHAR(50) NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'CreatePostLogFile')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD CreatePostLogFile BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_CreatePostLogFile DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'DefaultPostFromName')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD DefaultPostFromName NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'DefaultPostFromMail')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD DefaultPostFromMail NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'DefaultReplyTo')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD DefaultReplyTo NVARCHAR(256) NULL
+END
+GO
+
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'SubjectApprovalNeeded')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD SubjectApprovalNeeded NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'SubjectEventRegistration')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD SubjectEventRegistration NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'SubjectAwaitingApproval')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD SubjectAwaitingApproval NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'SubjectConfirm')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD SubjectConfirm NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'SubjectReject')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD SubjectReject NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'SubjectVerify')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD SubjectVerify NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TemplateApprovalNeeded')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TemplateApprovalNeeded NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TemplateEventRegistration')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TemplateEventRegistration NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TemplateAwaitingApproval')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TemplateAwaitingApproval NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TemplateConfirm')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TemplateConfirm NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TemplateReject')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TemplateReject NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TemplateVerify')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TemplateVerify NVARCHAR(MAX) NULL
+END
+GO

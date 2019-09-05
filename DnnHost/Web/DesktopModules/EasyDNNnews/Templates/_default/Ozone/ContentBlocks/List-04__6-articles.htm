@@ -1,0 +1,125 @@
+<!--TemplateGroup:contentBlockDefault-->
+
+<!--ArticleRepeat:Before:-->
+<div class="edn__contentBlock_header">
+	[EasyDNNnews:IfExists:ModuleHeader]<h3 class="edn__contentBlock_title"><span>[EasyDNNnews:ModuleTitle]</span></h3>[EasyDNNnews:EndIf:ModuleHeader]
+	[EasyDNNnews:IfExists:CategoriesFilter]
+	[EasyDNNnews:Categories:Html:UnorderedList]
+	<div class="edn__contentBlock_hiddenItemWrapper">
+		<div class="edn_contentBlock_trigger">More</div>
+		<ol class="edn__contentBlock_itemList edn__contentBlock_hiddenItemList"></ol>
+	</div>
+	[EasyDNNnews:EndIf:CategoriesFilter]
+</div>
+<div class="edn_mainWrapper">
+<!--RepeatEnd:Before:-->
+
+<!--MultiArticleTemplate-->
+
+<!--Before:1:-->
+<div class="edn_leadingArticle">
+<!--BeforeEnd-->
+
+<!--ArticleRepeat:1:-->
+<article>
+	[EasyDNNnews:IfExists:Image]
+	<figure>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><img class="edn_articleImage" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:860:Height:300:Resize:Crop]"/></a>
+		<span class="edn_bottomRightCorner">
+			<span class="edn_numberOfComments"><a href="[EasyDNNnews:ReadMore]#[EasyDNNnewsLocalizedText:CommentsAnchor]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Comments]</a></span>
+			<span class="edn_category">[EasyDNNnews:Categories separator="" last]</span>
+		</span>
+	</figure>
+	[EasyDNNnews:EndIf:Image]
+	<div class="edn_metaDetails">
+		[EasyDNNnews:Author:Link]
+		<time>[EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event]</time>
+	</div>
+	<h2 class="edn_articleTitle"><a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+	<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:250]</div>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--After:1:-->
+</div>
+<!--AfterEnd-->
+<!--RepeatEnd-->
+
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+
+<!--Before:2:-->
+<div class="edn_leftSide edn_leadingArticle">
+<!--BeforeEnd-->
+
+<!--ArticleRepeat:2:-->
+<article>
+	[EasyDNNnews:IfExists:Image]
+	<figure>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><img class="edn_articleImage" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:400:Height:180:Resize:Crop]"/></a>
+		<span class="edn_bottomRightCorner">
+			<span class="edn_numberOfComments">[EasyDNNnews:Comments]</span>
+			<span class="edn_category">[EasyDNNnews:Categories separator=", " nolink]</span>
+		</span>
+	</figure>
+	[EasyDNNnews:EndIf:Image]
+	<div class="edn_metaDetails">
+		[EasyDNNnews:Author:Link]
+		<time>[EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event]</time>
+	</div>
+	<h2 class="edn_articleTitle"><a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+	<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:250]</div>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--After:2:-->
+</div>
+<!--AfterEnd-->
+<!--RepeatEnd-->
+
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--Before:3:4:5:6:-->
+<div class="edn_rightSide edn_smallList">
+<!--BeforeEnd-->
+<!--ArticleRepeat:3:4:5:6:-->
+<article>
+	<h2>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">
+			[EasyDNNnews:IfExists:Image]
+			<span><img class="edn_articleImage" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:115:Height:70:Resize:Crop]"/></span>
+			[EasyDNNnews:EndIf:Image]
+			[EasyDNNnews:Title]
+		</a>
+	</h2>
+	<div class="edn_metaDetails">
+		<time>[EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfNotExists:Event][EasyDNNnews:PublishDate][EasyDNNnews:EndIf:Event]</time>
+	</div>
+</article>
+<!--RepeatEnd-->
+<!--MultiArticleEnd-->
+
+<!--After:3:4:5:6:-->
+</div>
+<!--AfterEnd-->
+<!--RepeatEnd-->
+
+<!--MultiArticleEnd-->
+
+<!--MultiArticleTemplate-->
+<!--ArticleRepeat:After:-->
+	<p class="eds_noContent">[EasyDNNnewsLocalizedText:NoContentMessage]</p>
+	<p class="eds_contentError">[EasyDNNnewsLocalizedText:ContentErrorMessage]</p>
+</div>
+[EasyDNNnews:IfExists:Paging]
+<div class="edn_pagination">
+	<span class="edn__contentBlock_previousPage">[EasyDNNnewsLocalizedText:PreviousPageText]</span>
+	<span class="edn__contentBlock_nextPage">[EasyDNNnewsLocalizedText:NextPageText]</span>
+</div>
+[EasyDNNnews:EndIf:Paging]
+<!--RepeatEnd:After:-->
+<!--MultiArticleEnd-->

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B8BD1AE-3081-4BF3-89CA-63C15259EDB9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sphdhv.KlantPortaal.Engine.Claims.Service</RootNamespace>
+    <AssemblyName>Sphdhv.KlantPortaal.Engine.Claims.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Accept|AnyCPU'">
+    <OutputPath>bin\Accept\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Icatt.CoreLib, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.CoreLib.1.0.4\lib\net451\Icatt.CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.OAuth.Contract, Version=1.0.2.536, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.OAuth.Contract.1.0.2.536\lib\net461\Icatt.OAuth.Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Icatt.ServiceModel, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Icatt.ServiceModel.1.2.3\lib\net461\Icatt.ServiceModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClaimsEngineService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Icatt.Auditing.Manager.AuditWriter.Contract\Icatt.Auditing.Manager.AuditTrailWriter.Contract.csproj">
+      <Project>{8C86A0A1-CD9A-4E83-928E-EEB338A3AFA9}</Project>
+      <Name>Icatt.Auditing.Manager.AuditTrailWriter.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Icatt.Digid.Access.Contract\Icatt.Digid.Access.Contract.csproj">
+      <Project>{bd1b1f78-e960-474c-a15b-8ba4ea821680}</Project>
+      <Name>Icatt.Digid.Access.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Icatt.Digid.Access.Proxy\Icatt.Digid.Access.Proxy.csproj">
+      <Project>{ad1369ea-3281-47fc-a746-b3eaee4c1a2b}</Project>
+      <Name>Icatt.Digid.Access.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Icatt.Identity.Manager.AspNetIdentity.Contract\Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract.csproj">
+      <Project>{6B21BC98-5137-4EFB-9623-158100C89288}</Project>
+      <Name>Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Icatt.Membership.Access.User.Contract\Icatt.Membership.Access.User.Contract.csproj">
+      <Project>{904E5F70-FFA5-4030-8F23-D27E977C17E5}</Project>
+      <Name>Icatt.Membership.Access.User.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spdhv.KlantPortaal.Access.AuthToken.Contract\Sphdhv.KlantPortaal.Access.AuthToken.Contract.csproj">
+      <Project>{4887730f-b311-4d63-826e-95d0e3ed0a89}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.AuthToken.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spdhv.KlantPortaal.Access.AuthToken.Service\Sphdhv.KlantPortaal.Access.AuthToken.Service.csproj">
+      <Project>{E2AA6A02-E0F9-4494-BC04-610103AFE5BE}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.AuthToken.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.KlantPortaal.Access.Pensioen.Contract\Sphdhv.KlantPortaal.Access.Pensioen.Contract.csproj">
+      <Project>{4bc516dd-8163-4068-8612-8c9dbc77e0ac}</Project>
+      <Name>Sphdhv.KlantPortaal.Access.Pensioen.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.KlantPortaal.Common\Sphdhv.KlantPortaal.Common.csproj">
+      <Project>{3d4888b2-356f-45bb-a314-01851818c170}</Project>
+      <Name>Sphdhv.KlantPortaal.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sphdhv.Klantportaal.Engine.Claims.Contract\Sphdhv.KlantPortaal.Engine.Claims.Contract.csproj">
+      <Project>{69187D81-14ED-49DF-AAB4-90C9AA417659}</Project>
+      <Name>Sphdhv.KlantPortaal.Engine.Claims.Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

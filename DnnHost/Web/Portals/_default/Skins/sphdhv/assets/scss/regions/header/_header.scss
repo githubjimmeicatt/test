@@ -1,0 +1,146 @@
+//
+// HEADER
+// ------------------------------------------------------------------
+//
+
+.page__header {
+    background-color: $color-primary-dark-blue;
+    color: #fff;
+
+}
+
+.page__header__inner {
+    @include clearfix;
+    @extend .container;
+    display: flex;
+    align-items: center;
+    height: rem(87);
+
+    @media (min-width: 768px) {
+        height: rem(72);
+    }
+
+}
+
+//
+// Logo
+//
+
+.page__header .logo {
+    margin-right: auto;
+}
+
+.page__header [class*="logo--"] {
+    float: left;
+}
+
+.page__header .logo--inline {
+    width: rem(385);
+    height: rem(27);
+
+    @media (max-width: 767px) {
+        display: none;
+    }
+
+}
+
+.page__header .logo--stacked {
+    width: rem(150);
+    height: rem(47);
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+
+}
+
+//
+// Meta
+//
+
+.page__header .meta {
+    display: none;
+
+    @media (min-width: 720px) {
+        float: right;    
+        display: block;
+        margin-top: -#{em(4,14)};
+        font-size: em(14);
+    }
+
+}
+
+.page__header .meta li {
+    display: flex;
+    align-items: center;
+    margin-top: em(7,14);
+}
+
+
+
+.page__header .meta li:before {
+    display: block;
+    margin-right: em(14,14);
+    margin-left: em(14,14);
+    content: '\007C';
+}
+
+.page__header .meta li:first-child:before {
+    display: none;
+}
+
+.page__header .meta a {
+    display: flex;
+    align-items: center;
+
+    img {
+        display: block;
+        width: em(14,14);
+        width: em(14,14);
+        margin-right: em(6,14);
+    }
+
+}
+
+//
+// Mobile nav
+//
+
+.page__header .mobile-nav {
+    float: right;    
+
+    @media (min-width: 720px) {
+        display: none;
+    }
+
+}
+
+.page__header .mobile-nav__item {
+    margin-left: em(14);
+}
+
+.page__header .mobile-nav__item:first-child {
+    margin-left: 0;
+}
+
+.page__header .mobile-nav__anchor {
+    @include hide-text;
+    display: block;
+    width: 28px;
+    height: 29px;
+}
+
+.page__header .mobile-nav__item--search .mobile-nav__anchor {
+    background: url(../img/btn_search.svg) no-repeat 0 0;
+    background-size: 100%;
+}
+
+.page__header .mobile-nav__item--profile .mobile-nav__anchor {
+    background: url(../img/btn_profile.svg) no-repeat 0 0;
+    background-size: 100%;
+}
+
+.page__header .mobile-nav__item--menu .mobile-nav__anchor {
+    background: url(../img/btn_menu.svg) no-repeat 0 0;
+    background-size: 100%;
+}

@@ -1,0 +1,146 @@
+<!--TemplateGroup:detailsArticleDefault-->
+<!--ArticleTemplate-->
+<EDNHeader>
+	<article class="edn_article edn_defaultDetails">
+		<header style="height:550px;[EasyDNNnews:IfMediaType:Image]background-image: url('[EasyDNNnews:Image]');" class="edn_mediaImage[EasyDNNnews:EndIfMediaType]">
+			<h1 class="edn_articleTitle">[EasyDNNnews:Title]</h1>
+			[EasyDNNnews:IfMediaType:EmbedMedia]
+			<div class="edn_mediaVideo" style="width:[EasyDNNnews:MainArticleImageWidth]">
+				[EasyDNNnews:MainMedia]
+			</div>
+			[EasyDNNnews:EndIfMediaType]
+			[EasyDNNnews:IfExists:AuthorProfile]
+			<div class="edn_headerAuthor">
+				[EasyDNNnews:Author:Image:Width:180:Height:180:Resize:Crop]
+				<div class="edn_authorGroupDetails">
+					<h4>[EasyDNNnews:Author:DisplayName][EasyDNNnews:Author:RSSURL]</h4>
+					[EasyDNNnews:Author:ShortInfo] <span class="edn_otherPostsBy">[EasyDNNnewsLocalizedText:Otherpostsby] [EasyDNNnews:Author:Link]</span>
+					<div class="edn_connectWith">
+						<div>
+							[EasyDNNnews:Author:Contact]
+							[EasyDNNnews:Author:FullInfo]
+						</div>
+						<div class="edn_authorSocial">
+							[EasyDNNnews:Author:Facebook]
+							[EasyDNNnews:Author:Twitter]
+							[EasyDNNnews:Author:LinkedIn]
+							[EasyDNNnews:Author:GooglePlus]
+						</div>
+					</div>
+				</div>
+			</div>
+			[EasyDNNnews:EndIf:AuthorProfile]
+			[EasyDNNnews:IfExists:ArticlePreviousNext]
+			<div class="edn_articleScrolling">
+				[EasyDNNnews:IfExists:PreviousArticleLink]
+				<div class="edn_prevArticle edn_toolTip edn_tooltipLeft">
+					<div class="edn_toolTipContent">
+						[EasyDNNnews:PreviousArticle:IfExists:Image]
+						<img alt="[EasyDNNnews:PreviousArticleTitle]" src="[EasyDNNnews:PreviousArticle:Image:Width:140:Height:100:Resize:Crop]"/>
+						[EasyDNNnews:PreviousArticle:EndIf:Image]
+						<span class="edn_fixedNavTitle">[EasyDNNnews:PreviousArticleTitle]</span>
+					</div>
+					<a class="edn_previusArticle" href="[EasyDNNnews:PreviousArticleLink]">[EasyDNNnewsLocalizedText:PreviusArticle]</a>
+				</div>
+				[EasyDNNnews:EndIf:PreviousArticleLink]
+				[EasyDNNnews:IfExists:NextArticleLink]
+				<div class="edn_nextArticle edn_toolTip edn_tooltipRight">
+					<div class="edn_toolTipContent">
+						[EasyDNNnews:NextArticle:IfExists:Image]
+						<img alt="[EasyDNNnews:NextArticleTitle]" src="[EasyDNNnews:NextArticle:Image:Width:140:Height:100:Resize:Crop]"/>
+						[EasyDNNnews:NextArticle:EndIf:Image]
+						<span class="edn_fixedNavTitle">[EasyDNNnews:NextArticleTitle]</span>
+					</div>
+					<a class="edn_nextArticle" href="[EasyDNNnews:NextArticleLink]">[EasyDNNnewsLocalizedText:NextArticle]</a>
+				</div>
+				[EasyDNNnews:EndIf:NextArticleLink]
+			</div>
+			[EasyDNNnews:EndIf:ArticlePreviousNext]
+		</header>
+		<div class="edn_articleContent[EasyDNNnews:IfExists:AuthorProfile] edn_articleHasAuthorProfile[EasyDNNnews:EndIf:AuthorProfile]">
+</EDNHeader>
+<!--Gallery TOP position-->
+<EDNContentTop>
+			[EasyDNNnews:IfMediaType:Image]
+			<div class="edn_articleDetailImage">
+				<img style="max-width:400px;" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/>
+			</div>
+			[EasyDNNnews:EndIfMediaType]
+			[EasyDNNnews:IfExists:SubTitle]
+			<h2 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h2>
+			[EasyDNNnews:EndIf:SubTitle]
+			[EasyDNNnews:IfExists:Event]
+			<div class="edn_eventDetails edn_clearFix">
+				[EasyDNNnews:IfExists:EventRegistration][EasyDNNnews:EventRegistration:RegisterButton][EasyDNNnews:EndIf:EventRegistration]
+				[EasyDNNnews:IfExists:Payment]<span class="edn_eventPrice">[EasyDNNnews:Price]</span>[EasyDNNnews:EndIf:Payment]
+				[EasyDNNnewsLocalizedText:Eventdate]: <strong>[EasyDNNnews:EventDate]</strong> <a class="edn_calendarExport edn_toolTip" href="[EasyDNNnews:iCalendar]"><span class="edn_toolTipContent">[EasyDNNnewsLocalizedText:ExportEvent]</span></a>
+				[EasyDNNnews:IfExists:EventLocation]
+				<p class="edn_eventLocation">[EasyDNNnewsLocalizedText:EventLocation]: <strong>[EasyDNNnews:EventLocation]</strong></p>
+				[EasyDNNnews:EndIf:EventLocation]
+				[EasyDNNnews:IfExists:EventRegistration]
+				<ul>
+					<li>[EasyDNNnewsLocalizedText:NumberOfAttendants]: <strong>[EasyDNNnews:EventRegistration:NumberOfAttendants]</strong></li>
+					<li>[EasyDNNnewsLocalizedText:MaxNumberOfTickets]: <strong>[EasyDNNnews:EventRegistration:MaxNumberOfTickets]</strong></li>
+					<li>[EasyDNNnewsLocalizedText:NotUsedTickets]: <strong>[EasyDNNnews:EventRegistration:NotUsedTickets]</strong></li>
+					[EasyDNNnews:IfExists:Payment]<li>[EasyDNNnewsLocalizedText:Price]: <strong>[EasyDNNnews:Price]</strong></li>[EasyDNNnews:EndIf:Payment]
+				</ul>
+				[EasyDNNnews:EventRegistration:InfoMessage]
+				[EasyDNNnews:EndIf:EventRegistration]
+				[EasyDNNnews:IfExists:EventSignUp]
+				<div class="eds_signUpActionBarWrapper edn_clearFix">
+					<h4>[EasyDNNnewsLocalizedText:AreYouGoing]</h4>[EasyDNNnews:SignUpActionBar]
+				</div>
+				[EasyDNNnews:EndIf:EventSignUp]
+			</div>
+			[EasyDNNnews:EndIf:Event]
+</EDNContentTop>
+<EDNContent>
+			[EasyDNNnews:Article]
+</EDNContent>
+<EDNContentBottom>
+			<div class="edn_metaDetails">
+				<time>[EasyDNNnews:PublishDate]</time> / [EasyDNNnewsLocalizedText:Author]: [EasyDNNnews:Author:Link] / [EasyDNNnewsLocalizedText:Numberofviews]: <span>[EasyDNNnews:NumberOfViews]</span> / [EasyDNNnewsLocalizedText:Comments]: <span>[EasyDNNnews:Comments]</span> / [EasyDNNnews:ArticleRating]
+			</div>
+			<div class="edn_socialPrintWrapper edn_clearFix">
+				[EasyDNNnewsSystemToken:SysAddThisFbTwGoLi]
+				[EasyDNNnews:Print:ArticleDetails]
+			</div>
+			<div class="edn_categories"><span>[EasyDNNnewsLocalizedText:Categories]:</span>[EasyDNNnews:Categories separator=""]</div>
+			[EasyDNNnews:IfExists:Tags]
+			<div class="edn_tags"><span>[EasyDNNnewsLocalizedText:Tags]:</span>[EasyDNNnews:Tags separator=""]</div>
+			[EasyDNNnews:EndIf:Tags]
+			[EDNcf:ShowAll]
+			[EasyDNNnews:ArticleMaps]
+			[EasyDNNnews:EventRegistration:ListOfAttendants]
+			[EasyDNNnews:DocumentList]
+			[EasyDNNnews:Links]
+</EDNContentBottom>
+<!--Gallery BOTTOM position-->
+<EDNFooter>
+			[EasyDNNnews:GravityGallery]
+			[EasyDNNnews:IfExists:AuthorGroup]
+			<div class="edn_authorGroupDetails edn_groupDetails edn_clearFix">
+				[EasyDNNnews:Author:GroupImage:Width:120:Height:100:Resize:Crop]
+				<h4>[EasyDNNnews:Author:GroupName][EasyDNNnews:Author:GroupRSSURL]</h4>
+				[EasyDNNnews:Author:GroupInfo]
+				<div class="edn_connectWith">
+					<div>
+						[EasyDNNnews:Author:GroupContact]
+					</div>
+					<div class="edn_authorSocial">
+						[EasyDNNnews:Author:GroupFacebook]
+						[EasyDNNnews:Author:GroupTwitter]
+						[EasyDNNnews:Author:GroupGooglePlus]
+						[EasyDNNnews:Author:GroupLinkedIn]
+					</div>
+				</div>
+			</div>
+			[EasyDNNnews:EndIf:AuthorGroup]
+			[EasyDNNnews:RelatedArticles]
+</EDNFooter>
+<!--Comments position-->
+<EDNBottom>
+		</div>
+	</article>
+</EDNBottom>
+<!--ArticleEnd-->

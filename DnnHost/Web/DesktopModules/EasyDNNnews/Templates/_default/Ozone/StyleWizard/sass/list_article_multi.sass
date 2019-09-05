@@ -1,0 +1,238 @@
+#{$baseThemeClass}
+
+	&.eds_subCollection_news
+
+		.edn_article
+
+			&.edn_multiArticle
+
+				> figure
+					margin: 0
+					padding: 0
+					position: relative
+					max-width: 100%
+					overflow: hidden
+					@include small-device-width
+						width: 100%
+
+					> img
+						width: 100%
+						height: auto
+						@include transition(all 300ms ease-in-out)
+						@include small-device-width
+							width: 100%
+
+					.edn_sss
+
+						> img
+							@include transition(all 300ms linear)
+
+					> a
+						position: absolute
+						top: 0
+						bottom: 0
+						left: 0
+						right: 0
+						z-index: 1
+						background: transparent url("_-StyleAssetsClientRoot-_images/common/blank.png")
+
+						> span
+							display: none
+
+					> figcaption
+						position: absolute
+						z-index: 0
+						bottom: 0
+						left: 0
+						right: 0
+						background-color: rgba(0, 0, 0, .7)
+						padding: 15px
+
+						.edn_articleTitle,
+						.edn_articleSummary
+							color: #fff
+
+						.edn_articleSummary
+							max-height: 0
+							padding: 0
+							overflow: hidden
+							@include transition(all 300ms ease-in-out)
+
+					.edn_metaDetails
+						position: absolute
+						top: 0
+						right: 0
+						background-color: #000
+						margin: 0
+						color: #fff
+						padding: 5px
+						border-radius: 0 0 0 5px
+						opacity: .7
+
+					&:hover
+
+						> img
+							-ms-transform: scale(1.05)
+							-webkit-transform: scale(1.05)
+							transform: scale(1.05)
+
+						> figcaption
+
+							.edn_articleSummary
+								max-height: 150px
+
+						.edn_sss
+
+							> img
+								-ms-transform: scale(1.05)
+								-webkit-transform: scale(1.05)
+								transform: scale(1.05)
+
+				&.edn_multiArticleMain
+					float: left
+					margin-top: 20px
+					@include small-device-width
+						width: 100% !important
+						display: block
+
+					&.edn_multiArticleMain2
+						float: right
+
+						> figure
+
+							> figcaption
+
+								h2.edn_articleTitle
+									font-size: 22px
+
+				&.edn_articleMultiBox
+					float: left
+					width: 31.3%
+					padding-left: 3%
+					box-sizing: content-box
+					@include small-device-width
+						width: 100%
+						padding: 0
+
+					h2.edn_articleTitle
+						font-size: 22px
+
+					.edn_mediaContainer
+
+						a
+							overflow: hidden
+							display: inline-block
+
+							&:after
+								content: ""
+								position: absolute
+								top: 0
+								bottom: 0
+								left: 0
+								right: 0
+								border: solid 0 rgba(255, 255, 255, .4)
+								@include transition(all 150ms ease-in-out)
+
+							> img
+								border: none
+								padding: 0
+								width: 100%
+								height: auto
+								@include transition(all 200ms ease-in-out)
+
+							&:hover
+
+								&:after
+									border-width: 3px
+
+								> img
+									-ms-transform: scale(1.05)
+									-webkit-transform: scale(1.05)
+									transform: scale(1.05)
+
+					&:first-child
+						padding-left: 0 !important
+
+					&.edn_articleMultiBox2
+						width: 23.5%
+						padding-left: 2%
+						@include small-device-width
+							width: 48%
+							padding: 0 1% !important
+
+						> figure
+
+							figcaption
+								padding: 5px
+
+								h2.edn_articleTitle
+									font-size: 13px
+
+							> img
+								width: 100%
+
+						h2.edn_articleTitle
+							font-size: 18px
+
+						.edn_metaDetails
+							margin: 0
+
+						&:nth-child(3)
+							@include small-device-width
+								clear: left
+
+				&.edn_articleInBox
+					box-sizing: content-box
+					width: 32%
+					padding: 0 0 20px 2%
+					float: left
+					@include small-device-width
+						width: 100%
+						max-width: none
+						float: none
+						padding: 0 0 20px
+
+					&:first-child
+						padding-left: 0
+
+			&.edn_multiArticleList
+				margin-bottom: 0
+				padding: 5px 0
+				border-bottom: dashed 1px #bfbfbf
+
+				h2.edn_articleTitle
+					font-size: 16px
+					margin-bottom: 5px
+
+				.edn_mediaContainer
+					margin-bottom: 5px
+					margin-top: 4px
+
+				.edn_metaDetails
+					margin: 0 0 4px
+
+				.edn_articleSummary
+					padding: 0
+
+		.edn_smallerBoxArticlesWrapper
+			@include middle-device-width
+				margin: 0 -1% !important
+			@include small-device-width
+				margin: 0 !important
+
+			.edn_article
+
+				&.edn_multiArticle
+
+					&.edn_articleInBox
+						@include middle-device-width
+							float: left
+							width: 48% !important
+							padding-right: 1% !important
+							padding-left: 1% !important
+
+						@include small-device-width
+							padding-left: 0 !important
+							padding-right: 0 !important
+							width: 100% !important
+							float: none

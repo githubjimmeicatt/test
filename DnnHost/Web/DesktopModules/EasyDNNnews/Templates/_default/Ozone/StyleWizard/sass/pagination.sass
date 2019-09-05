@@ -1,0 +1,392 @@
+#{$baseThemeClass}
+
+	&.eds_subCollection_news
+
+		.article_pager,
+		.article_pagination table,
+		.ednMoreArticlesTriggerWrapper .trigger
+			border: solid 1px $primaryColor
+				radius: 4px
+			margin: 20px 0
+			font-size: 0
+
+		.article_pager,
+		.article_pagination
+
+			a,
+			> span
+				display: inline-block
+				font-size: 13px
+				font-family: $headingsFont
+				line-height: 1
+				padding: 7px 10px
+				border-left: solid 1px $primaryColor
+				border-right: none !important
+				border-bottom: none !important
+				border-top: none !important
+				@include transition (all 200ms linear)
+
+			a
+				color: $defaultColor
+
+				&:hover
+					color: #fff
+					background-color: #FF9387
+
+		.article_pagination
+			overflow: hidden
+
+			a,
+			> span
+				margin-left: -1px
+
+		.article_pager
+			float: right
+			clear: both
+			overflow: hidden
+
+			a
+
+				&:first-child,
+					border-left: none
+
+				&.next,
+				&.last,
+				&.first,
+				&.prev,
+				&.edn_previusArticle,
+				&.edn_nextArticle
+
+					&:after,
+					&:before
+						font-family: $icon
+						line-height: 0
+
+				&.next,
+				&.edn_nextArticle
+
+					&:after
+						content: "\f105"
+						margin-left: 4px
+
+				&.last
+
+					&:after
+						content: "\f101"
+						margin-left: 4px
+
+				&.first
+
+					&:before
+						content: "\f100"
+						margin-right: 4px
+
+				&.prev,
+				&.edn_previusArticle
+
+					&:before
+						content: "\f104"
+						margin-right: 4px
+
+			&.edn_articleScrolling
+				float: none
+				border: none
+				margin: 0 -10px
+				padding: 20px 10px
+				overflow: visible
+
+				a
+					border: solid 1px $primaryColor !important
+						radius: 4px
+
+					&.edn_previusArticle
+						float: left
+
+					&.edn_nextArticle
+						float: right
+
+					&.edn_previusArticle,
+					&.edn_nextArticle
+
+						&:hover
+							background-color: $primaryColor
+
+		.article_pager a.active,
+		.article_pagination > span
+			color: #fff
+			background-color: $primaryColor
+
+		.ednMoreArticlesTriggerWrapper
+			text-align: center
+			line-height: 0
+			font-size: 0
+
+			.trigger
+				position: relative
+				padding: 0
+				background: none transparent
+				box-shadow: none
+				-webkit-appearance: none
+				overflow: hidden
+				width: 75%
+
+				> span
+					color: $primaryColor
+					font-family: $headingsFont
+					line-height: 1
+					font-size: 15px
+					display: block
+					padding: 7px 10px
+
+				.actionTextContainer
+					background-color: #fff
+					@include transition (all 200ms linear)
+
+				.loadingOverlay
+					position: absolute
+					left: 0
+					right: 0
+					bottom: 0
+					top: 100%
+					opacity: 0
+					@include transition(opacity 200ms linear)
+
+					&:before
+						content: "\f021"
+						display: inline-block
+						margin-right: 10px
+						font-family: $icon
+						line-height: 0
+						font-size: 21px
+						font-style: normal
+						font-weight: normal
+						opacity: .7
+						-webkit-animation: fa-spin 2s infinite linear
+						animation: fa-spin 2s infinite linear
+
+				&:hover
+
+					.actionTextContainer
+						color: #fff
+						background-color: $primaryColor
+
+			&.loading
+
+				.trigger
+
+					.loadingOverlay
+						opacity: 1
+						background-color: rgba(255, 255, 255, .8)
+						top: 0
+
+			&.hide
+				display: none
+
+		.edn_fixedPrevNextArticleNavigation
+			@include small-device-width
+				margin: 25px 0
+				overflow: hidden
+
+			> a
+				font-size: 0
+				line-height: 0
+				position: fixed
+				display: inline-block
+				width: 250px
+				top: 50%
+				margin-top: -70px
+				z-index: 9999
+				@include transition (all 500ms ease)
+				@include small-device-width
+					position: relative
+					top: auto
+					width: 130px
+					margin-top: 0
+					z-index: auto
+
+				.edn_fixedNavImage
+					display: inline-block
+					position: relative
+					width: 100%
+					z-index: 2
+					@include small-device-width
+						height: 70px !important
+
+					> img
+						position: relative
+						z-index: 2
+						@include small-device-width
+							height: 70px !important
+
+					&:after
+						background-color: rgba(0, 0, 0, .4)
+						font-family: $icon
+						line-height: 140px
+						top: 0
+						bottom: 0
+						left: 0
+						right: 0
+						font-size: 25px
+						color: #fff
+						z-index: 1
+						position: absolute
+						border-radius: 4px
+						@include transition (padding 600ms ease)
+						@include small-device-width
+							line-height: 70px !important
+
+					.edn_fixedNavTitle
+						top: 0 !important
+						bottom: 0 !important
+						overflow: hidden
+						border-style: none
+						z-index: 2
+						text-align: left
+						@include small-device-width
+							border-style: solid
+							width: 220px !important
+
+				.edn_fixedNavTitle
+					font-size: 16px
+					line-height: 1.1
+					color: $defaultColor
+					font-family: $headingsFont
+					position: absolute
+					top: 100%
+					opacity: 0
+					visibility: hidden
+					background-color: rgba(255, 255, 255, .7)
+					border: 1px solid rgba(0, 0, 0, .3)
+					border-top-style: none
+					width: 240px
+					padding: 10px
+					@include small-device-width
+						top: 0
+						bottom: 0
+						border-top-style: solid
+						z-index: 2
+						overflow: hidden
+
+				&:hover
+
+					.edn_fixedNavTitle
+						opacity: 1
+						visibility: visible
+
+					.edn_fixedNavImage
+
+						&:after
+							background-color: rgba(0, 0, 0, .8)
+
+				&.edn_previusArticle
+					left: -190px
+					border-left: none !important
+					@include small-device-width
+						left: auto !important
+						float: left
+
+					.edn_fixedNavImage
+
+						&:after
+							content: "\f060"
+							text-align: right
+							padding-right: 20px
+							border-top-left-radius: 0 !important
+							border-bottom-left-radius: 0 !important
+
+					.edn_fixedNavTitle
+						left: -100%
+						border-left: none !important
+						border-top-left-radius: 0 !important
+						@include transition (left 500ms ease, opacity 800ms)
+
+					&:hover
+						left: 0
+
+						.edn_fixedNavTitle
+							left: 0
+
+						.edn_fixedNavImage
+
+							&:after
+								padding-right: 45px
+								@include small-device-width
+									padding-right: 25px
+
+				&.edn_nextArticle
+					right: -190px
+					border-right: none !important
+					@include small-device-width
+						right: auto !important
+						float: right
+
+					.edn_fixedNavImage
+						text-align: right
+
+						&:after
+							content: "\f061"
+							text-align: left
+							padding-left: 20px
+							border-top-right-radius: 0 !important
+							border-bottom-right-radius: 0 !important
+
+					.edn_fixedNavTitle
+						right: -100%
+						border-right: none !important
+						border-top-right-radius: 0 !important
+						@include transition (right 500ms ease, opacity 800ms)
+
+					&:hover
+						right: 0
+
+						.edn_fixedNavTitle
+							right: 0
+
+						.edn_fixedNavImage
+
+							&:after
+								padding-left: 45px
+								@include small-device-width
+									padding-left: 25px
+
+	.edn_pagination
+		padding: 0
+		margin: 0
+		border: 0
+			top: 4px solid $primaryColor
+		text-align: right
+		font-size: 0
+		line-height: 0
+		clear: both
+		overflow: hidden
+
+		> span
+			padding: 0
+			margin: 1px 0 0 1px
+			border: 0
+			background: $primaryColor
+			position: relative
+			display: inline-block
+			font-size: 0
+			line-height: 0
+			cursor: pointer
+
+			&:after
+				font: 18px/1.3 $icon
+				color: #fff
+				display: block
+				text-align: center
+				display: block
+				padding: 0 11px 1px
+
+			&.edn__contentBlock_previousPage,
+			&.edn__recentComments_previousPage
+
+				&:after
+					content: '\f104'
+
+			&.edn__contentBlock_nextPage,
+			&.edn__recentComments_nextPage
+
+				&:after
+					content: '\f105'

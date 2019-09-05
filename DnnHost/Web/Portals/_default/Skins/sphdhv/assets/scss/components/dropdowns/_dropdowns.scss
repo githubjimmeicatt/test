@@ -1,0 +1,75 @@
+//
+// DROPDOWN BUTTONS
+// ------------------------------------------------------------------
+//
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown__button {
+    position: relative;
+    padding: em(15) em(48) em(15) em(15);
+    border: 0;
+    border-radius: em(3);
+    background-color: #fff;
+    box-shadow: 0 2px 0 0 #004765;
+    color: $color-primary-light-blue;
+    line-height: 1;
+    
+    &:before {
+        position: absolute;
+        top: em(19);
+        right: em(18);
+        display: block;
+        width: em(13);
+        height: em(7);
+        background: url(../img/icn_chevron_down_primary_light_blue.svg) no-repeat right center;
+        background-size: 13px 7px;
+        content: '';
+    }
+    
+    &:focus {
+        outline: none;
+    }
+    
+}
+
+.dropdown__menu {
+    position: absolute;
+    top: calc(100% + #{em(2)});
+    left: 0;
+    z-index: 1;
+    display: none;
+    min-width: em(250);
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border-radius: em(3);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    color: $color-primary-dark-blue;
+}
+
+.dropdown__menu li {
+    display: block;
+    list-style: none none;
+}
+
+.dropdown__menu li + li {
+    border-top: 1px solid $color-primary-dark-blue-10;
+}
+
+.dropdown__menu a {
+    display: block;
+    padding: em(7) em(14);
+    text-decoration: none;
+}
+
+.dropdown__menu a:hover {
+    color: $color-primary-light-blue-50;
+}
+
+.block .dropdown {
+    margin-bottom: em(16);
+}

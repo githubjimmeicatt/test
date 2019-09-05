@@ -1,0 +1,14 @@
+﻿-- make sure sql rolls back automatically in case of error.
+SET XACT_ABORT ON
+
+BEGIN TRANSACTION SexyContentUpdate;
+
+-- Make sure AttributeSetID can be null
+ALTER TABLE ToSIC_SexyContent_Templates ADD
+	PipelineEntityID int NULL,
+	ViewNameInUrl nvarchar(50) NULL
+
+
+-- Commit the transaction
+COMMIT TRANSACTION SexyContentUpdate;
+--ROLLBACK TRANSACTION SexyContentUpdate;

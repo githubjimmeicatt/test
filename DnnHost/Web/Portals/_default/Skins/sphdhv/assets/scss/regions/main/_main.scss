@@ -1,0 +1,71 @@
+//
+// REGION: MAIN
+// ------------------------------------------------------------------
+//
+
+.page__main {
+    background-color: #eee; 
+    background-image: url(../img/bg_html_right.png), url(../img/bg_html_bottom.png);
+    background-position: bottom right, bottom right;
+    background-repeat: no-repeat, no-repeat;
+    background-size: auto 100%, 100% auto;
+	background-attachment: fixed;
+
+    @media (max-width: 719px) {
+        background-position: bottom right -140px, bottom right;
+    }
+
+    @media (min-width: 720px) {
+        background-size: auto 100%, 60% auto;
+    }
+
+    @media (min-width: 1920px) {
+        background-size: auto 100%, 30% auto;
+    }
+
+}
+
+.page__main__inner {
+    @extend .container;
+    padding-right: em(14);
+    padding-left: em(14);
+
+    // page--home page
+
+    @at-root .page--home & {
+        padding-top: em(32);
+        padding-bottom: em(56);
+    }
+
+    // page--content-x pages
+
+    @at-root [class*="page--content"] & {
+        padding-top: em(36);
+        padding-bottom: em(36);
+
+        @media (min-width: 720px) {
+            padding-top: em(44);
+            padding-bottom: em(44);
+        }
+
+    }
+
+    // page--rubric pages
+
+    @at-root .page--rubric & {
+        padding-top: em(36);
+        padding-bottom: em(36);
+
+        @media (min-width: 720px) {
+            padding-top: em(44);
+            padding-bottom: em(44);
+        }
+
+    }
+
+    @media (min-width: 968px) {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+}

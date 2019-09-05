@@ -1,0 +1,77 @@
+<!--TemplateGroup:listArticleEventsSimple-->
+<!--ArticleRepeat:Before:-->
+<div class="edn_accordionWrapper_[EasyDNNnews:ModuleID] edn_mainWrapper">
+	<script src="[EasyDNNnews:ClientBasePath]/DesktopModules/EasyDNNnews/static/edsAccordion/edsAccordion-1.1.js"></script>
+	<script>
+		jQuery(function ($) {
+			$('div.edn_accordionWrapper_[EasyDNNnews:ModuleID]').edsAccordion_1();
+			//For first opened article remove comment tag from lines bellow
+			//$('.edn__articleListWrapper > .edn_article', $('div.edn_accordionWrapper_[EasyDNNnews:ModuleID]'))
+			//	.eq(0)
+			//		.addClass('edsAccordion_active');
+		});
+	</script>
+	<div class="edn_widgetHeader">
+		[EasyDNNnews:IfExists:ModuleHeader]<h3 class="edn_widgetTitle"><span>[EasyDNNnews:ModuleTitle]</span></h3>[EasyDNNnews:EndIf:ModuleHeader]
+		<div class="edn_navButtons">
+			<span class="edn__myEvents_button_currentAndUpcoming">[EasyDNNnewsLocalizedText:Current]</span>
+			<span class="edn__myEvents_button_allEvents">[EasyDNNnewsLocalizedText:AllEvents]</span>
+		</div>
+	</div>
+	<div class="edn__articleListWrapper">
+	<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+		<article class="edn_article edn_clearFix edn_articleAccordion edn_eventsSimple edsAccordion_section">
+			[EasyDNNnews:HasArticlePermissions]
+			<div class="edn_adminActions">
+				[EasyDNNnews:ArticlePermissions:Edit]
+				[EasyDNNnews:ArticlePermissions:Publish]
+				[EasyDNNnews:ArticlePermissions:Approve]
+			</div>
+			[EasyDNNnews:HasArticlePermissionsEnd]
+			<section class="edsAccordion_title">
+				<time><span>[EasyDNNnews:EventStartDay]</span><span class="edn_monthName">[EasyDNNnews:EventStartMonthNameShort]</span><span>[EasyDNNnews:EventStartYear]</span></time>
+				<div>
+					<h2 class="edn_articleTitle">[EasyDNNnews:Title]</h2>
+					[EasyDNNnews:IfExists:EventLocation]<span class="edn_eventBoxLocation">[EasyDNNnews:EventLocation]</span>[EasyDNNnews:EndIf:EventLocation]
+					<time>[EasyDNNnews:EventDate]</time>
+					<div class="edn_registrationStatus edn_[EasyDNNnews:EventRegistration:Status:Value]">
+						<span>[EasyDNNnews:EventRegistration:Status]</span>
+					</div>
+				</div>
+				<span class="edn_moreInfo">[EasyDNNnewsLocalizedText:MoreInfo]</span>
+			</section>
+			<div class="edsAccordion_contentWrapper">
+				<div class="edsAccordion_content">
+					<div class="edn_eventDetails edn_clearFix">
+						<h3 class="edn_articleTitle"><a href="[EasyDNNnews:Title:Link]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h3>
+						<ul>
+							<li>[EasyDNNnewsLocalizedText:NumberOfAttendants]: <strong>[EasyDNNnews:EventRegistration:NumberOfAttendants]</strong></li>
+							<li>[EasyDNNnewsLocalizedText:MaxNumberOfTickets]: <strong>[EasyDNNnews:EventRegistration:MaxNumberOfTickets]</strong></li>
+							<li>[EasyDNNnewsLocalizedText:NotUsedTickets]: <strong>[EasyDNNnews:EventRegistration:NotUsedTickets]</strong></li>
+							[EasyDNNnews:IfExists:Payment]
+							<li>[EasyDNNnewsLocalizedText:Price]: <strong>[EasyDNNnews:Price]</strong></li>
+							[EasyDNNnews:EndIf:Payment]
+						</ul>
+						[EasyDNNnews:EventRegistration:InfoMessage]
+						[EasyDNNnews:IfExists:EventRegistration:Unregister]
+						<span class="edn__myEvents_button_unregister" data-edsndata="[EasyDNNnews:Event:DataAttribute]">[EasyDNNnewsLocalizedText:Unregister]</span>
+						[EasyDNNnews:EndIf:EventRegistration:Unregister]
+					</div>
+				</div>
+			</div>
+		</article>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+	</div>
+</div>
+[EasyDNNnews:IfExists:Paging]
+<div class="edn_paginationWrapper">
+	<div class="edn_pagination">
+		<span class="edn__myEvents_previousPage">[EasyDNNnewsLocalizedText:PreviousPageText]</span>
+		<span class="edn__myEvents_nextPage">[EasyDNNnewsLocalizedText:NextPageText]</span>
+	</div>
+</div>
+[EasyDNNnews:EndIf:Paging]
+<!--RepeatEnd:After:-->

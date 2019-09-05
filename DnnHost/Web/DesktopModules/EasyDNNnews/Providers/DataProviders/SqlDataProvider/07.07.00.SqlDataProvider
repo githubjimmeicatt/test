@@ -1,0 +1,131 @@
+﻿IF NOT EXISTS (SELECT UpdateVersion FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate] WHERE UpdateVersion = '07.07.00')
+BEGIN
+	INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate]([UpdateVersion],[Finished],[InstallType]) VALUES(N'07.07.00',0, N'DNN')
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TextEditorType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TextEditorType TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_TextEditorType DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'TextEditorType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD TextEditorType TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_TextEditorType DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ControlBarInArticleList')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ControlBarInArticleList BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ControlBarInArticleList DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ControlBarInArticleList')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ControlBarInArticleList BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ControlBarInArticleList DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ControlBarInArticleDetails')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ControlBarInArticleDetails BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ControlBarInArticleDetails DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ControlBarInArticleDetails')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ControlBarInArticleDetails BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ControlBarInArticleDetails DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TextEditorMaxChar')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TextEditorMaxChar INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_TextEditorMaxChar DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'TextEditorMaxChar')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD TextEditorMaxChar INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_TextEditorMaxChar DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'TextEditorArticleMaxChar')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD TextEditorArticleMaxChar INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_TextEditorArticleMaxChar DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'TextEditorArticleMaxChar')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD TextEditorArticleMaxChar INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_TextEditorArticleMaxChar DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'DisplayMainArticleImageInGallery')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD DisplayMainArticleImageInGallery BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_DisplayMainArticleImageInGallery DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'DisplayMainArticleImageInGallery')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD DisplayMainArticleImageInGallery BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_DisplayMainArticleImageInGallery DEFAULT(1) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNews' and column_name = 'ContactEmail')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews] ADD ContactEmail NVARCHAR(256) NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ContactEmailByArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ContactEmailByArticle BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ContactEmailByArticle DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ContactEmailByArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ContactEmailByArticle BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ContactEmailByArticle DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ReplaceDNNTokens')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ReplaceDNNTokens BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ReplaceDNNTokens DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ReplaceDNNTokens')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ReplaceDNNTokens BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ReplaceDNNTokens DEFAULT(0) NOT NULL
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsLightboxSettings' and column_name = 'GalleryLightbox')
+BEGIN
+	UPDATE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] SET GalleryLightbox = 1 WHERE GalleryLightbox = 0
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonSettings' and column_name = 'GalleryLightbox')
+BEGIN
+	UPDATE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonSettings] SET GalleryLightbox = 1 WHERE GalleryLightbox = 0
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonNestedSettings' and column_name = 'GalleryLightbox')
+BEGIN
+	UPDATE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonNestedSettings] SET GalleryLightbox = 1 WHERE GalleryLightbox = 0
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsLightboxSettings' AND column_name = 'LightboxTheme')
+BEGIN
+	IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[DF_{objectQualifier}EasyDNNNewsLightboxSettings_LightboxTheme]') AND type = 'D')
+	BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] DROP CONSTRAINT [DF_{objectQualifier}EasyDNNNewsLightboxSettings_LightboxTheme]
+	END
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsLightboxSettings] DROP COLUMN LightboxTheme
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonSettings' AND column_name = 'LightboxType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonSettings] DROP COLUMN LightboxType
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsChameleonNestedSettings' AND column_name = 'LightboxType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsChameleonNestedSettings] DROP COLUMN LightboxType
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsDocuments' and column_name = 'Target')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsDocuments] ADD Target TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsDocuments_Target DEFAULT (0) NOT NULL
+END
+GO

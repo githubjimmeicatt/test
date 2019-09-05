@@ -1,0 +1,2 @@
+﻿<%@ control language="C#" autoeventwireup="true" inherits="EasyDNNSolutions.Modules.EasyDNNNews.Widgets.ContentBlocks.View.ContentBlocksView, App_Web_view.ascx.959344af" enableviewstate="false" %>
+<asp:Literal runat="server" ID="lHtml" />

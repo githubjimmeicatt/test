@@ -1,0 +1,665 @@
+﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsUpdate' and column_name = 'InstallType')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate] ADD InstallType NVARCHAR(10) CONSTRAINT DF_{objectQualifier}EasyDNNNewsUpdate_InstallType DEFAULT (N'DNN') NOT NULL
+END
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsWidgetsGetTreeViewContent]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsWidgetsGetTreeViewContent]
+GO
+IF NOT EXISTS  (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsTreeView' and column_name = 'OrderByCustomFieldID')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsTreeView] ADD OrderByCustomFieldID INT NULL
+END
+GO
+BEGIN TRY
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsTreeView_OrderByCustomFieldID]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsTreeView]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsTreeView] WITH CHECK ADD CONSTRAINT [FK_{objectQualifier}EasyDNNNewsTreeView_OrderByCustomFieldID] FOREIGN KEY([OrderByCustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE SET NULL
+END TRY
+BEGIN CATCH
+END CATCH
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsTreeView' and column_name = 'ArticlesOrderBy')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsTreeView] ADD ArticlesOrderBy NVARCHAR(50) CONSTRAINT DF_{objectQualifier}EasyDNNNewsTreeView_ArticlesOrderBy DEFAULT (N'PublishDate') NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsTreeView' and column_name = 'ArticlesOrderByDirection')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsTreeView] ADD ArticlesOrderByDirection VARCHAR(4) CONSTRAINT DF_{objectQualifier}EasyDNNNewsTreeView_ArticlesOrderByDirection DEFAULT (N'DESC') NOT NULL
+END
+GO
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsData' AND column_name = 'Value')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsData] ALTER COLUMN Value NVARCHAR(MAX) NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsSearchSettings' and column_name = 'SearchBarOrientation')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsSearchSettings] ADD SearchBarOrientation TINYINT CONSTRAINT DF_{objectQualifier}EasyDNNNewsSearchSettings_SearchBarOrientation DEFAULT(0) NOT NULL;
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'FilterRelatedArticlesByCategory')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD FilterRelatedArticlesByCategory BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_FilterRelatedArticlesByCategory DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'FilterRelatedArticlesByCategory')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD FilterRelatedArticlesByCategory BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_FilterRelatedArticlesByCategory DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'FilterByCustomFields')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD FilterByCustomFields BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_FilterByCustomFields DEFAULT(0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'FilterByCustomFields')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD FilterByCustomFields BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_FilterByCustomFields DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 10)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (10, N'Hyperlink')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 200)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (200, N'UploadField')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 300)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (300, N'NewsCategories')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 301)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (301, N'NewsAuthorsGroups')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 302)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (302, N'NewsDate')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 303)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (303, N'SearchField')
+END
+GO
+IF NOT EXISTS (SELECT ControlTypeID FROM {databaseOwner}[{objectQualifier}EasyDNNfielsType] WHERE ControlTypeID = 304)
+BEGIN
+INSERT {databaseOwner}[{objectQualifier}EasyDNNfielsType] ([ControlTypeID], [Name]) VALUES (304, N'SortField')
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[CfIdOrderable] [int] NULL,
+	[SysIdOrderable] [int] NULL,
+	[Name] [nvarchar](256) NOT NULL,
+	[Position] [tinyint] NOT NULL,
+	[SortOrder] [varchar](4) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsOrderByItems] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF),
+ CONSTRAINT [IX_{objectQualifier}EasyDNNfieldsOrderByItems_CfId_SysId_Order] UNIQUE NONCLUSTERED 
+(
+	[CustomFieldID] ASC,
+	[CfIdOrderable] ASC,
+	[SysIdOrderable] ASC,
+	[SortOrder] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]') AND name = N'IX_{objectQualifier}EasyDNNfieldsOrderByItems_Position')
+CREATE NONCLUSTERED INDEX [IX_{objectQualifier}EasyDNNfieldsOrderByItems_Position] ON {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] 
+(
+	[Position] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization](
+	[OrderByItemId] [int] NOT NULL,
+	[LocaleCode] [nvarchar](20) NOT NULL,
+	[Name] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization] PRIMARY KEY CLUSTERED 
+(
+	[OrderByItemId] ASC,
+	[LocaleCode] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItems_Name_Len]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItems_Name_Len] CHECK  ((len(ltrim(rtrim([Name])))>(0)))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItems_Name_Len]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItems_Name_Len]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItems_Nulls]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItems_Nulls] CHECK  (([CfIdOrderable] IS NOT NULL OR [SysIdOrderable] IS NOT NULL))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItems_Nulls]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItems_Nulls]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItems_SortOrder]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItems_SortOrder] CHECK  (([SortOrder]='DESC' OR [SortOrder]='ASC'))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItems_SortOrder]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItems_SortOrder]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_Name_Len]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_Name_Len] CHECK  ((len(ltrim(rtrim([Name])))>(0)))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_Name_Len]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_Name_Len]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_CfId]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_CfId] FOREIGN KEY([CfIdOrderable])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_CfId]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_CfId]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_Id]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_Id] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_Id]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsOrderByItems_EasyDNNfields_Id]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_EasyDNNfieldsOrderByItems]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_EasyDNNfieldsOrderByItems] FOREIGN KEY([OrderByItemId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItems] ([Id])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_EasyDNNfieldsOrderByItems]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsOrderByItemsLocalization] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsOrderByItemsLocalization_EasyDNNfieldsOrderByItems]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems](
+	[CustomFieldID] [int] NOT NULL,
+	[CategoryID] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsNewsCategoryItems] PRIMARY KEY CLUSTERED 
+(
+	[CustomFieldID] ASC,
+	[CategoryID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems](
+	[CustomFieldID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsNewsAuthorItems] PRIMARY KEY CLUSTERED 
+(
+	[CustomFieldID] ASC,
+	[UserID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems](
+	[CustomFieldID] [int] NOT NULL,
+	[GroupID] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems] PRIMARY KEY CLUSTERED 
+(
+	[CustomFieldID] ASC,
+	[GroupID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNNewsAuthorGroups]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNNewsAuthorGroups] FOREIGN KEY([GroupID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] ([GroupID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNNewsAuthorGroups]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorGroupItems_EasyDNNNewsAuthorGroups]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_Users] FOREIGN KEY([UserID])
+REFERENCES {databaseOwner}[{objectQualifier}Users] ([UserID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsAuthorItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsAuthorItems_Users]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNNewsCategoryList]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNNewsCategoryList] FOREIGN KEY([CategoryID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsCategoryList] ([CategoryID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNNewsCategoryList]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNfieldsNewsCategoryItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNfieldsNewsCategoryItems_EasyDNNNewsCategoryList]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PortalID] [int] NULL,
+	[ModuleID] [int] NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[LogicalOperator] [nvarchar](10) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsFilterMultiCF] PRIMARY KEY NONCLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]') AND name = N'IX_{objectQualifier}EasyDNNnewsFilterMultiCF')
+CREATE UNIQUE CLUSTERED INDEX [IX_{objectQualifier}EasyDNNnewsFilterMultiCF] ON {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF] 
+(
+	[ModuleID] ASC,
+	[PortalID] ASC,
+	[CustomFieldID] ASC,
+	[LogicalOperator] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PortalID] [int] NULL,
+	[ModuleID] [int] NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[ValueOne] [int] NOT NULL,
+	[ComparisonOperatorOne] [nvarchar](2) NOT NULL,
+	[ValueTwo] [int] NULL,
+	[ComparisonOperatorTwo] [nvarchar](2) NULL,
+	[LogicalOperator] [nvarchar](10) NULL,
+	[QueryRule] [nvarchar](512) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsFilterByCFInteger] PRIMARY KEY NONCLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF),
+ CONSTRAINT [IX_{objectQualifier}EasyDNNnewsFilterByCFInteger_Unique] UNIQUE NONCLUSTERED 
+(
+	[PortalID] ASC,
+	[ModuleID] ASC,
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]') AND name = N'IX_{objectQualifier}EasyDNNfieldsFilterInteger')
+CREATE CLUSTERED INDEX [IX_{objectQualifier}EasyDNNfieldsFilterInteger] ON {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger] 
+(
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PortalID] [int] NULL,
+	[ModuleID] [int] NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[ValueOne] [decimal](18, 4) NOT NULL,
+	[ComparisonOperatorOne] [nvarchar](2) NOT NULL,
+	[ValueTwo] [decimal](18, 4) NULL,
+	[ComparisonOperatorTwo] [nvarchar](2) NULL,
+	[LogicalOperator] [nvarchar](10) NULL,
+	[QueryRule] [nvarchar](512) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsFilterByCFDecimal] PRIMARY KEY NONCLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF),
+ CONSTRAINT [IX_{objectQualifier}EasyDNNnewsFilterByCFDecimal_Unique] UNIQUE NONCLUSTERED 
+(
+	[PortalID] ASC,
+	[ModuleID] ASC,
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]') AND name = N'IX_cfEasyDNNfieldsFilterDecimal')
+CREATE CLUSTERED INDEX [IX_cfEasyDNNfieldsFilterDecimal] ON {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal] 
+(
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PortalID] [int] NULL,
+	[ModuleID] [int] NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[ValueOne] [datetime] NOT NULL,
+	[ComparisonOperatorOne] [nvarchar](2) NOT NULL,
+	[ValueTwo] [datetime] NULL,
+	[ComparisonOperatorTwo] [nvarchar](2) NULL,
+	[LogicalOperator] [nvarchar](10) NULL,
+	[QueryRule] [nvarchar](512) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsFilterByCFDateTime] PRIMARY KEY NONCLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF),
+ CONSTRAINT [IX_{objectQualifier}EasyDNNnewsFilterByCFDateTime_Unique] UNIQUE NONCLUSTERED 
+(
+	[PortalID] ASC,
+	[ModuleID] ASC,
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]') AND name = N'IX_{objectQualifier}EasyDNNnewsFilterCFDateTime')
+CREATE CLUSTERED INDEX [IX_{objectQualifier}EasyDNNnewsFilterCFDateTime] ON {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime] 
+(
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PortalID] [int] NULL,
+	[ModuleID] [int] NULL,
+	[CustomFieldID] [int] NOT NULL,
+	[Value] [bit] NOT NULL,
+	[QueryRule] [nvarchar](512) NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsFilterByCFBit] PRIMARY KEY NONCLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF),
+ CONSTRAINT [IX_{objectQualifier}EasyDNNnewsFilterByCFBit_Unique] UNIQUE NONCLUSTERED 
+(
+	[PortalID] ASC,
+	[ModuleID] ASC,
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]') AND name = N'IX_{objectQualifier}EasyDNNnewsFilterByCFBit')
+CREATE CLUSTERED INDEX [IX_{objectQualifier}EasyDNNnewsFilterByCFBit] ON {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit] 
+(
+	[CustomFieldID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements](
+	[MultiCFId] [int] NOT NULL,
+	[FieldElementID] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNnewsFilterByMultiElements] PRIMARY KEY CLUSTERED 
+(
+	[MultiCFId] ASC,
+	[FieldElementID] ASC
+)WITH (STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFBit_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFBit_NotNull] CHECK  (([PortalID] IS NULL AND [ModuleID] IS NOT NULL OR [PortalID] IS NOT NULL AND [ModuleID] IS NULL))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFBit_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFBit_NotNull]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_NotNull] CHECK  (([PortalID] IS NULL AND [ModuleID] IS NOT NULL OR [PortalID] IS NOT NULL AND [ModuleID] IS NULL))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_NotNull]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_NotNull] CHECK  (([PortalID] IS NULL AND [ModuleID] IS NOT NULL OR [PortalID] IS NOT NULL AND [ModuleID] IS NULL))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_NotNull]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFInteger_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFInteger_NotNull] CHECK  (([PortalID] IS NULL AND [ModuleID] IS NOT NULL OR [PortalID] IS NOT NULL AND [ModuleID] IS NULL))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterByCFInteger_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterByCFInteger_NotNull]
+GO
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterMultiCF_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]  WITH CHECK ADD  CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterMultiCF_NotNull] CHECK  (([PortalID] IS NULL AND [ModuleID] IS NOT NULL OR [PortalID] IS NOT NULL AND [ModuleID] IS NULL))
+GO
+IF  EXISTS (SELECT * FROM sys.check_constraints WHERE object_id = OBJECT_ID(N'{databaseOwner}[CK_{objectQualifier}EasyDNNnewsFilterMultiCF_NotNull]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF] CHECK CONSTRAINT [CK_{objectQualifier}EasyDNNnewsFilterMultiCF_NotNull]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNNewsPortalSettings] FOREIGN KEY([PortalID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ([PortalID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFBit_EasyDNNNewsPortalSettings]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFBit_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFBit_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFBit_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFBit] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFBit_Modules]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNNewsPortalSettings] FOREIGN KEY([PortalID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ([PortalID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_EasyDNNNewsPortalSettings]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDateTime] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDateTime_Modules]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNNewsPortalSettings] FOREIGN KEY([PortalID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ([PortalID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_EasyDNNNewsPortalSettings]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFDecimal] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFDecimal_Modules]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNfields] FOREIGN KEY([CustomFieldID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfields] ([CustomFieldID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNfields]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNfields]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNNewsPortalSettings] FOREIGN KEY([PortalID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ([PortalID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNNewsPortalSettings]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_EasyDNNNewsPortalSettings]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByCFInteger] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByCFInteger_Modules]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterMultiCF_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterMultiCF_Modules] FOREIGN KEY([ModuleID])
+REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterMultiCF_Modules]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterMultiCF_Modules]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNfieldsMultiElements]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNfieldsMultiElements] FOREIGN KEY([FieldElementID])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNfieldsMultiElements] ([FieldElementID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNfieldsMultiElements]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNfieldsMultiElements]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNnewsFilterByMultiCF]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNnewsFilterByMultiCF] FOREIGN KEY([MultiCFId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiCF] ([Id])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNnewsFilterByMultiCF]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsFilterByMultiElements] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNnewsFilterByMultiElements_EasyDNNnewsFilterByMultiCF]
+GO
+
+/*** Cleanup unused SP ***/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNfieldsEventRegistrationGetValues]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNfieldsEventRegistrationGetValues]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsCountItemsFromSearch]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsCountItemsFromSearch]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsCountForPageingOnlyEvents]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsCountForPageingOnlyEvents]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsForListDisplayOnlyEvents]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsForListDisplayOnlyEvents]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsFromSearch]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsFromSearch]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsByMonthlyArchive]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsByMonthlyArchive]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsForTreeView]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsForTreeView]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsPerCategory]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsPerCategory]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsForTagCloud]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNNewsGetItemsForTagCloud]
+GO

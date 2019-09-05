@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="MediaDownload.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNNews.MediaDownload" %>
