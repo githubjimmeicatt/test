@@ -1,0 +1,77 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Icatt.DotNetNuke.DateTimeRanges
+</name>
+</assembly>
+<members>
+<member name="M:Icatt.DotNetNuke.DateTimeRanges.DateTimeRange.Create(System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{Icatt.DotNetNuke.DateTimeRanges.Period},System.Nullable{Icatt.DotNetNuke.DateTimeRanges.Period})">
+	<summary>
+ Create voor gecompliceerdere logica
+ </summary>
+	<param name="startdate"></param>
+	<param name="enddate"></param>
+	<param name="periodToStart"></param>
+	<param name="periodToEnd"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:Icatt.DotNetNuke.DateTimeRanges.DateTimeRange">
+	<summary>
+ A DateTimeRange defines an absolute or relative period in time. For any given DateTime value, a DateTimeRange has StartOfRange (DateTime) and an EndOfRange(DateTime). 
+ </summary>
+	<remarks>
+		<para>NB!: The range INCLUDES the StartOfRange UPTO, BUT NOT INCLUDING the EndOfRange</para>
+		<para>A datetime range can be absolute or relative</para>
+		<para>A datetime range is relative when:
+ <list>
+				<item>the startdate is defined relative to a variable time</item>
+				<item>the enddate is defined relative to the present time</item>
+				<item>both startdate and enddate are relative to the present time</item>
+			</list>
+		</para>
+		<para>
+ The DateTimeRange.Start and DateTimeRange.End properties of a relative DateTimeRange require return a different range every time the properties are called.
+ </para>
+		<para>For the calculation if the StartOfRange and EndOfRange values the Period structure is used, which in turn uses the methods en properties provided by the System.Thread.CurrentThread.CurrentCulture.Calender property.</para>
+		<para>
+        Current hour, day, week, month, quarter, half year, year
+        
+ </para>
+ CurrentMonth
+ periodToStart = 0 , round To Start, roundingUnit = month
+ periodToEnd   = 0 , round To End, roundingUnit = month
+ Current Year
+ periodToStart = 0 , round To Start, roundingUnit = year
+ periodToEnd   = 0 , round To End, roundingUnit = year
+ </remarks>
+</member><member name="M:Icatt.DotNetNuke.DateTimeRanges.Period.AddPeriod(System.DateTime)">
+	<summary>
+ Calculates theDate plus Period
+ </summary>
+	<exception cref="T:System.ArgumentException">Thrown if the result is outside of the current Era/ supported range</exception>
+</member><member name="M:Icatt.DotNetNuke.DateTimeRanges.Period.SubtractPeriod(System.DateTime)">
+	<summary>
+ Calculates theDate minus Period
+ </summary>
+</member><member name="M:Icatt.DotNetNuke.DateTimeRanges.Period.Negate">
+	<summary>
+ Returns the negative of the current period
+ </summary>
+</member><member name="M:Icatt.DotNetNuke.DateTimeRanges.Period.op_Addition(Icatt.DotNetNuke.DateTimeRanges.Period,Icatt.DotNetNuke.DateTimeRanges.Period)">
+	<summary>
+ Adds the individual contributing fields of both periods and returns the resulting period
+ </summary>
+</member><member name="M:Icatt.DotNetNuke.DateTimeRanges.Period.op_Equality(Icatt.DotNetNuke.DateTimeRanges.Period,Icatt.DotNetNuke.DateTimeRanges.Period)">
+	<summary>
+ Equality operator implementation
+ </summary>
+	<remarks>Periods are equal if all fields have the same value</remarks>
+</member><member name="T:Icatt.DotNetNuke.DateTimeRanges.Period">
+	<summary>
+ Structure for defining periods in several different ways that are not covered by the TimeSpan type
+ </summary>
+	<remarks></remarks>
+</member>
+</members>
+</doc>
