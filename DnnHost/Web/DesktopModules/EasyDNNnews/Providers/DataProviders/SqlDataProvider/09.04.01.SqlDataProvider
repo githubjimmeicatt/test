@@ -1,0 +1,47 @@
+﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAuthorProfile' and column_name = 'YouTubeURL')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] ADD YouTubeURL NVARCHAR(1000) NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAuthorProfile' and column_name = 'InstagramURL')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] ADD InstagramURL NVARCHAR(1000) NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAuthorProfile' and column_name = 'WebsiteURL')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] ADD WebsiteURL NVARCHAR(1000) NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAuthorGroups' and column_name = 'YouTubeURL')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] ADD YouTubeURL NVARCHAR(1000) NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAuthorGroups' and column_name = 'InstagramURL')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] ADD InstagramURL NVARCHAR(1000) NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsAuthorGroups' and column_name = 'WebsiteURL')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] ADD WebsiteURL NVARCHAR(1000) NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ReplaceDNNSharpMyTokens')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ReplaceDNNSharpMyTokens BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ReplaceDNNSharpMyTokens DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ReplaceDNNSharpMyTokens')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ReplaceDNNSharpMyTokens BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ReplaceDNNSharpMyTokens DEFAULT(0) NOT NULL
+END
+GO

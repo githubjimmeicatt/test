@@ -65,7 +65,7 @@
   letter-spacing: normal;
   border-radius: 3px 3px 0 0;
 }
-.eds_modalWrapper .eds_modalContent > h3:before {
+.eds_modalWrapper .eds_modalContent > h3::before {
   font-family: "FontAwesome";
   color: #fff;
   padding-right: 15px;
@@ -182,7 +182,7 @@
   position: relative;
   font-size: 0;
 }
-.eds_modalWrapper .eds_modalContent .eds_labelAndInput:after {
+.eds_modalWrapper .eds_modalContent .eds_labelAndInput::after {
   display: block;
   content: "";
   clear: both;
@@ -380,7 +380,7 @@
   -o-transition: background 100ms linear;
   -moz-transition: background 100ms linear;
 }
-.eds_modalWrapper .eds_closeWindowButtonOuter:before {
+.eds_modalWrapper .eds_closeWindowButtonOuter::before {
   font-family: "FontAwesome";
   color: #fff;
   font-size: 22px;
@@ -421,7 +421,7 @@
   border-radius: 2px;
   margin: 5px;
 }
-.eds_modalWrapper .eds_infoMessages:before {
+.eds_modalWrapper .eds_infoMessages::before {
   font-size: 21px;
   color: #fff !important;
   font-family: "FontAwesome";
@@ -431,25 +431,25 @@
 .eds_modalWrapper .eds_infoMessages.eds_success {
   background-color: #00be9c;
 }
-.eds_modalWrapper .eds_infoMessages.eds_success:before {
+.eds_modalWrapper .eds_infoMessages.eds_success::before {
   content: "";
 }
 .eds_modalWrapper .eds_infoMessages.eds_info {
   background-color: #189fd3;
 }
-.eds_modalWrapper .eds_infoMessages.eds_info:before {
+.eds_modalWrapper .eds_infoMessages.eds_info::before {
   content: "";
 }
 .eds_modalWrapper .eds_infoMessages.eds_warning {
   background-color: #f3c500;
 }
-.eds_modalWrapper .eds_infoMessages.eds_warning:before {
+.eds_modalWrapper .eds_infoMessages.eds_warning::before {
   content: "";
 }
 .eds_modalWrapper .eds_infoMessages.eds_error {
   background-color: #e07171;
 }
-.eds_modalWrapper .eds_infoMessages.eds_error:before {
+.eds_modalWrapper .eds_infoMessages.eds_error::before {
   content: "";
 }
 .eds_modalWrapper .eds_formStatus {
@@ -519,7 +519,7 @@
   padding: 2px 0 0 25px;
   min-height: 25px;
 }
-.eds_modalWrapper .eds_styledRadio input[type="radio"] + label::before, .eds_modalWrapper .eds_styledRadio input[type="radio"] + label:after {
+.eds_modalWrapper .eds_styledRadio input[type="radio"] + label::before, .eds_modalWrapper .eds_styledRadio input[type="radio"] + label::after {
   position: absolute;
   display: inline-block;
   vertical-align: middle;
@@ -539,7 +539,7 @@
   top: 2px;
   left: 2px;
 }
-.eds_modalWrapper .eds_styledRadio input[type="radio"] + label:after {
+.eds_modalWrapper .eds_styledRadio input[type="radio"] + label::after {
   border: 2px solid #919191;
   background: transparent;
   width: 18px;
@@ -550,13 +550,13 @@
 .eds_modalWrapper .eds_styledRadio input[type="radio"] + label:hover::before {
   background: #60cb20 !important;
 }
-.eds_modalWrapper .eds_styledRadio input[type="radio"] + label:hover:after {
+.eds_modalWrapper .eds_styledRadio input[type="radio"] + label:hover::after {
   border-color: #60cb20 !important;
 }
 .eds_modalWrapper .eds_styledRadio input[type="radio"]:checked + label::before {
   background: #189fd3;
 }
-.eds_modalWrapper .eds_styledRadio input[type="radio"]:checked + label:after {
+.eds_modalWrapper .eds_styledRadio input[type="radio"]:checked + label::after {
   border-color: #189fd3;
 }
 .eds_modalWrapper .eds_styledRadio input[type="radio"]:disabled {
@@ -581,10 +581,10 @@
 .eds_modalWrapper.eds_modalVisible .eds_modalContent {
   display: block;
 }
-.eds_modalWrapper.eds_contactForm .eds_modalContent > h3:before {
+.eds_modalWrapper.eds_contactForm .eds_modalContent > h3::before {
   content: "";
 }
-.eds_modalWrapper.eds_authorProfileFullInfo .eds_modalContent > h3:before {
+.eds_modalWrapper.eds_authorProfileFullInfo .eds_modalContent > h3::before {
   content: "";
 }
 .eds_modalWrapper.eds_authorProfileFullInfo .eds_modalContent > div {
@@ -633,4 +633,39 @@
 .eds_modalWrapper .eds_fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
+}
+
+.edNews_adminInfo {
+  display: inline-block;
+  margin: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  border: solid 1px #ababab;
+  border-radius: 3px;
+  padding: 5px 10px;
+  line-height: 0;
+  background-color: #fff;
+  font: 12px/1 "Arial";
+}
+.edNews_adminInfo.edNews_info {
+  border-color: #85bdf8;
+  color: #85bdf8 !important;
+}
+.edNews_adminInfo.edNews_warning {
+  border-color: #fa6900;
+  color: #fa6900 !important;
+}
+.edNews_adminInfo.edNews_blockCenter {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+}
+.edNews_adminInfo .edNews_textCenter {
+  text-align: center;
+}
+.edNews_adminInfo .edNews_inputGroup * {
+  vertical-align: middle;
+}
+.edNews_adminInfo .edNews_inputGroup input + label {
+  margin: 0 0 0 7px;
 }

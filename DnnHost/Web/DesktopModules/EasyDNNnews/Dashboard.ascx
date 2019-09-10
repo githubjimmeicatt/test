@@ -62,6 +62,9 @@
 					<li class="edNews__DataImportExport">
 						<asp:HyperLink runat="server" ID="hlDataImportExport"><span><%=_("hlDataImportExport")%></span></asp:HyperLink>
 					</li>
+					<li class="edNews__WorlflowEditor">
+						<asp:HyperLink runat="server" ID="hlWorlflowEditor"><span><%=_("hlWorlflowEditor")%></span></asp:HyperLink>
+					</li>
 				</ul>
 				<ul class="edNews__selectMenu edNews__dashBoard">
 					<li class="edNews__ModuleSettings">

@@ -70,8 +70,8 @@
 											<asp:ListItem ResourceKey="liUpcomingEventsTooltip" Value="UpcomingEventsTooltip" Text="Upcoming events tooltip" />
 											<asp:ListItem ResourceKey="liAMPTemplates" Value="AMPTemplates" Text="AMP templates" />
 										</asp:DropDownList>
-										<div ID="pnlUploadTemplate" runat="server" Visible="false" class="edNews_inputGroup displayInline">
-											<asp:FileUpload ID="fuTemplate" runat="server" CssClass="edNews_fileUpload"/>
+										<div id="pnlUploadTemplate" runat="server" visible="false" class="edNews_inputGroup displayInline">
+											<asp:FileUpload ID="fuTemplate" runat="server" CssClass="edNews_fileUpload" />
 										</div>
 										<div class="mainActions smallActions noMargin displayInline">
 											<asp:Button ID="btnUploadTemplate" runat="server" CssClass="upload" Text="Upload" ResourceKey="btnUploadTemplate" CommandName="showPanel" OnClick="BtnUploadTemplate_Click" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
@@ -163,7 +163,7 @@
 							<div class="mainActions">
 								<asp:Button ID="btnCreateBackupBySelection" CssClass="primaryAction" runat="server" OnClick="MainBackupButtonsClick" CommandName="BySelection" Text="Backup now" CausesValidation="false" ResourceKey="btnCreateBackupBySelection" />
 							</div>
-							<asp:label ID="liLastBackup" runat="server" />
+							<asp:Label ID="liLastBackup" runat="server" />
 						</div>
 						<fieldset runat="server" id="pnlBackupDelete" visible="false">
 							<legend><%=_("DeleteBackup.Text")%></legend>
@@ -188,11 +188,13 @@
 						</div>
 						<asp:Label ID="lblMainSelectionInfo" runat="server" EnableViewState="false" />
 						<asp:Literal ID="liEditingTemplate" runat="server" />
-						<div class="mainActions" runat="server" id="pnlEditorActions">
-							<asp:Button ID="btnUpdate" runat="server" CssClass="downSave" OnClick="MainButtonsClick" Text="Save" ResourceKey="btnUpdate" CommandName="update" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
-							<asp:Button ID="btnSaveAsPopUp" CssClass="downSave" runat="server" OnClick="BtnSaveAsPopUp_Click" Text="Save as" ResourceKey="btnSaveAsPopUp" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
-							<asp:Button ID="btnLoadFromBackup" CssClass="upload" runat="server" OnClick="BtnLoadBackupPanel_Click" Text="Load from backup" ResourceKey="btnLoadFromBackup" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
-							<asp:Button ID="btnDelete" CssClass="delete" runat="server" OnClick="MainButtonsClick" Text="Delete" ResourceKey="btnDelete" CommandName="delete" />
+						<div class="mainActions" runat="server" id="divMainEditActionsWrapper">
+							<div class="mainActions" runat="server" id="pnlEditorActions">
+								<asp:Button ID="btnUpdate" runat="server" CssClass="downSave" OnClick="MainButtonsClick" Text="Save" ResourceKey="btnUpdate" CommandName="update" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
+								<asp:Button ID="btnSaveAsPopUp" CssClass="downSave" runat="server" OnClick="BtnSaveAsPopUp_Click" Text="Save as" ResourceKey="btnSaveAsPopUp" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
+								<asp:Button ID="btnLoadFromBackup" CssClass="upload" runat="server" OnClick="BtnLoadBackupPanel_Click" Text="Load from backup" ResourceKey="btnLoadFromBackup" OnClientClick="return codeMirrorCustom.PreSaveEditor();" />
+								<asp:Button ID="btnDelete" CssClass="delete" runat="server" OnClick="MainButtonsClick" Text="Delete" ResourceKey="btnDelete" CommandName="delete" />
+							</div>
 						</div>
 						<div class="mainActions" runat="server" visible="false">
 							<asp:HyperLink ID="btnExit" CssClass="cancel" runat="server" Text="Exit" />

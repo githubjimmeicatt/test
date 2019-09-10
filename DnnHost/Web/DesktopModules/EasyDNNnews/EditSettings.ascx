@@ -21,15 +21,15 @@
 		}
 	}
 
-	function CfFilterToogleLogicalOperation(ControlClientID,AllControls) {
+	function CfFilterToogleLogicalOperation(ControlClientID, AllControls) {
 		var selectedDdl = document.getElementById(ControlClientID);
-		if(selectedDdl.options[selectedDdl.selectedIndex].value == ''){
-			for(i=0;i<AllControls.length;i++){
+		if (selectedDdl.options[selectedDdl.selectedIndex].value == '') {
+			for (i = 0; i < AllControls.length; i++) {
 				jQuery('#' + AllControls[i]).prop('disabled', true);
 			}
 		}
-		else{
-			for(i=0;i<AllControls.length;i++){
+		else {
+			for (i = 0; i < AllControls.length; i++) {
 				jQuery('#' + AllControls[i]).prop('disabled', false);
 			}
 		}
@@ -49,26 +49,23 @@
 		}
 	}
 
-	function showWarnningEdit()
-	{
+	function showWarnningEdit() {
 		alert("You are editing the default settings. This will affect all modules that use the default settings.");
 	}
 
 	function AMPArticleTemplateValidation(source, arguments) {
 		if ($('#<%=cbCreateAMPArticles.ClientID%>')[0].checked) {
-			if($("#<%=ddlAMPArticleTemplate.ClientID%> option:selected").val())
+			if ($("#<%=ddlAMPArticleTemplate.ClientID%> option:selected").val())
 				arguments.IsValid = true;
-			else
-			{
+			else {
 				$("#<%=pnlCanonicalURLsSettingsSource.ClientID%>").removeClass("edNews__collapsed");
 				$("#<%=hfCanonicalURLs.ClientID%>").val("");
-				$("#<%=pnlCanonicalURLsSettings.ClientID%>").attr('style','display: block;');
+				$("#<%=pnlCanonicalURLsSettings.ClientID%>").attr('style', 'display: block;');
 				arguments.IsValid = false;
 			}
 			return;
 		}
-		else
-		{
+		else {
 			arguments.IsValid = true;
 		}
 	}
@@ -131,10 +128,10 @@
 		$('input[type="checkbox"]', '.edNews__toggleNextTableRow').trigger("change");
 
 		$('#<%=cbCreateAMPArticles.ClientID%>,#<%=cbEnableCanonicalLink.ClientID%>').on('change', function () {
-			if(!this.checked){
+			if (!this.checked) {
 				$(this).closest("tr").nextAll().hide();
 			}
-			else{
+			else {
 				$(this).closest("tr").nextAll().show();
 			}
 		});
@@ -142,54 +139,54 @@
 		$('#<%=cbEnableCanonicalLink.ClientID %>').trigger("change");
 
 		$('#<%=cbFeaturedArticles.ClientID %>').on('change', function () {
-			if(this.checked){
+			if (this.checked) {
 				$('#<%=cbFeaturedOnTop.ClientID %>')[0].checked = false;
 			}
 		});
 
 		$('#<%=cbFeaturedOnTop.ClientID %>').on('change', function () {
-			if(this.checked)
+			if (this.checked)
 				$('#<%=cbFeaturedArticles.ClientID %>')[0].checked = false;
 		});
 
 		<%=includeLBJS%>;
 
 		$('#<%= ddlOrderPostsBy.ClientID %>').change(function () {
-			if(this.value == 'Random'){
+			if (this.value == 'Random') {
 				$('#<%= ddlAscOrder.ClientID %>').prop('disabled', true);
 			}
-			else{
+			else {
 				$('#<%= ddlAscOrder.ClientID %>').prop('disabled', false);
 			}
 		});
 
-		if($('#<%= rblRestrictionByDateRange.ClientID %> input:checked').val() == 0){
+		if ($('#<%= rblRestrictionByDateRange.ClientID %> input:checked').val() == 0) {
 			$('#<%= tbxRestrictionByDateRange.ClientID %>').css('display', 'none');
 		}
-		else{
+		else {
 			$('#<%= tbxRestrictionByDateRange.ClientID %>').css('display', '');
 		}
 
 		$('#<%= rblRestrictionByDateRange.ClientID %> input').change(function () {
-			if($(this).val() == 0){
+			if ($(this).val() == 0) {
 				$('#<%= tbxRestrictionByDateRange.ClientID %>').css('display', 'none');
 			}
-			else{
+			else {
 				$('#<%= tbxRestrictionByDateRange.ClientID %>').css('display', '');
 			}
 		});
 
 		$('#<%=rblPaginationType.ClientID%> input').change(function () {
-			if($(this).val() == 0){
+			if ($(this).val() == 0) {
 				$('#<%=rowNormalPaginationOptions.ClientID %>').css('display', '');
 			}
-			else{
+			else {
 				$('#<%=rowNormalPaginationOptions.ClientID %>').css('display', 'none');
 			}
 		});
 
-		eds2_2('#<%=tbxPublishDate.ClientID%>').datepick({dateFormat:"<%=dateFormat%>"});
-		eds2_2('#<%=tbxExpireDate.ClientID%>').datepick({dateFormat:"<%=dateFormat%>"});
+		eds2_2('#<%=tbxPublishDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
+		eds2_2('#<%=tbxExpireDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
 
 		var $permissions_show_all_items = $('.permissions_show_all_items > input'),
 			$permissions_show_manual_item_selection = $('.permissions_show_manual_item_selection > input'),
@@ -241,12 +238,12 @@
 				'<li class="contentLimit tag' + (limits.TagLimit > -1 ? ' activeLimit' : '') + '"><label><input type="checkbox" value=""' + (limits.TagLimit > -1 ? ' checked="checked"' : '') + ' /><%=MaximumNumberOfTagsPerArticle%></label><input type="text" value="' + (limits.TagLimit > -1 ? limits.TagLimit : '0') + '" /></li>' +
 				'<li class="contentLimit category' + (limits.CategoryLimit > -1 ? ' activeLimit' : '') + '"><label><input type="checkbox" value=""' + (limits.CategoryLimit > -1 ? ' checked="checked"' : '') + ' /><%=MaximumNumberOfCategoriesPerArticle%></label><input type="text" value="' + (limits.CategoryLimit > -1 ? limits.CategoryLimit : '1') + '" /></li>' +
 				'<li class="contentLimit expireDate' + (limits.ExpireDateLimit > -1 ? ' activeLimit' : '') + '">' +
-					'<label><input type="checkbox" value=""' + (limits.ExpireDateLimit > -1 ? ' checked="checked"' : '') + ' /><%=SetExpireDate%></label>' +
-					'<div>' +
-						'<label class="days"><input type="text" value="' + expireDateDays + '" /><%=Days%></label>' +
-						'<label class="hours"><input type="text" value="' + expireDateHours + '" /><%=Hours%></label>' +
-						'<label class="minutes"><input type="text" value="' + expireDateMinutes + '" /><%=Minutes%></label>' +
-					'</div>' +
+				'<label><input type="checkbox" value=""' + (limits.ExpireDateLimit > -1 ? ' checked="checked"' : '') + ' /><%=SetExpireDate%></label>' +
+				'<div>' +
+				'<label class="days"><input type="text" value="' + expireDateDays + '" /><%=Days%></label>' +
+				'<label class="hours"><input type="text" value="' + expireDateHours + '" /><%=Hours%></label>' +
+				'<label class="minutes"><input type="text" value="' + expireDateMinutes + '" /><%=Minutes%></label>' +
+				'</div>' +
 				'</li>';
 
 			$permission_list_items.html(listHtml);
@@ -418,29 +415,29 @@
 			$permission_list_items
 				.html(generate_category_list_items($selected_categories_field.val(), ($clicked.hasClass('custom_fields') ? edn_all_custom_fields : edn_all_categories)))
 				.find('input[type="checkbox"]')
-					.change(function () {
-						var $selected_categories = $permission_list_items.find('input[type="checkbox"]:checked'),
-							selected_ids = ',',
-							selected_categories_names = '';
+				.change(function () {
+					var $selected_categories = $permission_list_items.find('input[type="checkbox"]:checked'),
+						selected_ids = ',',
+						selected_categories_names = '';
 
-						if ($selected_categories.length) {
-							$selected_categories.each(function () {
-								var $this = $(this);
+					if ($selected_categories.length) {
+						$selected_categories.each(function () {
+							var $this = $(this);
 
-								selected_ids += $this.val() + ',';
-								selected_categories_names += $this.siblings('span:first').html() + ', ';
-							});
-							$selected_categories_field.val(selected_ids);
-							$selected_categories_text.html(selected_categories_names.substring(0, selected_categories_names.length - 2));
+							selected_ids += $this.val() + ',';
+							selected_categories_names += $this.siblings('span:first').html() + ', ';
+						});
+						$selected_categories_field.val(selected_ids);
+						$selected_categories_text.html(selected_categories_names.substring(0, selected_categories_names.length - 2));
 
-							$add_edit_field_selection_trigger.css('visibility', 'visible');
-						} else {
-							$selected_categories_field.val('');
-							$selected_categories_text.html('');
+						$add_edit_field_selection_trigger.css('visibility', 'visible');
+					} else {
+						$selected_categories_field.val('');
+						$selected_categories_text.html('');
 
-							$add_edit_field_selection_trigger.css('visibility', 'hidden');
-						}
-					});
+						$add_edit_field_selection_trigger.css('visibility', 'hidden');
+					}
+				});
 
 			$edn_permission_selection_dialog
 				.dialog('open');
@@ -456,25 +453,25 @@
 			$permission_list_items
 				.html(generate_add_edit_list_items($selected_categories_field.val(), edn_customize_add_edit))
 				.find('input[type="checkbox"]')
-					.change(function () {
-						var $selected_categories = $permission_list_items.find('input[type="checkbox"]:checked'),
-							selected_ids = ',',
-							selected_categories_names = '';
+				.change(function () {
+					var $selected_categories = $permission_list_items.find('input[type="checkbox"]:checked'),
+						selected_ids = ',',
+						selected_categories_names = '';
 
-						if ($selected_categories.length) {
-							$selected_categories.each(function () {
-								var $this = $(this);
+					if ($selected_categories.length) {
+						$selected_categories.each(function () {
+							var $this = $(this);
 
-								selected_ids += $this.val() + ',';
-								selected_categories_names += $this.siblings('span:first').html() + ', ';
-							});
-							$selected_categories_field.val(selected_ids);
-							$selected_categories_text.html(selected_categories_names.substring(0, selected_categories_names.length - 2));
-						} else {
-							$selected_categories_field.val('');
-							$selected_categories_text.html('');
-						}
-					});
+							selected_ids += $this.val() + ',';
+							selected_categories_names += $this.siblings('span:first').html() + ', ';
+						});
+						$selected_categories_field.val(selected_ids);
+						$selected_categories_text.html(selected_categories_names.substring(0, selected_categories_names.length - 2));
+					} else {
+						$selected_categories_field.val('');
+						$selected_categories_text.html('');
+					}
+				});
 
 			$edn_permission_selection_dialog
 				.dialog('open');
@@ -587,7 +584,7 @@
 
 		$('#<%=cbDisplayAllCategories.ClientID %>').on('change', function () {
 
-			if(this.checked)
+			if (this.checked)
 				ValidatorEnable(document.getElementById('<%=cvCategoriesTreeview.ClientID %>'), false);
 			else
 				ValidatorEnable(document.getElementById('<%=cvCategoriesTreeview.ClientID %>'), true);
@@ -595,14 +592,14 @@
 			$('#<%=tblSelectCategories.ClientID%>').css('display', (this.checked ? 'none' : ''));
 		});
 
-		if($('#<%=cbDisplayAllCategories.ClientID %>').length)
+		if ($('#<%=cbDisplayAllCategories.ClientID %>').length)
 			$('#<%=tblSelectCategories.ClientID%>').css('display', ($('#<%=cbDisplayAllCategories.ClientID %>')[0].checked ? 'none' : ''));
 
 		$('#<%=phGroupsAndAuthorsTreeView.ID%>advanced_tree_view_categor_selector').EDS_TreeViewSelector({
 			state_checkbox: $('#<%=cbAutoAdd.ClientID %>')
 		});
 
-		if($('#<%=cbShowAllAuthors.ClientID %>').length)
+		if ($('#<%=cbShowAllAuthors.ClientID %>').length)
 			$('#<%=phGroupsAndAuthorsTreeView.ID%>advanced_tree_view_categor_selector').css('display', ($('#<%=cbShowAllAuthors.ClientID %>')[0].checked ? 'none' : ''));
 
 		$('#<%=cbShowAllAuthors.ClientID %>').on('change', function () {
@@ -637,16 +634,15 @@
 		})
 	};
 
-	function EditTemplateLinkChange($ddlTemplate, $editTemplateLink)
-	{
+	function EditTemplateLinkChange($ddlTemplate, $editTemplateLink) {
 		var newTemplateHrefPart = $ddlTemplate.val();
 
-		$ddlTemplate.find('option').each(function(){
+		$ddlTemplate.find('option').each(function () {
 			var editTemplateHref = $editTemplateLink.attr('href');
 
 			var templateLinkPart = encodeURIComponent($(this).val());
 
-			if(editTemplateHref.indexOf(templateLinkPart) > 0){
+			if (editTemplateHref.indexOf(templateLinkPart) > 0) {
 				$editTemplateLink.attr('href', editTemplateHref.replace(templateLinkPart, encodeURIComponent(newTemplateHrefPart)));
 			}
 		});
@@ -654,7 +650,7 @@
 
 	function FilterByContent_Init() {
 
-		if($('#<%=rblFilterArticlesBy.ClientID %> input:checked').val() == 'False'){
+		if ($('#<%=rblFilterArticlesBy.ClientID %> input:checked').val() == 'False') {
 			$rblFilterContent = $('#<%=rblFilterContent.ClientID %> input:checked');
 			$ddlOrderArticlesBy = $('#<%= ddlOrderPostsBy.ClientID %>');
 
@@ -677,8 +673,7 @@
 		}
 	};
 
-	function TemplateEditLink_Init()
-	{
+	function TemplateEditLink_Init() {
 		$("#<%=ddlArticleListTemplate.ClientID %>").change(function () {
 			EditTemplateLinkChange($(this), $("#<%=hlEditHtmlTemplate.ClientID %>"));
 		});
@@ -716,12 +711,12 @@
 		if (args.get_isPartialLoad()) {
 
 			$('#<%=cbFeaturedArticles.ClientID %>').on('change', function () {
-				if(this.checked){
+				if (this.checked) {
 					$('#<%=cbFeaturedOnTop.ClientID %>')[0].checked = false;
 				}
 			});
 			$('#<%=cbFeaturedOnTop.ClientID %>').on('change', function () {
-				if(this.checked)
+				if (this.checked)
 					$('#<%=cbFeaturedArticles.ClientID %>')[0].checked = false;
 			});
 
@@ -731,7 +726,7 @@
 
 			$('#<%=cbDisplayAllCategories.ClientID %>').on('change', function () {
 
-				if(this.checked)
+				if (this.checked)
 					ValidatorEnable(document.getElementById('<%=cvCategoriesTreeview.ClientID %>'), false);
 				else
 					ValidatorEnable(document.getElementById('<%=cvCategoriesTreeview.ClientID %>'), true);
@@ -747,7 +742,7 @@
 				state_checkbox: $('#<%=cbAutoAdd.ClientID %>')
 			});
 
-			if($('#<%=cbShowAllAuthors.ClientID %>').length)
+			if ($('#<%=cbShowAllAuthors.ClientID %>').length)
 				$('#<%=phGroupsAndAuthorsTreeView.ID%>advanced_tree_view_categor_selector').css('display', ($('#<%=cbShowAllAuthors.ClientID %>')[0].checked ? 'none' : ''));
 
 			$('#<%=cbShowAllAuthors.ClientID %>').on('change', function () {
@@ -758,8 +753,8 @@
 
 			TemplateEditLink_Init();
 
-			eds2_2('#<%=tbxPublishDate.ClientID%>').datepick({dateFormat:"<%=dateFormat%>"});
-			eds2_2('#<%=tbxExpireDate.ClientID%>').datepick({dateFormat:"<%=dateFormat%>"});
+			eds2_2('#<%=tbxPublishDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
+			eds2_2('#<%=tbxExpireDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
 
 			$('#<%=upArticleTags.ClientID %>')
 				.delegate('#<%=dlListOfExistingTags.ClientID %> a.tag_link', 'click', function () {
@@ -767,7 +762,7 @@
 						tag_id = $this.data('edsTagId') || $this.data('eds-tag-id'),
 						$filterContentByTagsWrapper = $('#filterContentByTagsWrapper'),
 						$hfSelectedTags = $('#<%=hfSelectedTags.ClientID %>'),
-							id_list = $hfSelectedTags.val();
+						id_list = $hfSelectedTags.val();
 
 					$('#<%=filterContentByTagsNoTagsMsg.ClientID %>').css('display', 'none');
 
@@ -784,20 +779,20 @@
 
 					return false;
 				})
-					.delegate('#<%=dlListOfExistingTags.ClientID %> a.tag_link', 'mouseenter mouseleave', function (e) {
-						var $this = $(this),
-							$target = $('#filterContentByTagsWrapper li.tag-' + ($this.data('edsTagId') || $this.data('eds-tag-id')));
+				.delegate('#<%=dlListOfExistingTags.ClientID %> a.tag_link', 'mouseenter mouseleave', function (e) {
+					var $this = $(this),
+						$target = $('#filterContentByTagsWrapper li.tag-' + ($this.data('edsTagId') || $this.data('eds-tag-id')));
 
-						if (e.type == 'mouseenter')
-							$target.addClass('already_present');
-						else
-							$target.removeClass('already_present');
-					});
+					if (e.type == 'mouseenter')
+						$target.addClass('already_present');
+					else
+						$target.removeClass('already_present');
+				});
 
 			$('#filterContentByTagsWrapper').delegate('li > span', 'click', function () {
 				var $li = $(this).parent(),
 					$hfSelectedTags = $('#<%=hfSelectedTags.ClientID %>'),
-						id_list = $hfSelectedTags.val();
+					id_list = $hfSelectedTags.val();
 
 				id_list = id_list.replace(',' + ($li.data('edsTagId') || $li.data('eds-tag-id')) + ',', ',');
 				if (id_list == ',') {
@@ -870,7 +865,7 @@
 								<asp:ListBox runat="server" ID="lbSharingPortalID" SelectionMode="Multiple"></asp:ListBox>
 								<asp:HiddenField runat="server" ID="hfSelectedSharingPortalID" />
 								<div class="mainActions noMargin displayInline smallActions">
-									<asp:Button CssClass="primaryAction" ID="btnSharingPortal" runat="server" Text="Set portals" OnClick="btnSharingPortal_Click" />
+									<asp:Button CssClass="primaryAction" ID="btnSharingPortal" runat="server" resourcekey="btnSharingPortal" Text="Set portals" OnClick="btnSharingPortal_Click" />
 								</div>
 							</td>
 						</tr>
@@ -1208,6 +1203,16 @@
 									<td>
 										<div class="switchCheckbox">
 											<asp:CheckBox CssClass="normalCheckBox" ID="cbShowDocumentsWithoutPermissions" runat="server" Text=" " />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="tdLabel">
+										<label for="<%=cbPreventArticleDeletion.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblPreventArticleDeletion.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblPreventArticleDeletion.Text") %></label>
+									</td>
+									<td>
+										<div class="switchCheckbox">
+											<asp:CheckBox CssClass="normalCheckBox" ID="cbPreventArticleDeletion" runat="server" Text=" " />
 										</div>
 									</td>
 								</tr>
@@ -1586,6 +1591,16 @@
 									</div>
 								</td>
 							</tr>
+							<tr>
+								<td class="tdLabel width50">
+									<label for="<%=cbReplaceDNNSharpMyTokens.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblReplaceDNNSharpMyTokens.Help", true) %>" data-tooltip-position="top-right"><%=_("lblReplaceDNNSharpMyTokens.Text") %></label>
+								</td>
+								<td>
+									<div class="switchCheckbox">
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbReplaceDNNSharpMyTokens" Text="Replace standard DNN tokens" runat="server" />
+									</div>
+								</td>
+							</tr>
 						</table>
 					</asp:Panel>
 				</asp:Panel>
@@ -1924,22 +1939,20 @@
 							</tr>
 							<tr>
 								<td class="tdLabel">
-									<label for="<%=cbArticleApprove.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAproveArticle.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAproveArticle.Text") %></label>
+									<label for="<%=cbEnableArticleVoting.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEnableArticleVoting.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblEnableArticleVoting.Text") %></label>
 								</td>
 								<td>
 									<div class="switchCheckbox">
-										<asp:CheckBox CssClass="normalCheckBox" ID="cbArticleApprove" runat="server" Text=" " />
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbEnableArticleVoting" runat="server" Checked="False" Text=" " />
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
-									<label for="<%=cbUPpdatedArticleApprove.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAproveUpdatedArticles.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAproveUpdatedArticles.Text") %></label>
+									<label for="<%=ddlWorkflowSelect.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("ddlWorkflowSelect.HelpText", true) %>" data-tooltip-position="top-right"><%=_("ddlWorkflowSelect.Text") %></label>
 								</td>
 								<td>
-									<div class="switchCheckbox">
-										<asp:CheckBox CssClass="normalCheckBox" ID="cbUPpdatedArticleApprove" runat="server" Text=" " />
-									</div>
+									<asp:DropDownList ID="ddlWorkflowSelect" runat="server" DataTextField="Name" DataValueField="Id" />
 								</td>
 							</tr>
 						</table>
@@ -2964,6 +2977,7 @@
 														<asp:ListItem Value="6" resourcekey="liNextFriday" Text="Next Friday" />
 														<asp:ListItem Value="7" resourcekey="liNextSaturday" Text="Next Saturday" />
 														<asp:ListItem Value="8" resourcekey="liNextSunday" Text="Next Sunday" />
+														<asp:ListItem Value="9" resourcekey="liNextDay" Text="Next Day" />
 													</asp:DropDownList>
 												</div>
 												<asp:Panel ID="pnlDesiredPublishDate" runat="server" Visible="false" CssClass="edNews_inputGroup displayInline">
@@ -3291,6 +3305,16 @@
 												<td>
 													<div class="switchCheckbox">
 														<asp:CheckBox CssClass="normalCheckBox" ID="cbAllowArticleComments" runat="server" Text=" " />
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="tdLabel">
+													<label for="<%=cbShowCommentsGDPRComplianceAgreement.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblShowCommentsGDPRComplianceAgreement.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblShowCommentsGDPRComplianceAgreement.Text") %></label>
+												</td>
+												<td>
+													<div class="switchCheckbox">
+														<asp:CheckBox CssClass="normalCheckBox" ID="cbShowCommentsGDPRComplianceAgreement" runat="server" Text=" " />
 													</div>
 												</td>
 											</tr>
@@ -3635,8 +3659,8 @@
 									<label for="<%=btnClearSearchIndexer.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblClearSearchIndexer.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblClearSearchIndexer.Text") %></label>
 								</td>
 								<td>
-									<div class="mainAction smallActions displayInline noMargin">
-										<asp:Button ID="btnClearSearchIndexer" resourcekey="btnClearSearchIndexer" runat="server" Text="Clear" CssClass="cancel" OnClick="btnClearSearchIndexer_Click" />
+									<div class="mainActions smallActions displayInline noMargin">
+										<asp:Button ID="btnClearSearchIndexer" resourcekey="btnClearSearchIndexer" runat="server" Text="Clear" CssClass="delete" OnClick="btnClearSearchIndexer_Click" />
 									</div>
 									<label runat="server" id="lblClearSearchIndexerInfo" enableviewstate="false"></label>
 								</td>
@@ -3646,8 +3670,8 @@
 									<label for="<%=btnClearSearchIndexerAll.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblClearSearchIndexerAll.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblClearSearchIndexerAll.Text") %></label>
 								</td>
 								<td>
-									<div class="mainAction smallActions displayInline noMargin">
-										<asp:Button ID="btnClearSearchIndexerAll" resourcekey="btnClearSearchIndexerAll" runat="server" Text="Clear" CssClass="cancel" OnClick="btnClearSearchIndexerAll_Click" />
+									<div class="mainActions smallActions displayInline noMargin">
+										<asp:Button ID="btnClearSearchIndexerAll" resourcekey="btnClearSearchIndexerAll" runat="server" Text="Clear" CssClass="delete" OnClick="btnClearSearchIndexerAll_Click" />
 									</div>
 									<label runat="server" id="lblClearSearchIndexerAllInfo" enableviewstate="false"></label>
 								</td>
@@ -3719,6 +3743,16 @@
 								<td>
 									<div class="switchCheckbox">
 										<asp:CheckBox CssClass="normalCheckBox" ID="cbAuthorsCanEditThierGroup" runat="server" Text=" " />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="tdLabel">
+									<label for="<%=cbAuthorProfileUseHtmlEditor.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAuthorProfileUseHtmlEditor.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAuthorProfileUseHtmlEditor.Text") %></label>
+								</td>
+								<td>
+									<div class="switchCheckbox">
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbAuthorProfileUseHtmlEditor" runat="server" Text=" " />
 									</div>
 								</td>
 							</tr>
@@ -3925,6 +3959,16 @@
 									<asp:HyperLink ID="hlContactFormEnableCaptcha" runat="server" Target="_blank" Visible="False">You need to enter Google Recaptcha keys in API CONNECTION control.</asp:HyperLink>
 								</td>
 							</tr>
+							<tr>
+								<td class="tdLabel">
+									<label for="<%=cbContactFormAddArticleTitleToSubject.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblContactFormAddArticleTitleToSubject.Help", true) %>" data-tooltip-position="top-right"><%=_("lblContactFormAddArticleTitleToSubject.Text") %></label>
+								</td>
+								<td>
+									<div class="switchCheckbox">
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbContactFormAddArticleTitleToSubject" runat="server" Checked="False" Text=" " />
+									</div>
+								</td>
+							</tr>
 						</table>
 					</asp:Panel>
 				</asp:Panel>
@@ -4119,7 +4163,7 @@
 									</script>
 									<a href="#" id="twitterConnectInfoSwitch"><%=ShowhideTwitterconnectinfo%></a>
 									<div id="twitterConnectInfo" style="display: none">
-										<asp:HyperLink ID="hlVisitDetailInstrictionsTwitter" resourcekey="lblConToTwitterError" runat="server" Font-Bold="True" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink><br />
+										<asp:HyperLink ID="hlVisitDetailInstrictionsTwitter" resourcekey="hlVisitDetailInstrictionsFacebook" runat="server" Font-Bold="True" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/easydnnnews-and-facebook-integration" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink><br />
 										<asp:Label ID="lblTwitterSetup" resourcekey="lblTwitterSetup" runat="server" Text="To connect to Twitter you need to:&lt;br/&gt;1.Click on link &quot;Connect module to  Twitter account&quot;. New window will open and you need to login to Twitter and give your Twitter app to connect to your account&lt;br /&gt; 2. Copy the security code that Twitter will provide into field below. &lt;br/&gt3. Click on Connect to Twitter button." />
 									</div>
 								</td>
@@ -4296,9 +4340,9 @@
 										// ]]>
 									</script>
 									<a id="linkedInConnectInfoSwitch" href="#">
-										<%#Localization.GetSafeJSString("ShowHideLinkedInConnectInfo.Text", LocalResourceFile) %></a>
+										<%=ShowhideLinkedInconnectinfo %></a>
 									<div id="linkedInConnectInfo" style="display: none">
-										<asp:HyperLink ID="hlVisitDetailInstrictionsLinkedIn" runat="server" Font-Bold="True" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink><br />
+										<asp:HyperLink ID="hlVisitDetailInstrictionsLinkedIn" runat="server" Font-Bold="True" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/how-to-setup-auto-posting-to-linkedin" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink><br />
 										<asp:Label ID="lblLinkedInSetup" resourcekey="lblLinkedInSetup" runat="server" Text="To connect to LinkedIn you need to:&lt;br/&gt;1.Click on link &quot;Connect to LinkedIn account&quot;. New window will open and you need to login to LinkedIn and give your LinkedIn app permission to connect to your account&lt;br /&gt; 2. Click on button Connect to LinkedIn. After connected select from the dropdown list where you will post on LinkedIn." />
 									</div>
 								</td>
@@ -4320,9 +4364,7 @@
 									<asp:Label ID="lblConnectToLinkedInMessage" runat="server" />
 									<br />
 									2.
-									<div class="mainActions noMargin smallActions">
-										<asp:Button ID="btnConnectToLinkedIn" runat="server" Text="Connect to LinkedIn" CssClass="primaryAction" OnClick="btnConnectToLinkedIn_Click" />
-									</div>
+									<asp:Button ID="btnConnectToLinkedIn" runat="server" Text="Connect to LinkedIn" OnClick="btnConnectToLinkedIn_Click" />
 									<asp:HiddenField ID="hfLinkedInAccessToken" runat="server" />
 								</td>
 							</tr>
@@ -4608,7 +4650,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="tdLabel">
+								<td class="tdLabel textTop">
 									<label for="<%=tbOldCharacter.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAddCharacter.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAddCharacter.Text") %></label>
 								</td>
 								<td>
@@ -4617,7 +4659,9 @@
 										<asp:TextBox ID="tbOldCharacter" runat="server" MaxLength="3" ValidationGroup="vgAddCharacter" CssClass="smallCentered" />
 										<asp:Label ID="lblNewCharacter" runat="server" Text="New character:" resourcekey="lblNewCharacter0Resource1" />
 										<asp:TextBox ID="tbNewCharacter" runat="server" MaxLength="3" ValidationGroup="vgAddCharacter" CssClass="smallCentered" />
-										<asp:Button ID="btnAddCharacter" runat="server" OnClick="btnAddCharacter_Click" Text="Add" ValidationGroup="vgAddCharacter" resourcekey="btnAddCharacterResource1" />
+										<div class="mainActions smallActions displayInline noMargin">
+											<asp:Button CssClass="add" ID="btnAddCharacter" runat="server" OnClick="btnAddCharacter_Click" Text="Add" ValidationGroup="vgAddCharacter" resourcekey="btnAddCharacterResource1" />
+										</div>
 										<asp:RequiredFieldValidator ID="rfvACOld" runat="server" ControlToValidate="tbOldCharacter" ErrorMessage="This field is required." ValidationGroup="vgAddCharacter" resourcekey="rfvACOld0Resource1" />
 									</div>
 								</td>

@@ -1,0 +1,65 @@
+<!--TemplateGroup:listArticleDefault-->
+<!--ArticleRepeat:Before:-->
+<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+<article class="edn_articleStyle7 edn_whiteBg edn_clear">
+	[EasyDNNnews:IfExists:Image]
+	<section>
+		<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><img class="edn_articleImage" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]" /></a>
+		<div>
+			<div><time class="edn_time">[EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfNotExists:Event][EasyDNNnews:FormatedDate:m][EasyDNNnews:EndIf:Event]</time></div>
+			<span class="edn_category">[EasyDNNnews:Categories separator=" " last]</span>
+		</div>
+		[EasyDNNnews:IfExists:Comments]
+		<span class="edn_numberOfComments edn_hidden"><a href="[EasyDNNnews:ReadMore]#[EasyDNNnewsLocalizedText:CommentsAnchor]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Comments]</a></span>
+		[EasyDNNnews:EndIf:Comments]
+	</section>
+	[EasyDNNnews:EndIf:Image]
+	[EasyDNNnews:IfNotExists:Image]
+	<section class="edn_noImage edn_clear">
+		[EasyDNNnews:IfExists:Comments]
+		<span class="edn_numberOfComments"><a href="[EasyDNNnews:ReadMore]#[EasyDNNnewsLocalizedText:CommentsAnchor]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Comments]</a></span>
+		[EasyDNNnews:EndIf:Comments]
+		<div>
+			<time class="edn_time">[EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfNotExists:Event][EasyDNNnews:FormatedDate:m][EasyDNNnews:EndIf:Event]</time>
+			<span class="edn_category">[EasyDNNnews:Categories separator=" " last]</span>
+		</div>
+	</section>
+	[EasyDNNnews:EndIf:Image]
+	<div>
+		[EasyDNNnews:HasArticlePermissions]
+		<div class="edn_adminActions">
+			[EasyDNNnews:ArticlePermissions:Edit]
+			[EasyDNNnews:ArticlePermissions:Publish]
+			[EasyDNNnews:ArticlePermissions:Approve]
+		</div>
+		[EasyDNNnews:HasArticlePermissionsEnd]
+		[EasyDNNnews:IfExists:SubTitle]
+		<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+		[EasyDNNnews:EndIf:SubTitle]
+		<h2 class="edn_articleTitle"><a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+		[EasyDNNnews:IfExists:Tags]
+		<div class="edn_simpleTags">
+			[EasyDNNnews:Tags separator=", "]
+		</div>
+		[EasyDNNnews:EndIf:Tags]
+		[EasyDNNnews:IfExists:Event]
+		<p class="edn_listEventDetails">
+			[EasyDNNnews:IfExists:EventLocation]
+			<span class="edn_eventLocation">[EasyDNNnews:EventLocation]</span>
+			[EasyDNNnews:EndIf:EventLocation]
+			<span class="edn_eventDate">[EasyDNNnews:EventDate]</span>
+		</p>
+		[EasyDNNnews:EndIf:Event]
+		<div class="edn_articleSummary">[EasyDNNnews:Summary]</div>
+	</div>
+</article>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

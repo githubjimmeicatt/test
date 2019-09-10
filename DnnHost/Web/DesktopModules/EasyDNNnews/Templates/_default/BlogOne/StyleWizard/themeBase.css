@@ -358,7 +358,7 @@
   margin: 11px 0 0;
   clear: both;
 }
-.eds_news__-ThemeName-_ .article .stats > div {
+.eds_news__-ThemeName-_ .article .stats > span {
   display: inline-block;
   vertical-align: baseline;
   margin: 0 15px 0 0;
@@ -366,7 +366,7 @@
   font-size: 11px;
   font-family: Verdana, Geneva, sans-serif;
 }
-.eds_news__-ThemeName-_ .article .stats > div.comments {
+.eds_news__-ThemeName-_ .article .stats > span.comments {
   padding: 0 0 2px 19px;
   background: url("_-StyleAssetsClientRoot-_img/icons/comment.png") no-repeat 0 1px;
 }
@@ -884,6 +884,15 @@
 }
 .eds_news__-ThemeName-_ .article.standalone .author_group_profile .profile_buttons .button.social.google_plus {
   background-image: url("_-StyleAssetsClientRoot-_img/google_plus_button.png");
+}
+.eds_news__-ThemeName-_ .article.standalone .author_group_profile .profile_buttons .button.social.youtube {
+  background-image: url("_-StyleAssetsClientRoot-_img/yt_button.png");
+}
+.eds_news__-ThemeName-_ .article.standalone .author_group_profile .profile_buttons .button.social.instagram {
+  background-image: url("_-StyleAssetsClientRoot-_img/inst_button.png");
+}
+.eds_news__-ThemeName-_ .article.standalone .author_group_profile .profile_buttons .button.social.website {
+  background-image: url("_-StyleAssetsClientRoot-_img/link_button.png");
 }
 .eds_news__-ThemeName-_.eds_subCollection_news .article_rss_wrapper {
   overflow: hidden;
@@ -1933,6 +1942,75 @@
   .eds_news__-ThemeName-_.eds_subCollection_news .edn_fixedPrevNextArticleNavigation > a.edn_nextArticle:hover .edn_fixedNavImage:after {
     padding-left: 25px;
   }
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting {
+  float: right;
+  margin: 10px;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px;
+  position: relative;
+  font: 13px/1 Verdana, Geneva, sans-serif;
+  cursor: pointer;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span > i {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 1;
+  color: #bababa;
+  padding-right: 7px;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span .edn_voteTooltip {
+  display: inline-block;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: normal;
+  background-color: #4c4c4c;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 2px;
+  transition: all 400ms;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span .edn_voteTooltip::before {
+  content: "";
+  bottom: calc(100% - 4px);
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  background-color: #4c4c4c;
+  position: absolute;
+  transform: rotate(45deg);
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span:hover .edn_voteTooltip {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+  top: 130%;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__voted {
+  cursor: default;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__voted > i {
+  color: #bababa;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__voted .edn_voteTooltip {
+  display: none;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__voted:hover > i {
+  color: #bababa;
+}
+.eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__votedUp > i, .eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__votedDown > i, .eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__votedUp:hover > i, .eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span.edn__votedDown:hover > i, .eds_news__-ThemeName-_.eds_subCollection_news .edn_ArticleVoting > span:hover > i {
+  color: #37b1ab;
 }
 .eds_news__-ThemeName-_.eds_subCollection_news.eds_print .publish_date {
   color: #888;

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     var debugMode = window.parent['personaBarSettings']['debugMode'] === true;
@@ -8,8 +8,9 @@
         baseUrl: 'scripts/contrib/',
         paths: {
             'templatePath': '../../',
-            'cssPath': '../../css/',
-            'main': '../../scripts'
+            'cssPath': '../../css',
+            'main': '../../scripts',
+            'modules': '../../modules'
         },
         urlArgs: (cdv ? 'cdv=' + cdv : '') + (debugMode ? '&t=' + Math.random() : ''),
         shim: {
@@ -52,21 +53,6 @@
             throw err;
         }
     };
-
-    if (!String.prototype.includes) {
-        String.prototype.includes = function(search, start) {
-            'use strict';
-            if (typeof start !== 'number') {
-                start = 0;
-            }
-    
-            if (start + search.length > this.length) {
-                return false;
-            } else {
-                return this.indexOf(search, start) !== -1;
-            }
-        };
-    }
 })();
 
 // Enable React Dev Tools inside the iframe, this should be loaded before React has been loaded
@@ -80,14 +66,9 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         var iframe = window.parent.document.getElementById("personaBar-iframe");
         if (!iframe) return;
         
-        // var onTouch = "ontouchstart" in document.documentElement;
-        // var isTouch = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
-
-        //
-        // Replaced touch vars above to fix persona bar
-
-        var onTouch = false;
-        var isTouch = false;
+        var onTouch = "ontouchstart" in document.documentElement;
+        // Checking touch screen for second level menu - the above onTouch won't work on windows tablet - IE I didnt test but read about it.
+        var isTouch = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
 
         var activePath = null;
         var activemodule = '';
@@ -448,16 +429,35 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     }
                 }
             },
+            /**
+             * in case path is an array, it is expected to be a sorted list of dependent sources.
+             * 
+             * @param path string|array
+             */
             loadBundleScript: function (path) {
-                if (path.indexOf('cdv=') === -1) {
-                    path += (path.indexOf('?') > -1 ? '&' : '?') + 'cdv=' + config.buildNumber;
-                }
 
-                $.ajax({
-                    dataType: "script",
-                    cache: true,
-                    url: path
-                });
+                var urls = path;
+                if(Array.isArray(urls) === false) {
+                    urls = [path];
+                }
+                function ajax(urls, build) {
+                    if(urls.length == 0) {
+                        return;
+                    }
+                    $.ajax({
+                        dataType: "script",
+                        cache: true,
+                        data: {
+                            cdv: build
+                        },
+                        url: urls.pop(),
+                        complete: function() {
+                            ajax(urls, build);
+                        }
+                    });
+                }
+                    
+                ajax(urls.reverse(), config.buildNumber);
             },
             panelViewData: function (panelId, viewData) {
                 var localStorageAllowed = function () {
@@ -918,9 +918,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                 }());
 
                                 (function setupHoverMenu() {
-                                    if (onTouch) {
-                                        return;
-                                    }
+
 
                                     var showMenuHandlers = [];
                                     var leaveSubMenuHandlers = [];
@@ -970,7 +968,10 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                                             $('#' + hoverMenuId).hide();
                                                         });
 
+                                                        // Set aria-expanded to true when menu is shown
                                                         $hoverMenu.show();
+                                                        $this.attr('aria-expanded', 'true');
+
                                                         // Fix ie personabar hover menús
                                                         showMenuHandlers.push(setTimeout(function () {
                                                             $('.hovermenu > ul').css('list-style-type', 'square');
@@ -999,7 +1000,9 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                                         if (!activePath) {
                                                             $iframe.width(personaBarMenuWidth);
                                                         }
+                                                        // Set aria-expanded to false when menu is hidden
                                                         $hoverMenu.hide();
+                                                        $this.attr('aria-expanded', 'false');
 
                                                         resetHandlers();
                                                     }
@@ -1057,7 +1060,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                         util.closePersonaBar(function () {
                                             toogleUserMode('EDIT', function() {
                                                 function reloadPage() {
-                                                    window.top.location.replace(window.top.location.href);
+                                                    window.top.location = window.top.location.protocol + '//' + window.top.location.host + window.top.location.pathname + window.top.location.search;
                                                 }
                                                 saveBtnEditSettings(reloadPage, reloadPage);
                                             });

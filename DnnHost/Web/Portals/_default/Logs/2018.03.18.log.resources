@@ -1,0 +1,239 @@
+2018-03-18 13:11:26,662 [cheetah][Thread:40][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): This is an invalid webresource request.
+   at System.Web.Handlers.AssemblyResourceLoader.System.Web.IHttpHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-03-18 14:09:46,856 [cheetah][Thread:24][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 25635
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 38BiphjyVc7fLeqXRChqStS2GOcNYpWHjl3hwRZGBOnWQTLy6xfo Z6kr5hWqykc7D3nZpnkbRv71OUd8J 4mG4W5mBWVuhpMSEPZD6RtEubbbTPg0K4XQNI2sWttcA8g7UTmgs2JWDRrmgWtAhntMmikZEVHuBhDLkihD2LESt0 yDSn/FELYcXdoBYeeU/t74b8hmzSCUlh9vhlP0ThXPO2hXJaBxnuouc8oje ue1MuTaryjp83D0msmH2aDx7Omv4Qz0ydJu6//KKn5FeUT9VyTkyiPw7iFc4UA6PdYngusjfeJAcd/6AdF8kiroZld07oVlhzZywmDFBq9Vd2VwKyXNHNIDcF4Rrsp5NQNm24nLXa/PVSMlbDmG33EPcGqZkf9MOGPGVM8Rz jZXsanoHysLn7TAc9sGA9z7nYWQPQP1nl6qhadV33wuAAu7uxrjNDYq9nhPOPDvf9pZ4Xlht rzhV0qpO9E5uiakeTchYuKWfWtNjCr44Ol6I89fSq26KuAkuJPs3E ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 14:09:46,856 [cheetah][Thread:24][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 25635
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 38BiphjyVc7fLeqXRChqStS2GOcNYpWHjl3hwRZGBOnWQTLy6xfo Z6kr5hWqykc7D3nZpnkbRv71OUd8J 4mG4W5mBWVuhpMSEPZD6RtEubbbTPg0K4XQNI2sWttcA8g7UTmgs2JWDRrmgWtAhntMmikZEVHuBhDLkihD2LESt0 yDSn/FELYcXdoBYeeU/t74b8hmzSCUlh9vhlP0ThXPO2hXJaBxnuouc8oje ue1MuTaryjp83D0msmH2aDx7Omv4Qz0ydJu6//KKn5FeUT9VyTkyiPw7iFc4UA6PdYngusjfeJAcd/6AdF8kiroZld07oVlhzZywmDFBq9Vd2VwKyXNHNIDcF4Rrsp5NQNm24nLXa/PVSMlbDmG33EPcGqZkf9MOGPGVM8Rz jZXsanoHysLn7TAc9sGA9z7nYWQPQP1nl6qhadV33wuAAu7uxrjNDYq9nhPOPDvf9pZ4Xlht rzhV0qpO9E5uiakeTchYuKWfWtNjCr44Ol6I89fSq26KuAkuJPs3E ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 14:09:49,012 [cheetah][Thread:41][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 26639
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: PFIbiNRTq88pZpWEsU9kQd4MORiJN34T5kOCtH2o1MMcg/i9cqDXx6J032GUYC RYedbb73jdIXTXGai6xu5SmcbqGKEcxyxd7E3O1l6yd1NVb RGf G85aAsTucIWREhcZ5Ajtenaae19GW6Arf5ebULnwaQtoVpYkiuyCqR8GN2iTt6IbZ/0rbhDM= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 14:09:49,012 [cheetah][Thread:41][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 26639
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: PFIbiNRTq88pZpWEsU9kQd4MORiJN34T5kOCtH2o1MMcg/i9cqDXx6J032GUYC RYedbb73jdIXTXGai6xu5SmcbqGKEcxyxd7E3O1l6yd1NVb RGf G85aAsTucIWREhcZ5Ajtenaae19GW6Arf5ebULnwaQtoVpYkiuyCqR8GN2iTt6IbZ/0rbhDM= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 15:52:45,712 [cheetah][Thread:32][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 14428
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: pI9jSEYrwzipVnAZEgNHj5H8DBx8pVK5XQsdMMDSLNKS1bK/7ev4NCnwCZpEvmXnAGdssFacIUS8YfxFy/K3qbXqxd7KhBda4ojplkE3oarRxYagd5mgLuRBFygdPGgDNcDvWAifquKVD4ddFy308p 1fnUIZQFgM K7LQnIspl2Jhr1nbYbJZOJrfKrFqwyqd74E/1Re ahZ6mwDjlmJ1anDn2HucBJSCzndt6P7nnHldZBl60rnKt8TgfTIXyJHvkBr5uo8ltFk7TJyFKrqrZoij0OzyGdes8l152BQusOsFjfd62/nvyYodjm85k1ThQYx0PkI07Hh6l3FE2I4LtuCNt u3v0V2sOODrsSUIb 3zSoXdgY2v1sFqpeIJ/lkv8YPmaMr/mVBMmbxzrshFHoTM3J0ks7Ln3eKsJTR7ne3G0fWMMkuHJO 47B3tzuEO28TkrqmHiejpGEfIAWhbeti33XTqdqR zVEAkxWMRwYBzseB5xu7C2KjzOAJKdVe9ooUY7qO6lUZq ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 15:52:45,712 [cheetah][Thread:32][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 14428
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: pI9jSEYrwzipVnAZEgNHj5H8DBx8pVK5XQsdMMDSLNKS1bK/7ev4NCnwCZpEvmXnAGdssFacIUS8YfxFy/K3qbXqxd7KhBda4ojplkE3oarRxYagd5mgLuRBFygdPGgDNcDvWAifquKVD4ddFy308p 1fnUIZQFgM K7LQnIspl2Jhr1nbYbJZOJrfKrFqwyqd74E/1Re ahZ6mwDjlmJ1anDn2HucBJSCzndt6P7nnHldZBl60rnKt8TgfTIXyJHvkBr5uo8ltFk7TJyFKrqrZoij0OzyGdes8l152BQusOsFjfd62/nvyYodjm85k1ThQYx0PkI07Hh6l3FE2I4LtuCNt u3v0V2sOODrsSUIb 3zSoXdgY2v1sFqpeIJ/lkv8YPmaMr/mVBMmbxzrshFHoTM3J0ks7Ln3eKsJTR7ne3G0fWMMkuHJO 47B3tzuEO28TkrqmHiejpGEfIAWhbeti33XTqdqR zVEAkxWMRwYBzseB5xu7C2KjzOAJKdVe9ooUY7qO6lUZq ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 15:52:47,321 [cheetah][Thread:76][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 13119
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: BxQJ sJq9JrjahH4zgMKjcYDAFSYd0tIBZy1suAHg64G1SoMLhcn/cWK60KYfbc/VLDQhFvtzwHwkNhwzGp/1Mmw cI6q6RzHxpIOc15rhtJxbEvgysqa/KiI/VlxFO2tSPkWscV2kW17D1xJUch/iYNWo2Gt6NgkWVQGcXzUMeS2RzmtyOzUY1DCVI= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 15:52:47,321 [cheetah][Thread:76][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 13119
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: BxQJ sJq9JrjahH4zgMKjcYDAFSYd0tIBZy1suAHg64G1SoMLhcn/cWK60KYfbc/VLDQhFvtzwHwkNhwzGp/1Mmw cI6q6RzHxpIOc15rhtJxbEvgysqa/KiI/VlxFO2tSPkWscV2kW17D1xJUch/iYNWo2Gt6NgkWVQGcXzUMeS2RzmtyOzUY1DCVI= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 18:29:08,433 [cheetah][Thread:59][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 61465
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: G2qJCfiUMX9Y9PgiPqqNkbo4wuWYr3SVZgJoT5eW1rcmLntB1SE8q053zezUoi1rZ3Dhyba0V1kYU0xhWy6DDARFfVgLhxt2p6cfeN0yhTLMRMhuLjol9dqDS2FUYi/nZUN8TnO904rkJv79f2XDkyLx3bU6bT/cM0TdT9yA8R3HU7zVHkoRpYgamCxsIxgzMCwpTsapkKDScEDiiu4gH1iF BeA UY3/86bgDWjXlnvWW6Y4s7DHVf6GM9FLAy46Rt69yki2tmYci8JvhyGgvWiZZZYSUMuU1kTgs/f2NUemRCl37Zaz6c08HOBz4cB5dEyDaz5fWF1UDShI81ydkRh/APVO3Sd1AY62YzEA5/3pU86Ca/ PYG6EKkdcfM01aVD9AN95D14el1ByTObVMCHIzaI/fjNUKIfNyHI3mXlLXwBVGemWdGrk1yEYC8JX4lg44Ex3jL VY67pRkW31DguapxqWXBsop0Aya4Vh3eMIHwlbYVX6R4R3fWyoxzyO64cz9f3sQvL2B5
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 18:29:08,433 [cheetah][Thread:59][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 61465
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: G2qJCfiUMX9Y9PgiPqqNkbo4wuWYr3SVZgJoT5eW1rcmLntB1SE8q053zezUoi1rZ3Dhyba0V1kYU0xhWy6DDARFfVgLhxt2p6cfeN0yhTLMRMhuLjol9dqDS2FUYi/nZUN8TnO904rkJv79f2XDkyLx3bU6bT/cM0TdT9yA8R3HU7zVHkoRpYgamCxsIxgzMCwpTsapkKDScEDiiu4gH1iF BeA UY3/86bgDWjXlnvWW6Y4s7DHVf6GM9FLAy46Rt69yki2tmYci8JvhyGgvWiZZZYSUMuU1kTgs/f2NUemRCl37Zaz6c08HOBz4cB5dEyDaz5fWF1UDShI81ydkRh/APVO3Sd1AY62YzEA5/3pU86Ca/ PYG6EKkdcfM01aVD9AN95D14el1ByTObVMCHIzaI/fjNUKIfNyHI3mXlLXwBVGemWdGrk1yEYC8JX4lg44Ex3jL VY67pRkW31DguapxqWXBsop0Aya4Vh3eMIHwlbYVX6R4R3fWyoxzyO64cz9f3sQvL2B5
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 18:29:12,121 [cheetah][Thread:53][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 61513
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: Mq2c0KCYiX2LyLRyr3hwFxnzpgN/c2jjxUmJYrrk5HGSVY8v5nJYZ3oTewYw86YXiVsFHrDto3zz3DDpvZZAB43roKEYHsOmCgnctoHC1ieb68Jo57RmXB7V7LSirbPDpx9wsSH3H8cPiShRBsjxoR dMtAiXDqvcWlWJ/w429MWtUhuXe/JlxHkYE4= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2018-03-18 18:29:12,121 [cheetah][Thread:53][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 10.2.20.246
+	Port: 61513
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: Mq2c0KCYiX2LyLRyr3hwFxnzpgN/c2jjxUmJYrrk5HGSVY8v5nJYZ3oTewYw86YXiVsFHrDto3zz3DDpvZZAB43roKEYHsOmCgnctoHC1ieb68Jo57RmXB7V7LSirbPDpx9wsSH3H8cPiShRBsjxoR dMtAiXDqvcWlWJ/w429MWtUhuXe/JlxHkYE4= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

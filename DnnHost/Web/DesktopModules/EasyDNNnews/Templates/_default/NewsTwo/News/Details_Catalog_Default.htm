@@ -94,6 +94,12 @@
 			<div class="meta-text-wraper">
 				<div class="meta_text">
 					<div class="attribute author"><strong>[EasyDNNnewsLocalizedText:Author]:</strong> [EasyDNNnews:Author:Link]</div><div class="newstwo-comments">[EasyDNNnews:Comments] [EasyDNNnewsLocalizedText:Comments]</div><div class="rating">[EasyDNNnews:ArticleRating]</div>
+					[EasyDNNnews:IfExists:ArticleVoting]
+					<div class="edn_ArticleVoting">
+						<span class="edn__voteArticleUp"><i class="fa fa-thumbs-o-up"></i><span class="eds__voteCount">[EasyDNNnews:ArticleGoodVotesCount]</span><span class="edn_voteTooltip">[EasyDNNnewsLocalizedText:Upvote]</span></span>
+						<span class="edn__voteArticleDown"><i class="fa fa-thumbs-o-down"></i><span class="eds__voteCount">[EasyDNNnews:ArticleBadVotesCount]</span><span class="edn_voteTooltip">[EasyDNNnewsLocalizedText:Downvote]</span></span>
+					</div>
+					[EasyDNNnews:EndIf:ArticleVoting]
 				</div>
 			</div>
 			<div class="meta-details">
@@ -104,14 +110,18 @@
 			<div class="details-wraper">
 				<div class="author-details">
 					[EasyDNNnews:Author:Image:Width:114:Height:99:Resize:Crop]
-					<p>[EasyDNNnews:Author:ShortInfo] <span class="more-about-author">[EasyDNNnews:Author:FullInfo]</span></p>
+					<h4 class="author-display-name">[EasyDNNnews:Author:DisplayName][EasyDNNnews:Author:RSSURL]</h4>
+					<p>[EasyDNNnews:Author:ShortInfo] <span class="other-posty-by">[EasyDNNnewsLocalizedText:Otherpostsby] [EasyDNNnews:Author:Link]</span></p>
 					<div class="connect-with">
-						<strong>Connect with [EasyDNNnews:Author:DisplayName]:</strong>
 						[EasyDNNnews:Author:Facebook]
 						[EasyDNNnews:Author:Twitter]
 						[EasyDNNnews:Author:LinkedIn]
 						[EasyDNNnews:Author:GooglePlus]
+						[EasyDNNnews:Author:YouTube]
+						[EasyDNNnews:Author:Instagram]
+						[EasyDNNnews:Author:Website]
 						[EasyDNNnews:Author:Contact]
+						[EasyDNNnews:Author:FullInfo]
 					</div>
 				</div>
 			</div>
@@ -120,14 +130,16 @@
 			<div class="details-wraper">
 				<div class="author-details">
 					[EasyDNNnews:Author:GroupImage:Width:114:Height:99:Resize:Crop]
+					<h4 class="author-display-name">[EasyDNNnews:Author:GroupName][EasyDNNnews:Author:GroupRSSURL]</h4>
 					<p>[EasyDNNnews:Author:GroupInfo]</p>
 					<div class="connect-with">
-						<strong>Connect with [EasyDNNnews:Author:GroupName]:</strong>
 						[EasyDNNnews:Author:GroupFacebook]
 						[EasyDNNnews:Author:GroupTwitter]
 						[EasyDNNnews:Author:GroupGooglePlus]
 						[EasyDNNnews:Author:GroupLinkedIn]
-						[EasyDNNnews:Author:GroupRSSURL]
+						[EasyDNNnews:Author:GroupYouTube]
+						[EasyDNNnews:Author:GroupInstagram]
+						[EasyDNNnews:Author:GroupWebsite]
 						[EasyDNNnews:Author:GroupContact]
 					</div>
 				</div>

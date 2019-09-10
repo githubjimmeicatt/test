@@ -1,0 +1,21 @@
+2016-10-06 13:13:56,106 [Jaguar][Thread:68][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 213.254.241.4
+	Port: 1290
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: fwg2GQ5BZbvIAVseJyvvJO9HQ9zzAyYyRtgSLg o12/expxGsQUj q2T9hPYR3y0F6swwhlRbAazP/1YxAaQOuyNEgYJ/A0FgGhFOwuMjdIgspCOXkyGoCj3D6IF6SVolBJq 8xv5Q98V7aU1TY9AiHV1UUPNL27LQqR/RbnOkG0MTIqFDskwcKsNS9R8Do/DB9Tcpx7nCUj85mbl6u7CoV/1Cn6v7QXM50jMjg6CCrT WhTWnjUQKgCztCEufB5Q0QMb QZT/0LfA8Rsvne4XHHbfrmET0XWNx0qnhRaUyJgFFNHeqsm/tOpiLGr75eOEjSOHARspGdbq3E1FmOiENrr9P3cNNDn K3UfTu1PupySE14UN BYy6yNi22LrBO3RB4vZzcobTWmCF8tw hylAwsPN05bDh/EG bLaCHXvgxs2/I2Jw9rJgeYrj2/LnKp9mIkbHG5eRzPkImvi1QFJR VSj7RF /era1P vs8Jy83eqtghQqbMQiI8MmK96u82y75W7NTq3Aov2srSy/olMsBEkwPZ6aUCXwa8AoE7hlrQgTLexphZGys=
+   at System.Web.UI.ViewStateException.ThrowMacValidationError(Exception inner, String persistedState)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-06 14:52:51,190 [Jaguar][Thread:10][ERROR] DotNetNuke.Framework.Reflection - Icatt.DotNetNuke.Modules.Response.ResponseController
+System.Web.HttpException (0x80004005): Could not load type 'Icatt.DotNetNuke.Modules.Response.ResponseController'.
+   at System.Web.Compilation.BuildManager.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at DotNetNuke.Framework.Reflection.CreateType(String TypeName, String CacheKey, Boolean UseCache, Boolean IgnoreErrors)

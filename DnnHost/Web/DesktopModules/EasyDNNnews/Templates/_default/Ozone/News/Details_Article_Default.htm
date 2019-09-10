@@ -1,7 +1,7 @@
 <!--TemplateGroup:detailsArticleDefault-->
 <!--ArticleTemplate-->
 <EDNHeader>
-	<article class="edn_article edn_articleDetails">
+	<article class="edn_article edn_articleDetails" [EasyDNNnews:ArticleMetaDataAttribute]>
 		[EasyDNNnews:IfExists:Event]
 		<div class="edn_eventDetails edn_clearFix">
 			[EasyDNNnews:IfExists:EventRegistration][EasyDNNnews:EventRegistration:RegisterButton][EasyDNNnews:EndIf:EventRegistration]
@@ -83,6 +83,12 @@
 		<div class="edn_metaDetails edn_clearFix">
 			<span class="edn_numberOfVievs">[EasyDNNnews:NumberOfViews]</span>
 			[EasyDNNnews:ArticleRating]
+			[EasyDNNnews:IfExists:ArticleVoting]
+			<div class="edn_ArticleVoting">
+				<span class="edn__voteArticleUp"><i class="fa fa-thumbs-o-up"></i><span class="eds__voteCount">[EasyDNNnews:ArticleGoodVotesCount]</span><span class="edn_voteTooltip">[EasyDNNnewsLocalizedText:Upvote]</span></span>
+				<span class="edn__voteArticleDown"><i class="fa fa-thumbs-o-down"></i><span class="eds__voteCount">[EasyDNNnews:ArticleBadVotesCount]</span><span class="edn_voteTooltip">[EasyDNNnewsLocalizedText:Downvote]</span></span>
+			</div>
+			[EasyDNNnews:EndIf:ArticleVoting]
 		</div>
 		[EasyDNNnews:IfExists:Tags]
 		<div class="edn_articleTags edn_clearFix">[EasyDNNnewsLocalizedText:Tags]: [EasyDNNnews:Tags separator=""]</div>
@@ -95,37 +101,43 @@
 </EDNContentBottom>
 <!--Gallery BOTTOM position-->
 <EDNFooter>
-		[EasyDNNnews:GravityGallery]
-		[EasyDNNnews:IfExists:AuthorProfile]
-		<div class="edn_authorGroupDetails">
-			[EasyDNNnews:Author:Image:Width:85:Height:120:Resize:Crop]
-			<h4>[EasyDNNnews:Author:DisplayName][EasyDNNnews:Author:RSSURL]</h4>
-			[EasyDNNnews:Author:ShortInfo] <span class="edn_otherPostsBy">[EasyDNNnewsLocalizedText:Otherpostsby] [EasyDNNnews:Author:Link]</span>
-			<div class="edn_connectWith">
-				[EasyDNNnews:Author:Contact]
-				[EasyDNNnews:Author:FullInfo]
-				[EasyDNNnews:Author:Facebook]
-				[EasyDNNnews:Author:Twitter]
-				[EasyDNNnews:Author:LinkedIn]
-				[EasyDNNnews:Author:GooglePlus]
-			</div>
+	[EasyDNNnews:GravityGallery]
+	[EasyDNNnews:IfExists:AuthorProfile]
+	<div class="edn_authorGroupDetails">
+		[EasyDNNnews:Author:Image:Width:85:Height:120:Resize:Crop]
+		<h4>[EasyDNNnews:Author:DisplayName][EasyDNNnews:Author:RSSURL]</h4>
+		[EasyDNNnews:Author:ShortInfo] <span class="edn_otherPostsBy">[EasyDNNnewsLocalizedText:Otherpostsby] [EasyDNNnews:Author:Link]</span>
+		<div class="edn_connectWith">
+			[EasyDNNnews:Author:Contact]
+			[EasyDNNnews:Author:FullInfo]
+			[EasyDNNnews:Author:Facebook]
+			[EasyDNNnews:Author:Twitter]
+			[EasyDNNnews:Author:LinkedIn]
+			[EasyDNNnews:Author:GooglePlus]
+			[EasyDNNnews:Author:YouTube]
+			[EasyDNNnews:Author:Instagram]
+			[EasyDNNnews:Author:Website]
 		</div>
-		[EasyDNNnews:EndIf:AuthorProfile]
-		[EasyDNNnews:IfExists:AuthorGroup]
-		<div class="edn_authorGroupDetails edn_groupDetails">
-			[EasyDNNnews:Author:GroupImage:Width:85:Height:120:Resize:Crop]
-			<h4>[EasyDNNnews:Author:GroupName][EasyDNNnews:Author:GroupRSSURL]</h4>
-			[EasyDNNnews:Author:GroupInfo]
-			<div class="edn_connectWith">
-				[EasyDNNnews:Author:GroupContact]
-				[EasyDNNnews:Author:GroupFacebook]
-				[EasyDNNnews:Author:GroupTwitter]
-				[EasyDNNnews:Author:GroupGooglePlus]
-				[EasyDNNnews:Author:GroupLinkedIn]
-			</div>
+	</div>
+	[EasyDNNnews:EndIf:AuthorProfile]
+	[EasyDNNnews:IfExists:AuthorGroup]
+	<div class="edn_authorGroupDetails edn_groupDetails">
+		[EasyDNNnews:Author:GroupImage:Width:85:Height:120:Resize:Crop]
+		<h4>[EasyDNNnews:Author:GroupName][EasyDNNnews:Author:GroupRSSURL]</h4>
+		[EasyDNNnews:Author:GroupInfo]
+		<div class="edn_connectWith">
+			[EasyDNNnews:Author:GroupContact]
+			[EasyDNNnews:Author:GroupFacebook]
+			[EasyDNNnews:Author:GroupTwitter]
+			[EasyDNNnews:Author:GroupLinkedIn]
+			[EasyDNNnews:Author:GroupGooglePlus]
+			[EasyDNNnews:Author:GroupYouTube]
+			[EasyDNNnews:Author:GroupInstagram]
+			[EasyDNNnews:Author:GroupWebsite]
 		</div>
-		[EasyDNNnews:EndIf:AuthorGroup]
-		[EasyDNNnews:RelatedArticles]
+	</div>
+	[EasyDNNnews:EndIf:AuthorGroup]
+	[EasyDNNnews:RelatedArticles]
 </EDNFooter>
 <!--Comments position-->
 <EDNBottom>

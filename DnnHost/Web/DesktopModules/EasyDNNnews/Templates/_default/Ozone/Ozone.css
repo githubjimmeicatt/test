@@ -295,7 +295,9 @@
 .eds_news_Ozone {
   margin-bottom: 30px;
 }
-.eds_news_Ozone * {
+.eds_news_Ozone *,
+.eds_news_Ozone *::before,
+.eds_news_Ozone *::after {
   box-sizing: border-box;
 }
 .eds_news_Ozone h1,
@@ -1549,6 +1551,15 @@
 }
 .eds_news_Ozone.eds_subCollection_news .edn_authorGroupDetails .button.social.google_plus:before {
   content: "";
+}
+.eds_news_Ozone.eds_subCollection_news .edn_authorGroupDetails .button.social.youtube:before {
+  content: "";
+}
+.eds_news_Ozone.eds_subCollection_news .edn_authorGroupDetails .button.social.instagram:before {
+  content: "";
+}
+.eds_news_Ozone.eds_subCollection_news .edn_authorGroupDetails .button.social.website:before {
+  content: "";
 }
 .eds_news_Ozone.eds_subCollection_news .edn_authorGroupDetails .button.social:hover {
   border-color: #c81704;
@@ -3127,7 +3138,6 @@
   padding-top: 25px;
   clear: both;
   margin-top: 40px;
-  width: 90%;
   margin: 40px auto 0;
 }
 .eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews_numberOfComments {
@@ -3182,16 +3192,33 @@
 .eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions {
   text-align: right;
   margin: 20px 0;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1;
   font-family: "PT Sans", sans-serif;
 }
 .eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span {
   cursor: pointer;
   color: #8b8b8b;
+  display: inline-block;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px 20px;
+  border-radius: 3px;
 }
 .eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span:hover {
-  color: #c81704;
+  color: #333;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span + span {
+  margin-left: 7px;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span.edNews__editComment, .eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span.edNews__editCommentCancelTrigger {
+  border-color: #ff6a00;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span.edNews__deleteComment {
+  border-color: #db313c;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > div .edNews_commentActions > span.edNews__editCommentSaveTrigger {
+  border-color: #37cbcb;
 }
 .eds_news_Ozone.eds_subCollection_news .edNews__itemCommentsWrapper .edNews__itemCommentContainer > .edNews__childCommentsContainer {
   margin: 0 0 0 50px;
@@ -3483,6 +3510,55 @@
 .eds_news_Ozone.eds_subCollection_news .edNews__showCommentsTrigger:hover {
   border-color: #c81704;
   color: #c81704;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews_votes .edNews_actionIcon {
+  color: #bababa;
+  font-size: 20px;
+  margin-right: 10px;
+  transition: color 300ms;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews_votes .edNews__commentVoting_trigger {
+  display: inline-block;
+  cursor: pointer;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews_votes .edNews__commentVoting_trigger > * {
+  vertical-align: middle;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews_votes .edNews__commentVoting_trigger + .edNews__commentVoting_trigger {
+  margin-left: 20px;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews_votes .edNews__commentVoting_trigger:hover .edNews_actionIcon {
+  color: #8de171;
+}
+.eds_news_Ozone.eds_subCollection_news .edNews_votes .edNews__commentVoting_trigger.edNews__commentVoting_voted .edNews_actionIcon {
+  color: #8de171;
+}
+.eds_news_Ozone .edNews__editCommentContainer {
+  border: dashed 1px #ddd;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+.eds_news_Ozone .edNews__editCommentContent {
+  font-family: "PT Sans", sans-serif;
+  background: none #fdfdfd;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 0;
+  color: #C6C6C6;
+  outline: none;
+  padding: 8px;
+  width: 100%;
+  box-shadow: none !important;
+  margin: 0;
+  resize: vertical;
+  font-size: 12px;
+}
+.eds_news_Ozone .edNews__editCommentContent:focus, .eds_news_Ozone .edNews__editCommentContent:hover {
+  color: #9fa0a2;
+  background: none #fdfdfd;
+}
+.eds_news_Ozone .edNews__editCommentContent:focus {
+  background-color: #fff;
+  color: #9fa0a2;
 }
 .eds_news_Ozone .edn_recentCommentsHeader {
   border-bottom: 1px solid #e4e4e4;
@@ -6479,6 +6555,85 @@
 .eds_news_Ozone.eds_subCollection_news div.EDN_article_rateit div.rateit-selected-rtl {
   background-position: right -16px;
 }
+.eds_news_Ozone.eds_subCollection_news .article_rating + .edn_ArticleVoting {
+  margin-left: 50px;
+}
+@media handheld, only screen and (max-width: 992px), only screen and (max-device-width: 992px) {
+  .eds_news_Ozone.eds_subCollection_news .article_rating + .edn_ArticleVoting {
+    margin-left: 0;
+    display: block;
+    text-align: right;
+  }
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting {
+  display: inline-block;
+  vertical-align: middle;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px;
+  position: relative;
+  font: 13px/1 "PT Sans", sans-serif;
+  cursor: pointer;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span > i {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 1;
+  color: #bababa;
+  padding-right: 7px;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span .edn_voteTooltip {
+  display: inline-block;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: normal;
+  background-color: #4c4c4c;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 2px;
+  transition: all 400ms;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span .edn_voteTooltip::before {
+  content: "";
+  bottom: calc(100% - 4px);
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  background-color: #4c4c4c;
+  position: absolute;
+  transform: rotate(45deg);
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span:hover .edn_voteTooltip {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+  top: 130%;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__voted {
+  cursor: default;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__voted > i {
+  color: #bababa;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__voted .edn_voteTooltip {
+  display: none;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__voted:hover > i {
+  color: #bababa;
+}
+.eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__votedUp > i, .eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__votedDown > i, .eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__votedUp:hover > i, .eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span.edn__votedDown:hover > i, .eds_news_Ozone.eds_subCollection_news .edn_ArticleVoting > span:hover > i {
+  color: #37b1ab;
+}
 
 .eds_news_Ozone.eds_subCollection_search {
   float: none;
@@ -6968,18 +7123,18 @@
   display: block;
   margin: 4px 0;
 }
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox > input,
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton > input {
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input,
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input {
   display: none;
 }
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox > label,
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton > label {
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label,
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label {
   display: inline-block;
   vertical-align: middle;
   font-weight: normal;
 }
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox > label:before,
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton > label:before {
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before,
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label:before {
   display: inline-block;
   vertical-align: middle;
   content: "";
@@ -6995,14 +7150,14 @@
   color: #8e1003;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
 }
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox > label:before {
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before {
   background-image: url("assets/images/advancedSearch/checkBoxes/background/predefined/checkBoxBg.png");
 }
 .eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type="checkbox"]:checked + label:before {
   background-position: 0 bottom;
   content: "";
 }
-.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton > label:before {
+.eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label:before {
   background-image: url("assets/images/advancedSearch/radioButtons/background/predefined/radioButtonBg.png");
 }
 .eds_news_Ozone.eds_subCollection_search .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type="radio"]:checked + label:before {

@@ -30,9 +30,7 @@ var watch           =   require('gulp-watch');
 gulp.task('sass', function () {
 	return gulp.src('./assets/scss/**/*.scss')
         .pipe(plumber())
-        .pipe(sass({
-            precision: 10
-        }))
+		.pipe(sass())
 		.pipe(gulp.dest('./assets/css/'));
 });
 

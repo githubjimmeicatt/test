@@ -1,0 +1,22 @@
+﻿IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'LinkedInAccessToken')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ALTER COLUMN LinkedInAccessToken nvarchar(1000) NULL;
+END
+GO
+
+IF EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'LinkedInAccessToken')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ALTER COLUMN LinkedInAccessToken nvarchar(1000) NULL;
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'ShowCommentsGDPRComplianceAgreement')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD ShowCommentsGDPRComplianceAgreement  BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_ShowCommentsGDPRComplianceAgreement DEFAULT (0) NOT NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'ShowCommentsGDPRComplianceAgreement')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD ShowCommentsGDPRComplianceAgreement  BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_ShowCommentsGDPRComplianceAgreement DEFAULT (0) NOT NULL
+END
+GO

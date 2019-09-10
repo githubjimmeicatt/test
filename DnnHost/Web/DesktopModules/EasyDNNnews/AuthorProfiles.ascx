@@ -1,4 +1,5 @@
 ﻿<%@ control language="C#" autoeventwireup="true" inherits="EasyDNNSolutions.Modules.EasyDNNNews.Administration.AuthorProfiles, App_Web_authorprofiles.ascx.d988a5ac" %>
+<%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 <script type="text/javascript">
 	function ConfirmDelete() {
 		return confirm('<%=Localization.GetString("Areyousure.Text", this.LocalResourceFile)%>');
@@ -45,7 +46,7 @@
 							</asp:TemplateField>
 							<asp:TemplateField HeaderText="UserID">
 								<EditItemTemplate>
-									<asp:TextBox ID="tbUserId" runat="server"  Text='<%# Bind("UserID") %>'></asp:TextBox>
+									<asp:TextBox ID="tbUserId" runat="server" Text='<%# Bind("UserID") %>'></asp:TextBox>
 								</EditItemTemplate>
 								<ItemTemplate>
 									<p>
@@ -71,7 +72,7 @@
 							</asp:TemplateField>
 							<asp:TemplateField HeaderText="Short Info">
 								<ItemTemplate>
-									<asp:Label ID="lblShortInfoDate" runat="server" CssClass="smallText" Text='<%# Eval("ShortInfo") %>' />
+									<asp:Label ID="lblShortInfoDate" runat="server" CssClass="smallText" Text='<%# HttpUtility.HtmlDecode(Eval("ShortInfo").ToString()) %>' />
 								</ItemTemplate>
 							</asp:TemplateField>
 							<asp:TemplateField HeaderText="Date added">
@@ -90,7 +91,7 @@
 							</asp:TemplateField>
 							<asp:TemplateField HeaderText="Group name">
 								<ItemTemplate>
-									<asp:Label ID="Label1" runat="server" Text='<%# GetAuthorGroups(Eval("AuthorProfileID")) %>' />
+									<asp:Label ID="lblAuthorGroups" runat="server" Text='<%# Eval("GroupName") %>' />
 								</ItemTemplate>
 								<HeaderStyle Width="150px" />
 								<ItemStyle CssClass="textCenter" />
@@ -155,7 +156,10 @@
 								<asp:Label ID="lblShortInfo" runat="server" Text="Short info:" resourcekey="lblShortInfoResource1" />
 							</td>
 							<td>
-								<div class="edNews_inputGroup inputWidth40">
+								<div runat="server" id="divShortInfoHtmlEditor" class="summaryhtmleditor text_input_set">
+									<dnn:TextEditor ID="txtShortInfo" runat="server" Height="300px" />
+								</div>
+								<div runat="server" id="divShortInfoBasicEditor" class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbShortInfo" runat="server" MaxLength="4000" TextMode="MultiLine" />
 								</div>
 							</td>
@@ -165,7 +169,10 @@
 								<asp:Label ID="lblFullBio" runat="server" Text="Full info:" resourcekey="lblFullBioResource1" />
 							</td>
 							<td>
-								<div class="edNews_inputGroup inputWidth40">
+								<div runat="server" id="divFullInfotHtmlEditor" class="summaryhtmleditor text_input_set">
+									<dnn:TextEditor ID="txtFullInfo" runat="server" Height="600px" />
+								</div>
+								<div runat="server" id="divFullInfoBasicEditor" class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbFullInfo" runat="server" MaxLength="4000" TextMode="MultiLine" />
 								</div>
 							</td>
@@ -175,7 +182,7 @@
 								<asp:Label ID="lblFacebookURL" runat="server" Text="Facebook URL:" resourcekey="lblFacebookURLResource1" />
 							</td>
 							<td>
-								<div class="edNews_inputGroup inputWidth40 inputHeight150">
+								<div class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbFacebookURL" runat="server" />
 								</div>
 							</td>
@@ -207,6 +214,36 @@
 							<td>
 								<div class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbLinkedInURL" runat="server" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdLabel">
+								<asp:Label ID="lblYouTubeURL" runat="server" Text="YouTube URL:" resourcekey="lblYouTubeURL" />
+							</td>
+							<td>
+								<div class="edNews_inputGroup inputWidth40">
+									<asp:TextBox ID="tbYouTubeURL" runat="server" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdLabel">
+								<asp:Label ID="lblInstagramURL" runat="server" Text="Instagram URL:" resourcekey="lblInstagramURL" />
+							</td>
+							<td>
+								<div class="edNews_inputGroup inputWidth40">
+									<asp:TextBox ID="tbInstagramURL" runat="server" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdLabel">
+								<asp:Label ID="lblWebsiteURL" runat="server" Text="Website URL:" resourcekey="lblWebsiteURL" />
+							</td>
+							<td>
+								<div class="edNews_inputGroup inputWidth40">
+									<asp:TextBox ID="tbWebsiteURL" runat="server" />
 								</div>
 							</td>
 						</tr>
@@ -303,7 +340,7 @@
 							</asp:TemplateField>
 							<asp:TemplateField HeaderText="Info">
 								<ItemTemplate>
-									<asp:Label ID="lblInfo" runat="server" CssClass="smallText" Text='<%# Eval("GroupInfo") %>' />
+									<asp:Label ID="lblInfo" runat="server" CssClass="smallText" Text='<%# HttpUtility.HtmlDecode(Eval("GroupInfo").ToString()) %>' />
 								</ItemTemplate>
 							</asp:TemplateField>
 							<asp:TemplateField HeaderText="Position">
@@ -313,8 +350,8 @@
 								<ItemTemplate>
 									<asp:Label ID="lblPosition" runat="server" Text='<%# Bind("Position") %>' Visible="False" />
 									<div class="edNews_boxedActions">
-										<asp:LinkButton ID="imgCategoryUp" runat="server" CausesValidation="False" CssClass="edNews_aaUp" CommandArgument= '<%# Eval("GroupID")%>' CommandName="Up" resourcekey="imgGroupUp" Text="Up" />
-										<asp:LinkButton ID="imgCategoryDown" runat="server" CausesValidation="False" CssClass="edNews_aaDown" CommandArgument= '<%# Eval("GroupID")%>' CommandName="Down" resourcekey="imgGroupDown" Text="Down" />
+										<asp:LinkButton ID="imgCategoryUp" runat="server" CausesValidation="False" CssClass="edNews_aaUp" CommandArgument='<%# Eval("GroupID")%>' CommandName="Up" resourcekey="imgGroupUp" Text="Up" />
+										<asp:LinkButton ID="imgCategoryDown" runat="server" CausesValidation="False" CssClass="edNews_aaDown" CommandArgument='<%# Eval("GroupID")%>' CommandName="Down" resourcekey="imgGroupDown" Text="Down" />
 									</div>
 								</ItemTemplate>
 								<HeaderStyle Width="100px" />
@@ -348,7 +385,10 @@
 								<asp:Label ID="lblGroupInfo" runat="server" Text="Short info:" resourcekey="lblGroupInfoResource1" />
 							</td>
 							<td>
-								<div class="edNews_inputGroup inputWidth40 inputHeight150">
+								<div runat="server" id="divGroupInfoHtmlEditor" class="summaryhtmleditor text_input_set">
+									<dnn:TextEditor ID="txtGroupInfo" runat="server" Height="300px" />
+								</div>
+								<div runat="server" id="divGroupInfoBasicEditor" class="edNews_inputGroup inputWidth40 inputHeight150">
 									<asp:TextBox ID="tbGroupInfo" runat="server" MaxLength="300" TextMode="MultiLine" />
 								</div>
 							</td>
@@ -385,7 +425,7 @@
 						</tr>
 						<tr>
 							<td class="tdLabel">
-								<asp:Label ID="Label10" runat="server" Text="LinkedIn URL:" resourcekey="Label10Resource1" />
+								<asp:Label ID="lblGroupLinkedIn" runat="server" Text="LinkedIn URL:" resourcekey="Label10Resource1" />
 							</td>
 							<td>
 								<div class="edNews_inputGroup inputWidth40">
@@ -395,7 +435,37 @@
 						</tr>
 						<tr>
 							<td class="tdLabel">
-								<asp:Label ID="Label11" runat="server" Text="Group contact email:" resourcekey="Label11Resource1" />
+								<asp:Label ID="lblGroupYouTubeURL" runat="server" Text="YouTube URL:" resourcekey="lblGroupYouTubeURL" />
+							</td>
+							<td>
+								<div class="edNews_inputGroup inputWidth40">
+									<asp:TextBox ID="tbGroupYouTubeURL" runat="server" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdLabel">
+								<asp:Label ID="lblGroupInstagramURL" runat="server" Text="Instagram URL:" resourcekey="lblGroupInstagramURL" />
+							</td>
+							<td>
+								<div class="edNews_inputGroup inputWidth40">
+									<asp:TextBox ID="tbGroupInstagramURL" runat="server" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdLabel">
+								<asp:Label ID="lblGroupWebsiteURL" runat="server" Text="Website URL:" resourcekey="lblGroupWebsiteURL" />
+							</td>
+							<td>
+								<div class="edNews_inputGroup inputWidth40">
+									<asp:TextBox ID="tbGroupWebsiteURL" runat="server" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdLabel">
+								<asp:Label ID="lblGroupContactEmail" runat="server" Text="Group contact email:" resourcekey="Label11Resource1" />
 							</td>
 							<td>
 								<div class="edNews_inputGroup inputWidth40">
@@ -442,7 +512,7 @@
 			</asp:Panel>
 		</div>
 	</div>
-	<asp:ObjectDataSource ID="odsAuthors" runat="server" SelectMethod="GetAllAuthorProfilesInPortalODS" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" DeleteMethod="DeleteAuthorProfile" EnablePaging="True" SelectCountMethod="SelectTotalNumberAuthorsINportalODs">
+	<asp:ObjectDataSource ID="odsAuthors" runat="server" SelectMethod="GetAllAuthorProfilesInPortalODS" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.Authors.AuthorProfileController" DeleteMethod="DeleteAuthorProfile" EnablePaging="True" SelectCountMethod="SelectTotalNumberAuthorsINportalODs">
 		<DeleteParameters>
 			<asp:Parameter Name="UserID" Type="Int32" />
 		</DeleteParameters>
@@ -452,7 +522,7 @@
 			<asp:Parameter Name="startRowIndex" Type="Int32" />
 		</SelectParameters>
 	</asp:ObjectDataSource>
-	<asp:ObjectDataSource ID="odsGetGroups" runat="server" SelectMethod="GetAllProfileGroupsInPortal" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" DeleteMethod="DeleteProfileGroup">
+	<asp:ObjectDataSource ID="odsGetGroups" runat="server" SelectMethod="GetAllAuthorProfileGroupsInPortal" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.Authors.AuthorProfileController" DeleteMethod="DeleteProfileGroup">
 		<DeleteParameters>
 			<asp:Parameter Name="GroupID" Type="Int32" />
 		</DeleteParameters>

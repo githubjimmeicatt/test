@@ -1,0 +1,569 @@
+﻿IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyDNNNewsSocialSharingTemp_Roles]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsSocialSharingTemp]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsSocialSharingTemp] DROP CONSTRAINT [FK_{objectQualifier}EasyDNNNewsSocialSharingTemp_Roles]
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNews' and column_name = 'Published')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews] ADD Published BIT CONSTRAINT DF_{objectQualifier}EasyDNNNews_Published DEFAULT(0) NOT NULL
+	EXECUTE sp_executesql N'UPDATE {databaseOwner}[{objectQualifier}EasyDNNNews] SET Published = 1 WHERE Approved=1 AND Active=1';
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNews' and column_name = 'WorkflowId')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews] ADD WorkflowId INT CONSTRAINT DF_{objectQualifier}EasyDNNNews_WorkflowId NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNews' and column_name = 'RevisionHistoryEntryID')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNews] ADD RevisionHistoryEntryID INT CONSTRAINT DF_{objectQualifier}EasyDNNNews_RevisionHistoryEntryID DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'ArticleImageSet')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD ArticleImageSet BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_ArticleImageSet DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'ShowGallery')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD ShowGallery BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_ShowGallery DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'ArticleGalleryID')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD ArticleGalleryID INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_ArticleGalleryID DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'TitleTag')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD TitleTag NVARCHAR(256) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_TitleTag NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'MetaDecription')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD MetaDecription NVARCHAR(1000) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_MetaDecription NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'MetaKeywords')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD MetaKeywords NVARCHAR(500) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_MetaKeywords NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'OpenGraphMetaTags')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD OpenGraphMetaTags NVARCHAR(4000) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_OpenGraphMetaTags NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'TwitterCardMetaTags')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD TwitterCardMetaTags NVARCHAR(4000) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_TwitterCardMetaTags NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'StructuredDataJSON')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD StructuredDataJSON NVARCHAR(4000) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_StructuredDataJSON NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'MainImageTitle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD MainImageTitle NVARCHAR(500) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_MainImageTitle NULL
+END
+GO
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'MainImageDescription')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD MainImageDescription NVARCHAR(2000) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_MainImageDescription NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'GalleryImageRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD GalleryImageRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_GalleryImageRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'DocumetsRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD DocumetsRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_DocumetsRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'LinksRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD LinksRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_LinksRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'MapsRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD MapsRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_MapsRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'TagsRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD TagsRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_TagsRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'CategoriesRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD CategoriesRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_CategoriesRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'EventArticle')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD EventArticle BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_EventArticle DEFAULT(0) NOT NULL
+END
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'EventRevisions')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD EventRevisions NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_EventRevisions NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'IntegratedGalleries')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD IntegratedGalleries NVARCHAR(MAX) CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_IntegratedGalleries NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsArchive' and column_name = 'IsRevision')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsArchive] ADD IsRevision BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsArchive_IsRevision DEFAULT(0) NOT NULL
+END
+GO
+
+IF NOT EXISTS (SELECT * from INFORMATION_SCHEMA.columns WHERE table_name = '{objectQualifier}EasyGalleryPictures' AND column_name = 'IsRevision')
+BEGIN
+ ALTER TABLE {databaseOwner}[{objectQualifier}EasyGalleryPictures] ADD IsRevision BIT CONSTRAINT DF_{objectQualifier}EasyGalleryPictures_IsRevision DEFAULT(0) NOT NULL
+END
+GO
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PortalId] [int] NULL,
+	[Name] [nvarchar](250) NOT NULL,
+	[Description] [nvarchar](2000) NULL,
+	[CreatedDate] [datetime] NOT NULL CONSTRAINT [DF_{objectQualifier}EasyDNNNewsWorkFlows_CreatedDate]  DEFAULT (getutcdate()),
+	[WorkflowType] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}EasyDNNNewsWorkFlows_WorkflowType]  DEFAULT ((0)),
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkFlows] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ON 
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ([Id], [PortalId], [Name], [Description], [WorkflowType]) VALUES (1, NULL, N'Direct publish', N'Publish articles.', 0)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ([Id], [PortalId], [Name], [Description], [WorkflowType]) VALUES (2, NULL, N'Content staging', N'Review content before publish', 1)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ([Id], [PortalId], [Name], [Description], [WorkflowType]) VALUES (3, NULL, N'Content approval', N'Approve content before publish', 2)
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] OFF
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates](
+	[StateId] [int] IDENTITY(1,1) NOT NULL,
+	[WorkflowId] [int] NOT NULL,
+	[Title] [nvarchar](250) NOT NULL,
+	[WorkflowStateType] [int] NOT NULL,
+	[Position] [int] NOT NULL,
+	[AllUserEdit] [bit] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkflowStates] PRIMARY KEY CLUSTERED 
+(
+	[StateId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ON 
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId], [WorkflowId], [Title], [WorkflowStateType], [Position], [AllUserEdit]) VALUES (1, 1, N'Publish', 1, 1, 1)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId], [WorkflowId], [Title], [WorkflowStateType], [Position], [AllUserEdit]) VALUES (2, 2, N'Draft', 0, 1, 1)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId], [WorkflowId], [Title], [WorkflowStateType], [Position], [AllUserEdit]) VALUES (3, 2, N'Publish', 1, 2, 1)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId], [WorkflowId], [Title], [WorkflowStateType], [Position], [AllUserEdit]) VALUES (4, 3, N'Draft', 0, 1, 1)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId], [WorkflowId], [Title], [WorkflowStateType], [Position], [AllUserEdit]) VALUES (5, 3, N'Publish', 1, 3, 1)
+INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId], [WorkflowId], [Title], [WorkflowStateType], [Position], [AllUserEdit]) VALUES (6, 3, N'Approve', 2, 2, 1)
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] OFF
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates]') AND name = N'IX_{objectQualifier}EasyDNNNewsWorkflowStates_Positions')
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ADD  CONSTRAINT [IX_{objectQualifier}EasyDNNNewsWorkflowStates_Positions] UNIQUE NONCLUSTERED 
+(
+	[WorkflowId] ASC,
+	[Position] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF)
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStates_EasyDNNNewsWorkFlows]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStates_EasyDNNNewsWorkFlows] FOREIGN KEY([WorkflowId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ([Id])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStates_EasyDNNNewsWorkFlows]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStates_EasyDNNNewsWorkFlows]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[StateId] [int] NOT NULL,
+	[ArticleId] [int] NOT NULL,
+	[Status] [int] NOT NULL,
+	[FinishedByUserId] [int] NULL,
+	[DateFinished] [datetime] NOT NULL CONSTRAINT [DF_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_DateFinished]  DEFAULT (getutcdate()),
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNews] FOREIGN KEY([ArticleId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNews] ([ArticleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNews]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNewsWorkflowStates] FOREIGN KEY([StateId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_EasyDNNNewsWorkflowStates]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_Users] FOREIGN KEY([FinishedByUserId])
+REFERENCES {databaseOwner}[{objectQualifier}Users] ([UserID])
+ON DELETE SET NULL
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItems_Users]
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsModuleSettings' and column_name = 'WorkflowId')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] ADD WorkflowId INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsModuleSettings_WorkflowId DEFAULT(1) NOT NULL
+	IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNNewsWorkFlows]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]'))
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNNewsWorkFlows] FOREIGN KEY([WorkflowId])
+	REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ([Id])
+
+	IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNNewsWorkFlows]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings]'))
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsModuleSettings_EasyDNNNewsWorkFlows]
+	EXECUTE sp_executesql N'UPDATE {databaseOwner}[{objectQualifier}EasyDNNNewsModuleSettings] SET WorkflowId = 3 WHERE ApproveArticles=1 OR ApproveUpdatedArticles=1';
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsPortalSettings' and column_name = 'WorkflowId')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] ADD WorkflowId INT CONSTRAINT DF_{objectQualifier}EasyDNNNewsPortalSettings_WorkflowId DEFAULT(1) NOT NULL
+	IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNNewsWorkFlows]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]'))
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNNewsWorkFlows] FOREIGN KEY([WorkflowId])
+	REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflows] ([Id])
+	
+	IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNNewsWorkFlows]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings]'))
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsPortalSettings_EasyDNNNewsWorkFlows]
+	EXECUTE sp_executesql N'UPDATE {databaseOwner}[{objectQualifier}EasyDNNNewsPortalSettings] SET WorkflowId = 3 WHERE ApproveArticles=1 OR ApproveUpdatedArticles=1';
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ArticleStateItemId] [int] NOT NULL,
+	[UserId] [int] NULL,
+	[EditStatus] [int] NOT NULL,
+	[DateCreate] [datetime] NOT NULL CONSTRAINT [DF_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_DateCreate]  DEFAULT (getutcdate()),
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_EasyDNNNewsWorkflowStateArticleItems]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_EasyDNNNewsWorkflowStateArticleItems] FOREIGN KEY([ArticleStateItemId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItems] ([Id])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_EasyDNNNewsWorkflowStateArticleItems]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_EasyDNNNewsWorkflowStateArticleItems]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_Users] FOREIGN KEY([UserId])
+REFERENCES {databaseOwner}[{objectQualifier}Users] ([UserID])
+ON DELETE SET NULL
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleItemsUsers_Users]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[StateId] [int] NULL,
+	[ArticleId] [int] NOT NULL,
+	[UserId] [int] NULL,
+	[EditStatus] [bit] NOT NULL,
+	[DateFinished] [datetime] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNews] FOREIGN KEY([ArticleId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNews] ([ArticleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNews]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNews]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNewsWorkflowStates] FOREIGN KEY([StateId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId])
+ON DELETE SET NULL
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_EasyDNNNewsWorkflowStates]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_Users] FOREIGN KEY([UserId])
+REFERENCES {databaseOwner}[{objectQualifier}Users] ([UserID])
+ON DELETE SET NULL
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateArticleLog] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateArticleLog_Users]
+GO
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles](
+	[StateId] [int] NOT NULL,
+	[RoleId] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles] PRIMARY KEY CLUSTERED 
+(
+	[StateId] ASC,
+	[RoleId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]') AND type in (N'U'))
+BEGIN
+CREATE TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers](
+	[StateId] [int] NOT NULL,
+	[UserId] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers] PRIMARY KEY CLUSTERED 
+(
+	[StateId] ASC,
+	[UserId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_EasyDNNNewsWorkflowStates] FOREIGN KEY([StateId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_EasyDNNNewsWorkflowStates]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_Roles]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_Roles] FOREIGN KEY([RoleId])
+REFERENCES {databaseOwner}[{objectQualifier}Roles] ([RoleID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_Roles]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveRoles_Roles]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_EasyDNNNewsWorkflowStates] FOREIGN KEY([StateId])
+REFERENCES {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStates] ([StateId])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_EasyDNNNewsWorkflowStates]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_EasyDNNNewsWorkflowStates]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_Users] FOREIGN KEY([UserId])
+REFERENCES {databaseOwner}[{objectQualifier}Users] ([UserID])
+ON DELETE CASCADE
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}[FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_Users]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers] CHECK CONSTRAINT [FK_{objectQualifier}EasyDNNNewsWorkflowStateApproveUsers_Users]
+GO
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive] AS' 
+END
+GO
+ALTER PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsArticleArchive]
+(
+	@ArticleID int,
+	@numOfHistory int   
+)
+AS
+	DECLARE @latestValue int;
+	SET @latestValue = 0;
+	DECLARE @numOfHistoryDB int;
+	SET @numOfHistoryDB = 0;
+
+        SET NOCOUNT ON;      
+        BEGIN
+		IF @numOfHistory = 0
+			BEGIN
+				DELETE FROM dbo.[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID = @ArticleID AND IsRevision=0;
+			END
+        ELSE
+			BEGIN
+				SELECT @numOfHistoryDB = CASE WHEN Count(HistoryVersion) IS NULL THEN 0 ELSE Count(HistoryVersion) END FROM dbo.[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID=@ArticleID;
+				IF @numOfHistoryDB <> 0 AND @numOfHistoryDB >= @numOfHistory -- if contains history items and if need to delete overflow items
+				BEGIN
+					DELETE FROM dbo.[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID = @ArticleID AND IsRevision=0 AND HistoryEntryID IN
+						 (SELECT TOP(@numOfHistoryDB - @numOfHistory + 1) HistoryEntryID FROM dbo.[{objectQualifier}EasyDNNNewsArchive]
+						  WHERE ArticleID = @ArticleID AND IsRevision=0 ORDER BY HistoryVersion ASC);
+					With cte As
+						(
+						SELECT ArticleID, HistoryVersion, ROW_NUMBER() OVER (ORDER BY HistoryVersion ASC) AS RN FROM dbo.[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID=@ArticleID AND IsRevision=0
+						)
+						UPDATE cte SET HistoryVersion=RN  WHERE ArticleID=@ArticleID;
+				END
+			END
+				
+		IF @numOfHistory <> 0
+		BEGIN
+			SELECT @latestValue = CASE WHEN max(HistoryVersion) IS NULL THEN 1 ELSE max(HistoryVersion) + 1 END FROM dbo.[{objectQualifier}EasyDNNNewsArchive] WHERE ArticleID = @ArticleID AND IsRevision=0;	
+
+			INSERT INTO dbo.[{objectQualifier}EasyDNNNewsArchive] 
+				([PortalID]
+				  ,[UserID]
+				  ,[Title]
+				  ,[SubTitle]
+				  ,[Summary]
+				  ,[Article]
+				  ,[ArticleImage]
+				  ,[LastModified]
+				  ,[PublishDate]
+				  ,[ExpireDate]
+				  ,[Featured]
+				  ,[AllowComments]
+				  ,[TitleLink]
+				  ,[DetailType]
+				  ,[DetailTypeData]
+				  ,[DetailsTemplate]
+				  ,[DetailsTheme]
+				  ,[GalleryPosition]
+				  ,[GalleryDisplayType]
+				  ,[ShowMainImage]
+				  ,[ShowMainImageFront]
+				  ,[CommentsTheme]
+				  ,[ArticleImageFolder]
+				  ,[HistoryVersion]
+				  ,[TitleTag]
+				  ,[MetaDecription]
+				  ,[MetaKeywords]
+				  ,[OpenGraphMetaTags]
+				  ,[TwitterCardMetaTags]
+				  ,[StructuredDataJSON]
+				  ,[MainImageTitle]
+				  ,[MainImageDescription]
+				  ,n.[ArticleID])
+			SELECT
+				   n.[PortalID]
+				  ,n.[UserID]
+				  ,n.[Title]
+				  ,n.[SubTitle]
+				  ,n.[Summary]
+				  ,n.[Article]
+				  ,n.[ArticleImage]
+				  ,n.[LastModified]
+				  ,n.[PublishDate]
+				  ,n.[ExpireDate]
+				  ,n.[Featured]
+				  ,n.[AllowComments]
+				  ,n.[TitleLink]
+				  ,n.[DetailType]
+				  ,n.[DetailTypeData]
+				  ,n.[DetailsTemplate]
+				  ,n.[DetailsTheme]
+				  ,n.[GalleryPosition]
+				  ,n.[GalleryDisplayType]
+				  ,n.[ShowMainImage]
+				  ,n.[ShowMainImageFront]
+				  ,n.[CommentsTheme]
+				  ,n.[ArticleImageFolder]
+				  ,[HistoryVersion] = @latestValue
+				  ,n.[TitleTag]
+				  ,n.[MetaDecription]
+				  ,n.[MetaKeywords]
+				  ,n.[OpenGraphMetaTags]
+				  ,n.[TwitterCardMetaTags]
+				  ,n.[StructuredDataJSON]
+				  ,n.[MainImageTitle]
+				  ,n.[MainImageDescription]
+				  ,n.[ArticleID]
+			FROM dbo.[{objectQualifier}EasyDNNNews] AS n WHERE ArticleID = @ArticleID;
+		 END
+        END
+GO

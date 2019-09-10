@@ -14,7 +14,9 @@
 			"Rename": "rename",
 			"Save": "save",
 			"System": "advanced system functions",
-			"Metadata": "metadata"
+			"Metadata": "metadata",
+			"Export": "export",
+			"Import": "import"
 		},
 		"Messages": {
 			"Loading": "loading...",
@@ -30,6 +32,23 @@
 		},
 		"Terms": {
 			"Title": "title"
+		},
+		"State": {
+			"OnOff": {
+				"true": "on",
+				"false": "off",
+				"undefined": "?"
+			},
+			"TrueFalse": {
+				"true": "true",
+				"false": "false",
+				"undefined": "?"
+			},
+			"YesNo": {
+				"true": "yes",
+				"false": "no",
+				"undefined": "?"
+			}
 		}
 	},
 	"DataType": {

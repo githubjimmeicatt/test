@@ -1,0 +1,189 @@
+/** Create Table **/
+
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_WowChartv3]') AND OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+		CREATE TABLE {databaseOwner}[{objectQualifier}w1_WowChartv3] (
+			[Id] [int] IDENTITY(1,1) NOT NULL,
+			[ModuleId] [int] NOT NULL,
+			[Name] [nvarchar](255) NOT NULL,
+			[ChartSettings] [nvarchar](max) NOT NULL,
+			[DataSourceSettings] [nvarchar](max) NOT NULL,
+			[ReportId] [nvarchar](255) NOT NULL,
+			[ViewOrder] [int] NOT NULL,
+			[IsDefault] [bit] NOT NULL,
+			[CreatedBy] [int] NOT NULL, 
+			[CreatedOn] [datetime] NOT NULL,
+			[ModifiedBy] [int] NULL, 
+			[ModifiedOn] [datetime] NULL,
+			[IsDeleted] [bit] NOT NULL
+		)
+
+		ALTER TABLE {databaseOwner}[{objectQualifier}w1_WowChartv3] ADD CONSTRAINT [PK_{objectQualifier}_w1_WowChartv3] PRIMARY KEY CLUSTERED  ([Id])
+
+		ALTER TABLE {databaseOwner}[{objectQualifier}w1_WowChartv3]  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}w1_WowChartv3_{objectQualifier}Modules] FOREIGN KEY([ModuleId]) REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleId])
+	END
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_AddWowChartv3]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_AddWowChartv3
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_UpdateWowChartv3]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_UpdateWowChartv3
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_DeleteWowChartv3]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_DeleteWowChartv3
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_GetWowChartv3]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_GetWowChartv3
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_GetAllWowChartv3ByReportId]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_GetAllWowChartv3ByReportId
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_GetDefaultWowChartv3]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_GetDefaultWowChartv3
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}w1_GetAllWowChartv3]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}w1_GetAllWowChartv3
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_AddWowChartv3]
+	@ModuleId [int],
+	@Name [nvarchar](255),
+	@ChartSettings [nvarchar](max),
+	@DataSourceSettings [nvarchar](max),
+	@ReportId [nvarchar](255),
+	@ViewOrder [int],
+	@IsDefault [bit],
+	@CreatedBy [int]
+AS
+
+INSERT INTO {databaseOwner}[{objectQualifier}w1_WowChartv3]
+           ([ModuleId]
+           ,[Name]
+           ,[ChartSettings]
+           ,[DataSourceSettings]
+		   ,[ReportId]
+           ,[ViewOrder]
+		   ,[IsDefault]
+           ,[CreatedBy]
+           ,[CreatedOn]
+           ,[IsDeleted])
+     VALUES
+           (@ModuleId
+           ,@Name
+           ,@ChartSettings
+           ,@DataSourceSettings
+           ,@ReportId
+		   ,@ViewOrder
+		   ,@IsDefault
+           ,@CreatedBy
+           ,GETDATE()
+           ,0)
+
+Declare @Id INT = (SELECT CAST(SCOPE_IDENTITY() AS INT))
+
+IF @IsDefault = 1 
+BEGIN
+	UPDATE {databaseOwner}[{objectQualifier}w1_WowChartv3]
+		SET IsDefault = 0
+		WHERE ModuleId = @ModuleId AND Id != @Id
+END
+
+SELECT @Id
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_UpdateWowChartv3]
+	@Id [int],
+	@ModuleId [int],
+	@Name [nvarchar](255),
+	@ChartSettings [nvarchar](max),
+	@DataSourceSettings [nvarchar](max),
+	@ReportId [nvarchar](255),
+	@ViewOrder [int],
+	@IsDefault [bit],
+	@ModifiedBy [int]
+AS
+
+UPDATE {databaseOwner}[{objectQualifier}w1_WowChartv3]
+   SET [Name] = @Name
+      ,[ChartSettings] = @ChartSettings
+      ,[DataSourceSettings] = @DataSourceSettings
+      ,[ReportId] = @ReportId
+	  ,[ViewOrder] = @ViewOrder
+	  ,[IsDefault] = @IsDefault
+      ,[ModifiedBy] = @ModifiedBy
+      ,[ModifiedOn] = GETDATE()
+ WHERE ModuleID = @ModuleId AND Id = @Id
+
+IF @IsDefault = 1 
+BEGIN
+	UPDATE {databaseOwner}[{objectQualifier}w1_WowChartv3]
+		SET IsDefault = 0
+		WHERE Id != @Id 
+			AND ModuleId = @ModuleId
+END
+
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_DeleteWowChartv3]
+	@Id [int],
+	@ModuleId [int],
+	@ModifiedBy [int]
+AS
+
+UPDATE {databaseOwner}[{objectQualifier}w1_WowChartv3]
+   SET [IsDeleted] = 1
+      ,[ModifiedBy] = @ModifiedBy
+      ,[ModifiedOn] = GETDATE()
+ WHERE Id = @Id
+	AND ModuleID = @ModuleId 
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_GetWowChartv3]
+	@Id [int],
+	@ModuleId [int]
+AS
+SELECT * FROM {databaseOwner}[{objectQualifier}w1_WowChartv3]
+	WHERE Id = @Id 
+		AND ModuleId = @ModuleId 
+		AND IsDeleted = 0
+	ORDER BY ViewOrder ASC, CreatedOn DESC
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_GetAllWowChartv3ByReportId]
+	@ReportId [nvarchar](255),
+	@ModuleId [int]
+AS
+SELECT * FROM {databaseOwner}[{objectQualifier}w1_WowChartv3]
+	WHERE ReportId = @ReportId 
+		AND ModuleId = @ModuleId 
+		AND IsDeleted = 0
+	ORDER BY ViewOrder ASC, CreatedOn DESC
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_GetDefaultWowChartv3]
+	@ModuleId [int]
+AS
+SELECT TOP 1 * FROM {databaseOwner}[{objectQualifier}w1_WowChartv3]
+	WHERE ModuleId = @ModuleId 
+		AND IsDefault = 1
+		AND IsDeleted = 0
+	ORDER BY ViewOrder ASC, CreatedOn DESC
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}w1_GetAllWowChartv3]
+	@ModuleId [int]
+AS
+
+SELECT * FROM {databaseOwner}[{objectQualifier}w1_WowChartv3]
+	WHERE ModuleId = @ModuleId 
+		AND IsDeleted = 0
+	ORDER BY ViewOrder ASC, CreatedOn DESC
+GO
+

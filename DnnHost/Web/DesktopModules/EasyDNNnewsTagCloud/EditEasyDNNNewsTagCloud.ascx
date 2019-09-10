@@ -392,7 +392,7 @@
 					</td>
 				</tr>
 				<tr runat="server" id="rowfilterbyEvents">
-					<td class="tdLabel">
+					<td class="tdLabel textTop">
 						<label for="<%=rblLimitBackEvents.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblShowOnlyEventsLimit.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblShowOnlyEventsLimit.Text") %></label>
 					</td>
 					<td>
@@ -402,8 +402,8 @@
 								<asp:ListItem class="normalRadioButton" Value="1" Text="Show only past events" resourcekey="ShowOnlyPastEvents" />
 								<asp:ListItem class="normalRadioButton" Value="2" Text="Limit to number of days:" Selected="True" resourcekey="LimitToNumberOfDays" />
 							</asp:RadioButtonList>
+							<asp:TextBox ID="tbPastEventLimit" runat="server" CssClass="smallCentered" Text="0" />
 						</div>
-						<asp:TextBox ID="tbPastEventLimit" runat="server" CssClass="smallCentered" Text="0" />
 						<asp:RequiredFieldValidator ID="rfvPastEventLimit" runat="server" ControlToValidate="tbPastEventLimit" Display="Dynamic" ErrorMessage="This filed is required." SetFocusOnError="True" ValidationGroup="vgSaveSettings" />
 						<asp:CompareValidator ID="cvPastEventLimit" runat="server" ControlToValidate="tbPastEventLimit" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgSaveSettings" />
 					</td>

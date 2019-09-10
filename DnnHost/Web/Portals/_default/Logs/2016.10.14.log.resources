@@ -1,0 +1,24 @@
+2016-10-14 14:39:51,422 [Jaguar][Thread:77][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 213.254.241.7
+	Port: 8682
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 5LDjzY2ch55nJXj n2IUU7Zwrt mHmI6umYJFETWDgWjScOcQcW4NFrg UHse4095NlhNhfrra/YbO3nDqczg9uKf8G2Gwu8ux9HQWqR0UyY8tZIMK296iappC5VxNXiabvd5lfMynchg05IagdNi5acP6OXZPDVKxhi3V1tpb0M/rDSHKSQlzvPOLAWWXWxe CDGt2BW2nCHh/vRHk12dGztAzuHywK7ZMbCNPX5NugmxCAxUvKWIBLOgB3aAEyTn3Cee5FrIJSI4/U7FJKdWQgkd2VqLm F4miG7MsY63owqVUr2uaK0N9jRtAO7LQ 4FX2KN7p fxNh6VeVte7lBcyPcO4qmppYfpyEfxqQF4hn58tDG5AX7pRGqRLMw/ho AG3UlkQHufjlLIMocRkRHtftn4prqHo3YlMt4O4W93h5seMLiQXQctS/JVxvuRYq6pPjGO9165crzz55Bmyt5H63IU0VMRAhVzMKvz2fvB6Lh 5TLWn5bmyB3lC B8fSEObhLkWYyPxe4Xn viKTNirZtHjdcrBmJlNWapWXcaqeJFk61Y/2u6Dw= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-14 16:24:52,278 [Jaguar][Thread:8][ERROR] DotNetNuke.Framework.Reflection - Icatt.DotNetNuke.Modules.Response.ResponseController
+System.Web.HttpException (0x80004005): Could not load type 'Icatt.DotNetNuke.Modules.Response.ResponseController'.
+   at System.Web.Compilation.BuildManager.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at DotNetNuke.Framework.Reflection.CreateType(String TypeName, String CacheKey, Boolean UseCache, Boolean IgnoreErrors)

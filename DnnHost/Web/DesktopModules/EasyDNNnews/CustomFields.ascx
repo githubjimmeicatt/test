@@ -1106,6 +1106,20 @@
 					<div class="sectionBoxSubtitle sectionBoxSubtitleWithNumber">
 						<span><span><i class="fa fa-wrench"></i></span></span><%=specificOptions%></span>
 					</div>
+					<asp:Panel ID="pnlHyperLinkOptions" runat="server" Visible="false">
+						<table class="optionsList fullWidthTable tablePadding5 noBorder">
+							<tr>
+								<td class="tdLabel">
+									<label for="<%=cbHyperLinkOpenLinkInNewWindow.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblHyperlinkcbOpenLinkInNewWindow.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblHyperlinkcbOpenLinkInNewWindow.Text") %></label>
+								</td>
+								<td>
+									<div class="switchCheckbox">
+										<asp:CheckBox ID="cbHyperLinkOpenLinkInNewWindow" CssClass="normalCheckBox" Text="Autocomplete" runat="server" Checked="false" />
+									</div>
+								</td>
+							</tr>
+						</table>
+					</asp:Panel>
 					<asp:Panel ID="pnlDateTimePickerOptions" runat="server" Visible="false">
 						<table class="optionsList fullWidthTable tablePadding5 noBorder">
 							<tr>

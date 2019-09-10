@@ -20,8 +20,8 @@
 					<td class="tdLabel strongText textTop">
 						<asp:Label ID="lblInstructions" resourcekey="lblInstructions" runat="server" Text="Instructions:"></asp:Label>
 					</td>
-					<td>
-						<asp:HyperLink ID="hlVisitDetailInstrictionsTwitter" resourcekey="hlVisitDetailInstrictionsTwitter" runat="server" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
+					<td class="textTop">
+						<asp:HyperLink ID="hlVisitDetailInstrictionsTwitter" resourcekey="hlVisitDetailInstrictionsTwitter" runat="server" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/how-to-setup-auto-posting-to-twitter" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
 						<asp:Label ID="lblDetailInstructions" resourcekey="lblDetailInstructions" runat="server" Text="&lt;ol&gt;&lt;li&gt;Visit the URL below &lt;/li&gt;&lt;li&gt;Create a Twitter app&lt;/li&gt;&lt;li&gt;Click on the 'Settings' tab and under 'Application type' 'Access:' select 'Read and Write'&lt;/li&gt;&lt;li&gt;Go to 'Details' tab and copy 'Consumer key' and 'Consumer secret' values into fields below.&lt;/li&gt;&lt;/ol&gt;"></asp:Label>
 					</td>
 				</tr>
@@ -71,8 +71,8 @@
 					<td class="tdLabel strongText textTop" valign="top">
 						<asp:Label ID="lblFacebookInstructions" resourcekey="lblFacebookInstructions" runat="server" Text="Instructions:"></asp:Label>
 					</td>
-					<td>
-						<asp:HyperLink ID="hlVisitDetailInstrictionsFacebook" resourcekey="hlVisitDetailInstrictionsFacebook" runat="server" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
+					<td class="textTop">
+						<asp:HyperLink ID="hlVisitDetailInstrictionsFacebook" resourcekey="hlVisitDetailInstrictionsFacebook" runat="server" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/easydnnnews-and-facebook-integration" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
 						<asp:Label ID="lblFaceBookDetailInstructions" resourcekey="lblFaceBookDetailInstructions" runat="server" Text="&lt;ol&gt; &lt;li&gt;Visit the URL below and create Facebook application&lt;/li&gt; &lt;li&gt;If on localhost you must specify Site Domain as &quot;localhost&quot; and Site URL as http://localhost:####/ where #### is port number&lt;/li&gt; &lt;li&gt;To below textboxes, add information from created Facebook application settings tab&lt;/li&gt;&lt;/ol&gt;"></asp:Label>
 					</td>
 				</tr>
@@ -123,8 +123,8 @@
 					<td class="tdLabel strongText textTop">
 						<asp:Label ID="lblLinkedInInstructions" resourcekey="lblLinkedInInstructions" runat="server" Text="Instructions:"></asp:Label>
 					</td>
-					<td>
-						<asp:HyperLink ID="hlVisitDetailInstrictionsLinkedIn" resourcekey="hlVisitDetailInstrictionsLinkedIn" runat="server" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
+					<td class="textTop">
+						<asp:HyperLink ID="hlVisitDetailInstrictionsLinkedIn" resourcekey="hlVisitDetailInstrictionsLinkedIn" runat="server" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/how-to-setup-auto-posting-to-linkedin" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
 						<asp:Label ID="lblLinkedIDetailInstructions" runat="server"></asp:Label>
 					</td>
 				</tr>
@@ -174,8 +174,8 @@
 					<td class="tdLabel strongText textTop">
 						<asp:Label ID="lblGoogleRecaptchaInstructions" resourcekey="lblGoogleRecaptchaInstructions" runat="server" Text="Instructions:"></asp:Label>
 					</td>
-					<td>
-						<asp:HyperLink ID="hlVisitDetailInstrictionsGoogleRecaptcha" runat="server" resourcekey="hlVisitDetailInstrictionsGoogleRecaptcha" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
+					<td class="textTop">
+						<asp:HyperLink ID="hlVisitDetailInstrictionsGoogleRecaptcha" runat="server" resourcekey="hlVisitDetailInstrictionsGoogleRecaptcha" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/easydnnnews-and-google-recaptcha-integration" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
 						<asp:Label ID="lblGoogleRecaptchaDetailInstructions" runat="server" resourcekey="lblGoogleRecaptchaDetailInstructions"><ol><li>Visit the URL below and create Google Recaptcha keys with your site info</li><li>To below textboxes, add Site key and Secret key</li></ol></asp:Label>
 					</td>
 				</tr>
@@ -225,8 +225,8 @@
 					<td class="tdLabel strongText textTop">
 						<asp:Label ID="lblAddThisInstructions" resourcekey="lblAddThisInstructions" runat="server" Text="Instructions:"></asp:Label>
 					</td>
-					<td>
-						<asp:HyperLink ID="hlVisitDetailInstrictionsAddThis" resourcekey="hlVisitDetailInstrictionsAddThis" runat="server" NavigateUrl="http://www.easydnnsolutions.com/Blog/TabId/248/ArtMID/790/ArticleID/15/default.aspx" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
+					<td class="textTop">
+						<asp:HyperLink ID="hlVisitDetailInstrictionsAddThis" resourcekey="hlVisitDetailInstrictionsAddThis" runat="server" NavigateUrl="http://help.easydnnsolutions.com/user-manuals/easydnnnews/category/integrations/integration-with-addthis" Target="_blank">For more detail instructions please visit this link.</asp:HyperLink>
 						<asp:Label ID="lblAddthisDetailInstructions" resourcekey="lblAddthisDetailInstructions" runat="server"><ol><li>Visit the URL below, create and setup site profile</li><li>Go to site profile 'General settings' and copy profile id to below textbox. Profile is must start with 'ra-'.</li></ol></asp:Label>
 					</td>
 				</tr>

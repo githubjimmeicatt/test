@@ -361,47 +361,39 @@
 											<div class="itemActions displayBlock">
 												<asp:LinkButton ID="lbUnregisterAttendee" CssClass="unregisterAction color4" runat="server" CommandArgument='<%# Container.DataItemIndex %>' CommandName="UnregisterAttendee">
 													<asp:Label runat="server" Text="Unregister" ID="lblUnregisterAttendee" resourcekey="lblUnregisterAttendee" />
-												</asp:LinkButton>
-												<asp:Panel runat="server" ID="pnlApproveCancellationRequest" CssClass="additionalActions" Visible="false">
+												</asp:LinkButton><asp:Panel runat="server" ID="pnlApproveCancellationRequest" CssClass="additionalActions" Visible="false">
 													<asp:Label runat="server" Text="Cancellation request:" resourcekey="CancellationRequest" />
 													<asp:LinkButton ID="lbApproveUnregisterAttendee" runat="server" CssClass="approve" CommandArgument='<%# Container.DataItemIndex %>' CommandName="ApproveUnregisterAttendee">
 														<asp:Label runat="server" Text="approve" resourcekey="ApproveUnregisterAttendee" />
-													</asp:LinkButton>
-													<asp:LinkButton ID="lbRejectCancellation" CssClass="reject" resourcekey="lbRejectCancellation" runat="server" CommandArgument='<%# Container.DataItemIndex %>' CommandName="RejectCancellationPopUp" Text="reject"></asp:LinkButton>
+													</asp:LinkButton><asp:LinkButton ID="lbRejectCancellation" CssClass="reject" resourcekey="lbRejectCancellation" runat="server" CommandArgument='<%# Container.DataItemIndex %>' CommandName="RejectCancellationPopUp" Text="reject"></asp:LinkButton>
 												</asp:Panel>
 												<asp:Label runat="server" CssClass="smallInfo deleted centered" ID="lblIsDeletedStatus" />
 												<asp:LinkButton ID="lbApproveAttendee" runat="server" CssClass='<%# GetIconClas(Eval("ApproveStatus")) %>' CommandArgument='<%# Container.DataItemIndex %>' CommandName="ApproveAttendee">
 													<asp:Label runat="server" Text="Unapprove registration" ID="lblArticleListApproved" Visible='<%# IsApproved(Eval("ApproveStatus")) %>' resourcekey="lblArticleListApproved"></asp:Label>
 													<asp:Label runat="server" Text="Approve registration" ID="lblApproveRegistration" Visible='<%# !IsApproved(Eval("ApproveStatus")) %>' resourcekey="lblArticleListNotApproved.Text"></asp:Label>
-												</asp:LinkButton>
-												<asp:LinkButton ID="lbRejectAttendee" resourcekey="lbRejectAttendee" runat="server" Visible='<%# !IsApproved(Eval("ApproveStatus")) %>' CommandArgument='<%# Container.DataItemIndex %>' CommandName="Reject" CssClass="rejectAction" Text="Reject"></asp:LinkButton>
+												</asp:LinkButton><asp:LinkButton ID="lbRejectAttendee" resourcekey="lbRejectAttendee" runat="server" Visible='<%# !IsApproved(Eval("ApproveStatus")) %>' CommandArgument='<%# Container.DataItemIndex %>' CommandName="Reject" CssClass="rejectAction" Text="Reject"></asp:LinkButton>
 											</div>
 											<asp:CheckBox runat="server" ID="cbApproved" CssClass="normalCheckBox" Visible="false" Checked='<%# IsApproved(Eval("ApproveStatus")) %>'></asp:CheckBox>
-											<asp:Literal ID="liMailVerified" runat="server" Text='<%# IsVerifyed(Eval("Verified")) %>'></asp:Literal>
-											<asp:Label ID="liAlreadyApprovedRegistration" CssClass="smallInfo warning centered" Visible='<%# IsAlreadyRejacted(Eval("ApproveStatus")) %>' runat="server" Text="<%#alreadyRejected %>" />
+											<asp:Literal ID="liMailVerified" runat="server" Text='<%# IsVerifyed(Eval("Verified")) %>'></asp:Literal><asp:Label ID="liAlreadyApprovedRegistration" CssClass="smallInfo warning centered" Visible='<%# IsAlreadyRejacted(Eval("ApproveStatus")) %>' runat="server" Text="<%#alreadyRejected %>" />
 										</asp:Panel>
 										<asp:Panel runat="server" ID="pnlRejectMessage" Visible="false" CssClass="edNews_popUp edNews_topLeft">
 											<div class="edNews_inputGroup">
 												<div class="floatingLabel">
-													<asp:TextBox ID="tbRejectMessage" runat="server" TextMode="MultiLine"></asp:TextBox>
-													<asp:Label ID="lblRejectMessage" resourcekey="lblRejectMessage" AssociatedControlID="tbRejectMessage" runat="server" Text="Explain why the attende was rejected:"></asp:Label>
+													<asp:TextBox ID="tbRejectMessage" runat="server" TextMode="MultiLine"></asp:TextBox><asp:Label ID="lblRejectMessage" resourcekey="lblRejectMessage" AssociatedControlID="tbRejectMessage" runat="server" Text="Explain why the attende was rejected:"></asp:Label>
 												</div>
 											</div>
 											<div class="mainActions smallActions displayInline noMargin">
-												<asp:LinkButton ID="lbRejectWMessage" resourcekey="lbRejectWMessage" CssClass="primaryAction" CommandArgument='<%# Container.DataItemIndex %>' CommandName="RejectAttendee" runat="server" Text="Reject"> </asp:LinkButton>
-												<asp:LinkButton ID="lbCancelRejectWMessage" resourcekey="lbCancelRejectWMessage" CssClass="cancel" CommandName="Cancel" Font-Bold="True" runat="server" Text="Cancel"></asp:LinkButton>
+												<asp:LinkButton ID="lbRejectWMessage" resourcekey="lbRejectWMessage" CssClass="primaryAction" CommandArgument='<%# Container.DataItemIndex %>' CommandName="RejectAttendee" runat="server" Text="Reject"> </asp:LinkButton><asp:LinkButton ID="lbCancelRejectWMessage" resourcekey="lbCancelRejectWMessage" CssClass="cancel" CommandName="Cancel" Font-Bold="True" runat="server" Text="Cancel"></asp:LinkButton>
 											</div>
 										</asp:Panel>
 										<asp:Panel runat="server" ID="pnlRejectCancellationMessage" Visible="false" CssClass="edNews_popUp edNews_topLeft">
 											<div class="edNews_inputGroup">
 												<div class="floatingLabel">
-													<asp:TextBox ID="tbRejectCancellationMessage" runat="server" TextMode="MultiLine"></asp:TextBox>
-													<asp:Label ID="lblRejectCancellationMessage" resourcekey="lblRejectCancellationMessage" AssociatedControlID="tbRejectCancellationMessage" runat="server" Text="Explain why the cancellation was rejected:"></asp:Label>
+													<asp:TextBox ID="tbRejectCancellationMessage" runat="server" TextMode="MultiLine"></asp:TextBox><asp:Label ID="lblRejectCancellationMessage" resourcekey="lblRejectCancellationMessage" AssociatedControlID="tbRejectCancellationMessage" runat="server" Text="Explain why the cancellation was rejected:"></asp:Label>
 												</div>
 											</div>
 											<div class="mainActions smallActions displayInline noMargin">
-												<asp:LinkButton ID="lbRejectCancellationMessage" resourcekey="lbRejectCancellationMessage" CssClass="primaryAction" CommandArgument='<%# Container.DataItemIndex %>' CommandName="RejectCancellation" runat="server" Text="Reject"> </asp:LinkButton>
-												<asp:LinkButton ID="lbCancelRejectCancellationMessage" resourcekey="lbCancelRejectCancellationMessage" CssClass="cancel" CommandName="Cancel" Font-Bold="True" runat="server" Text="Cancel"></asp:LinkButton>
+												<asp:LinkButton ID="lbRejectCancellationMessage" resourcekey="lbRejectCancellationMessage" CssClass="primaryAction" CommandArgument='<%# Container.DataItemIndex %>' CommandName="RejectCancellation" runat="server" Text="Reject"> </asp:LinkButton><asp:LinkButton ID="lbCancelRejectCancellationMessage" resourcekey="lbCancelRejectCancellationMessage" CssClass="cancel" CommandName="Cancel" Font-Bold="True" runat="server" Text="Cancel"></asp:LinkButton>
 											</div>
 										</asp:Panel>
 									</ItemTemplate>
@@ -442,8 +434,7 @@
 							<label for="<%=tbxFirstName.ClientID %>"><%=_("lblFirstName.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxFirstName" runat="server" ValidationGroup="vgUserData" MaxLength="50" CausesValidation="true"></asp:TextBox>
-							<asp:RequiredFieldValidator ID="rfvFirstName" CssClass="smallInfo error" resourcekey="rfvFirstName.ErrorMessage" runat="server" ControlToValidate="tbxFirstName" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
+							<asp:TextBox ID="tbxFirstName" runat="server" ValidationGroup="vgUserData" MaxLength="50" CausesValidation="true"></asp:TextBox><asp:RequiredFieldValidator ID="rfvFirstName" CssClass="smallInfo error" resourcekey="rfvFirstName.ErrorMessage" runat="server" ControlToValidate="tbxFirstName" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
 						</td>
 					</tr>
 					<tr>
@@ -451,8 +442,7 @@
 							<label for="<%=tbxLastName.ClientID %>"><%=_("lblLastName.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxLastName" runat="server" ValidationGroup="vgUserData" MaxLength="50" placeholder="Last name"></asp:TextBox>
-							<asp:RequiredFieldValidator ID="rfvLastName" CssClass="smallInfo error" resourcekey="rfvLastName.ErrorMessage" runat="server" ControlToValidate="tbxLastName" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
+							<asp:TextBox ID="tbxLastName" runat="server" ValidationGroup="vgUserData" MaxLength="50" placeholder="Last name"></asp:TextBox><asp:RequiredFieldValidator ID="rfvLastName" CssClass="smallInfo error" resourcekey="rfvLastName.ErrorMessage" runat="server" ControlToValidate="tbxLastName" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
 						</td>
 					</tr>
 					<tr>
@@ -460,8 +450,7 @@
 							<label for="<%=tbxEmail.ClientID %>"><%=_("lblEmail.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxEmail" runat="server" ValidationGroup="vgUserData" MaxLength="256" placeholder="E-mail"></asp:TextBox>
-							<asp:RequiredFieldValidator ID="rfvEmail" CssClass="smallInfo error" resourcekey="rfvEmail.ErrorMessage" runat="server" ControlToValidate="tbxEmail" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
+							<asp:TextBox ID="tbxEmail" runat="server" ValidationGroup="vgUserData" MaxLength="256" placeholder="E-mail"></asp:TextBox><asp:RequiredFieldValidator ID="rfvEmail" CssClass="smallInfo error" resourcekey="rfvEmail.ErrorMessage" runat="server" ControlToValidate="tbxEmail" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
 							<asp:RegularExpressionValidator ID="revEmail" resourcekey="revEmail.ErrorMessage" runat="server" ControlToValidate="tbxEmail" Display="Dynamic" ErrorMessage="Please enter a valid email address." ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ValidationGroup="vgUserData" SetFocusOnError="True" />
 						</td>
 					</tr>
@@ -470,10 +459,8 @@
 							<label for="<%=tbxNumberOfTickets.ClientID %>"><%=_("lblNumberOfTickets.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxNumberOfTickets" runat="server" MaxLength="4" placeholder="Number of tickets" Text="1"></asp:TextBox>
-							<asp:RequiredFieldValidator ID="rfvNumberOfTickets" CssClass="smallInfo error" resourcekey="rfvNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxNumberOfTickets" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
-							<asp:RangeValidator ID="rvNumberOfTickets" resourcekey="rvNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxNumberOfTickets" ErrorMessage="Value between" Type="Integer" SetFocusOnError="True" MaximumValue="5" MinimumValue="1" Display="Dynamic"></asp:RangeValidator>
-						</td>
+							<asp:TextBox ID="tbxNumberOfTickets" runat="server" MaxLength="4" placeholder="Number of tickets" Text="1"></asp:TextBox><asp:RequiredFieldValidator ID="rfvNumberOfTickets" CssClass="smallInfo error" resourcekey="rfvNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxNumberOfTickets" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True" />
+							<asp:RangeValidator ID="rvNumberOfTickets" resourcekey="rvNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxNumberOfTickets" ErrorMessage="Value between" Type="Integer" SetFocusOnError="True" MaximumValue="5" MinimumValue="1" Display="Dynamic"></asp:RangeValidator></td>
 					</tr>
 				</table>
 				<table runat="server" id="tblExtendedUserData" cellspacing="0" cellpadding="0" class="optionsList strippedTable noBorder fullWidthTable tablePadding5" align="center" visible="false">
@@ -482,48 +469,42 @@
 							<label for="<%=tbxStreet.ClientID %>"><%=_("lblStreet.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxStreet" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxStreet" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox></td>
 					</tr>
 					<tr>
 						<td class="tdLabel">
 							<label for="<%=tbxCity.ClientID %>"><%=_("lblCity.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxCity" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxCity" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox></td>
 					</tr>
 					<tr>
 						<td class="tdLabel">
 							<label for="<%=tbxRegion.ClientID %>"><%=_("lblRegion.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxRegion" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxRegion" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox></td>
 					</tr>
 					<tr>
 						<td class="tdLabel">
 							<label for="<%=tbxCountry.ClientID %>"><%=_("lblCountry.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxCountry" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxCountry" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox></td>
 					</tr>
 					<tr>
 						<td class="tdLabel">
 							<label for="<%=tbxPostalCode.ClientID %>"><%=_("lblPostalCode.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxPostalCode" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxPostalCode" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox></td>
 					</tr>
 					<tr>
 						<td class="tdLabel">
 							<label for="<%=tbxTelephone.ClientID %>"><%=_("lblTelephone.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxTelephone" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxTelephone" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox></td>
 					</tr>
 				</table>
 				<table class="optionsList strippedTable noBorder fullWidthTable tablePadding5">
@@ -567,12 +548,54 @@
 							<label for="<%=tbxMessage.ClientID %>"><%=_("lblMessage.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxMessage" runat="server" MaxLength="256" TextMode="MultiLine"></asp:TextBox>
-						</td>
+							<asp:TextBox ID="tbxMessage" runat="server" MaxLength="256" TextMode="MultiLine"></asp:TextBox></td>
 					</tr>
 				</table>
 				<asp:Literal ID="litPaymentDataInfo" runat="server"></asp:Literal>
+				<table runat="server" id="tblEditPaymentData" cellspacing="0" cellpadding="0" class="optionsList strippedTable noBorder fullWidthTable tablePadding5" align="center" visible="false">
+					<tr>
+						<td class="tdLabel">
+							<label for="<%=btnEditPaymentDetails.ClientID %>">Edit payment details:</label>
+						</td>
+						<td>
+							<div class="mainActions textLeft smallActions">
+								<asp:Button ID="btnEditPaymentDetails" CssClass="downSave" runat="server" Text="Edit payment details" OnClick="btnEditPaymentDetails_Click" />
+							</div>
+						</td>
+					</tr>
+					<tr runat="server" id="trEditSubtotal" visible="false">
+						<td class="tdLabel">
+							<label for="<%=tbEditSubtotal.ClientID %>">Sub Total:</label>
+						</td>
+						<td>
+							<asp:TextBox ID="tbEditSubtotal" runat="server" CausesValidation="false"></asp:TextBox><asp:RequiredFieldValidator ID="rfvEditSubtotal" CssClass="smallInfo error" resourcekey="rfvEventPostName.ErrorMessage" runat="server" ControlToValidate="tbEditSubtotal" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator><asp:CompareValidator ID="cvEditSubtotal" ControlToValidate="tbEditSubtotal" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgUserData"></asp:CompareValidator></td>
+					</tr>
+					<tr runat="server" id="trDiscount" visible="false">
+						<td class="tdLabel">
+							<label for="<%=tbDiscount.ClientID %>">Discount:</label>
+						</td>
+						<td>
+							<asp:TextBox ID="tbDiscount" runat="server" CausesValidation="false">
+							</asp:TextBox><asp:RequiredFieldValidator ID="rfvDiscount" CssClass="smallInfo error" resourcekey="rfvEventPostName.ErrorMessage" runat="server" ControlToValidate="tbDiscount" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True">
+							</asp:RequiredFieldValidator><asp:CompareValidator ID="cvDiscount" ControlToValidate="tbDiscount" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgUserData"></asp:CompareValidator></td>
+					</tr>
+					<tr runat="server" id="trTaxValue" visible="false">
+						<td class="tdLabel">
+							<label for="<%=tbTaxValue.ClientID %>">Tax Value:</label>
+						</td>
+						<td>
+							<asp:TextBox ID="tbTaxValue" runat="server" CausesValidation="false"></asp:TextBox><asp:RequiredFieldValidator ID="rfvTaxValue" CssClass="smallInfo error" resourcekey="rfvEventPostName.ErrorMessage" runat="server" ControlToValidate="tbTaxValue" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator><asp:CompareValidator ID="cvTaxValue" ControlToValidate="tbTaxValue" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgUserData"></asp:CompareValidator></td>
+					</tr>
+					<tr runat="server" id="trEstimatedTotal" visible="false">
+						<td class="tdLabel">
+							<label for="<%=tbEstimatedTotal.ClientID %>">Estimated Total:</label>
+						</td>
+						<td>
+							<asp:TextBox ID="tbEstimatedTotal" runat="server" CausesValidation="false"></asp:TextBox><asp:RequiredFieldValidator ID="rfvEstimatedTotal" CssClass="smallInfo error" resourcekey="rfvEventPostName.ErrorMessage" runat="server" ControlToValidate="tbEstimatedTotal" ErrorMessage="Required!" ValidationGroup="vgUserData" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator><asp:CompareValidator ID="cvEstimatedTotal" ControlToValidate="tbEstimatedTotal" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgUserData"></asp:CompareValidator></td>
+					</tr>
+				</table>
 				<asp:Label ID="lblregistrationUserDataUpdateInfo" runat="server" EnableViewState="false" />
+
 				<div class="mainActions">
 					<asp:Button ID="btnUpdateUserData" CssClass="downSave" resourcekey="btnUpdateUserData" runat="server" Text="Update" OnClick="btnUpdateUserData_Click" ValidationGroup="vgUserData" />
 					<asp:Button ID="btnCloseUserData" CssClass="cancel" resourcekey="btnCloseUserData" runat="server" Text="Close" CausesValidation="false" OnClick="btnCloseUserData_Click" />
@@ -580,9 +603,8 @@
 			</asp:Panel>
 
 			<asp:Panel ID="pnlAddUserToEvent" runat="server" Visible="false" CssClass="sectionBox noPadding">
-				<asp:Literal ID="liRegistrationInfo" runat="server"></asp:Literal>
-				<table class="optionsList strippedTable noBorder fullWidthTable tablePadding5">
-					<tr>
+				<asp:Literal ID="liRegistrationInfo" runat="server"></asp:Literal><table class="optionsList strippedTable noBorder fullWidthTable tablePadding5">
+					<tr runat="server" id="trAddRolesToEvent">
 						<td class="tdLabel textTop">
 							<label for="<%=ddlAddUsersFromRole.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAddUsersFromRole.Help", true) %>" data-tooltip-position="top-right"><%=_("lblAddUsersFromRole.Text") %></label>
 						</td>
@@ -616,8 +638,7 @@
 							<label for="<%=tbxAddUserNameToEvent.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSelectUserToAddToEvent.Help", true) %>" data-tooltip-position="top-right"><%=_("lblSelectUserToAddToEvent.Text") %></label>
 						</td>
 						<td>
-							<asp:TextBox ID="tbxAddUserNameToEvent" runat="server"></asp:TextBox>
-							<div class="mainActions smallActions displayInline noMargin">
+							<asp:TextBox ID="tbxAddUserNameToEvent" runat="server"></asp:TextBox><div class="mainActions smallActions displayInline noMargin">
 								<asp:LinkButton ID="lbAddUserNameToEvent" CssClass="add" resourcekey="lbAddUserNameToEvent" runat="server" OnClick="lbAddUserNameToEvent_Click" Text="Add" />
 							</div>
 							<asp:GridView ID="gvAddedUsersToEvent" runat="server" AutoGenerateColumns="false" CssClass="strippedTable tablePadding5 textCenter" EnableModelValidation="True" GridLines="None" OnRowCommand="gvAddedUsersToEvent_RowCommand" Width="350">
@@ -658,8 +679,7 @@
 							</td>
 							<td>
 								<div class="edNews_inputGroup inputWidth40">
-									<asp:TextBox ID="tbxEventPostName" runat="server"></asp:TextBox>
-									<asp:RequiredFieldValidator ID="rfvEventPostName" CssClass="smallInfo error" resourcekey="rfvEventPostName.ErrorMessage" runat="server" ControlToValidate="tbxEventPostName" ErrorMessage="Required!" ValidationGroup="vgPostSettings" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator>
+									<asp:TextBox ID="tbxEventPostName" runat="server"></asp:TextBox><asp:RequiredFieldValidator ID="rfvEventPostName" CssClass="smallInfo error" resourcekey="rfvEventPostName.ErrorMessage" runat="server" ControlToValidate="tbxEventPostName" ErrorMessage="Required!" ValidationGroup="vgPostSettings" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator>
 								</div>
 							</td>
 						</tr>
@@ -698,8 +718,7 @@
 								<label for="<%=tbxSendToUserName.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSendToUserName.Help", true) %>" data-tooltip-position="top-right"><%=_("lblSendToUserName.Text") %></label>
 							</td>
 							<td>
-								<asp:TextBox ID="tbxSendToUserName" runat="server"></asp:TextBox>
-								<div class="mainActions displayInline smallActions noMargin">
+								<asp:TextBox ID="tbxSendToUserName" runat="server"></asp:TextBox><div class="mainActions displayInline smallActions noMargin">
 									<asp:LinkButton ID="lbUsernameAdd" CssClass="add" resourcekey="lbUsernameAdd" runat="server" OnClick="lbUsernameAdd_Click" Text="Add" />
 								</div>
 								<asp:GridView ID="gvSendToUsers" runat="server" AutoGenerateColumns="false" CssClass="strippedTable tablePadding5" EnableModelValidation="True" GridLines="None" OnRowCommand="gvSendToUsers_RowCommand">
@@ -747,8 +766,7 @@
 								</div>
 								<div runat="server" id="divCreateEmailTemplate" class="topMargin sectionBox" visible="false">
 									<a id="toggleCreateEmail"><%#createEmailTemplate%></a>
-									<%#fileName%>:<asp:TextBox ID="tbxTemplateName" runat="server"></asp:TextBox>
-									<div class="mainActions smallActions noMargin">
+									<%#fileName%>:<asp:TextBox ID="tbxTemplateName" runat="server"></asp:TextBox><div class="mainActions smallActions noMargin">
 										<asp:Button ID="btnSaveEmailTemplate" CssClass="downSawe" resourcekey="btnSaveEmailTemplate" runat="server" Text="Save template to file" OnClick="btnSaveEmailTemplate_Click" ValidationGroup="vgSaveEmailTemplate" />
 										<asp:Button ID="btnDeleteEmailTemplate" CssClass="delete" resourcekey="btnDeleteEmailTemplate" runat="server" Text="Delete selected template" OnClick="btnDeleteEmailTemplate_Click" ValidationGroup="vgSaveEmailTemplate" />
 									</div>
@@ -761,9 +779,7 @@
 								<label for="<%=tbxMailSubject.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblMailSubject.Help", true) %>" data-tooltip-position="top-right"><%=_("lblMailSubject.Text") %></label>
 							</td>
 							<td>
-								<asp:TextBox ID="tbxMailSubject" runat="server" Width="450px"></asp:TextBox>
-								<asp:RequiredFieldValidator ID="rfvMailSubject" CssClass="smallInfo error" resourcekey="rfvMailSubject.ErrorMessage" runat="server" ControlToValidate="tbxMailSubject" ErrorMessage="Required!" ValidationGroup="vgPostSettings" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator>
-							</td>
+								<asp:TextBox ID="tbxMailSubject" runat="server" Width="450px"></asp:TextBox><asp:RequiredFieldValidator ID="rfvMailSubject" CssClass="smallInfo error" resourcekey="rfvMailSubject.ErrorMessage" runat="server" ControlToValidate="tbxMailSubject" ErrorMessage="Required!" ValidationGroup="vgPostSettings" Display="Dynamic" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 						</tr>
 						<tr>
 							<td class="tdLabel textTop">
@@ -813,8 +829,7 @@
 								<dnn:Label ID="lblSendToEmail" runat="server" Text="Add e-mail:" HelpText="Add e-mail." ControlName="tbxSendToEmail" />
 							</td>
 							<td>
-								<asp:TextBox ID="tbxSendToEmail" runat="server"></asp:TextBox>
-								<div class="mainActions smallActions displayInline noMargin">
+								<asp:TextBox ID="tbxSendToEmail" runat="server"></asp:TextBox><div class="mainActions smallActions displayInline noMargin">
 									<asp:LinkButton ID="lbEmailAdd" CssClass="add" resourcekey="lbEmailAdd" runat="server" OnClick="lbEmailAdd_Click" Text="Add" />
 								</div>
 							</td>
@@ -854,8 +869,7 @@
 							<asp:TemplateField HeaderText="Action">
 								<ItemTemplate>
 									<div class="itemActions">
-										<asp:HyperLink runat="server" ID="hlEdit" CssClass="editAction" resourcekey="hlEdit" NavigateUrl='<%# CreateLinkForEdit(Eval("Id"), Eval("PostType")) %>' Text="Edit"></asp:HyperLink>
-										<asp:LinkButton ID="lbDelete" resourcekey="lbDelete" CssClass="deleteAction" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete"></asp:LinkButton>
+										<asp:HyperLink runat="server" ID="hlEdit" CssClass="editAction" resourcekey="hlEdit" NavigateUrl='<%# CreateLinkForEdit(Eval("Id"), Eval("PostType")) %>' Text="Edit"></asp:HyperLink><asp:LinkButton ID="lbDelete" resourcekey="lbDelete" CssClass="deleteAction" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete"></asp:LinkButton>
 									</div>
 								</ItemTemplate>
 								<HeaderStyle Width="200px" />
@@ -890,7 +904,6 @@
 						<asp:HyperLink ID="hlAddNewPostSettings" runat="server" CssClass="add"></asp:HyperLink>
 					</div>
 				</asp:Panel>
-
 				<asp:Panel ID="pnlEmailSettings" Visible="false" class="sectionBox noPadding" runat="server">
 					<asp:Panel ID="pnlPostCategories" runat="server" CssClass="edNews_numberedOptions">
 						<div class="edNews_numberedOptionsHeader">
@@ -927,8 +940,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxapprovalNeededMailSubject" runat="server" placeholder="e.g. Awaiting registration approval for [event title]..."></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvapprovalNeededMailSubject" CssClass="smallInfo error" resource="rfvapprovalNeededMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxapprovalNeededMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvapprovalNeededMailSubject" CssClass="smallInfo error" resource="rfvapprovalNeededMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxapprovalNeededMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -965,8 +977,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxnewEventRegistrationMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvnewEventRegistrationMailSubject" CssClass="smallInfo error" resoucekey="rfvnewEventRegistrationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxnewEventRegistrationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvnewEventRegistrationMailSubject" CssClass="smallInfo error" resoucekey="rfvnewEventRegistrationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxnewEventRegistrationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1003,8 +1014,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxverifyingRegistrationForUnregisteredUsersMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvverifyingRegistrationForUnregisteredUsersMailSubject" CssClass="smallInfo error" resourcekey="rfvverifyingRegistrationForUnregisteredUsersMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxverifyingRegistrationForUnregisteredUsersMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvverifyingRegistrationForUnregisteredUsersMailSubject" CssClass="smallInfo error" resourcekey="rfvverifyingRegistrationForUnregisteredUsersMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxverifyingRegistrationForUnregisteredUsersMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1041,8 +1051,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxAwaitingRegistrationApprovalMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvAwaitingRegistrationApprovalMailSubject" CssClass="smallInfo error" resourcekey="rfvAwaitingRegistrationApprovalMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxAwaitingRegistrationApprovalMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvAwaitingRegistrationApprovalMailSubject" CssClass="smallInfo error" resourcekey="rfvAwaitingRegistrationApprovalMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxAwaitingRegistrationApprovalMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1079,8 +1088,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxrejectRegistrationMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvrejectRegistrationMailSubject" CssClass="smallInfo error" resourcekey="rfvrejectRegistrationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxrejectRegistrationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvrejectRegistrationMailSubject" CssClass="smallInfo error" resourcekey="rfvrejectRegistrationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxrejectRegistrationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1117,8 +1125,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxconfirmRegistrationMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvconfirmRegistrationMailSubject" CssClass="smallInfo error" resourcekey="rfvconfirmRegistrationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxconfirmRegistrationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvconfirmRegistrationMailSubject" CssClass="smallInfo error" resourcekey="rfvconfirmRegistrationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxconfirmRegistrationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1155,8 +1162,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxpaymentRequestMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvpaymentRequestMailSubject" CssClass="smallInfo error" resourcekey="rfvpaymentRequestMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxpaymentRequestMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvpaymentRequestMailSubject" CssClass="smallInfo error" resourcekey="rfvpaymentRequestMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxpaymentRequestMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1193,8 +1199,7 @@
 									<div class="edNews_inputGroup inputWidth100">
 										<asp:TextBox ID="tbxUnregisterNotificationMailSubject" runat="server"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvUnregisterNotificationMailSubject" CssClass="smallInfo error" resourcekey="rfvUnregisterNotificationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxUnregisterNotificationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvUnregisterNotificationMailSubject" CssClass="smallInfo error" resourcekey="rfvUnregisterNotificationMailSubject.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxUnregisterNotificationMailSubject" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1235,8 +1240,7 @@
 									<div class="edNews_inputGroup inputWidth40">
 										<asp:TextBox ID="tbxDefaultFromName" runat="server" Width="450px"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvDefaultFromName" CssClass="smallInfo error" resourcekey="rfvDefaultFromName.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromName" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvDefaultFromName" CssClass="smallInfo error" resourcekey="rfvDefaultFromName.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromName" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1246,8 +1250,7 @@
 									<div class="edNews_inputGroup inputWidth40">
 										<asp:TextBox ID="tbxDefaultFromMail" runat="server" Width="450px"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvDefaultFromMail" CssClass="smallInfo error" resourcekey="rfvDefaultFromMail.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromMail" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvDefaultFromMail" CssClass="smallInfo error" resourcekey="rfvDefaultFromMail.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromMail" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 							<tr>
 								<td class="tdLabel">
@@ -1257,12 +1260,10 @@
 									<div class="edNews_inputGroup inputWidth40">
 										<asp:TextBox ID="tbxDefaultReplyTo" runat="server" Width="450px"></asp:TextBox>
 									</div>
-									<asp:RequiredFieldValidator ID="rfvDefaultReplyTo" CssClass="smallInfo error" runat="server" resourcekey="required.ErrorMessage" ErrorMessage="Required!" ControlToValidate="tbxDefaultReplyTo" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>
-								</td>
+									<asp:RequiredFieldValidator ID="rfvDefaultReplyTo" CssClass="smallInfo error" runat="server" resourcekey="required.ErrorMessage" ErrorMessage="Required!" ControlToValidate="tbxDefaultReplyTo" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
 							</tr>
 						</table>
 					</asp:Panel>
-
 					<asp:Panel ID="pnlEmailLog" runat="server" CssClass="edNews_numberedOptions" Visible="false">
 						<div class="edNews_numberedOptionsHeader">
 							<span class="edNews_numberedOptionsHeaderNumber">4</span>
@@ -1379,8 +1380,7 @@
 								<div class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbxPayPalApyKey" runat="server"></asp:TextBox>
 								</div>
-								<asp:RequiredFieldValidator ID="rfvPayPalApyKey" CssClass="smallInfo error" runat="server" ControlToValidate="tbxPayPalApyKey" ErrorMessage="Required!" Display="Dynamic" ValidationGroup="vgSavePaymentSettings"></asp:RequiredFieldValidator>
-							</td>
+								<asp:RequiredFieldValidator ID="rfvPayPalApyKey" CssClass="smallInfo error" runat="server" ControlToValidate="tbxPayPalApyKey" ErrorMessage="Required!" Display="Dynamic" ValidationGroup="vgSavePaymentSettings"></asp:RequiredFieldValidator></td>
 						</tr>
 						<tr>
 							<td class="tdLabel">
@@ -1400,8 +1400,7 @@
 							</td>
 							<td>
 								<asp:DropDownList ID="ddlStoreCountry" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlStoreCountry_SelectedIndexChanged"></asp:DropDownList>
-								<asp:RequiredFieldValidator ID="rfvStoreCountry" CssClass="smallInfo error" runat="server" ErrorMessage="Please select country" Display="Dynamic" ControlToValidate="ddlStoreCountry" ValidationGroup="vgSavePaymentSettings" InitialValue=""></asp:RequiredFieldValidator>
-							</td>
+								<asp:RequiredFieldValidator ID="rfvStoreCountry" CssClass="smallInfo error" runat="server" ErrorMessage="Please select country" Display="Dynamic" ControlToValidate="ddlStoreCountry" ValidationGroup="vgSavePaymentSettings" InitialValue=""></asp:RequiredFieldValidator></td>
 						</tr>
 						<tr>
 							<td class="tdLabel">
@@ -1442,8 +1441,7 @@
 							</td>
 							<td>
 								<asp:DropDownList ID="ddlHomeCountry" runat="server" OnSelectedIndexChanged="ddlHomeCountry_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-								<asp:RequiredFieldValidator ID="rfvHomeCountry" CssClass="smallInfo error" runat="server" ErrorMessage="Please select country" Display="Dynamic" ControlToValidate="ddlHomeCountry" ValidationGroup="vgSavePaymentSettings" InitialValue=""></asp:RequiredFieldValidator>
-							</td>
+								<asp:RequiredFieldValidator ID="rfvHomeCountry" CssClass="smallInfo error" runat="server" ErrorMessage="Please select country" Display="Dynamic" ControlToValidate="ddlHomeCountry" ValidationGroup="vgSavePaymentSettings" InitialValue=""></asp:RequiredFieldValidator></td>
 						</tr>
 						<tr>
 							<td class="tdLabel">

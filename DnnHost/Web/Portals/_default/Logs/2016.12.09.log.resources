@@ -1,0 +1,40 @@
+2016-12-09 14:06:16,613 [Jaguar][Thread:46][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.196
+	Port: 2461
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: E5tdfFFl8SdJmJsCywZgNU1RiJRx4hn A8GxtIem873Hei9z0MTnmWIgsn5eHW5ch4MQPoz/CQuEju1BnJwoyd49A9Q4wmS2kvJuIsymYS98zV3F5/b7DgsY5wUJVHFST/emXC8az8JqzTtH5nm7vJDPZdAf2QCi0h4 f23HVsP9miURV4w985Hj364qzkXisZczlU5aokt/B9y MFV3gsMv/X03Mi003hrCzZqe4I1OUZbGCJpnMD8qReg3MtMgytonsX/7lprQv2Jm0y8Sy7Qbyf1DS/q4kv/0XTKwp DLJ4TfdkmLNwPm5dOaDh5XU0bfKdkvVRdgP2g1ZBliQFAeqW3xVaBkRUigDrHoNReNogP1ku3mYIvQdA0Bl4FYAvWJp4jrlKKYtdCVwlZHDeMwV/OPCygqDDfexR6TPmm0fPy/OmiEqRa2NbPZfOsq5 ccLozpN0PctnlkZEGz9c4DzcL1ARXZ3PotsGcD3H9ygkoYFE5byVOPbMZbRsq3gYjW NA1ZUU8uRCamR4IAiW2mQHoLZ7LXk1wUKb49vyn/sYkFn7CMinVRU0= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-12-09 14:06:16,628 [Jaguar][Thread:46][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.196
+	Port: 2461
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: E5tdfFFl8SdJmJsCywZgNU1RiJRx4hn A8GxtIem873Hei9z0MTnmWIgsn5eHW5ch4MQPoz/CQuEju1BnJwoyd49A9Q4wmS2kvJuIsymYS98zV3F5/b7DgsY5wUJVHFST/emXC8az8JqzTtH5nm7vJDPZdAf2QCi0h4 f23HVsP9miURV4w985Hj364qzkXisZczlU5aokt/B9y MFV3gsMv/X03Mi003hrCzZqe4I1OUZbGCJpnMD8qReg3MtMgytonsX/7lprQv2Jm0y8Sy7Qbyf1DS/q4kv/0XTKwp DLJ4TfdkmLNwPm5dOaDh5XU0bfKdkvVRdgP2g1ZBliQFAeqW3xVaBkRUigDrHoNReNogP1ku3mYIvQdA0Bl4FYAvWJp4jrlKKYtdCVwlZHDeMwV/OPCygqDDfexR6TPmm0fPy/OmiEqRa2NbPZfOsq5 ccLozpN0PctnlkZEGz9c4DzcL1ARXZ3PotsGcD3H9ygkoYFE5byVOPbMZbRsq3gYjW NA1ZUU8uRCamR4IAiW2mQHoLZ7LXk1wUKb49vyn/sYkFn7CMinVRU0= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

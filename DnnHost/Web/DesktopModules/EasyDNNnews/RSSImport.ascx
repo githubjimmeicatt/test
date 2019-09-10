@@ -47,7 +47,7 @@
 						</asp:TemplateField>
 						<asp:TemplateField HeaderText="Category">
 							<ItemTemplate>
-								<asp:Label ID="lblCategoryName" runat="server" Text='<%# string.Join(", ", XDocument.Parse(Eval("CategoryName").ToString()).Root.Elements("Category").Select(element => element.Value).ToList().ToArray()) %>' />
+								<asp:Label ID="lblCategoryName" runat="server" Text='<%#string.IsNullOrEmpty(Eval("CategoryName").ToString())?"": string.Join(", ", XDocument.Parse(Eval("CategoryName").ToString()).Root.Elements("Category").Select(element => element.Value).ToList().ToArray()) %>' />
 							</ItemTemplate>
 							<HeaderStyle Width="100px" />
 						</asp:TemplateField>

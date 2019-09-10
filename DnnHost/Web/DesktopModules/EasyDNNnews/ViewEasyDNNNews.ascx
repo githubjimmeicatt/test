@@ -13,6 +13,7 @@
 	<%=includeContactFormInitJs%>
 	<%=includeGoogleRecaptchJs%>
 	<%=includeContactAuthorAgreementValidationJs%>
+	<%=includeArticleVotingJS%>
 
 	eds2_2(function ($) {
 		if (typeof edn_fluidvids != 'undefined')
@@ -58,8 +59,8 @@
 			<%=GenerateArticleBreadCrumbs()%>
 		</p>
 		<%=EditLink("admin_action edit")%>
-		<asp:LinkButton ID="lbPublishArticle" CssClass="admin_action publish_article" OnClick="PublishArticle_Click" Visible="false" runat="server"><%=Localization.GetString("Publish.Text", ControlResxFile)%></asp:LinkButton>
-		<asp:LinkButton ID="lbApproveArticle" CssClass="admin_action publish_article" OnClick="ApproveArticle_Click" Visible="false" runat="server"><%=Localization.GetString("Approve.Text", ControlResxFile)%></asp:LinkButton>
+		<%--<asp:LinkButton ID="lbPublishArticle" CssClass="admin_action publish_article" OnClick="PublishArticle_Click" Visible="false" runat="server"><%=Localization.GetString("Publish.Text", ControlResxFile)%></asp:LinkButton>
+		<asp:LinkButton ID="lbApproveArticle" CssClass="admin_action publish_article" OnClick="ApproveArticle_Click" Visible="false" runat="server"><%=Localization.GetString("Approve.Text", ControlResxFile)%></asp:LinkButton>--%>
 		<%=GenerateArticleHtml("EDNHeader")%>
 		<asp:UpdatePanel ID="upHeader" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
 			<ContentTemplate>
@@ -116,27 +117,47 @@
 		<script type="text/javascript">
 			// <![CDATA[
 			eds2_2(function ($) {
-				var isArticleRated= false;
-				if(!<%=DisableApplicationCookies.ToString().ToLowerInvariant()%>)
-					isArticleRated=  $.cookie("<%=EDNViewArticleID%>");
+				var isArticleRated = false;
+				if (!<%=DisableApplicationCookies.ToString().ToLowerInvariant()%>)
+					isArticleRated = $.cookie("<%=EDNViewArticleID%>");
 				var $rate_it = $(".EDN_article_rateit.M<%=ModuleId%>");
+
 				$rate_it.bind('rated reset', function (e) {
-					var ri = $(this);
-					var value = ri.rateit('value');
-					var articleid = <%=publicOpenArticleID%>;
+					var ri = $(this),
+						value = ri.rateit('value'),
+						articleid = <%=publicOpenArticleID%>,
+						portalId = <%=PortalId%>,
+						moduleId = <%=ModuleId%>,
+						tabId = <%=TabId%>;
+
 					$rate_it.rateit('readonly', true);
 					ri.rateit('readonly', true);
-					if(!<%=DisableApplicationCookies.ToString().ToLowerInvariant()%>)
+
+					if (!<%=DisableApplicationCookies.ToString().ToLowerInvariant()%>)
 						$.cookie("<%=EDNViewArticleID%>", "true");
+
 					document.getElementById("<%=hfRate.ClientID %>").value = value;
-					$.ajax(
-						{
-							url: "<%=_ControlPath%>Rater.aspx",
-							type: "POST",
-							data: { artid: articleid, rating: value },
-							success: function (data) {
-								ri.siblings('.current_rating').text(data);
-							}
+
+					$.ajax({
+						url: "<%=_ControlPath%>ashx/RateArticle.ashx",
+						type: "POST",
+						cache: false,
+						dataType: 'json',
+						timeout: 15000,
+						data: {
+							portalId: portalId,
+							moduleId: moduleId,
+							tabId: tabId,
+							articleid: articleid,
+							ratingValue: value
+						}
+					})
+						.done(function (response, status) {
+							ri.siblings('.current_rating').text(response);
+						})
+						.fail(function () {
+						})
+						.always(function () {
 						});
 				})
 					.rateit('value', document.getElementById("<%=hfRate.ClientID %>").value)
@@ -149,7 +170,7 @@
 
 						$authorNameInput = $('#<%=tbAddCommentName.ClientID %>'),
 						$authorEmailInput = $('#<%=tbAddCommentEmail.ClientID %>'),
-
+						$authorGDPRAgreement = $('#<%=cbShowCommentsGDPRComplianceAgreementRules.ClientID %>'),
 						authorName,
 						authorEmail,
 						comment = $('#<%=tbAddComment.ClientID %>').val(),
@@ -159,6 +180,7 @@
 						$authorEmailNotValid = $('#<%=lblAddCommentEmailValid.ClientID %>'),
 						$noComment = $('#<%=lblAddCommentError.ClientID %>'),
 						$notValidCaptcha = $('#<%=lblCaptchaError.ClientID %>'),
+						$noauthorGDPRAgreement = $('#<%=lblShowCommentsGDPRComplianceAgreementError.ClientID %>'),
 
 						emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -188,6 +210,14 @@
 							noErrors = false;
 						} else if (!emailRegex.test(authorEmail)) {
 							$authorEmailNotValid.css('display', 'block');
+							noErrors = false;
+						}
+					}
+
+					if ($authorGDPRAgreement.length > 0) {
+						$noauthorGDPRAgreement.css('display', 'none');
+						if (!$authorGDPRAgreement[0].checked) {
+							$noauthorGDPRAgreement.css('display', 'block');
 							noErrors = false;
 						}
 					}
@@ -294,6 +324,15 @@
 									<td class="right">
 										<asp:TextBox ID="tbAddComment" runat="server" TextMode="MultiLine" MaxLength="10000" ValidationGroup="vgAddArtComment" />
 										<asp:Label ID="lblAddCommentError" runat="server" Text="Please enter comment." Style="color: red; display: none;" />
+									</td>
+								</tr>
+								<tr runat="server" id="trShowCommentsGDPRComplianceAgreement" visible="false">
+									<td class="left">
+										<asp:CheckBox ID="cbShowCommentsGDPRComplianceAgreementRules" Text="I agree" runat="server" />
+									</td>
+									<td class="right">
+										<asp:Label ID="lblShowCommentsGDPRComplianceAgreementRules" runat="server" Text="" />
+										<asp:Label ID="lblShowCommentsGDPRComplianceAgreementError" runat="server" Text="You must read and accept this rules." Style="color: red; display: none;" />
 									</td>
 								</tr>
 							</table>
@@ -432,8 +471,7 @@
 
 				<div class="eds_labelAndInput" runat="server" id="divEventRegistrationTermsAndConditionsAgreement">
 					<script type="text/javascript">
-						function validateEventRegistrationTermsAndConditionsAgreement(source, arguments)
-						{
+						function validateEventRegistrationTermsAndConditionsAgreement(source, arguments) {
 							if (eds2_2('#<%=cbEventRegistrationTermsAndConditionsAgreement.ClientID%>')[0].checked) {
 								arguments.IsValid = true; return true;
 							}
@@ -449,8 +487,7 @@
 
 				<div class="eds_labelAndInput" runat="server" id="divEventRegistrationEmailUseAgreement">
 					<script type="text/javascript">
-						function validateEventRegistrationEmailUseAgreement(source, arguments)
-						{
+						function validateEventRegistrationEmailUseAgreement(source, arguments) {
 							if (eds2_2('#<%=cbEventRegistrationEmailUseAgreement.ClientID%>')[0].checked) {
 								arguments.IsValid = true; return true;
 							}

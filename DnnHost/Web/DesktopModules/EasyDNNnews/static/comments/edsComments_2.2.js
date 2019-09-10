@@ -5,6 +5,7 @@
 			tabId: 0,
 			portalId: 0,
 			moduleId: 0,
+			indetails: true,
 			websiteClientRoot: '',
 			comments: {
 				requireAuthorInfo: true,
@@ -25,6 +26,7 @@
 
 		var $mainListWrapper = this,
 			requestInProgress = false,
+			replayCommentMessage = '',
 			allCommentsLoaded = false;
 
 		$mainListWrapper.on('click', '.edNews__commentVoting_trigger', function () {
@@ -86,6 +88,7 @@
 						portalId: options.portalId,
 						moduleId: options.moduleId,
 						tabid: options.tabId,
+						indetails: options.indetails,
 						articleid: articleInfo.id,
 						action: 'comment_vote',
 						commentId: $commentContainer.data('commentId'),
@@ -112,7 +115,6 @@
 					$itemContainer = $this.parents('.edNews__itemCommentsWrapper').eq(0),
 					articleInfo = $itemContainer.data('articleInfo'),
 					position = $this.data('position');
-				console.log('sada loadamo od pozicije:', position);
 				$.ajax({
 					type: 'GET',
 					url: options.websiteClientRoot + 'DesktopModules/EasyDNNnews/ashx/Comments.ashx',
@@ -121,6 +123,7 @@
 						portalId: options.portalId,
 						moduleId: options.moduleId,
 						tabid: options.tabId,
+						indetails: options.indetails,
 						position: position,
 						action: 'load_comments',
 						articleId: articleInfo.id
@@ -160,7 +163,8 @@
 					$commentInput = $('.edNews__commentsCommentInput', $commentsCommentFormWrapper),
 					$authorNameInput = $('.edNews__commentsAuthorNameInput', $commentsCommentFormWrapper),
 					$authorEmailInput = $('.edNews__commentsAuthorEmailInput', $commentsCommentFormWrapper),
-
+					$gdprComplience = $('.edNews__commentsGDPRComplianceAgreementRules', $commentsCommentFormWrapper),
+					$nogdprComplienceError = $('.edNews__commentsGDPRComplianceError', $commentsCommentFormWrapper),
 					$numberOfComments = $('.edNews__numberOfComments', $commentsCommentFormWrapper),
 					captchaId = "0",
 					articleInfo = $itemContainer.data('articleInfo'),
@@ -170,10 +174,10 @@
 					params = {
 						portalId: options.portalId,
 						moduleId: options.moduleId,
+						indetails: options.indetails,
 						tabid: options.tabId,
 						action: 'add_comment',
-						articleid: articleInfo.id,
-						tabid: options.tabId
+						articleid: articleInfo.id
 					},
 					errorOccurred = false,
 					replyingToComment = false;
@@ -187,6 +191,7 @@
 				$authorNoNameError.removeClass('show');
 				$authorNoCaptchaError.removeClass('show');
 				$commentPendingApproval.removeClass('show');
+				$nogdprComplienceError.removeClass('show');
 
 				if (typeof comment != 'string' || comment == '') {
 					errorOccurred = true;
@@ -216,6 +221,14 @@
 					params.captcha = grecaptcha.getResponse(captchaId);
 					if (params.captcha.length == 0) {
 						$authorNoCaptchaError.addClass('show');
+						errorOccurred = true;
+					}
+				}
+				if ($gdprComplience.length > 0) {
+					if ($gdprComplience[0].checked) {
+					}
+					else {
+						$nogdprComplienceError.addClass('show');
 						errorOccurred = true;
 					}
 				}
@@ -294,7 +307,10 @@
 					.data('parentElement', $itemCommentContainer[0]);
 				$('.edNews__replyingToMessage > a', $commentsCommentFormWrapper).attr('href', '#' + $itemCommentContainer[0].id);
 				$('.edNews__commentsCommentInput', $commentsCommentFormWrapper).val('').focus();
-				$('.edNews_addComment > p', $commentsCommentFormWrapper).eq(0).append(' ' + $itemCommentContainer.data('authorName'));
+				if (replayCommentMessage == "") {
+					replayCommentMessage = $('.edNews_addComment > p', $commentsCommentFormWrapper).eq(0).text();
+				}
+				$('.edNews_addComment > p', $commentsCommentFormWrapper).eq(0).text(replayCommentMessage + ' ' + $itemCommentContainer.data('authorName'));
 			});
 
 		if (options.comments.permissions.deleting) {
@@ -324,6 +340,7 @@
 							portalId: options.portalId,
 							moduleId: options.moduleId,
 							tabid: options.tabId,
+							indetails: options.indetails,
 							action: 'delete_comment',
 							articleId: articleInfo.id,
 							commentId: commentId
@@ -331,7 +348,6 @@
 						success: function (response) {
 							if (response.status != undefined && response.status == 'success') {
 								commentRemoved = true;
-								console.log('delete response', response.result);
 								if (response.result == "deleted") {
 									var $loadMoreCommentsButton = $('.edNews__loadMoreCommentsTrigger', $commentsCommentFormWrapper),
 										position = $loadMoreCommentsButton.data('position');
@@ -367,8 +383,8 @@
 
 								if (commentId == $commentsCommentFormWrapper.data('parentId'))
 									$commentsCommentFormWrapper
-									.removeClass('edNews__replyingToComment')
-									.data('parentId', undefined);
+										.removeClass('edNews__replyingToComment')
+										.data('parentId', undefined);
 							}
 						},
 						complete: function () {
@@ -433,6 +449,7 @@
 						portalId: options.portalId,
 						moduleId: options.moduleId,
 						tabid: options.tabId,
+						indetails: options.indetails,
 						articleid: articleInfo.id,
 						action: 'edit_comment',
 						comment: commentContent,
@@ -452,6 +469,20 @@
 				});
 			});
 		}
+
+		$('.edNews__showCommentsTrigger').on('click', function () {
+			var $this = $(this),
+				$itemCommentContainer = $this.closest('.edNews__commentsWrapper').eq(0);
+			if ($itemCommentContainer.hasClass("edNews__commentscollapsed")) {
+				$itemCommentContainer.removeClass("edNews__commentscollapsed");
+				$('.edNews__commentsCollapseWrapper', $itemCommentContainer).show(200);
+			}
+			else {
+				$itemCommentContainer.addClass("edNews__commentscollapsed");
+				$('.edNews__commentsCollapseWrapper', $itemCommentContainer).hide(200);
+			}
+
+		});
 		return this;
 	};
 })(eds2_2, window);

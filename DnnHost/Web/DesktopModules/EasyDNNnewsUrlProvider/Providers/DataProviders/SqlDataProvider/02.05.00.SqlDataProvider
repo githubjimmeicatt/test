@@ -1,0 +1,5 @@
+﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNnewsUrlNewProviderSettings' and column_name = 'RewritePagerLinks')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderSettings] ADD RewritePagerLinks BIT CONSTRAINT DF_{objectQualifier}EasyDNNnewsUrlNewProviderSettings_RewritePagerLinks DEFAULT (1) NOT NULL
+END
+GO

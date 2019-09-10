@@ -1,0 +1,11 @@
+﻿IF EXISTS (SELECT TOP 1 ID FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData])
+BEGIN
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%/groupid/%'
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%/userid/%'
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%login.aspx?returnurl=%'
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%login?returnurl=%'
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%register.aspx?returnurl=%'
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%register?returnurl=%'
+DELETE FROM {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] WHERE OriginalUrlString LIKE '%sendpassword/default?returnurl=%'
+END
+GO

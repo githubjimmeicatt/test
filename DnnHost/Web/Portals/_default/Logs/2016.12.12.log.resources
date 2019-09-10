@@ -1,0 +1,23 @@
+2016-12-12 13:50:38,399 [Jaguar][Thread:56][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.193
+	Port: 4284
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: fxaW n1e RUcmIVJpAtG3YNBGQa2JV2Kb/IDLtBR5niQFscbjo3QodWlxbxQtyl5Q12LXaYTev2gIjRhjCwSQoMZcFatEaGEN5ClaC4F/r77tOkPxoYF5GEBUY xwpEQ/gHqT4llJIgV1fT7c8F0rFV6RY/AdC8IB Skfwnw2APbDpfULiTUzsFkBDSh7a6F0Gsnv/UyZRgAopAUDh6 /mJO2V1D1IuHnaUtfM/z1jSfhVb/6GRhbp4dIgrnDm5eTPeVxjzck3W9HN81sO1 Ojm39UrEyMfhme4qf3GCrLV  yWaqkQ883W m bpK4zQRA21172S9VFqvB/qPCHg/2d6oxhaiMOv/ETEp0UpXDJGg8Bphjfisxv43lBhXOyvz6GAMfOpnehBQLwDqwdanDjJetxyjN3/ZGy4heH4EfTpxiNkzWrn6ShGKQbPARj6iYfAlsBbGSszRZ6eZV4yHVSXVgVrYiuv5BhTPUt2ng1ctsGnNSVsRbJG9NlUX1taG sOGG BAPu1/AkmUkmnt6vuU79aq2jgOEFlJehs8Sxx5rfgM1ypVzVHTzE=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-12-12 18:49:20,856 [Jaguar][Thread:7][ERROR] DotNetNuke.Common.Internal.EventHandlersContainer`1[[DotNetNuke.Entities.Portals.IPortalEventHandlers, DotNetNuke, Version=7.3.4.45, Culture=neutral, PublicKeyToken=null]] - Thread was being aborted.
+System.Threading.ThreadAbortException: Thread was being aborted.
+   at System.Threading.Monitor.Enter(Object obj)
+   at DotNetNuke.ExtensionPoints.ExtensionPointManager.ComposeParts(Object[] attributeParts)
+   at DotNetNuke.Common.Internal.EventHandlersContainer`1..ctor()
+2016-12-12 18:49:20,934 [Jaguar][Thread:7][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): Request timed out.

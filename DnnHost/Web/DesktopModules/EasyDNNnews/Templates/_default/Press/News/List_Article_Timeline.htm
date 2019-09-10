@@ -1,0 +1,54 @@
+<!--TemplateGroup:listArticleTimeline-->
+<!--ArticleRepeat:Before:-->
+<ol class="[EasyDNNnews:ArticleListWrapperClass] edNews_timeline">
+<!--RepeatEnd:Before:-->
+<!--ArticleTemplate-->
+	<li>
+		<article class="edn_articleStyle9">
+			<div class="edn_timeStyle2Wrapper">
+				<time class="edn_timeStyle2">[EasyDNNnews:IfExists:Event][EasyDNNnews:EventDate][EasyDNNnews:EndIf:Event][EasyDNNnews:IfNotExists:Event][EasyDNNnews:FormatedDate:MMMM d, h:mm tt, yyyy][EasyDNNnews:EndIf:Event]</time>
+			</div>
+			<div class="edn_primaryWrapper">
+				[EasyDNNnews:IfExists:Image]
+				<section>
+					<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><img class="edn_articleImage" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/></a>
+				</section>
+				[EasyDNNnews:EndIf:Image]
+				<h2 class="edn_articleTitle"><a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+				[EasyDNNnews:IfExists:SubTitle]
+				<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle]</h3>
+				[EasyDNNnews:EndIf:SubTitle]
+				[EasyDNNnews:IfExists:Tags]
+				<div class="edn_simpleTags">
+					[EasyDNNnews:Tags separator=", "]
+				</div>
+				[EasyDNNnews:EndIf:Tags]
+				[EasyDNNnews:IfExists:Event]
+				<p class="edn_listEventDetails">
+					[EasyDNNnews:IfExists:EventLocation]
+					<span class="edn_eventLocation">[EasyDNNnews:EventLocation]</span>
+					[EasyDNNnews:EndIf:EventLocation]
+					<span class="edn_eventDate">[EasyDNNnews:EventDate]</span>
+				</p>
+				[EasyDNNnews:EndIf:Event]
+				<div class="edn_articleSummary">[EasyDNNnews:Summary]</div>
+			</div>
+			[EasyDNNnews:HasArticlePermissions]
+			<div class="edn_adminActions">
+				[EasyDNNnews:ArticlePermissions:Edit]
+				[EasyDNNnews:ArticlePermissions:Publish]
+				[EasyDNNnews:ArticlePermissions:Approve]
+			</div>
+			[EasyDNNnews:HasArticlePermissionsEnd]
+		</article>
+	</li>
+<!--ArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+</ol>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

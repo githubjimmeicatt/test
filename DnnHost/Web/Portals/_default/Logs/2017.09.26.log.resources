@@ -1,0 +1,1198 @@
+2017-09-26 07:33:58,411 [cheetah][Thread:77][ERROR] DotNetNuke.Services.Exceptions.Exceptions - Resource niet gevonden: - 
+System.Web.HttpException (0x80004005): Resource niet gevonden
+2017-09-26 07:33:58,427 [cheetah][Thread:77][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): Resource niet gevonden
+   at DotNetNuke.Services.Exceptions.Exceptions.ProcessHttpException(HttpException exc, String URL)
+   at DotNetNuke.Services.FileSystem.FileServerHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2017-09-26 08:46:25,701 [cheetah][Thread:62][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.19
+	Port: 5978
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: vT1GLBetxJApP1 pzEOZ8e5OcSo8TzvCecS4dU1VwKz44Wo5JulmxWDC/tcqK4EePzEG7d1nhWvbkAnummSKFk9XLB/dKBC5nstqyjDjy48LgJjZaVe4 rVa2uZD7xhr5C6S0IThWOPzZCNy/LBmNZl8yxxYgHPOP1lp2oeOvu0SzWtA76tfWsWJp IIzlKpjM2fEASJbbK2 No0dssszO1L/KuuVrgdwAD1ueexu4gpVQzAQ Ii5mImyPAmpl4US8mU7/ShCwwRzXX1W38gP9LW5jGNXkLG6GPqlNGT9Yqt/G1o9idI3ILNHAGExdUW4zB73tN2XUNGby1 zwzwfyCOP0dc4JGy7c26F0qZSnibtnZRJFc9ikbQxi4Mhs srujMgaTSkDm7A/RnkE6A1/NIrZogcii2L54NTGTMw99cNdnoHjFu8qIXBObJ1TZs8wviq8rdexSVlUjYfZz/105fjyBjoDr41UHaffsRh1g8OJFV7OXCAjZSdMttBEaUlTBvKakfO1zlM2hn ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 08:46:25,701 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.19
+	Port: 5978
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: vT1GLBetxJApP1 pzEOZ8e5OcSo8TzvCecS4dU1VwKz44Wo5JulmxWDC/tcqK4EePzEG7d1nhWvbkAnummSKFk9XLB/dKBC5nstqyjDjy48LgJjZaVe4 rVa2uZD7xhr5C6S0IThWOPzZCNy/LBmNZl8yxxYgHPOP1lp2oeOvu0SzWtA76tfWsWJp IIzlKpjM2fEASJbbK2 No0dssszO1L/KuuVrgdwAD1ueexu4gpVQzAQ Ii5mImyPAmpl4US8mU7/ShCwwRzXX1W38gP9LW5jGNXkLG6GPqlNGT9Yqt/G1o9idI3ILNHAGExdUW4zB73tN2XUNGby1 zwzwfyCOP0dc4JGy7c26F0qZSnibtnZRJFc9ikbQxi4Mhs srujMgaTSkDm7A/RnkE6A1/NIrZogcii2L54NTGTMw99cNdnoHjFu8qIXBObJ1TZs8wviq8rdexSVlUjYfZz/105fjyBjoDr41UHaffsRh1g8OJFV7OXCAjZSdMttBEaUlTBvKakfO1zlM2hn ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 08:46:28,904 [cheetah][Thread:82][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.27
+	Port: 17119
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: XdqPkKSDRCTMRNysGXxOeviohkXl83lLT B3EYSEfWyrVAjGNK6hz0PURkgoq/JTNQyDXBI8as/ajPfcSW6kHCYKK3ffJnZzhiOP2z4LhoItQnhMcA2aKBhqgnkXqPOHEBHvGjqNY1JounnzlXyH/unbK9wzEUW5uo27uJa3DY8L14bnoay1fe3vK3M= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 08:46:28,904 [cheetah][Thread:82][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.27
+	Port: 17119
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: XdqPkKSDRCTMRNysGXxOeviohkXl83lLT B3EYSEfWyrVAjGNK6hz0PURkgoq/JTNQyDXBI8as/ajPfcSW6kHCYKK3ffJnZzhiOP2z4LhoItQnhMcA2aKBhqgnkXqPOHEBHvGjqNY1JounnzlXyH/unbK9wzEUW5uo27uJa3DY8L14bnoay1fe3vK3M= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:21:00,806 [cheetah][Thread:82][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.72
+	Port: 1108
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: sVua8TFkVsTiuXJDzpUGB3EHiHZBFf1CppWEVDThDeUliP1lWQsAMgTuRUT4T4G4Pg83mhqpCGtGcGrI2apuulEzaN9v27fZKR/KnmEQ0URITU4JY w4r1yOfyemHEJ7GHjbsXiCHAYD7zjoPhHSsSNwHPRnULqS7LRb6/Pu7qEXfalxqnG1ir3FoeeRXVuoOvJfD880OC8Imb0 0pJEQ5/Ihij41Lsl2aZI0z7/EVlcpYJjCFxx9APEvMaCQWjXiy8NMrGfX4 24xljsJuvQ4ipYU4n1aO95BnZAdzPrYBNu9EWOyGwRzOre/qTfnBwyBJUG7qZ jx7xFJfUqoRPnw9J0G4gDX86N5GWYFERprnGC9QcOOe8BWu78fRCi0i x4GWjxfRhSWd7tDoRqi fmGdjDRE8HgKncXAw WvYBX23NoSiEfF8LOIZjstOM5hryfRtC6pYrculDhbQ8fuMiV20fBsIJ9a49r wV7Dv7wKtL223sKJC4o6gPYfoJpb03m6cv71kyR8yXz
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:21:00,806 [cheetah][Thread:82][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.72
+	Port: 1108
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: sVua8TFkVsTiuXJDzpUGB3EHiHZBFf1CppWEVDThDeUliP1lWQsAMgTuRUT4T4G4Pg83mhqpCGtGcGrI2apuulEzaN9v27fZKR/KnmEQ0URITU4JY w4r1yOfyemHEJ7GHjbsXiCHAYD7zjoPhHSsSNwHPRnULqS7LRb6/Pu7qEXfalxqnG1ir3FoeeRXVuoOvJfD880OC8Imb0 0pJEQ5/Ihij41Lsl2aZI0z7/EVlcpYJjCFxx9APEvMaCQWjXiy8NMrGfX4 24xljsJuvQ4ipYU4n1aO95BnZAdzPrYBNu9EWOyGwRzOre/qTfnBwyBJUG7qZ jx7xFJfUqoRPnw9J0G4gDX86N5GWYFERprnGC9QcOOe8BWu78fRCi0i x4GWjxfRhSWd7tDoRqi fmGdjDRE8HgKncXAw WvYBX23NoSiEfF8LOIZjstOM5hryfRtC6pYrculDhbQ8fuMiV20fBsIJ9a49r wV7Dv7wKtL223sKJC4o6gPYfoJpb03m6cv71kyR8yXz
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:21:04,478 [cheetah][Thread:79][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.66
+	Port: 1041
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 6IGq5S7y0Lcuwo7pZ8kqfO0AGL8D1LOUXw/3ISECJPyrDuKAMknrk9jsZHdyoHp5D1UnzHpZZ7rCVyhzPLkcsmnxCnJbqnWyC aRhZOUln4NWMPMZTuK125JWpB6EWvJKqyRni/F5FblfZotEfgT4HRRb1W xWpTIFPtEH0WPAj3RhaJxqKkTKdHaQw= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:21:04,478 [cheetah][Thread:79][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.66
+	Port: 1041
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 6IGq5S7y0Lcuwo7pZ8kqfO0AGL8D1LOUXw/3ISECJPyrDuKAMknrk9jsZHdyoHp5D1UnzHpZZ7rCVyhzPLkcsmnxCnJbqnWyC aRhZOUln4NWMPMZTuK125JWpB6EWvJKqyRni/F5FblfZotEfgT4HRRb1W xWpTIFPtEH0WPAj3RhaJxqKkTKdHaQw= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:36:14,854 [cheetah][Thread:27][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.0
+	Port: 9289
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: L9S/lbPjJMA9R1LVT215/dF8VIbzyqZoQLb8mfas9P8HSOn0xdjv7ngeuJCV NTtRzxqnNh6ZxS97etgSGghUGA5yhRn6KS7/yJQL5omWKx8yAKJYKqP6R0Rk3VoXdZ5Sbn2MBAwTNqNbRxYb22qkXbvYbiyLxfc8yfzv2HSInXKeFsOhdlOblwUPpcwcyRL0L9Ej CYH6KKndYY5 1iUrMdfCSl7wSAXQdWOYMxKoQJrlqYwE240vmRybU2Jtfs3dwnMR1C1TFI8 PHvfamhKh5x/1i4S1l/auPFD7P11X3HbkVUUEsno26qdgYddpNm7nMyeyWPQfZ20rJzA8zbbbFk7k/3yE/wJfFdDlOLbtNfq0GfEt6ytR8wiHiN6dJwyN6SAk1SKslBcPQ6LAzXzaLhxByEOX 7SAmmjmV/67XiuZp6PLXnC RyjCjlxIWsXEc5 Er3yV WDqg6dtlhIs9QFspJHdem/ND IfsWR4Z76KL/4BfUecSlZ4TmIKXt3bevOkEtrKtsEdW ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:36:14,854 [cheetah][Thread:27][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.0
+	Port: 9289
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: L9S/lbPjJMA9R1LVT215/dF8VIbzyqZoQLb8mfas9P8HSOn0xdjv7ngeuJCV NTtRzxqnNh6ZxS97etgSGghUGA5yhRn6KS7/yJQL5omWKx8yAKJYKqP6R0Rk3VoXdZ5Sbn2MBAwTNqNbRxYb22qkXbvYbiyLxfc8yfzv2HSInXKeFsOhdlOblwUPpcwcyRL0L9Ej CYH6KKndYY5 1iUrMdfCSl7wSAXQdWOYMxKoQJrlqYwE240vmRybU2Jtfs3dwnMR1C1TFI8 PHvfamhKh5x/1i4S1l/auPFD7P11X3HbkVUUEsno26qdgYddpNm7nMyeyWPQfZ20rJzA8zbbbFk7k/3yE/wJfFdDlOLbtNfq0GfEt6ytR8wiHiN6dJwyN6SAk1SKslBcPQ6LAzXzaLhxByEOX 7SAmmjmV/67XiuZp6PLXnC RyjCjlxIWsXEc5 Er3yV WDqg6dtlhIs9QFspJHdem/ND IfsWR4Z76KL/4BfUecSlZ4TmIKXt3bevOkEtrKtsEdW ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:36:16,776 [cheetah][Thread:27][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.9
+	Port: 18402
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: jArudfvSOz3zdDEwm/ fJ6jvCwR TNYyq1Ro639UE6TQobHX5VO8S pULZiq ydNq6Elc2aG17Gc0okU /T2O6zaNhBuo1VxBtZKY6bUVPWHlqh iiPzv6xFkRqYNFlrdyng0zDS/PT7ar9nlvpgonQ1v66FOxo52cbHQdtvv2cftnadh994HMjeppc= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 10:36:16,776 [cheetah][Thread:27][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.9
+	Port: 18402
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: jArudfvSOz3zdDEwm/ fJ6jvCwR TNYyq1Ro639UE6TQobHX5VO8S pULZiq ydNq6Elc2aG17Gc0okU /T2O6zaNhBuo1VxBtZKY6bUVPWHlqh iiPzv6xFkRqYNFlrdyng0zDS/PT7ar9nlvpgonQ1v66FOxo52cbHQdtvv2cftnadh994HMjeppc= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 11:37:08,065 [cheetah][Thread:79][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.27
+	Port: 8997
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: XR2gLWK71U pL yfMdA s gv1Vch/2wzWbJqx9OjkS8kVGQQkQ7YY8GRb9uZXZ v/ClaNmJ4x7VUy6EKcM4l8uS94Pr8ohf8qXoEtqnvjZdLYUqL1x6PKr9HTPuDTLOPKPnCffuAhoHFd1rtLgqgpIt2Lu93mQUnIj4b7e5eDL1o0oUO2llzOw6ATwKZwIMOyo8WWrIEzxebASUx0QvHc6FOPmGnKK3mAGutkvfxMmHCV62M9LwmluhkDXLrx2oiK /MRAq68tem5XwoCID0eRwDgIWRyIjeATof9B4koTnAm36Xbs3hJDXm5a0/qKyWYL MLwR PjwV2rOaXMTPyBur2e1SAQtmojDvYjnYldj03GNy3uFrz3L0jHk6RFK5X3h/ELJ1v6H1ktdWStk17egcaiIiG3HpKeUR5zX9LOX EuzLAPipzPhmHOgYCewA2g75Frst1b6XT5CIKRGGSmjSoPO88GJmZAGPSA3fi75MC0YKaPe1Y9Ym GoRA0sFtHC17w7LIHxOO69T ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 11:37:08,065 [cheetah][Thread:79][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.27
+	Port: 8997
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: XR2gLWK71U pL yfMdA s gv1Vch/2wzWbJqx9OjkS8kVGQQkQ7YY8GRb9uZXZ v/ClaNmJ4x7VUy6EKcM4l8uS94Pr8ohf8qXoEtqnvjZdLYUqL1x6PKr9HTPuDTLOPKPnCffuAhoHFd1rtLgqgpIt2Lu93mQUnIj4b7e5eDL1o0oUO2llzOw6ATwKZwIMOyo8WWrIEzxebASUx0QvHc6FOPmGnKK3mAGutkvfxMmHCV62M9LwmluhkDXLrx2oiK /MRAq68tem5XwoCID0eRwDgIWRyIjeATof9B4koTnAm36Xbs3hJDXm5a0/qKyWYL MLwR PjwV2rOaXMTPyBur2e1SAQtmojDvYjnYldj03GNy3uFrz3L0jHk6RFK5X3h/ELJ1v6H1ktdWStk17egcaiIiG3HpKeUR5zX9LOX EuzLAPipzPhmHOgYCewA2g75Frst1b6XT5CIKRGGSmjSoPO88GJmZAGPSA3fi75MC0YKaPe1Y9Ym GoRA0sFtHC17w7LIHxOO69T ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 11:37:11,659 [cheetah][Thread:62][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.27
+	Port: 21140
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: Y9XcjdVjQWtxjazC9HCNoYomQ2VPU1321WlkbDMk8D4Xjy4jrRue7qS e/JnuTyrc1L4GXvXxKBBTlkOZQuqioke5OMpZEoRlYJYm7zccKGVHEWcQ2MtTnmW4ros7OTORuRwEgELAKeQa99gTQL0vRa68gunPdX30qvCnXKukiEYLFYJ5mXlq jgNiI= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 11:37:11,659 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.27
+	Port: 21140
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: Y9XcjdVjQWtxjazC9HCNoYomQ2VPU1321WlkbDMk8D4Xjy4jrRue7qS e/JnuTyrc1L4GXvXxKBBTlkOZQuqioke5OMpZEoRlYJYm7zccKGVHEWcQ2MtTnmW4ros7OTORuRwEgELAKeQa99gTQL0vRa68gunPdX30qvCnXKukiEYLFYJ5mXlq jgNiI= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 12:45:15,401 [cheetah][Thread:76][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.0
+	Port: 8735
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: wEY3Y ogTTQ6Rtejitek/3GEVYqkYgNwUtjuS3M0C2zTuA0JtWtSfgCRVQAXvW3nmOk4IwGh5zxeuqzwoK 6Cnn9/XeAAJaIRWufwYodf6UaxM5qLx3FTbiv7oV6/LEECv9wW5UGOii5c77lrhl4X0ihWBjIqDUirDSWBqH8isuZtbqdIj1gTwIZ5mzxYeCeHYF5z2fsKW9In6CCTi72QZsUsu oQYE3d7o5wBJN142HcpBvcoAeonJAm2GRUDxRPwi1xUF/SjiDrP8QPxqrcecrnUuU3uGWv5oidtx2EAw7HY HtwAoFQr4zwPakWqhrkBgA5fIOBtPBus3K9kuv60/V2 Avrgti8kJBfhg86xcFFWhF2u6Zg2j8xxIXjVAcozCo8OApFLFlCtKkhDMts2/fllh7haQkeKILXJV9qcd8LwIBp2voogTPpclwiDGQvCQKpgxpo1PyzhuMIBltnelxQ415Lh 9MaKZWRMW/TLSHEzIJuI2B7FtMOACbkDHcyn659rYgSV3WR6 ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 12:45:15,401 [cheetah][Thread:76][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.0
+	Port: 8735
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: wEY3Y ogTTQ6Rtejitek/3GEVYqkYgNwUtjuS3M0C2zTuA0JtWtSfgCRVQAXvW3nmOk4IwGh5zxeuqzwoK 6Cnn9/XeAAJaIRWufwYodf6UaxM5qLx3FTbiv7oV6/LEECv9wW5UGOii5c77lrhl4X0ihWBjIqDUirDSWBqH8isuZtbqdIj1gTwIZ5mzxYeCeHYF5z2fsKW9In6CCTi72QZsUsu oQYE3d7o5wBJN142HcpBvcoAeonJAm2GRUDxRPwi1xUF/SjiDrP8QPxqrcecrnUuU3uGWv5oidtx2EAw7HY HtwAoFQr4zwPakWqhrkBgA5fIOBtPBus3K9kuv60/V2 Avrgti8kJBfhg86xcFFWhF2u6Zg2j8xxIXjVAcozCo8OApFLFlCtKkhDMts2/fllh7haQkeKILXJV9qcd8LwIBp2voogTPpclwiDGQvCQKpgxpo1PyzhuMIBltnelxQ415Lh 9MaKZWRMW/TLSHEzIJuI2B7FtMOACbkDHcyn659rYgSV3WR6 ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 12:45:17,370 [cheetah][Thread:81][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.4
+	Port: 4530
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: dgLDipSRzFZ6DkTsG4XHKn1/tomu7MLwHXeuQGcdOheL0a87YWBYl CBBZC5pHfB9llRLB3R7sZ0y3nSOLDdMPl4YRm5vBM aYzlU3hjQvGwOoMXtGfNvpDerPiYBcZTps6LTidR8TRg xvxDZ0igUToYgGV/nNHKGeoV/5gvF4BdPK14tFG8lk s/w=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 12:45:17,370 [cheetah][Thread:81][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 77.67.54.4
+	Port: 4530
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: dgLDipSRzFZ6DkTsG4XHKn1/tomu7MLwHXeuQGcdOheL0a87YWBYl CBBZC5pHfB9llRLB3R7sZ0y3nSOLDdMPl4YRm5vBM aYzlU3hjQvGwOoMXtGfNvpDerPiYBcZTps6LTidR8TRg xvxDZ0igUToYgGV/nNHKGeoV/5gvF4BdPK14tFG8lk s/w=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:33:16,578 [cheetah][Thread:79][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.24
+	Port: 17015
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: Wa5NXhV4rAKj9KxEDmn72JhYyY65IXX997oQUSyNtnuwqBlJglglqREz8KekRTYX4C3l/kiYrcn2ZMomqsgrln7BGFLWV8 J607vi B2MB71Z8U4ETEGBUzL91tuo5LsjM2fERDRqxXUi06Yo/vCmfrhtxKY5H6Fu1MRoiX 9ptlWfNCYFXQ37vbIP1QTNCxL3QE1LI353LggptP 0MmBF8ibN6f/MF29Cot52O8YvQ6 I/p/a2XuukoDj/OchZxKohd6jqQpgDa5YenktvuJZQnGsNEoBJFeH0u hO4b 2GG76XBOFgIelhnIs5ZODXDm9V qpBVqgbQRGdNZFZmqHWCo EKbxPcudfIJezPvyhomsPR2pg13sBxOtaq0 atMdpiLYI7qVMX0vlPmVwd4RnG4Sg6JPdr3xnbeCtwYbvFsnmOQ4MmTlWr3fRpb0e2WDYiCqfeKrtawD0waIHVdnSZYKk4lVwYquADM oLUgkScB6X8VEPameH7BQRSls8B8/9XDE44/CRKne ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:33:16,578 [cheetah][Thread:79][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.24
+	Port: 17015
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: Wa5NXhV4rAKj9KxEDmn72JhYyY65IXX997oQUSyNtnuwqBlJglglqREz8KekRTYX4C3l/kiYrcn2ZMomqsgrln7BGFLWV8 J607vi B2MB71Z8U4ETEGBUzL91tuo5LsjM2fERDRqxXUi06Yo/vCmfrhtxKY5H6Fu1MRoiX 9ptlWfNCYFXQ37vbIP1QTNCxL3QE1LI353LggptP 0MmBF8ibN6f/MF29Cot52O8YvQ6 I/p/a2XuukoDj/OchZxKohd6jqQpgDa5YenktvuJZQnGsNEoBJFeH0u hO4b 2GG76XBOFgIelhnIs5ZODXDm9V qpBVqgbQRGdNZFZmqHWCo EKbxPcudfIJezPvyhomsPR2pg13sBxOtaq0 atMdpiLYI7qVMX0vlPmVwd4RnG4Sg6JPdr3xnbeCtwYbvFsnmOQ4MmTlWr3fRpb0e2WDYiCqfeKrtawD0waIHVdnSZYKk4lVwYquADM oLUgkScB6X8VEPameH7BQRSls8B8/9XDE44/CRKne ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:33:20,063 [cheetah][Thread:81][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.30
+	Port: 12178
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: unhPTGEdFoSYgkEP8wR0h AfHPdvCn4LMjBQ6viXikW 7cqXOaklhBrcUgHgxhX4K5RMp9SFWCOskQakkwXgixCgAXN2lU/pNPxebNj2J8KOKQlONp04OY liiffQg/7oX/uoiCPuiF24uZxcpj9PSwcPnVVFVQxCnO7Bfu2DOO5DohkBzWD/V5O7h8= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:33:20,063 [cheetah][Thread:81][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.30
+	Port: 12178
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: unhPTGEdFoSYgkEP8wR0h AfHPdvCn4LMjBQ6viXikW 7cqXOaklhBrcUgHgxhX4K5RMp9SFWCOskQakkwXgixCgAXN2lU/pNPxebNj2J8KOKQlONp04OY liiffQg/7oX/uoiCPuiF24uZxcpj9PSwcPnVVFVQxCnO7Bfu2DOO5DohkBzWD/V5O7h8= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:40:58,189 [cheetah][Thread:62][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.65
+	Port: 1026
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: TlgCvMCoNXKk8 gVmTKPJmLLw/xYX7/FslPjM8kKvu CpoA8Nfn/UhIQQ6jNgsEAvcuyfJL8KjviPzj1QpkGCBbqCxhjAzxq0zaL7eRaMek/GJ9vbm5vR5efSMoyG6pnRrBsp0/3XRMEHhDYKNmud46xQyxfybZRcJG3u7RLnoemhtepY2sE/3V/uJYijQrdHK BvkwV1rKoR7eRr20u6K3M0MBnDxIMo4aGkvhk10HorOz/XcH/p9nr0LdCrQbKVUa7qv9nt3PVjLbE3Uy7hVw XxAGAWgUciTRQvw9cwBA1a1ee/Lgrvv3hb7z827eag//PrXQvfLtxqiGOzQjsJCeoLw595P86QfihD4GLnoPSoqRLhVpyaXZ44ihz oZFyFkvcFQeH04PliXQszerN38Qt5 oV1yqPYmYzeqFVCg5oyvH39parNVjq7iygbaaY89qNCZJ7J2mtWwxxQDnpleSwve18DBSDZX/J/BybIGVCykiYrn7SfCPqQt5qTwH5j7YoOe3tPOuhUM ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:40:58,189 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.65
+	Port: 1026
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: TlgCvMCoNXKk8 gVmTKPJmLLw/xYX7/FslPjM8kKvu CpoA8Nfn/UhIQQ6jNgsEAvcuyfJL8KjviPzj1QpkGCBbqCxhjAzxq0zaL7eRaMek/GJ9vbm5vR5efSMoyG6pnRrBsp0/3XRMEHhDYKNmud46xQyxfybZRcJG3u7RLnoemhtepY2sE/3V/uJYijQrdHK BvkwV1rKoR7eRr20u6K3M0MBnDxIMo4aGkvhk10HorOz/XcH/p9nr0LdCrQbKVUa7qv9nt3PVjLbE3Uy7hVw XxAGAWgUciTRQvw9cwBA1a1ee/Lgrvv3hb7z827eag//PrXQvfLtxqiGOzQjsJCeoLw595P86QfihD4GLnoPSoqRLhVpyaXZ44ihz oZFyFkvcFQeH04PliXQszerN38Qt5 oV1yqPYmYzeqFVCg5oyvH39parNVjq7iygbaaY89qNCZJ7J2mtWwxxQDnpleSwve18DBSDZX/J/BybIGVCykiYrn7SfCPqQt5qTwH5j7YoOe3tPOuhUM ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:41:02,001 [cheetah][Thread:77][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.75
+	Port: 1175
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 5Hwp1EEWhBHKuOxGByJ8wCHwDZ1YaP1PSTzEZEvlpcjpKKuuECiDAoCLyTPoz9yjxLS6ftDQl7/QmFmRY0fPh6SzwQEp4ggf3UaHHNgHJvaEZQDnxMZHcFaGPfjncV6g5NyD2Ya QZU2ceC02eDmST7FW7BwWzZfvJLFJ8049dKnrDSj63DPxqnQyw0= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 13:41:02,001 [cheetah][Thread:77][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.75
+	Port: 1175
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 5Hwp1EEWhBHKuOxGByJ8wCHwDZ1YaP1PSTzEZEvlpcjpKKuuECiDAoCLyTPoz9yjxLS6ftDQl7/QmFmRY0fPh6SzwQEp4ggf3UaHHNgHJvaEZQDnxMZHcFaGPfjncV6g5NyD2Ya QZU2ceC02eDmST7FW7BwWzZfvJLFJ8049dKnrDSj63DPxqnQyw0= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 14:39:40,055 [cheetah][Thread:76][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.76
+	Port: 1158
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 78TrRv/z3uEEWoUGwLMfTm1V65o44h2KraKwitpJcaFJUi9yi9Kv7tEEsx5PEFnuUzBgUIA8Y3zfpAjeqY4io3dHwXI8RGxYaYgWtTgAyf52TAh2gPt1FFs0pF8FGC6grqsAUT7XCDjBpOb8L2pTSTCaUK8IykDUSEu5cqnTiIgkWHrUp5bYnj A2XwdFoPsUgh5D8e vqV0JhhrUg8oGx2G6Y2cEkS7SMheKeWJDCYVCiSUPqiV qHRsP4hB/ufTNerQSLLSIOD3TiWWhPsmPKrSnFyQYArjGDUcBt6uaXDxAn4FmStSE8XFOFxfbuFIDaIkPFE/xvQ3DcVKRviF7HyuIK0Yut688CxcSnUhcGfPoL6/uj192w/s/OXXHKVpqEpepxD8c6rs274lLiooZXeV4 pEBR8xdn6Oyvl1yPFZYOcigQ5WrFCjd0zcPLS rxmQSnlFBfyhDA0uft1hP oCz5UEWh02E6Yv3H2dDAes6plyOP7bltV0Cnszif3ILuWfXB00VbZtbFv ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 14:39:40,055 [cheetah][Thread:76][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.76
+	Port: 1158
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 78TrRv/z3uEEWoUGwLMfTm1V65o44h2KraKwitpJcaFJUi9yi9Kv7tEEsx5PEFnuUzBgUIA8Y3zfpAjeqY4io3dHwXI8RGxYaYgWtTgAyf52TAh2gPt1FFs0pF8FGC6grqsAUT7XCDjBpOb8L2pTSTCaUK8IykDUSEu5cqnTiIgkWHrUp5bYnj A2XwdFoPsUgh5D8e vqV0JhhrUg8oGx2G6Y2cEkS7SMheKeWJDCYVCiSUPqiV qHRsP4hB/ufTNerQSLLSIOD3TiWWhPsmPKrSnFyQYArjGDUcBt6uaXDxAn4FmStSE8XFOFxfbuFIDaIkPFE/xvQ3DcVKRviF7HyuIK0Yut688CxcSnUhcGfPoL6/uj192w/s/OXXHKVpqEpepxD8c6rs274lLiooZXeV4 pEBR8xdn6Oyvl1yPFZYOcigQ5WrFCjd0zcPLS rxmQSnlFBfyhDA0uft1hP oCz5UEWh02E6Yv3H2dDAes6plyOP7bltV0Cnszif3ILuWfXB00VbZtbFv ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 14:39:43,961 [cheetah][Thread:62][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.64
+	Port: 1190
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: b59VZ2zyh9oCPMbFDJ844jPov3/WbRq0hpsVUty6z7FGE1OCHEqSi845DeqvRCZJ UdjMQLlqYUkpEVhwio2KR8K7vQgQDqxpKUYgQCNGWwERftmG8GQgNunJNtWSyRRJc5cYqWDYEJz5OV5OlaO6A3oRxkoP60ushg/ezNRYMnMkfQkZUY BsfGRuY= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 14:39:43,961 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.64
+	Port: 1190
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: b59VZ2zyh9oCPMbFDJ844jPov3/WbRq0hpsVUty6z7FGE1OCHEqSi845DeqvRCZJ UdjMQLlqYUkpEVhwio2KR8K7vQgQDqxpKUYgQCNGWwERftmG8GQgNunJNtWSyRRJc5cYqWDYEJz5OV5OlaO6A3oRxkoP60ushg/ezNRYMnMkfQkZUY BsfGRuY= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 15:09:26,402 [cheetah][Thread:62][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.29
+	Port: 10940
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: n8NgyAcfBTxT7wbnguLrtl ArVhQL0/Se3S1EOYMl3id4/qxGvtLrhdFzlMFf3vdytGQ4avtpGqcAnfwdEn2RHlzljG4A3T8UTOGt27PzZWCIUnUYjqW/nQviDMRnnhEzbYolNNwOFxQnUgy/HnWNwO9yEsJjzbJAzAdobZ5YnpHSMtrEPNer6Z543vDpJjSjpJRfFoH7 8UThWNzt/3BKJS3KB0MNcRyjT6qRPKeUq3SK1B2nYb9dCygO b7CWgmTbl9y pjpJlBULSUlYeutvcdw1D8fcVi7ZAkg0v/1ff B YCf80xWU1y4 Tqov YkSpk1vW07wfH4SNhb9Vnc8ie9Nvq121aSXK9tIoalePqKhj7L1hB nt0QxL1EfRoFFHWs9P5ezQk0uRe8jjHQSD1dxnC4lIrG xYtXDkd vz7u26CUwEC3Phf2fLvM8givz3aLF2HRkCNThqf/7Dq3pJKvnYQ3NIMLYljHnWNYMQbDHB2dZ2q5CMMYOQL25ygNKRI3yaZHt5 CL
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 15:09:26,402 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.29
+	Port: 10940
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: n8NgyAcfBTxT7wbnguLrtl ArVhQL0/Se3S1EOYMl3id4/qxGvtLrhdFzlMFf3vdytGQ4avtpGqcAnfwdEn2RHlzljG4A3T8UTOGt27PzZWCIUnUYjqW/nQviDMRnnhEzbYolNNwOFxQnUgy/HnWNwO9yEsJjzbJAzAdobZ5YnpHSMtrEPNer6Z543vDpJjSjpJRfFoH7 8UThWNzt/3BKJS3KB0MNcRyjT6qRPKeUq3SK1B2nYb9dCygO b7CWgmTbl9y pjpJlBULSUlYeutvcdw1D8fcVi7ZAkg0v/1ff B YCf80xWU1y4 Tqov YkSpk1vW07wfH4SNhb9Vnc8ie9Nvq121aSXK9tIoalePqKhj7L1hB nt0QxL1EfRoFFHWs9P5ezQk0uRe8jjHQSD1dxnC4lIrG xYtXDkd vz7u26CUwEC3Phf2fLvM8givz3aLF2HRkCNThqf/7Dq3pJKvnYQ3NIMLYljHnWNYMQbDHB2dZ2q5CMMYOQL25ygNKRI3yaZHt5 CL
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 15:09:29,637 [cheetah][Thread:82][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.26
+	Port: 28481
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: vkZtoAvAdvi0VEXjCzs4dqant5NEkU4xApc5BcRFHUbHmrW4Ih4iPcUiSUGgRqWodfvVO2zQBuNhHQm9YiwVkfNdlnSzoCj4oUCct3IfPfz3m1gNl81hNl8iM2FioeFMFQJF2YDIy93xWA8N EIrb/v7kU3xpCfQ3YSA9VYg2xWMaMt Wg LOa2H XQ=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 15:09:29,637 [cheetah][Thread:82][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 173.205.33.26
+	Port: 28481
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: vkZtoAvAdvi0VEXjCzs4dqant5NEkU4xApc5BcRFHUbHmrW4Ih4iPcUiSUGgRqWodfvVO2zQBuNhHQm9YiwVkfNdlnSzoCj4oUCct3IfPfz3m1gNl81hNl8iM2FioeFMFQJF2YDIy93xWA8N EIrb/v7kU3xpCfQ3YSA9VYg2xWMaMt Wg LOa2H XQ=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,841 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,857 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables()
+2017-09-26 15:20:30,872 [cheetah][Thread:62][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: Object reference not set to an instance of an object.
+   at DotNetNuke.Common.Utilities.Config.GetDefaultProvider(String type)
+   at DotNetNuke.Common.Utilities.Config.GetConnectionString()
+   at DotNetNuke.Data.DataProvider.get_ConnectionString()
+   at DotNetNuke.Data.SqlDataProvider.ExecuteReader(String procedureName, Object[] commandParameters)
+   at DotNetNuke.Services.Log.EventLog.DBLoggingProvider.<>c.<GetLogTypeInfo>b__25_0(CacheItemArgs c)
+   at DotNetNuke.Common.Utilities.DataCache.GetCachedDataFromRuntimeCache(CacheItemArgs cacheItemArgs, CacheItemExpiredCallback cacheItemExpired)
+2017-09-26 18:43:07,521 [cheetah][Thread:77][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.75
+	Port: 1135
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: FmLDjDzUO5fmgPfZaDn9R4z8WUlJaJVYKjDhGemxs6ad5XnhucqTGHYJ0MbW/veWH59ZJrXuITjRay1O2bhrLxBdvtyh/hzz6FFinaTvE24w30FolhqurvWuwRPSeldhAUiSRn/IaTPQQmzyYNYYeC7l14e6NoNcmAqHbA6rzsN8c3GL6rikW/5tg4rvMbPg1Kz67SlcrLThsz8lxh5s9kV1i07 9Abp 9yohbHd8EEziGFsjcFTOO9gejWrTjKSgE/0Fn7JJGcKqgYVKJO8w14bmJd87YW7ho/eDcPpOiiU1bdwczzPKQzmaKiZdGWOT8 Dy5MQ0LirpR72P2GmRCutfVawXbOVHicmqdUPgEwCurbZdSkB53bGRUkRXDWq3ouBi ePgYQ5oChau1k9hgAh1tEn v/ c7tazP VNvjwTn17ibAG9L/sceqaBhNmCKnQZNRp1D0efhIr6mucsGcmxx1ScOZJebJYLzCl tE7t5FRlQOJmHykPsU8SkUeMzEmdpPxndK2LjJ5
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 18:43:07,537 [cheetah][Thread:77][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.75
+	Port: 1135
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: FmLDjDzUO5fmgPfZaDn9R4z8WUlJaJVYKjDhGemxs6ad5XnhucqTGHYJ0MbW/veWH59ZJrXuITjRay1O2bhrLxBdvtyh/hzz6FFinaTvE24w30FolhqurvWuwRPSeldhAUiSRn/IaTPQQmzyYNYYeC7l14e6NoNcmAqHbA6rzsN8c3GL6rikW/5tg4rvMbPg1Kz67SlcrLThsz8lxh5s9kV1i07 9Abp 9yohbHd8EEziGFsjcFTOO9gejWrTjKSgE/0Fn7JJGcKqgYVKJO8w14bmJd87YW7ho/eDcPpOiiU1bdwczzPKQzmaKiZdGWOT8 Dy5MQ0LirpR72P2GmRCutfVawXbOVHicmqdUPgEwCurbZdSkB53bGRUkRXDWq3ouBi ePgYQ5oChau1k9hgAh1tEn v/ c7tazP VNvjwTn17ibAG9L/sceqaBhNmCKnQZNRp1D0efhIr6mucsGcmxx1ScOZJebJYLzCl tE7t5FRlQOJmHykPsU8SkUeMzEmdpPxndK2LjJ5
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 18:43:11,380 [cheetah][Thread:31][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.64
+	Port: 1099
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: p1RUzA4vRT4Ew5ScrUwvZiR4DstgmYM27xGBn0CFf6dEC2sBKNhKWGQCjB3hfLF2/O/Ce 5TUstWAz/KBtwxwFzkLwlLWfAf 7Ou9xIFOZjPqc0/5s1wF5f6cnnEaM45cM7wgzSn8r9/Tng og6jyFMsrj0Q3Y6Yy5dFwn/otPz45AQjkJWrw/bUWOU= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2017-09-26 18:43:11,380 [cheetah][Thread:31][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=426&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.53.111.64
+	Port: 1099
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: p1RUzA4vRT4Ew5ScrUwvZiR4DstgmYM27xGBn0CFf6dEC2sBKNhKWGQCjB3hfLF2/O/Ce 5TUstWAz/KBtwxwFzkLwlLWfAf 7Ou9xIFOZjPqc0/5s1wF5f6cnnEaM45cM7wgzSn8r9/Tng og6jyFMsrj0Q3Y6Yy5dFwn/otPz45AQjkJWrw/bUWOU= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)

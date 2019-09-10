@@ -14,12 +14,18 @@
 
         -->
 
-        <div class="search">
+    <div class="search hidden-xs">
+                        <dnn:SEARCH ID="dnnSearch" runat="server" ShowSite="false" ShowWeb="false" autocomplete="off" UseDropDownList="false" EnableTheming="true" Submit="Zoeken" CssClass="SearchButton" />
+                    </div>
 
-            <dnn:SEARCH runat="server" ShowWeb="false" ShowSite="true" UseDropDownList="false" EnableWildSearch="false" AutoSearchDelayInMilliSecond="100000" MinCharRequired="100" />
-
-        </div>
 
     </div>
 
 </div>
+
+<style>
+
+#dnn_dnnSearch_cmdSearch { display: none !important; }
+.searchSkinObjectPreview { display: none !important; }
+
+</style>

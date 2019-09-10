@@ -1,0 +1,11 @@
+﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNnewsUrlProviderData' and column_name = 'ev')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsUrlProviderData] ADD ev INT NULL
+END
+GO
+
+IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNnewsUrlProviderData' and column_name = 'evl')
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsUrlProviderData] ADD evl INT NULL
+END
+GO

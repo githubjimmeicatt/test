@@ -5,6 +5,20 @@
     <%=PortalSharingJS%>
 
 	jQuery(function ($) {
+
+		$('.edNews__toggleNextTableRow').on('change', 'input[type="checkbox"]', function () {
+			var $this = $(this);
+			console.log('pkre�emo change', $this);
+			
+			if (!this.checked) {
+				$this.closest('tr').next('tr').hide();
+			} else {
+				$this.closest('tr').next('tr').show();
+			};
+		});
+
+		$('input[type="checkbox"]', '.edNews__toggleNextTableRow').trigger("change");
+
 		$('#<%=phDinamicTreeView.ID%>advanced_tree_view_categor_selector').EDS_TreeViewSelector({
 			state_checkbox: $('#<%=cbAutoAddCatChilds.ClientID%>')
 		});
@@ -240,7 +254,7 @@
 						<label for="<%=ddlSelectNewsModuleToDisplayResults.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSelectNewsModule.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblSelectNewsModule.Text") %></label>
 					</td>
 					<td>
-						<asp:DropDownList ID="ddlSelectNewsModuleToDisplayResults" runat="server" ValidationGroup="vgSaveSettings" resourcekey="ddlSelectNewsModuleToDisplayResultsResource1" />
+						<asp:DropDownList ID="ddlSelectNewsModuleToDisplayResults" runat="server" ValidationGroup="vgSaveSettings" />
 					</td>
 				</tr>
 				<tr>
@@ -308,13 +322,23 @@
 						</div>
 					</td>
 				</tr>
-				<tr id="trAutoComplete" runat="server">
+				<tr>
 					<td class="tdLabel width40">
 						<label for="<%=cbAutoComplete.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAutoComplete.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAutoComplete.Text") %></label>
 					</td>
 					<td>
-						<div class="switchCheckbox">
+						<div class="switchCheckbox edNews__toggleNextTableRow">
 							<asp:CheckBox CssClass="normalCheckBox" ID="cbAutoComplete" runat="server" Checked="True" Text="Auto complete box" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdLabel width40">
+						<label for="<%=cbAutocompleteLinkFromNewsDetails.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAutocompleteLinkFromNewsDetails.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAutocompleteLinkFromNewsDetails.Text") %></label>
+					</td>
+					<td>
+						<div class="switchCheckbox">
+							<asp:CheckBox CssClass="normalCheckBox" ID="cbAutocompleteLinkFromNewsDetails" runat="server" Checked="False" Text="Autocomplete link" />
 						</div>
 					</td>
 				</tr>

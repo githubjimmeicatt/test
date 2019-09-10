@@ -1,7 +1,7 @@
 ﻿<%@ control language="C#" inherits="EasyDNNSolutions.Modules.EasyDNNNews.Administration.AddEditArticle, App_Web_addeditarticle.ascx.d988a5ac" autoeventwireup="true" %>
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 <%@ Register TagPrefix="Portal" TagName="URL" Src="~/controls/URLControl.ascx" %>
-<%="" %>
+
 <style type="text/css">
 	.styleDisplayNone {
 		display: none;
@@ -311,7 +311,6 @@
 					</div>
 				</div>
 
-
 				<div id="pnlSummary" runat="server" class="section_box grey white_border_1 summarypanel">
 					<h1 class="section_box_title">
 						<span><%=Summary%></span>
@@ -323,8 +322,6 @@
 						<asp:Label ID="lblSummaryCountMaxChar" runat="server" class="edn_countMaxChar" />
 					</div>
 				</div>
-
-
 
 				<div id="pnlDetailTypeSelection" runat="server" class="section_box grey white_border_1 detailtypepanel" style="border-bottom: 0;">
 					<h1 class="section_box_title">
@@ -1264,9 +1261,9 @@
 															<tr>
 																<td class="action">
 																	<asp:LinkButton ID="lbSetArticleImageArtGallery" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="SetArticleImage" CssClass="action_btn article_img" resourcekey="lbSetArticleImageArtGalleryResource1">Set as main article image</asp:LinkButton>
-																	<asp:LinkButton ID="lbEditImage" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn edit" resourcekey="LinkButton3Resource1"></asp:LinkButton>
-																	<asp:LinkButton ID="lbDeleteImage" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn delete" OnClientClick="return confirm('Are you sure you want to delete this image?');" resourcekey="LinkButton4Resource1"></asp:LinkButton>
-																	<asp:LinkButton ID="lbLocalizeimage" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="LocalizeImage" CssClass="image_localization" resourcekey="lbLocalizeimageResource1" Visible='<%# LocalizationEnabled%>'>Localize content</asp:LinkButton>
+																	<asp:LinkButton ID="lbEditImage" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn edit" resourcekey="LinkButton3Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
+																	<asp:LinkButton ID="lbDeleteImage" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn delete" OnClientClick="return confirm('Are you sure you want to delete this image?');" resourcekey="LinkButton4Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
+																	<asp:LinkButton ID="lbLocalizeimage" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="LocalizeImage" CssClass="image_localization" resourcekey="lbLocalizeimageResource1" Visible='<%# LocalizationEnabled && !IS_ARTICLE_REVISION%>'>Localize content</asp:LinkButton>
 																</td>
 																<td class="image">
 																	<div class="wrapper">
@@ -1282,7 +1279,7 @@
 																	<asp:Label ID="lblImageDescription" runat="server" Text='<%# Bind("Description") %>' />
 																</td>
 																<td class="position_show_type" style="width: 90px;">
-																	<div class="action_box">
+																	<div class="action_box" style='<%=!EditingSharedCustomGallery?"": "display:none"%>'>
 																		<div class="action_wrapper">
 																			<asp:ImageButton ID="imbMediaUp" runat="server" CausesValidation="false" CommandArgument='<%# Eval("PictureID") %>' CommandName="Up" CssClass="position_btn up" ImageUrl="~/DesktopModules/EasyDNNnews/images/icons/arrow_up_green.png" />
 																			<asp:ImageButton ID="imbMediaDown" runat="server" CausesValidation="false" CommandArgument='<%# Eval("PictureID") %>' CommandName="Down" CssClass="position_btn down" ImageUrl="~/DesktopModules/EasyDNNnews/images/icons/arrow_down_orange.png" />
@@ -1290,8 +1287,9 @@
 																		<span class="text">
 																			<%=Position%></span>
 																	</div>
-																	<div class="action_box">
+																	<div class="action_box" style='<%=!EditingSharedCustomGallery?"": "display:none"%>'>
 																		<div class="action_wrapper">
+																			<asp:HiddenField ID="hfPictureShowMedia" runat="server" Value='<%# Bind("ShowMedia") %>' />
 																			<asp:LinkButton ID="lbArticleGalleryItemState" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="ChangeShow" CssClass='<%# GetShowMediaClass(Convert.ToBoolean(Eval("ShowMedia"))) %>'></asp:LinkButton>
 																		</div>
 																		<span class="text">
@@ -1490,7 +1488,7 @@
 									<ItemTemplate>
 										<asp:Label ID="lblDocUploadTitle" runat="server" CssClass="title" Text='<%# Bind("Title") %>' />
 										<asp:Label ID="lblDocUploadDesc" runat="server" CssClass="description" Text='<%#Bind("Description") %>' />
-										<%if (IS_ARTICLE_EDIT_MODE)
+										<%if (IsArticleEditMode)
 											{ %>
 										<input type="text" class="token light" value="<%# GenerateDocumentToken(Convert.ToString(Eval("DocEntryID"))) %>" />
 										<% } %>
@@ -1511,7 +1509,7 @@
 										<p>
 											<asp:Label ID="lblFileSize" runat="server" Text='<%# EasyDNNSolutions.Modules.EasyDNNNews.StringHelpers.HumanReadableFileSize(Convert.ToDouble(Eval("FileSize"))) %>' />
 										</p>
-										<%if (IS_ARTICLE_EDIT_MODE)
+										<%if (IsArticleEditMode)
 											{ %>
 										<p>
 											<asp:Label ID="lblDownloads" runat="server" Text='<%# NumberOfDownloadsText(Convert.ToString(Eval("NumberOfDownloads"))) %>' />
@@ -1816,15 +1814,7 @@
 					</div>
 				</asp:Panel>
 				<asp:Panel ID="pnlEventManager" runat="server" CssClass="section_box white_border_1 dark_grey orange eventmanagerpanel">
-					<%--					<asp:UpdatePanel ID="upEventManager" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
-						<ContentTemplate>--%>
 					<div class="edn_admin_progress_overlay_container">
-						<%--								<asp:UpdateProgress ID="uppEventManager" runat="server" AssociatedUpdatePanelID="upEventManager" DisplayAfter="100" DynamicLayout="true">
-									<ProgressTemplate>
-										<div class="edn_admin_progress_overlay">
-										</div>
-									</ProgressTemplate>
-								</asp:UpdateProgress>--%>
 						<h1 class="section_box_title edNews_tooltip" data-tooltip-content="<%=_("isArticleEventTooltip.Text", true) %>" data-tooltip-position="top-left">
 							<asp:Label ID="lblIsArticleEvent" runat="server" Text="Add as event:" resourcekey="lblIsArticleEventResource1" />
 						</h1>
@@ -1888,7 +1878,7 @@
 											<asp:RequiredFieldValidator ID="rfvEventEnd" runat="server" ControlToValidate="tbEventEndTime" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Time required." ValidationGroup="vgEditArticle" resourcekey="rfvEventEndResource1" />
 										</td>
 									</tr>
-									<tr>
+									<tr id="trRecurringEvent" runat="server">
 										<td class="left">
 											<label for="<%=cbRecurringEvent.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblrecurringEvent.Help", true) %>" data-tooltip-position="top-right"><%=_("lblrecurringEvent.Text") %></label>
 										</td>
@@ -1901,78 +1891,138 @@
 									</tr>
 								</table>
 							</asp:Panel>
+							<asp:Panel runat="server" ID="pnlEventInfoAndData">
+								<asp:Panel runat="server" ID="pnlRecurringEvent" Visible="false">
+									<div class="rounded3dBox">
 
-							<asp:Panel runat="server" ID="pnlRecurringEvent" Visible="false">
-								<div class="rounded3dBox">
+										<div runat="server" id="divEventRecurringOptionsPanel">
 
-									<div runat="server" id="divEventRecurringOptionsPanel">
-
-										<asp:Panel ID="pnlRecurringEditsSettings" runat="server">
-											<table class="settings_table no_margin" runat="server">
-												<tr>
-													<td class="left">
-														<label for="<%=rblRecurringEventType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRecurrenceType.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRecurrenceType.Text") %></label>
-													</td>
-													<td class="right">
-														<div class="edNews_inputGroup displayInline">
-															<asp:RadioButtonList ID="rblRecurringEventType" CssClass="styledRadio inlineList smallRadio" runat="server" OnSelectedIndexChanged="rblRecurringEventType_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="UnorderedList">
-																<asp:ListItem resourcekey="liDaily" class="normalRadioButton" Value="0" Text="Daily" Selected="True" />
-																<asp:ListItem resourcekey="liWeekly" class="normalRadioButton" Value="1" Text="Weekly" />
-																<asp:ListItem resourcekey="liMonthly" class="normalRadioButton" Value="2" Text="Monthly" />
-																<asp:ListItem resourcekey="liYearly" class="normalRadioButton" Value="3" Text="Yearly" />
-															</asp:RadioButtonList>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="left"></td>
-													<td class="right">
-														<asp:Panel runat="server" ID="pnlDailyRecurringEvent" Visible="false">
-															<asp:Label ID="lblRecurringEvery" resourcekey="lblRecurringEvery" runat="server" Text="Every:" />
-															<asp:TextBox ID="tbxDailyRecurringEventDays" runat="server" Width="30px" Text="2" />
-															<asp:Label ID="lblRecurringDays" resourcekey="lblRecurringDays" runat="server" Text="day(s)" />
-															<asp:RequiredFieldValidator ID="rfvDailyRecurringEventDays" runat="server" ControlToValidate="tbxDailyRecurringEventDays" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Days required." resourcekey="rfvDailyRecurringEventDays.ErrorMessage" ValidationGroup="vgEditArticle"
-																SetFocusOnError="True" />
-															<asp:CompareValidator ID="cvDailyRecurringEventDays" runat="server" ControlToValidate="tbxDailyRecurringEventDays" Display="Dynamic" resourcekey="cvDailyRecurringEventDays.ErrorMessage" ErrorMessage="Please enter number only." Operator="DataTypeCheck"
-																Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlWeeklyRecurringEvent" Visible="false">
-															<asp:Label ID="lblWeeklyRecurringEvery" resourcekey="lblWeeklyRecurringEvery" runat="server" Text="Recur every:" />
-															<asp:TextBox ID="tbxWeeklyRecurringEventWeeks" runat="server" Width="30px" Text="1" />
-															<asp:RequiredFieldValidator ID="rfvWeeklyRecurringEventWeeks" runat="server" resourcekey="rfvWeeklyRecurringEventWeeks.ErrorMessage" ControlToValidate="tbxWeeklyRecurringEventWeeks" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Week required."
-																ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-															<asp:CompareValidator ID="cvWeeklyRecurringEventWeeks" runat="server" resourcekey="cvWeeklyRecurringEventWeeks.ErrorMessage" ControlToValidate="tbxWeeklyRecurringEventWeeks" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck"
-																Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-															<asp:Label ID="lblRecurringWeeks" resourcekey="lblRecurringWeeks" runat="server" Text="weeks(s) on" />
-															<div class="edNews_inputGroup">
-																<asp:CheckBoxList ID="cblWeeklyRecurringEvent" CssClass="styledCheckbox inlineList" runat="server" RepeatLayout="UnorderedList">
-																	<asp:ListItem class="normalCheckBox" resourcekey="liMonday" Value="1" Text="Monday" />
-																	<asp:ListItem class="normalCheckBox" resourcekey="liThuesday" Value="2" Text="Tuesday" />
-																	<asp:ListItem class="normalCheckBox" resourcekey="liWednesday" Value="3" Text="Wednesday" />
-																	<asp:ListItem class="normalCheckBox" resourcekey="liThursday" Value="4" Text="Thursday" />
-																	<asp:ListItem class="normalCheckBox" resourcekey="liFriday" Value="5" Text="Friday" />
-																	<asp:ListItem class="normalCheckBox" resourcekey="liSaturday" Value="6" Text="Saturday" />
-																	<asp:ListItem class="normalCheckBox" resourcekey="liSunday" Value="7" Text="Sunday" />
-																</asp:CheckBoxList>
-															</div>
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlMonthlyRecurringEvent" Visible="false">
+											<asp:Panel ID="pnlRecurringEditsSettings" runat="server">
+												<table class="settings_table no_margin" runat="server">
+													<tr>
+														<td class="left">
+															<label for="<%=rblRecurringEventType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRecurrenceType.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRecurrenceType.Text") %></label>
+														</td>
+														<td class="right">
 															<div class="edNews_inputGroup displayInline">
-																<asp:RadioButtonList ID="rblMonthlyRecurringEventType" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" runat="server" OnSelectedIndexChanged="rblMonthlyRecurringEventType_SelectedIndexChanged" AutoPostBack="true">
-																	<asp:ListItem resourcekey="liRepeatedon" class="normalRadioButton" Value="0" Text="Repeated on:" Selected="True" />
-																	<asp:ListItem resourcekey="liRepeatedonday" class="normalRadioButton" Value="1" Text="Repeated on day:" />
+																<asp:RadioButtonList ID="rblRecurringEventType" CssClass="styledRadio inlineList smallRadio" runat="server" OnSelectedIndexChanged="rblRecurringEventType_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="UnorderedList">
+																	<asp:ListItem resourcekey="liDaily" class="normalRadioButton" Value="0" Text="Daily" Selected="True" />
+																	<asp:ListItem resourcekey="liWeekly" class="normalRadioButton" Value="1" Text="Weekly" />
+																	<asp:ListItem resourcekey="liMonthly" class="normalRadioButton" Value="2" Text="Monthly" />
+																	<asp:ListItem resourcekey="liYearly" class="normalRadioButton" Value="3" Text="Yearly" />
 																</asp:RadioButtonList>
 															</div>
-															<div style="float: left;">
-																<asp:Panel runat="server" ID="pnlRepeatedOn" Visible="true">
-																	<asp:DropDownList ID="ddlRepeatedOnEvery" runat="server">
+														</td>
+													</tr>
+													<tr>
+														<td class="left"></td>
+														<td class="right">
+															<asp:Panel runat="server" ID="pnlDailyRecurringEvent" Visible="false">
+																<asp:Label ID="lblRecurringEvery" resourcekey="lblRecurringEvery" runat="server" Text="Every:" />
+																<asp:TextBox ID="tbxDailyRecurringEventDays" runat="server" Width="30px" Text="2" />
+																<asp:Label ID="lblRecurringDays" resourcekey="lblRecurringDays" runat="server" Text="day(s)" />
+																<asp:RequiredFieldValidator ID="rfvDailyRecurringEventDays" runat="server" ControlToValidate="tbxDailyRecurringEventDays" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Days required." resourcekey="rfvDailyRecurringEventDays.ErrorMessage" ValidationGroup="vgEditArticle"
+																	SetFocusOnError="True" />
+																<asp:CompareValidator ID="cvDailyRecurringEventDays" runat="server" ControlToValidate="tbxDailyRecurringEventDays" Display="Dynamic" resourcekey="cvDailyRecurringEventDays.ErrorMessage" ErrorMessage="Please enter number only." Operator="DataTypeCheck"
+																	Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+															</asp:Panel>
+															<asp:Panel runat="server" ID="pnlWeeklyRecurringEvent" Visible="false">
+																<asp:Label ID="lblWeeklyRecurringEvery" resourcekey="lblWeeklyRecurringEvery" runat="server" Text="Recur every:" />
+																<asp:TextBox ID="tbxWeeklyRecurringEventWeeks" runat="server" Width="30px" Text="1" />
+																<asp:RequiredFieldValidator ID="rfvWeeklyRecurringEventWeeks" runat="server" resourcekey="rfvWeeklyRecurringEventWeeks.ErrorMessage" ControlToValidate="tbxWeeklyRecurringEventWeeks" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Week required."
+																	ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																<asp:CompareValidator ID="cvWeeklyRecurringEventWeeks" runat="server" resourcekey="cvWeeklyRecurringEventWeeks.ErrorMessage" ControlToValidate="tbxWeeklyRecurringEventWeeks" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck"
+																	Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																<asp:Label ID="lblRecurringWeeks" resourcekey="lblRecurringWeeks" runat="server" Text="weeks(s) on" />
+																<div class="edNews_inputGroup">
+																	<asp:CheckBoxList ID="cblWeeklyRecurringEvent" CssClass="styledCheckbox inlineList" runat="server" RepeatLayout="UnorderedList">
+																		<asp:ListItem class="normalCheckBox" resourcekey="liMonday" Value="1" Text="Monday" />
+																		<asp:ListItem class="normalCheckBox" resourcekey="liThuesday" Value="2" Text="Tuesday" />
+																		<asp:ListItem class="normalCheckBox" resourcekey="liWednesday" Value="3" Text="Wednesday" />
+																		<asp:ListItem class="normalCheckBox" resourcekey="liThursday" Value="4" Text="Thursday" />
+																		<asp:ListItem class="normalCheckBox" resourcekey="liFriday" Value="5" Text="Friday" />
+																		<asp:ListItem class="normalCheckBox" resourcekey="liSaturday" Value="6" Text="Saturday" />
+																		<asp:ListItem class="normalCheckBox" resourcekey="liSunday" Value="7" Text="Sunday" />
+																	</asp:CheckBoxList>
+																</div>
+															</asp:Panel>
+															<asp:Panel runat="server" ID="pnlMonthlyRecurringEvent" Visible="false">
+																<div class="edNews_inputGroup displayInline">
+																	<asp:RadioButtonList ID="rblMonthlyRecurringEventType" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" runat="server" OnSelectedIndexChanged="rblMonthlyRecurringEventType_SelectedIndexChanged" AutoPostBack="true">
+																		<asp:ListItem resourcekey="liRepeatedon" class="normalRadioButton" Value="0" Text="Repeated on:" Selected="True" />
+																		<asp:ListItem resourcekey="liRepeatedonday" class="normalRadioButton" Value="1" Text="Repeated on day:" />
+																	</asp:RadioButtonList>
+																</div>
+																<div style="float: left;">
+																	<asp:Panel runat="server" ID="pnlRepeatedOn" Visible="true">
+																		<asp:DropDownList ID="ddlRepeatedOnEvery" runat="server">
+																			<asp:ListItem resourcekey="liFirst" Value="1" Text="First" Selected="True" />
+																			<asp:ListItem resourcekey="liSecond" Value="2" Text="Second" />
+																			<asp:ListItem resourcekey="liThird" Value="3" Text="Third" />
+																			<asp:ListItem resourcekey="liFourth" Value="4" Text="Fourth" />
+																			<asp:ListItem resourcekey="liLast" Value="5" Text="Last" />
+																		</asp:DropDownList>
+																		<asp:DropDownList ID="ddlRepeatedOnDay" runat="server">
+																			<asp:ListItem resourcekey="liMonday" Value="1" Text="Monday" />
+																			<asp:ListItem resourcekey="liThuesday" Value="2" Text="Tuesday" />
+																			<asp:ListItem resourcekey="liWednesday" Value="3" Text="Wednesday" />
+																			<asp:ListItem resourcekey="liThursday" Value="4" Text="Thursday" />
+																			<asp:ListItem resourcekey="liFriday" Value="5" Text="Friday" />
+																			<asp:ListItem resourcekey="liSaturday" Value="6" Text="Saturday" />
+																			<asp:ListItem resourcekey="liSunday" Value="7" Text="Sunday" />
+																		</asp:DropDownList>
+																	</asp:Panel>
+																	<asp:Panel runat="server" ID="pnlRepeatedOnDay" Visible="false" Style="margin-top: 3px">
+																		<asp:TextBox ID="tbxRepeatedOnDay" runat="server" Width="30px" Text="1" />
+																		<asp:RequiredFieldValidator ID="rfvRepeatedOnDay" resourcekey="rfvRepeatedOnDay.ErrorMessage" runat="server" ControlToValidate="tbxRepeatedOnDay" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Day required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																		<asp:CompareValidator ID="cvtbxRepeatedOnDay" resourcekey="cvtbxRepeatedOnDay.ErrorMessage" runat="server" ControlToValidate="tbxRepeatedOnDay" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																		<asp:RangeValidator ID="rvRepeatedOnDay" resourcekey="rvRepeatedOnDay.ErrorMessage" runat="server" MinimumValue="1" MaximumValue="31" ControlToValidate="tbxRepeatedOnDay" Display="Dynamic" ErrorMessage="Please enter number between 1-31." ValidationGroup="vgEditArticle" SetFocusOnError="True" Type="Integer" />
+																	</asp:Panel>
+																</div>
+																<div style="margin-top: 2px">
+																	<asp:Label ID="lblRecurringMonthEvery" resourcekey="lblRecurringMonthEvery" runat="server" Text="of every:" Style="margin-left: 5px;" />
+																	<asp:TextBox ID="tbxOfEveryMonth" runat="server" Width="30px" Text="1" />
+																	<asp:Label ID="lblRecurringMonth" resourcekey="lblRecurringMonth" runat="server" Text=" month(s)" />
+																</div>
+																<asp:RequiredFieldValidator ID="rfvOfEveryMonth" resourcekey="rfvOfEveryMonth.ErrorMessage" runat="server" ControlToValidate="tbxOfEveryMonth" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Day required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																<asp:CompareValidator ID="cvOfEveryMonth" resourcekey="cvOfEveryMonth.ErrorMessage" runat="server" ControlToValidate="tbxOfEveryMonth" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+															</asp:Panel>
+															<asp:Panel runat="server" ID="pnlYearlyRecurringEvent" Visible="false">
+																<div class="edNews_inputGroup displayInline">
+																	<asp:RadioButtonList ID="rblYearlyRecurringEventType" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" runat="server" OnSelectedIndexChanged="rblYearlyRecurringEventType_SelectedIndexChanged" AutoPostBack="true">
+																		<asp:ListItem resourcekey="liEvery" class="normalRadioButton" Value="0" Text="Every:" Selected="True" />
+																		<asp:ListItem resourcekey="liThe" class="normalRadioButton" Value="1" Text="The:" />
+																	</asp:RadioButtonList>
+																</div>
+																<asp:Panel runat="server" ID="pnlYearlyRecurringEventSimple" Visible="true">
+																	<asp:DropDownList ID="ddlSimpleMonthOfYear" runat="server">
+																		<asp:ListItem resourcekey="liJanuary" Value="1" Text="January" Selected="True" />
+																		<asp:ListItem resourcekey="liFebruary" Value="2" Text="February" />
+																		<asp:ListItem resourcekey="liMarch" Value="3" Text="March" />
+																		<asp:ListItem resourcekey="liApril" Value="4" Text="April" />
+																		<asp:ListItem resourcekey="liMay" Value="5" Text="May" />
+																		<asp:ListItem resourcekey="liJune" Value="6" Text="June" />
+																		<asp:ListItem resourcekey="liJuly" Value="7" Text="July" />
+																		<asp:ListItem resourcekey="liAugust" Value="8" Text="August" />
+																		<asp:ListItem resourcekey="liSeptember" Value="9" Text="September" />
+																		<asp:ListItem resourcekey="liOctober" Value="10" Text="October" />
+																		<asp:ListItem resourcekey="liNovember" Value="11" Text="November" />
+																		<asp:ListItem resourcekey="liDecember" Value="12" Text="December" />
+																	</asp:DropDownList>
+																	<asp:TextBox ID="tbxYearlyDayOfMonth" runat="server" Width="30px" Text="1" />
+																	<asp:RequiredFieldValidator ID="rfvDayOfMonth" resourcekey="rfvDayOfMonth.ErrorMessage" runat="server" ControlToValidate="tbxYearlyDayOfMonth" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Day required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																	<asp:CompareValidator ID="cvDayOfMonth" resourcekey="cvDayOfMonth.ErrorMessage" runat="server" ControlToValidate="tbxYearlyDayOfMonth" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																	<asp:RangeValidator ID="rvDayOfMonth" resourcekey="rvDayOfMonth.ErrorMessage" runat="server" MinimumValue="1" MaximumValue="31" ControlToValidate="tbxYearlyDayOfMonth" Display="Dynamic" ErrorMessage="Please enter number between 1-31." ValidationGroup="vgEditArticle" SetFocusOnError="True" Type="Integer" />
+																</asp:Panel>
+																<asp:Panel runat="server" ID="pnlYearlyRecurringEventComplex" Visible="false">
+																	<asp:DropDownList ID="ddlYearlyRepeatedOnEvery" runat="server">
 																		<asp:ListItem resourcekey="liFirst" Value="1" Text="First" Selected="True" />
 																		<asp:ListItem resourcekey="liSecond" Value="2" Text="Second" />
 																		<asp:ListItem resourcekey="liThird" Value="3" Text="Third" />
 																		<asp:ListItem resourcekey="liFourth" Value="4" Text="Fourth" />
 																		<asp:ListItem resourcekey="liLast" Value="5" Text="Last" />
 																	</asp:DropDownList>
-																	<asp:DropDownList ID="ddlRepeatedOnDay" runat="server">
+																	<asp:DropDownList ID="ddlYearlyRepeatedOnDay" runat="server">
 																		<asp:ListItem resourcekey="liMonday" Value="1" Text="Monday" />
 																		<asp:ListItem resourcekey="liThuesday" Value="2" Text="Tuesday" />
 																		<asp:ListItem resourcekey="liWednesday" Value="3" Text="Wednesday" />
@@ -1981,67 +2031,7 @@
 																		<asp:ListItem resourcekey="liSaturday" Value="6" Text="Saturday" />
 																		<asp:ListItem resourcekey="liSunday" Value="7" Text="Sunday" />
 																	</asp:DropDownList>
-																</asp:Panel>
-																<asp:Panel runat="server" ID="pnlRepeatedOnDay" Visible="false" Style="margin-top: 3px">
-																	<asp:TextBox ID="tbxRepeatedOnDay" runat="server" Width="30px" Text="1" />
-																	<asp:RequiredFieldValidator ID="rfvRepeatedOnDay" resourcekey="rfvRepeatedOnDay.ErrorMessage" runat="server" ControlToValidate="tbxRepeatedOnDay" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Day required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-																	<asp:CompareValidator ID="cvtbxRepeatedOnDay" resourcekey="cvtbxRepeatedOnDay.ErrorMessage" runat="server" ControlToValidate="tbxRepeatedOnDay" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-																	<asp:RangeValidator ID="rvRepeatedOnDay" resourcekey="rvRepeatedOnDay.ErrorMessage" runat="server" MinimumValue="1" MaximumValue="31" ControlToValidate="tbxRepeatedOnDay" Display="Dynamic" ErrorMessage="Please enter number between 1-31." ValidationGroup="vgEditArticle" SetFocusOnError="True" Type="Integer" />
-																</asp:Panel>
-															</div>
-															<div style="margin-top: 2px">
-																<asp:Label ID="lblRecurringMonthEvery" resourcekey="lblRecurringMonthEvery" runat="server" Text="of every:" Style="margin-left: 5px;" />
-																<asp:TextBox ID="tbxOfEveryMonth" runat="server" Width="30px" Text="1" />
-																<asp:Label ID="lblRecurringMonth" resourcekey="lblRecurringMonth" runat="server" Text=" month(s)" />
-															</div>
-															<asp:RequiredFieldValidator ID="rfvOfEveryMonth" resourcekey="rfvOfEveryMonth.ErrorMessage" runat="server" ControlToValidate="tbxOfEveryMonth" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Day required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-															<asp:CompareValidator ID="cvOfEveryMonth" resourcekey="cvOfEveryMonth.ErrorMessage" runat="server" ControlToValidate="tbxOfEveryMonth" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlYearlyRecurringEvent" Visible="false">
-															<div class="edNews_inputGroup displayInline">
-																<asp:RadioButtonList ID="rblYearlyRecurringEventType" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" runat="server" OnSelectedIndexChanged="rblYearlyRecurringEventType_SelectedIndexChanged" AutoPostBack="true">
-																	<asp:ListItem resourcekey="liEvery" class="normalRadioButton" Value="0" Text="Every:" Selected="True" />
-																	<asp:ListItem resourcekey="liThe" class="normalRadioButton" Value="1" Text="The:" />
-																</asp:RadioButtonList>
-															</div>
-															<asp:Panel runat="server" ID="pnlYearlyRecurringEventSimple" Visible="true">
-																<asp:DropDownList ID="ddlSimpleMonthOfYear" runat="server">
-																	<asp:ListItem resourcekey="liJanuary" Value="1" Text="January" Selected="True" />
-																	<asp:ListItem resourcekey="liFebruary" Value="2" Text="February" />
-																	<asp:ListItem resourcekey="liMarch" Value="3" Text="March" />
-																	<asp:ListItem resourcekey="liApril" Value="4" Text="April" />
-																	<asp:ListItem resourcekey="liMay" Value="5" Text="May" />
-																	<asp:ListItem resourcekey="liJune" Value="6" Text="June" />
-																	<asp:ListItem resourcekey="liJuly" Value="7" Text="July" />
-																	<asp:ListItem resourcekey="liAugust" Value="8" Text="August" />
-																	<asp:ListItem resourcekey="liSeptember" Value="9" Text="September" />
-																	<asp:ListItem resourcekey="liOctober" Value="10" Text="October" />
-																	<asp:ListItem resourcekey="liNovember" Value="11" Text="November" />
-																	<asp:ListItem resourcekey="liDecember" Value="12" Text="December" />
-																</asp:DropDownList>
-																<asp:TextBox ID="tbxYearlyDayOfMonth" runat="server" Width="30px" Text="1" />
-																<asp:RequiredFieldValidator ID="rfvDayOfMonth" resourcekey="rfvDayOfMonth.ErrorMessage" runat="server" ControlToValidate="tbxYearlyDayOfMonth" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Day required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-																<asp:CompareValidator ID="cvDayOfMonth" resourcekey="cvDayOfMonth.ErrorMessage" runat="server" ControlToValidate="tbxYearlyDayOfMonth" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-																<asp:RangeValidator ID="rvDayOfMonth" resourcekey="rvDayOfMonth.ErrorMessage" runat="server" MinimumValue="1" MaximumValue="31" ControlToValidate="tbxYearlyDayOfMonth" Display="Dynamic" ErrorMessage="Please enter number between 1-31." ValidationGroup="vgEditArticle" SetFocusOnError="True" Type="Integer" />
-															</asp:Panel>
-															<asp:Panel runat="server" ID="pnlYearlyRecurringEventComplex" Visible="false">
-																<asp:DropDownList ID="ddlYearlyRepeatedOnEvery" runat="server">
-																	<asp:ListItem resourcekey="liFirst" Value="1" Text="First" Selected="True" />
-																	<asp:ListItem resourcekey="liSecond" Value="2" Text="Second" />
-																	<asp:ListItem resourcekey="liThird" Value="3" Text="Third" />
-																	<asp:ListItem resourcekey="liFourth" Value="4" Text="Fourth" />
-																	<asp:ListItem resourcekey="liLast" Value="5" Text="Last" />
-																</asp:DropDownList>
-																<asp:DropDownList ID="ddlYearlyRepeatedOnDay" runat="server">
-																	<asp:ListItem resourcekey="liMonday" Value="1" Text="Monday" />
-																	<asp:ListItem resourcekey="liThuesday" Value="2" Text="Tuesday" />
-																	<asp:ListItem resourcekey="liWednesday" Value="3" Text="Wednesday" />
-																	<asp:ListItem resourcekey="liThursday" Value="4" Text="Thursday" />
-																	<asp:ListItem resourcekey="liFriday" Value="5" Text="Friday" />
-																	<asp:ListItem resourcekey="liSaturday" Value="6" Text="Saturday" />
-																	<asp:ListItem resourcekey="liSunday" Value="7" Text="Sunday" />
-																</asp:DropDownList>
-																of
+																	of
 																<asp:DropDownList ID="ddlComplexMonthOfYear" runat="server">
 																	<asp:ListItem resourcekey="liJanuary" Value="1" Text="January" Selected="True" />
 																	<asp:ListItem resourcekey="liFebruary" Value="2" Text="February" />
@@ -2056,801 +2046,802 @@
 																	<asp:ListItem resourcekey="liNovember" Value="11" Text="November" />
 																	<asp:ListItem resourcekey="liDecember" Value="12" Text="December" />
 																</asp:DropDownList>
+																</asp:Panel>
 															</asp:Panel>
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlUpcomingOccurrences" Style="clear: both; margin-top: 10px; margin-bottom: 10px;">
-															<asp:TextBox ID="tbxUpcomingOccurrences" runat="server" Width="30px" Text="1" />
-															<asp:Label ID="lblUpcomingOccurrences" resourcekey="lblUpcomingOccurrences" runat="server" Text="Display upcoming occurrences" />
-															<asp:RequiredFieldValidator ID="rfvUpcomingOccurrences" resourcekey="rfvUpcomingOccurrences.ErrorMessage" runat="server" ControlToValidate="tbxUpcomingOccurrences" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Upcoming occurrences required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-															<asp:CompareValidator ID="cvUpcomingOccurrences" resourcekey="cvUpcomingOccurrences.ErrorMessage" runat="server" ControlToValidate="tbxUpcomingOccurrences" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-															<asp:RegularExpressionValidator ID="revUpcomingOccurrences" resourcekey="revUpcomingOccurrences.ErrorMessage" runat="server" ErrorMessage="Only positive numbers. Zero is not allowed." ValidationExpression="^[1-9]([0-9]+)?" ControlToValidate="tbxUpcomingOccurrences" Display="Dynamic" ValidationGroup="vgEditArticle"
-																SetFocusOnError="True" ForeColor="Red" />
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlRecurringEndType">
-															<div class="edNews_inputGroup displayInline">
-																<asp:RadioButtonList ID="rblRecurringEndType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblRecurringEndType_SelectedIndexChanged">
-																	<asp:ListItem resourcekey="liEndsafterocurrences" class="normalRadioButton" Value="1" Text="Ends after occurrences" Selected="True" />
-																	<asp:ListItem resourcekey="liEndbydate" class="normalRadioButton" Value="2" Text="End by date" />
-																</asp:RadioButtonList>
-															</div>
-															<asp:Panel runat="server" ID="pnlRecurringEndsAfterOcurrences">
-																<asp:TextBox ID="tbxEndsAfterOcurrences" runat="server" Width="30px" Text="5" />
-																<asp:RequiredFieldValidator ID="rfvEndsAfterOcurrences" resourcekey="rfvEndsAfterOcurrences.ErrorMessage" runat="server" ControlToValidate="tbxEndsAfterOcurrences" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Occurrences required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-																<asp:CompareValidator ID="cvEndsAfterOcurrences" resourcekey="cvEndsAfterOcurrences.ErrorMessage" runat="server" ControlToValidate="tbxEndsAfterOcurrences" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-																<asp:RegularExpressionValidator ID="revEndsAfterOcurrences" resourcekey="revEndsAfterOcurrences.ErrorMessage" runat="server" ErrorMessage="Only positive numbers. Zero is not allowed." ValidationExpression="^[1-9]([0-9]+)?" ControlToValidate="tbxEndsAfterOcurrences" Display="Dynamic" ValidationGroup="vgEditArticle"
+															<asp:Panel runat="server" ID="pnlUpcomingOccurrences" Style="clear: both; margin-top: 10px; margin-bottom: 10px;">
+																<asp:TextBox ID="tbxUpcomingOccurrences" runat="server" Width="30px" Text="1" />
+																<asp:Label ID="lblUpcomingOccurrences" resourcekey="lblUpcomingOccurrences" runat="server" Text="Display upcoming occurrences" />
+																<asp:RequiredFieldValidator ID="rfvUpcomingOccurrences" resourcekey="rfvUpcomingOccurrences.ErrorMessage" runat="server" ControlToValidate="tbxUpcomingOccurrences" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Upcoming occurrences required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																<asp:CompareValidator ID="cvUpcomingOccurrences" resourcekey="cvUpcomingOccurrences.ErrorMessage" runat="server" ControlToValidate="tbxUpcomingOccurrences" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																<asp:RegularExpressionValidator ID="revUpcomingOccurrences" resourcekey="revUpcomingOccurrences.ErrorMessage" runat="server" ErrorMessage="Only positive numbers. Zero is not allowed." ValidationExpression="^[1-9]([0-9]+)?" ControlToValidate="tbxUpcomingOccurrences" Display="Dynamic" ValidationGroup="vgEditArticle"
 																	SetFocusOnError="True" ForeColor="Red" />
 															</asp:Panel>
-															<asp:Panel runat="server" ID="pnlRecurringEndByDate" Visible="false">
-																<asp:TextBox ID="tbxRecurringEndByDate" runat="server" CssClass="text_generic center" ValidationGroup="vgEditArticle" Width="90px" />
-																<asp:RequiredFieldValidator ID="rfvRecurringEndByDate" resourcekey="rfvRecurringEndByDate.ErrorMessage" runat="server" ControlToValidate="tbxRecurringEndByDate" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Date required." ValidationGroup="vgEditArticle" />
+															<asp:Panel runat="server" ID="pnlRecurringEndType">
+																<div class="edNews_inputGroup displayInline">
+																	<asp:RadioButtonList ID="rblRecurringEndType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblRecurringEndType_SelectedIndexChanged">
+																		<asp:ListItem resourcekey="liEndsafterocurrences" class="normalRadioButton" Value="1" Text="Ends after occurrences" Selected="True" />
+																		<asp:ListItem resourcekey="liEndbydate" class="normalRadioButton" Value="2" Text="End by date" />
+																	</asp:RadioButtonList>
+																</div>
+																<asp:Panel runat="server" ID="pnlRecurringEndsAfterOcurrences">
+																	<asp:TextBox ID="tbxEndsAfterOcurrences" runat="server" Width="30px" Text="5" />
+																	<asp:RequiredFieldValidator ID="rfvEndsAfterOcurrences" resourcekey="rfvEndsAfterOcurrences.ErrorMessage" runat="server" ControlToValidate="tbxEndsAfterOcurrences" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Occurrences required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																	<asp:CompareValidator ID="cvEndsAfterOcurrences" resourcekey="cvEndsAfterOcurrences.ErrorMessage" runat="server" ControlToValidate="tbxEndsAfterOcurrences" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+																	<asp:RegularExpressionValidator ID="revEndsAfterOcurrences" resourcekey="revEndsAfterOcurrences.ErrorMessage" runat="server" ErrorMessage="Only positive numbers. Zero is not allowed." ValidationExpression="^[1-9]([0-9]+)?" ControlToValidate="tbxEndsAfterOcurrences" Display="Dynamic" ValidationGroup="vgEditArticle"
+																		SetFocusOnError="True" ForeColor="Red" />
+																</asp:Panel>
+																<asp:Panel runat="server" ID="pnlRecurringEndByDate" Visible="false">
+																	<asp:TextBox ID="tbxRecurringEndByDate" runat="server" CssClass="text_generic center" ValidationGroup="vgEditArticle" Width="90px" />
+																	<asp:RequiredFieldValidator ID="rfvRecurringEndByDate" resourcekey="rfvRecurringEndByDate.ErrorMessage" runat="server" ControlToValidate="tbxRecurringEndByDate" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Date required." ValidationGroup="vgEditArticle" />
+																</asp:Panel>
 															</asp:Panel>
-														</asp:Panel>
-													</td>
-												</tr>
-											</table>
-										</asp:Panel>
+														</td>
+													</tr>
+												</table>
+											</asp:Panel>
 
-										<asp:Label ID="lblInfoEventLock" runat="server"></asp:Label>
+											<asp:Label ID="lblInfoEventLock" runat="server"></asp:Label>
 
-										<table class="settings_table no_margin" runat="server" id="tblEnableEditOccurances">
-											<tr>
-												<td class="left">
-													<label for="<%=cbReccuringInEditMode.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblReccuringInEditMode.Help", true) %>" data-tooltip-position="top-right"><%=_("lblReccuringInEditMode.Text") %></label>
-												</td>
-												<td class="right">
-													<div class="styledCheckbox">
-														<asp:CheckBox CssClass="normalCheckBox" ID="cbReccuringInEditMode" resourcekey="cbReccuringInEditMode" runat="server" AutoPostBack="True" Text="Edit single reccuring event" OnCheckedChanged="cbReccuringInEditMode_CheckedChanged" />
-													</div>
-												</td>
-											</tr>
-										</table>
-
-										<asp:Label ID="lblReccuringInEditModeInfo" CssClass="textCenter" runat="server"></asp:Label>
-
-									</div>
-
-									<asp:Panel runat="server" ID="pnlAddEditRecurringEvents" Visible="false">
-										<asp:GridView ID="gvRecurringEvents"
-											runat="server"
-											AutoGenerateColumns="false"
-											CellPadding="0" CssClass="grid_view_table row_editing" EnableModelValidation="True" GridLines="None" OnRowCommand="gvRecurringEvents_RowCommand" OnRowEditing="gvRecurringEvents_RowEditing" OnRowDeleting="gvRecurringEvents_RowDeleting">
-											<Columns>
-												<asp:TemplateField HeaderText="Actions" ItemStyle-Width="100px">
-													<EditItemTemplate>
-														<asp:LinkButton ID="lbRecurringEventUpdate" runat="server" CausesValidation="true" Text="Update" CommandName="Update" CssClass="action_btn save" resourcekey="lbDocUpdateResource1" ToolTip="Save changes" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' />
-														<asp:LinkButton ID="lbRecurringEventCancel" runat="server" CausesValidation="false" Text="Cancel" CommandName="Cancel" CssClass="action_btn cancel" resourcekey="LinkButton2Resource1" ToolTip="Discard changes" />
-													</EditItemTemplate>
-													<ItemTemplate>
-														<asp:LinkButton ID="lbRecurringEventEdit" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn tripple edit" ToolTip='<%#_("EditContent")%>' CommandArgument='<%# Eval("RecurringID") %>' />
-														<asp:LinkButton ID="lbEditRecurringDateTime" runat="server" CausesValidation="false" CommandName="EditDateTime" CssClass="action_btn tripple edittime" ToolTip='<%#_("EditDateTime")%>' CommandArgument='<%# Eval("RecurringID") %>' />
-														<asp:LinkButton ID="lbEditDateRestrictionPayment" runat="server" CausesValidation="false" CommandName="EditDateRestrictionPayment" CssClass="action_btn tripple editDateRestrictionPayment" ToolTip='<%#_("EditDateRestrictionPayment")%>' CommandArgument='<%# Eval("RecurringID") %>' Visible="<%#IsEventRegistrationByDateRestrictionPayment%>" />
-														<asp:LinkButton ID="lbRecurringEventDelete" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn tripple delete" ToolTip='<%#_("DeleteThisRecurringEvent")%>' CommandArgument='<%# Eval("RecurringID") %>' OnClientClick="return confirm('Are you sure you want to remove this recurring event?');" />
-													</ItemTemplate>
-													<HeaderStyle CssClass="actions reccuring" />
-													<ItemStyle CssClass="actions reccuring" />
-												</asp:TemplateField>
-												<asp:TemplateField HeaderText="ID" Visible="false">
-													<ItemTemplate>
-														<asp:Label ID="lblRecurringID" runat="server" Text='<%# Bind("RecurringID") %>' CssClass="light" />
-													</ItemTemplate>
-													<HeaderStyle CssClass="title_description" />
-													<ItemStyle CssClass="title_description" />
-												</asp:TemplateField>
-												<asp:TemplateField HeaderText="StartDateTime">
-													<ItemTemplate>
-														<asp:Label ID="lblLinkUploadTitle" runat="server" Text='<%# ConvertDateTimeFromUTCToPortalTimeZone(Eval("StartDateTime")) %>' CssClass="title" />
-													</ItemTemplate>
-													<HeaderStyle CssClass="title_description" />
-													<ItemStyle CssClass="title_description" />
-												</asp:TemplateField>
-												<asp:TemplateField HeaderText="EndDateTime">
-													<ItemTemplate>
-														<asp:Label ID="lblLinkUploadDesc" runat="server" Text='<%# ConvertDateTimeFromUTCToPortalTimeZone(Eval("EndDateTime")) %>' CssClass="title" />
-													</ItemTemplate>
-													<HeaderStyle CssClass="title_description" />
-													<ItemStyle CssClass="title_description" />
-												</asp:TemplateField>
-												<asp:TemplateField HeaderText="Attendees">
-													<ItemTemplate>
-														<asp:Label ID="lblAttendees" runat="server" Text='<%# Bind("Attendees") %>' CssClass="light" />
-													</ItemTemplate>
-													<HeaderStyle CssClass="title_description" />
-													<ItemStyle CssClass="title_description" />
-												</asp:TemplateField>
-												<asp:TemplateField HeaderText="CustomContent">
-													<ItemTemplate>
-														<asp:Label ID="lblCustomContent" runat="server" Text='<%# GetRecurringEventLocalization(Eval("SelectedLocales")) %>' />
-													</ItemTemplate>
-													<HeaderStyle CssClass="language" />
-													<ItemStyle CssClass="language" />
-												</asp:TemplateField>
-											</Columns>
-											<AlternatingRowStyle CssClass="second" />
-											<HeaderStyle CssClass="header_row" />
-										</asp:GridView>
-										<div style="text-align: center; margin: 10px;">
-											<asp:Button ID="btnShowAddRecuringEvent" runat="server" resourcekey="btnShowAddRecuringEvent" Text="Add event" OnClick="btnShowAddRecuringEvent_Click" />
-										</div>
-										<asp:Panel runat="server" ID="pnlAddRecurringEvent" Visible="false">
-											<table class="settings_table no_margin" runat="server" id="tblRecurringDatesEdit" visible="false">
+											<table class="settings_table no_margin" runat="server" id="tblEnableEditOccurances">
 												<tr>
-													<td class="left" style="vertical-align: top; padding-top: 2px;">
-														<label for="<%=tbxRecurringEventStartDate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventStartDateTime.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventStartDateTime.Text") %></label>
-													</td>
-													<td class="right" style="width: 225px;">
-														<asp:TextBox ID="tbxRecurringEventStartDate" runat="server" CssClass="text_generic center" ValidationGroup="vgAddRecurringEvent" Width="90px" />
-														<img src="<%=_ControlPath%>images/icons/calendar.png" alt="RecurringEventStartDate" style="position: relative; top: 2px" />
-														<asp:RequiredFieldValidator ID="rfvRecurringEventStartDate" runat="server" ControlToValidate="tbxRecurringEventStartDate" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Date required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventStartDateResource1" />
-														<asp:Label ID="lblRecurringEvStartDateError" runat="server" ForeColor="Red" resourcekey="lblPubDateErrorResource1" Text="Invalid date." Visible="false" />
-														<asp:TextBox ID="tbxRecurringEventStartTime" runat="server" CssClass="text_generic center" ValidationGroup="vgEditArticle" Width="55px" />
-														<span id="tbxRecurringEventStartTimeIcon" runat="server" class="clockicon"></span>
-														&nbsp;<asp:RegularExpressionValidator ID="revRecurringEventStartTime" runat="server" ControlToValidate="tbxRecurringEventStartTime" Enabled="false" ErrorMessage="hh:mm" ValidationExpression="([0-1]?[0-9]|2[0-3]):([0-5][0-9])" ValidationGroup="vgAddRecurringEvent" Display="Dynamic"
-															resourcekey="revEventStartTimeResource1" />
-														<asp:RequiredFieldValidator ID="rfvRecurringEventStartTime" runat="server" ControlToValidate="tbxRecurringEventStartTime" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Time required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventStartTimeResource1" />
-													</td>
-												</tr>
-												<tr>
-													<td class="left" style="vertical-align: top; padding-top: 2px;">
-														<label for="<%=tbxRecurringEventEndDate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventEndDateTime.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventEndDateTime.Text") %></label>
+													<td class="left">
+														<label for="<%=cbReccuringInEditMode.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblReccuringInEditMode.Help", true) %>" data-tooltip-position="top-right"><%=_("lblReccuringInEditMode.Text") %></label>
 													</td>
 													<td class="right">
-														<asp:TextBox ID="tbxRecurringEventEndDate" runat="server" CssClass="text_generic center" ValidationGroup="vgAddRecurringEvent" Width="90px" />
-														<img src="<%=_ControlPath%>images/icons/calendar.png" alt="RecurringEventEndDate" style="position: relative; top: 2px" />
-														<asp:RequiredFieldValidator ID="rfvRecurringEventEndDate" runat="server" ControlToValidate="tbxRecurringEventEndDate" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Date required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventEndDateResource1" />
-														<asp:Label ID="lblRecurringEvEndDateError" runat="server" ForeColor="Red" resourcekey="lblExpireDateErrorResource1" Text="Invalid date." Visible="false" />
-														<asp:TextBox ID="tbxRecurringEventEndTime" runat="server" CssClass="text_generic center" ValidationGroup="vgAddRecurringEvent" Width="55px" />
-														<span id="tbxRecurringEventEndTimeIcon" runat="server" class="clockicon"></span>
-														&nbsp;<asp:RegularExpressionValidator ID="revRecurringEventEndTime" runat="server" ControlToValidate="tbxRecurringEventEndTime" Enabled="false" ErrorMessage="hh:mm" ValidationExpression="([0-1]?[0-9]|2[0-3]):([0-5][0-9])" ValidationGroup="vgAddRecurringEvent" Display="Dynamic"
-															resourcekey="revEventEndTImeResource1" />
-														<asp:RequiredFieldValidator ID="rfvRecurringEventEndTime" runat="server" ControlToValidate="tbxRecurringEventEndTime" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Time required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventEndResource1" />
+														<div class="styledCheckbox">
+															<asp:CheckBox CssClass="normalCheckBox" ID="cbReccuringInEditMode" resourcekey="cbReccuringInEditMode" runat="server" AutoPostBack="True" Text="Edit single reccuring event" OnCheckedChanged="cbReccuringInEditMode_CheckedChanged" />
+														</div>
 													</td>
 												</tr>
 											</table>
-											<table class="settings_table no_margin" runat="server" id="tblRecurringDateRestrictionPayment" visible="false">
-												<tr>
-													<td>
-														<asp:Literal runat="server" ID="litRecurringEventDateInfo"></asp:Literal>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<asp:HiddenField runat="server" ID="hfRecurringDateCostMatrix" />
-														<asp:HiddenField runat="server" ID="hfRecurringDateCostMatrixViewSpecific" />
-														<div id="eds__RecurringCostByDateRestriction" class="edNews_manipulatingTable"></div>
-														<asp:TextBox ID="tbRecurringValidateDecimal" runat="server" Style="display: none"></asp:TextBox>
-														<asp:CompareValidator ID="CompareValidator1" ControlToValidate="tbRecurringValidateDecimal" runat="server" ErrorMessage="" Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="false" ValidationGroup="vgAddRecurringEvent"></asp:CompareValidator>
-													</td>
-												</tr>
-											</table>
+
+											<asp:Label ID="lblReccuringInEditModeInfo" CssClass="textCenter" runat="server"></asp:Label>
+
+										</div>
+
+										<asp:Panel runat="server" ID="pnlAddEditRecurringEvents" Visible="false">
+											<asp:GridView ID="gvRecurringEvents"
+												runat="server"
+												AutoGenerateColumns="false"
+												CellPadding="0" CssClass="grid_view_table row_editing" EnableModelValidation="True" GridLines="None" OnRowCommand="gvRecurringEvents_RowCommand" OnRowEditing="gvRecurringEvents_RowEditing" OnRowDeleting="gvRecurringEvents_RowDeleting">
+												<Columns>
+													<asp:TemplateField HeaderText="Actions" ItemStyle-Width="100px">
+														<EditItemTemplate>
+															<asp:LinkButton ID="lbRecurringEventUpdate" runat="server" CausesValidation="true" Text="Update" CommandName="Update" CssClass="action_btn save" resourcekey="lbDocUpdateResource1" ToolTip="Save changes" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' />
+															<asp:LinkButton ID="lbRecurringEventCancel" runat="server" CausesValidation="false" Text="Cancel" CommandName="Cancel" CssClass="action_btn cancel" resourcekey="LinkButton2Resource1" ToolTip="Discard changes" />
+														</EditItemTemplate>
+														<ItemTemplate>
+															<asp:LinkButton ID="lbRecurringEventEdit" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn tripple edit" ToolTip='<%#_("EditContent")%>' CommandArgument='<%# Eval("RecurringID") %>' />
+															<asp:LinkButton ID="lbEditRecurringDateTime" runat="server" CausesValidation="false" CommandName="EditDateTime" CssClass="action_btn tripple edittime" ToolTip='<%#_("EditDateTime")%>' CommandArgument='<%# Eval("RecurringID") %>' />
+															<asp:LinkButton ID="lbEditDateRestrictionPayment" runat="server" CausesValidation="false" CommandName="EditDateRestrictionPayment" CssClass="action_btn tripple editDateRestrictionPayment" ToolTip='<%#_("EditDateRestrictionPayment")%>' CommandArgument='<%# Eval("RecurringID") %>' Visible="<%#IsEventRegistrationByDateRestrictionPayment%>" />
+															<asp:LinkButton ID="lbRecurringEventDelete" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn tripple delete" ToolTip='<%#_("DeleteThisRecurringEvent")%>' CommandArgument='<%# Eval("RecurringID") %>' OnClientClick="return confirm('Are you sure you want to remove this recurring event?');" />
+														</ItemTemplate>
+														<HeaderStyle CssClass="actions reccuring" />
+														<ItemStyle CssClass="actions reccuring" />
+													</asp:TemplateField>
+													<asp:TemplateField HeaderText="ID" Visible="false">
+														<ItemTemplate>
+															<asp:Label ID="lblRecurringID" runat="server" Text='<%# Bind("RecurringID") %>' CssClass="light" />
+														</ItemTemplate>
+														<HeaderStyle CssClass="title_description" />
+														<ItemStyle CssClass="title_description" />
+													</asp:TemplateField>
+													<asp:TemplateField HeaderText="StartDateTime">
+														<ItemTemplate>
+															<asp:Label ID="lblLinkUploadTitle" runat="server" Text='<%# ConvertDateTimeFromUTCToPortalTimeZone(Eval("StartDateTime")) %>' CssClass="title" />
+														</ItemTemplate>
+														<HeaderStyle CssClass="title_description" />
+														<ItemStyle CssClass="title_description" />
+													</asp:TemplateField>
+													<asp:TemplateField HeaderText="EndDateTime">
+														<ItemTemplate>
+															<asp:Label ID="lblLinkUploadDesc" runat="server" Text='<%# ConvertDateTimeFromUTCToPortalTimeZone(Eval("EndDateTime")) %>' CssClass="title" />
+														</ItemTemplate>
+														<HeaderStyle CssClass="title_description" />
+														<ItemStyle CssClass="title_description" />
+													</asp:TemplateField>
+													<asp:TemplateField HeaderText="Attendees">
+														<ItemTemplate>
+															<asp:Label ID="lblAttendees" runat="server" Text='<%# Bind("Attendees") %>' CssClass="light" />
+														</ItemTemplate>
+														<HeaderStyle CssClass="title_description" />
+														<ItemStyle CssClass="title_description" />
+													</asp:TemplateField>
+													<asp:TemplateField HeaderText="CustomContent">
+														<ItemTemplate>
+															<asp:Label ID="lblCustomContent" runat="server" Text='<%# GetRecurringEventLocalization(Eval("SelectedLocales")) %>' />
+														</ItemTemplate>
+														<HeaderStyle CssClass="language" />
+														<ItemStyle CssClass="language" />
+													</asp:TemplateField>
+												</Columns>
+												<AlternatingRowStyle CssClass="second" />
+												<HeaderStyle CssClass="header_row" />
+											</asp:GridView>
 											<div style="text-align: center; margin: 10px;">
-												<asp:Button ID="btnSaveRecuringEvent" runat="server" CommandName="SaveEventDates" Text="Save" OnClientClick="return EdsSaveButtonClick('vgAddRecurringEvent');" OnClick="EditRecuringEventButtonsClick" ValidationGroup="vgAddRecurringEvent" />
-												<asp:Button ID="btnUpdateRecuringEvent" runat="server" CommandName="UpdateEventDates" Text="Save" OnClientClick="return EdsSaveButtonClick('vgAddRecurringEvent');" OnClick="EditRecuringEventButtonsClick" ValidationGroup="vgAddRecurringEvent" Visible="false" />
-												<asp:Button ID="btnCloseRecuringEvent" runat="server" Text="Close" OnClick="btnCloseRecuringEvent_Click" />
-												<asp:Label ID="lblSaveRecuringEventInfo" runat="server"></asp:Label>
+												<asp:Button ID="btnShowAddRecuringEvent" runat="server" resourcekey="btnShowAddRecuringEvent" Text="Add event" OnClick="btnShowAddRecuringEvent_Click" />
 											</div>
+											<asp:Panel runat="server" ID="pnlAddRecurringEvent" Visible="false">
+												<table class="settings_table no_margin" runat="server" id="tblRecurringDatesEdit" visible="false">
+													<tr>
+														<td class="left" style="vertical-align: top; padding-top: 2px;">
+															<label for="<%=tbxRecurringEventStartDate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventStartDateTime.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventStartDateTime.Text") %></label>
+														</td>
+														<td class="right" style="width: 225px;">
+															<asp:TextBox ID="tbxRecurringEventStartDate" runat="server" CssClass="text_generic center" ValidationGroup="vgAddRecurringEvent" Width="90px" />
+															<img src="<%=_ControlPath%>images/icons/calendar.png" alt="RecurringEventStartDate" style="position: relative; top: 2px" />
+															<asp:RequiredFieldValidator ID="rfvRecurringEventStartDate" runat="server" ControlToValidate="tbxRecurringEventStartDate" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Date required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventStartDateResource1" />
+															<asp:Label ID="lblRecurringEvStartDateError" runat="server" ForeColor="Red" resourcekey="lblPubDateErrorResource1" Text="Invalid date." Visible="false" />
+															<asp:TextBox ID="tbxRecurringEventStartTime" runat="server" CssClass="text_generic center" ValidationGroup="vgEditArticle" Width="55px" />
+															<span id="tbxRecurringEventStartTimeIcon" runat="server" class="clockicon"></span>
+															&nbsp;<asp:RegularExpressionValidator ID="revRecurringEventStartTime" runat="server" ControlToValidate="tbxRecurringEventStartTime" Enabled="false" ErrorMessage="hh:mm" ValidationExpression="([0-1]?[0-9]|2[0-3]):([0-5][0-9])" ValidationGroup="vgAddRecurringEvent" Display="Dynamic"
+																resourcekey="revEventStartTimeResource1" />
+															<asp:RequiredFieldValidator ID="rfvRecurringEventStartTime" runat="server" ControlToValidate="tbxRecurringEventStartTime" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Time required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventStartTimeResource1" />
+														</td>
+													</tr>
+													<tr>
+														<td class="left" style="vertical-align: top; padding-top: 2px;">
+															<label for="<%=tbxRecurringEventEndDate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventEndDateTime.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventEndDateTime.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:TextBox ID="tbxRecurringEventEndDate" runat="server" CssClass="text_generic center" ValidationGroup="vgAddRecurringEvent" Width="90px" />
+															<img src="<%=_ControlPath%>images/icons/calendar.png" alt="RecurringEventEndDate" style="position: relative; top: 2px" />
+															<asp:RequiredFieldValidator ID="rfvRecurringEventEndDate" runat="server" ControlToValidate="tbxRecurringEventEndDate" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Date required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventEndDateResource1" />
+															<asp:Label ID="lblRecurringEvEndDateError" runat="server" ForeColor="Red" resourcekey="lblExpireDateErrorResource1" Text="Invalid date." Visible="false" />
+															<asp:TextBox ID="tbxRecurringEventEndTime" runat="server" CssClass="text_generic center" ValidationGroup="vgAddRecurringEvent" Width="55px" />
+															<span id="tbxRecurringEventEndTimeIcon" runat="server" class="clockicon"></span>
+															&nbsp;<asp:RegularExpressionValidator ID="revRecurringEventEndTime" runat="server" ControlToValidate="tbxRecurringEventEndTime" Enabled="false" ErrorMessage="hh:mm" ValidationExpression="([0-1]?[0-9]|2[0-3]):([0-5][0-9])" ValidationGroup="vgAddRecurringEvent" Display="Dynamic"
+																resourcekey="revEventEndTImeResource1" />
+															<asp:RequiredFieldValidator ID="rfvRecurringEventEndTime" runat="server" ControlToValidate="tbxRecurringEventEndTime" CssClass="NormalRed" Display="Dynamic" Enabled="false" ErrorMessage="Time required." ValidationGroup="vgAddRecurringEvent" resourcekey="rfvEventEndResource1" />
+														</td>
+													</tr>
+												</table>
+												<table class="settings_table no_margin" runat="server" id="tblRecurringDateRestrictionPayment" visible="false">
+													<tr>
+														<td>
+															<asp:Literal runat="server" ID="litRecurringEventDateInfo"></asp:Literal>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<asp:HiddenField runat="server" ID="hfRecurringDateCostMatrix" />
+															<asp:HiddenField runat="server" ID="hfRecurringDateCostMatrixViewSpecific" />
+															<div id="eds__RecurringCostByDateRestriction" class="edNews_manipulatingTable"></div>
+															<asp:TextBox ID="tbRecurringValidateDecimal" runat="server" Style="display: none"></asp:TextBox>
+															<asp:CompareValidator ID="CompareValidator1" ControlToValidate="tbRecurringValidateDecimal" runat="server" ErrorMessage="" Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="false" ValidationGroup="vgAddRecurringEvent"></asp:CompareValidator>
+														</td>
+													</tr>
+												</table>
+												<div style="text-align: center; margin: 10px;">
+													<asp:Button ID="btnSaveRecuringEvent" runat="server" CommandName="SaveEventDates" Text="Save" OnClientClick="return EdsSaveButtonClick('vgAddRecurringEvent');" OnClick="EditRecuringEventButtonsClick" ValidationGroup="vgAddRecurringEvent" />
+													<asp:Button ID="btnUpdateRecuringEvent" runat="server" CommandName="UpdateEventDates" Text="Save" OnClientClick="return EdsSaveButtonClick('vgAddRecurringEvent');" OnClick="EditRecuringEventButtonsClick" ValidationGroup="vgAddRecurringEvent" Visible="false" />
+													<asp:Button ID="btnCloseRecuringEvent" runat="server" Text="Close" OnClick="btnCloseRecuringEvent_Click" />
+													<asp:Label ID="lblSaveRecuringEventInfo" runat="server"></asp:Label>
+												</div>
+											</asp:Panel>
 										</asp:Panel>
-									</asp:Panel>
 
-									<asp:Panel runat="server" ID="pnlRecurringContentEdit" Visible="false">
-										<table class="settings_table" cellpadding="0" cellspacing="0">
-											<tr>
-												<td class="left">
-													<asp:Label ID="lblRecurringPortalDefLanguage" runat="server" Text="Portal default language:" resourcekey="lblPortalDefLanguageResource1" />
-												</td>
-												<td class="right">
-													<asp:Label ID="lblRecurringDefaultPortalLangugageImage" runat="server" resourcekey="lblDefaultPortalLangugageImageResource1" />
-												</td>
-											</tr>
-											<tr>
-												<td class="left">
-													<asp:Label ID="lblRecurringContentLocalizationLocalizedLanguages" runat="server" Text="Localized languages:" resourcekey="lblContentLocalizationLocalizedLanguagesResource1" />
-												</td>
-												<td class="right">
-													<asp:Label ID="lblRecurringContentLocalizationLocalizedLanguagesList" runat="server" resourcekey="lblContentLocalizationLocalizedLanguagesListResource1" />
-												</td>
-											</tr>
-										</table>
-										<div class="text_input_set">
-											<label for="<%=ddlRecurringEventsLocales.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblContentLocalizationSelectLanguage.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblContentLocalizationSelectLanguage.Text") %></label>
-											<asp:DropDownList ID="ddlRecurringEventsLocales" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlRecurringEventsLocales_SelectedIndexChanged" />
-											<asp:LinkButton ID="lbRecurringEventsDeleteContent" CssClass="silver_button" Style="float: right;" runat="server" OnClick="lbRecurringEventsDeleteContent_Click" OnClientClick="return confirm('Are you sure you want to delete selected content?');"><span><%=RecurringEventsDeleteContent%></span></asp:LinkButton>
-											<asp:LinkButton ID="lbRecurringEventsCopyContent" CssClass="silver_button" Style="float: right;" runat="server" OnClick="lbRecurringEventsCopyContent_Click"> <span><%=RecurringEventsCopyContent%></span></asp:LinkButton>
-										</div>
-										<div class="text_input_set">
-											<label for="<%=teRecurringEventSummary.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRecurringEventSummary.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRecurringEventSummary.Text") %></label>
-											<dnn:TextEditor ID="teRecurringEventSummary" runat="server" Height="250px" Visible="false" />
-											<asp:TextBox ID="tbxRecurringEventSummary" runat="server" TextMode="MultiLine" Height="250" Width="700" Visible="false" />
-											<asp:Label ID="lblRecurringEventSummaryCountMaxChar" runat="server" Style="float: right;" />
-										</div>
-										<div class="text_input_set">
-											<label for="<%=teRecurringEventArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRecurringEventArticle.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRecurringEventArticle.Text") %></label>
-											<dnn:TextEditor ID="teRecurringEventArticle" runat="server" Height="500px" Visible="false" />
-											<asp:TextBox ID="tbxRecurringEventArticle" runat="server" TextMode="MultiLine" Height="500" Width="732" Visible="false" />
-											<asp:Label ID="lblRecurringEventArticleCountMaxChar" runat="server" Style="float: right;" />
-										</div>
-
-										<asp:Label ID="lblAddEventContentInfo" runat="server"></asp:Label>
-
-										<asp:Panel ID="pnlRecurringEventDocumentUpload" CssClass="section_box white_border_1 dark_grey document_reccuring_upload" runat="server">
-											<h1 class="section_box_title">
-												<span><%=DOCUMENTSincluded%></span></h1>
-											<div class="edNews_inputGroup displayInline">
-												<asp:RadioButtonList ID="rblRecurringEventAddDocumentType" CssClass="styledRadio inlineList" runat="server" RepeatLayout="UnorderedList" onclick="toogleRecurringEventDocumentPanels()">
-													<asp:ListItem Value="0" class="normalRadioButton" Text="Upload new documents" Selected="True" resourcekey="rblAddDocumentType-newDocument" />
-													<asp:ListItem Value="1" class="normalRadioButton" Text="Add existing document" resourcekey="rblAddDocumentType-existingDocument" />
-												</asp:RadioButtonList>
+										<asp:Panel runat="server" ID="pnlRecurringContentEdit" Visible="false">
+											<table class="settings_table" cellpadding="0" cellspacing="0">
+												<tr>
+													<td class="left">
+														<asp:Label ID="lblRecurringPortalDefLanguage" runat="server" Text="Portal default language:" resourcekey="lblPortalDefLanguageResource1" />
+													</td>
+													<td class="right">
+														<asp:Label ID="lblRecurringDefaultPortalLangugageImage" runat="server" resourcekey="lblDefaultPortalLangugageImageResource1" />
+													</td>
+												</tr>
+												<tr>
+													<td class="left">
+														<asp:Label ID="lblRecurringContentLocalizationLocalizedLanguages" runat="server" Text="Localized languages:" resourcekey="lblContentLocalizationLocalizedLanguagesResource1" />
+													</td>
+													<td class="right">
+														<asp:Label ID="lblRecurringContentLocalizationLocalizedLanguagesList" runat="server" resourcekey="lblContentLocalizationLocalizedLanguagesListResource1" />
+													</td>
+												</tr>
+											</table>
+											<div class="text_input_set">
+												<label for="<%=ddlRecurringEventsLocales.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblContentLocalizationSelectLanguage.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblContentLocalizationSelectLanguage.Text") %></label>
+												<asp:DropDownList ID="ddlRecurringEventsLocales" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlRecurringEventsLocales_SelectedIndexChanged" />
+												<asp:LinkButton ID="lbRecurringEventsDeleteContent" CssClass="silver_button" Style="float: right;" runat="server" OnClick="lbRecurringEventsDeleteContent_Click" OnClientClick="return confirm('Are you sure you want to delete selected content?');"><span><%=RecurringEventsDeleteContent%></span></asp:LinkButton>
+												<asp:LinkButton ID="lbRecurringEventsCopyContent" CssClass="silver_button" Style="float: right;" runat="server" OnClick="lbRecurringEventsCopyContent_Click"> <span><%=RecurringEventsCopyContent%></span></asp:LinkButton>
 											</div>
-											<div class="content document_upload">
-												<div class="rounded3dBox" runat="server" id="divRecurringEventAddDocuments">
-													<asp:Panel ID="pnlRecurringEventAddDocument" runat="server">
-														<div id="divRecurringEventAddDocumentFineUploader" runat="server" visible="false" class="EDS_simpleFineUploader documents_fine_uploader">
-															<div class="uploader">
-															</div>
-															<div class="uploadControls">
-																<div class="infomsg">Drag and drop documents here or click on Select documents button</div>
-																<div class="actions">
-																	<span class="action fileSelection rounded_button gradient icon document_in_folder">
-																		<asp:Label ID="lblRecurringEventDocumentFineUploaderSelect" runat="server" resourcekey="fineUploaderSelectDocuments" Text="Select documents" />
-																		<span class="dnnInputFileWrapper">
-																			<input type="file" value="" multiple="multiple" />
-																		</span></span><span class="action upload rounded_button gradient icon orange_plus">
-																			<asp:Label ID="lblRecurringEventDocumentFineUploaderStart" runat="server" resourcekey="fineUploaderUpload" Text="Upload" />
-																		</span>
-																</div>
-																<div class="dndContainer">
-																	<p>
-																		<asp:Label ID="lblRecurringEventDocumentFineUploaderDrag" runat="server" resourcekey="fineUploaderDragFilesHere" Text="Drag files here" />
-																	</p>
-																</div>
-															</div>
-															<div class="uploadDetails">
-																<ol class="fileUploadList">
-																</ol>
-															</div>
-														</div>
-														<div id="divRecurringEventAddDocumentStandardUploader" runat="server" visible="true" class="documents_standard_uploader">
-															<asp:Label ID="lblRecurringEventDocUploadmessage" CssClass="upload_message" Visible="false" EnableViewState="false" runat="server" />
-															<span class="file_selection rounded_button gradient icon document_in_folder">
-																<asp:FileUpload ID="fuRecurringEventDocFileUpload" runat="server" />
-															</span>
-															<asp:LinkButton ID="btnRecurringEventDocUpload" runat="server" ValidationGroup="vgRecurringEventDocs" resourcekey="btnDocUploadResource1" CssClass="action upload rounded_button gradient icon orange_plus" OnClick="btnRecurringEventDocUpload_Click"><span>Upload</span></asp:LinkButton>
-														</div>
-													</asp:Panel>
-													<asp:Panel ID="pnlRecurringEventAddExistingDocument" runat="server" CssClass="documents_add_existing_container" Style="display: none;">
-														<div class="messages">
-															<asp:Label runat="server" ID="lblRecurringEventAddDocumentInfo" EnableViewState="false" Visible="false" CssClass="error" />
-															<p>
-																<asp:RequiredFieldValidator ID="rfvRecurringEventExistingDocumentID" resourcekey="rfvExistingDocumentID.ErrorMessage" runat="server" ControlToValidate="tbxRecurringEventExistingDocumentID" ErrorMessage="Document ID must be set" ValidationGroup="vgRecurringEventDocumentLinks" Display="Dynamic"
-																	CssClass="error" />
-															</p>
-															<p>
-																<asp:CompareValidator ID="cvRecurringEventExistingDocumentID" resourcekey="cvExistingDocumentID.ErrorMessage" runat="server" ControlToValidate="tbxRecurringEventExistingDocumentID" ErrorMessage="Document ID must be an integer" Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgRecurringEventDocumentLinks"
-																	Display="Dynamic" CssClass="error" />
-															</p>
-														</div>
-														<div class="search_by_document_title">
-															<p>
-																<%=Searchdocuments%>
-															</p>
-															<asp:TextBox ID="tbxRecurringEventDocumentText" runat="server" AutoCompleteType="Search" CausesValidation="False" EnableViewState="false" CssClass="rounded_text_box" />
-														</div>
-														<div class="search_by_document_id">
-															<p>
-																<%=Documentid%>
-															</p>
-															<asp:TextBox ID="tbxRecurringEventExistingDocumentID" runat="server" CausesValidation="False" EnableViewState="false" CssClass="rounded_text_box grey" />
-														</div>
-														<asp:LinkButton ID="btnRecurringEventAddExistingDocument" runat="server" OnClick="lbRecurringEventAddExistingDocument_Click" ValidationGroup="vgRecurringEventDocumentLinks" CssClass="add_button rounded_button gradient icon orange_plus"><span><%=Add%></span></asp:LinkButton>
-														<div class="clear_float">
-														</div>
-													</asp:Panel>
+											<div class="text_input_set">
+												<label for="<%=teRecurringEventSummary.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRecurringEventSummary.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRecurringEventSummary.Text") %></label>
+												<dnn:TextEditor ID="teRecurringEventSummary" runat="server" Height="250px" Visible="false" />
+												<asp:TextBox ID="tbxRecurringEventSummary" runat="server" TextMode="MultiLine" Height="250" Width="700" Visible="false" />
+												<asp:Label ID="lblRecurringEventSummaryCountMaxChar" runat="server" Style="float: right;" />
+											</div>
+											<div class="text_input_set">
+												<label for="<%=teRecurringEventArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRecurringEventArticle.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRecurringEventArticle.Text") %></label>
+												<dnn:TextEditor ID="teRecurringEventArticle" runat="server" Height="500px" Visible="false" />
+												<asp:TextBox ID="tbxRecurringEventArticle" runat="server" TextMode="MultiLine" Height="500" Width="732" Visible="false" />
+												<asp:Label ID="lblRecurringEventArticleCountMaxChar" runat="server" Style="float: right;" />
+											</div>
+
+											<asp:Label ID="lblAddEventContentInfo" runat="server"></asp:Label>
+
+											<asp:Panel ID="pnlRecurringEventDocumentUpload" CssClass="section_box white_border_1 dark_grey document_reccuring_upload" runat="server">
+												<h1 class="section_box_title">
+													<span><%=DOCUMENTSincluded%></span></h1>
+												<div class="edNews_inputGroup displayInline">
+													<asp:RadioButtonList ID="rblRecurringEventAddDocumentType" CssClass="styledRadio inlineList" runat="server" RepeatLayout="UnorderedList" onclick="toogleRecurringEventDocumentPanels()">
+														<asp:ListItem Value="0" class="normalRadioButton" Text="Upload new documents" Selected="True" resourcekey="rblAddDocumentType-newDocument" />
+														<asp:ListItem Value="1" class="normalRadioButton" Text="Add existing document" resourcekey="rblAddDocumentType-existingDocument" />
+													</asp:RadioButtonList>
 												</div>
-												<div class="rounded3dBox" runat="server" id="divRecurringEventYouCanNotAddMoreDocuments" visible="false">
-													<asp:Label ID="lblRecurringEventYouCanNotAddMoreDocuments" runat="server" />
-												</div>
-												<asp:GridView ID="gvRecurringEventDocuments" runat="server" AutoGenerateColumns="false" CellPadding="0" CssClass="grid_view_table" DataKeyNames="DocEntryID,RecurringID" EnableModelValidation="True" GridLines="None" OnRowCommand="gvRecurringEventDocuments_RowCommand" OnRowEditing="gvRecurringEventDocuments_RowEditing"
-													OnRowCancelingEdit="gvRecurringEventDocuments_RowCancelingEdit" OnRowUpdating="gvRecurringEventDocuments_RowUpdating" OnRowUpdated="gvRecurringEventDocuments_RowUpdated" OnRowDeleting="gvRecurringEventDocuments_RowDeleting" OnRowDataBound="gvRecurringEventDocuments_RowDataBound" OnPreRender="gvRecurringEventDocuments_PreRender" OnPageIndexChanged="gvRecurringEventDocuments_PageIndexChanged" OnPageIndexChanging="gvRecurringEventDocuments_PageIndexChanging">
-													<AlternatingRowStyle CssClass="second" />
-													<Columns>
-														<asp:TemplateField HeaderText="Actions">
-															<EditItemTemplate>
-																<asp:LinkButton ID="lbDocUpdate" runat="server" CausesValidation="true" CommandName="Update" CssClass="action_btn save" resourcekey="lbDocUpdateResource1" ToolTip="Save changes" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' />
-																<asp:LinkButton ID="lbDocCancel" runat="server" CausesValidation="false" CommandName="Cancel" CssClass="action_btn cancel" resourcekey="LinkButton2Resource1" ToolTip="Discard changes" />
-															</EditItemTemplate>
-															<ItemTemplate>
-																<asp:LinkButton ID="lbDocEdit" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn edit" resourcekey="LinkButton1Resource1" ToolTip="<%#Editthisdocument %>" />
-																<asp:LinkButton ID="lbDocDelete" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn red_x" resourcekey="lbDeleteDocResource1" ToolTip="<%#Deletethisdocument%>" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' />
-															</ItemTemplate>
-															<HeaderStyle CssClass="actions" />
-															<ItemStyle CssClass="actions" />
-														</asp:TemplateField>
-														<asp:TemplateField HeaderText="TitleDescription">
-															<EditItemTemplate>
-																<asp:TextBox ID="tbDocTitle" runat="server" Text='<%# Bind("Title") %>' CssClass="light" />
-																<asp:TextBox ID="tbDocDescription" runat="server" Text='<%# Bind("Description") %>' CssClass="light" />
-															</EditItemTemplate>
-															<ItemTemplate>
-																<asp:Label ID="lblDocUploadTitle" runat="server" CssClass="title" Text='<%# Bind("Title") %>' />
-																<asp:Label ID="lblDocUploadDesc" runat="server" CssClass="description" Text='<%#Bind("Description") %>' />
-																<input type="text" class="token light" value="<%# GenerateDocumentToken(Convert.ToString(Eval("DocEntryID"))) %>" />
-															</ItemTemplate>
-															<HeaderStyle CssClass="title_dscription" />
-															<ItemStyle CssClass="title_dscription" />
-														</asp:TemplateField>
-														<asp:TemplateField HeaderText="Info">
-															<ItemTemplate>
-																<p class="document_link <%#PrintAlreadyInUseClass((bool) Eval("InUseByOther")) %>">
-																	<%#GetDocumentDownloadLink(Convert.ToString(Eval("DocEntryID")), Convert.ToString(Eval("Filename")), Convert.ToString(Eval("FileExtension")))%>
+												<div class="content document_upload">
+													<div class="rounded3dBox" runat="server" id="divRecurringEventAddDocuments">
+														<asp:Panel ID="pnlRecurringEventAddDocument" runat="server">
+															<div id="divRecurringEventAddDocumentFineUploader" runat="server" visible="false" class="EDS_simpleFineUploader documents_fine_uploader">
+																<div class="uploader">
+																</div>
+																<div class="uploadControls">
+																	<div class="infomsg">Drag and drop documents here or click on Select documents button</div>
+																	<div class="actions">
+																		<span class="action fileSelection rounded_button gradient icon document_in_folder">
+																			<asp:Label ID="lblRecurringEventDocumentFineUploaderSelect" runat="server" resourcekey="fineUploaderSelectDocuments" Text="Select documents" />
+																			<span class="dnnInputFileWrapper">
+																				<input type="file" value="" multiple="multiple" />
+																			</span></span><span class="action upload rounded_button gradient icon orange_plus">
+																				<asp:Label ID="lblRecurringEventDocumentFineUploaderStart" runat="server" resourcekey="fineUploaderUpload" Text="Upload" />
+																			</span>
+																	</div>
+																	<div class="dndContainer">
+																		<p>
+																			<asp:Label ID="lblRecurringEventDocumentFineUploaderDrag" runat="server" resourcekey="fineUploaderDragFilesHere" Text="Drag files here" />
+																		</p>
+																	</div>
+																</div>
+																<div class="uploadDetails">
+																	<ol class="fileUploadList">
+																	</ol>
+																</div>
+															</div>
+															<div id="divRecurringEventAddDocumentStandardUploader" runat="server" visible="true" class="documents_standard_uploader">
+																<asp:Label ID="lblRecurringEventDocUploadmessage" CssClass="upload_message" Visible="false" EnableViewState="false" runat="server" />
+																<span class="file_selection rounded_button gradient icon document_in_folder">
+																	<asp:FileUpload ID="fuRecurringEventDocFileUpload" runat="server" />
+																</span>
+																<asp:LinkButton ID="btnRecurringEventDocUpload" runat="server" ValidationGroup="vgRecurringEventDocs" resourcekey="btnDocUploadResource1" CssClass="action upload rounded_button gradient icon orange_plus" OnClick="btnRecurringEventDocUpload_Click"><span>Upload</span></asp:LinkButton>
+															</div>
+														</asp:Panel>
+														<asp:Panel ID="pnlRecurringEventAddExistingDocument" runat="server" CssClass="documents_add_existing_container" Style="display: none;">
+															<div class="messages">
+																<asp:Label runat="server" ID="lblRecurringEventAddDocumentInfo" EnableViewState="false" Visible="false" CssClass="error" />
+																<p>
+																	<asp:RequiredFieldValidator ID="rfvRecurringEventExistingDocumentID" resourcekey="rfvExistingDocumentID.ErrorMessage" runat="server" ControlToValidate="tbxRecurringEventExistingDocumentID" ErrorMessage="Document ID must be set" ValidationGroup="vgRecurringEventDocumentLinks" Display="Dynamic"
+																		CssClass="error" />
 																</p>
 																<p>
-																	<asp:Label ID="lblDateUploaded" runat="server" Text='<%# Convert.ToDateTime(Eval("DateUploaded")).ToShortDateString() %>' />
-																	-
+																	<asp:CompareValidator ID="cvRecurringEventExistingDocumentID" resourcekey="cvExistingDocumentID.ErrorMessage" runat="server" ControlToValidate="tbxRecurringEventExistingDocumentID" ErrorMessage="Document ID must be an integer" Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgRecurringEventDocumentLinks"
+																		Display="Dynamic" CssClass="error" />
+																</p>
+															</div>
+															<div class="search_by_document_title">
+																<p>
+																	<%=Searchdocuments%>
+																</p>
+																<asp:TextBox ID="tbxRecurringEventDocumentText" runat="server" AutoCompleteType="Search" CausesValidation="False" EnableViewState="false" CssClass="rounded_text_box" />
+															</div>
+															<div class="search_by_document_id">
+																<p>
+																	<%=Documentid%>
+																</p>
+																<asp:TextBox ID="tbxRecurringEventExistingDocumentID" runat="server" CausesValidation="False" EnableViewState="false" CssClass="rounded_text_box grey" />
+															</div>
+															<asp:LinkButton ID="btnRecurringEventAddExistingDocument" runat="server" OnClick="lbRecurringEventAddExistingDocument_Click" ValidationGroup="vgRecurringEventDocumentLinks" CssClass="add_button rounded_button gradient icon orange_plus"><span><%=Add%></span></asp:LinkButton>
+															<div class="clear_float">
+															</div>
+														</asp:Panel>
+													</div>
+													<div class="rounded3dBox" runat="server" id="divRecurringEventYouCanNotAddMoreDocuments" visible="false">
+														<asp:Label ID="lblRecurringEventYouCanNotAddMoreDocuments" runat="server" />
+													</div>
+													<asp:GridView ID="gvRecurringEventDocuments" runat="server" AutoGenerateColumns="false" CellPadding="0" CssClass="grid_view_table" DataKeyNames="DocEntryID,RecurringID" EnableModelValidation="True" GridLines="None" OnRowCommand="gvRecurringEventDocuments_RowCommand" OnRowEditing="gvRecurringEventDocuments_RowEditing"
+														OnRowCancelingEdit="gvRecurringEventDocuments_RowCancelingEdit" OnRowUpdating="gvRecurringEventDocuments_RowUpdating" OnRowUpdated="gvRecurringEventDocuments_RowUpdated" OnRowDeleting="gvRecurringEventDocuments_RowDeleting" OnRowDataBound="gvRecurringEventDocuments_RowDataBound" OnPreRender="gvRecurringEventDocuments_PreRender" OnPageIndexChanged="gvRecurringEventDocuments_PageIndexChanged" OnPageIndexChanging="gvRecurringEventDocuments_PageIndexChanging">
+														<AlternatingRowStyle CssClass="second" />
+														<Columns>
+															<asp:TemplateField HeaderText="Actions">
+																<EditItemTemplate>
+																	<asp:LinkButton ID="lbDocUpdate" runat="server" CausesValidation="true" CommandName="Update" CssClass="action_btn save" resourcekey="lbDocUpdateResource1" ToolTip="Save changes" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' />
+																	<asp:LinkButton ID="lbDocCancel" runat="server" CausesValidation="false" CommandName="Cancel" CssClass="action_btn cancel" resourcekey="LinkButton2Resource1" ToolTip="Discard changes" />
+																</EditItemTemplate>
+																<ItemTemplate>
+																	<asp:LinkButton ID="lbDocEdit" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn edit" resourcekey="LinkButton1Resource1" ToolTip="<%#Editthisdocument %>" />
+																	<asp:LinkButton ID="lbDocDelete" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn red_x" resourcekey="lbDeleteDocResource1" ToolTip="<%#Deletethisdocument%>" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' />
+																</ItemTemplate>
+																<HeaderStyle CssClass="actions" />
+																<ItemStyle CssClass="actions" />
+															</asp:TemplateField>
+															<asp:TemplateField HeaderText="TitleDescription">
+																<EditItemTemplate>
+																	<asp:TextBox ID="tbDocTitle" runat="server" Text='<%# Bind("Title") %>' CssClass="light" />
+																	<asp:TextBox ID="tbDocDescription" runat="server" Text='<%# Bind("Description") %>' CssClass="light" />
+																</EditItemTemplate>
+																<ItemTemplate>
+																	<asp:Label ID="lblDocUploadTitle" runat="server" CssClass="title" Text='<%# Bind("Title") %>' />
+																	<asp:Label ID="lblDocUploadDesc" runat="server" CssClass="description" Text='<%#Bind("Description") %>' />
+																	<input type="text" class="token light" value="<%# GenerateDocumentToken(Convert.ToString(Eval("DocEntryID"))) %>" />
+																</ItemTemplate>
+																<HeaderStyle CssClass="title_dscription" />
+																<ItemStyle CssClass="title_dscription" />
+															</asp:TemplateField>
+															<asp:TemplateField HeaderText="Info">
+																<ItemTemplate>
+																	<p class="document_link <%#PrintAlreadyInUseClass((bool) Eval("InUseByOther")) %>">
+																		<%#GetDocumentDownloadLink(Convert.ToString(Eval("DocEntryID")), Convert.ToString(Eval("Filename")), Convert.ToString(Eval("FileExtension")))%>
+																	</p>
+																	<p>
+																		<asp:Label ID="lblDateUploaded" runat="server" Text='<%# Convert.ToDateTime(Eval("DateUploaded")).ToShortDateString() %>' />
+																		-
 																			<asp:Label ID="lblDocUploadAuthor" runat="server" Text='<%#Eval("DisplayName")%>' />
-																</p>
-																<p>
-																	<asp:Label ID="lblFileSize" runat="server" Text='<%# EasyDNNSolutions.Modules.EasyDNNNews.StringHelpers.HumanReadableFileSize(Convert.ToDouble(Eval("FileSize"))) %>' />
-																</p>
-																<p>
-																	<asp:Label ID="lblDownloads" runat="server" Text='<%# NumberOfDownloadsText(Convert.ToString(Eval("NumberOfDownloads"))) %>' />
-																</p>
-															</ItemTemplate>
-															<EditItemTemplate>
-																<p>
-																	<asp:Label ID="lbFilenameEdit" runat="server" Text='<%# GetDocumentFilename(Convert.ToString(Eval("Filename")),Convert.ToString(Eval("FileExtension"))) %>' />
-																</p>
-																<div id="divReplaceFileContainer" runat="server" class="replace_file">
-																	<p>
-																		<asp:Label ID="lblReplaceFile" runat="server" Text="Replace existing file:" resourcekey="lblDocumentsReplaceFile" />
 																	</p>
-																	<asp:FileUpload ID="fuReplaceFile" runat="server" />
-																</div>
-															</EditItemTemplate>
-															<HeaderStyle CssClass="info" />
-															<ItemStyle CssClass="info" />
-														</asp:TemplateField>
-														<asp:TemplateField HeaderText="Lang">
-															<ItemTemplate>
-																<asp:Label ID="lblLang" runat="server" Text='<%# GetDocumentLocalization(Convert.ToString(Eval("SelectedLocales"))) %>' />
-															</ItemTemplate>
-															<EditItemTemplate>
-																<div class="language_selection_container">
-																	<asp:ListBox ID="lbEditDocUploadLanguage" runat="server" SelectionMode="Multiple" />
-																</div>
-															</EditItemTemplate>
-															<HeaderStyle CssClass="language" />
-															<ItemStyle CssClass="language" />
-														</asp:TemplateField>
-														<asp:TemplateField HeaderText="Target">
-															<EditItemTemplate>
-																<asp:DropDownList ID="ddlLinkTarget" runat="server">
-																	<asp:ListItem Value="0" Text="_self" Selected="True" />
-																	<asp:ListItem Value="1" Text="_blank" />
-																	<asp:ListItem Value="2" Text="_parent" />
-																	<asp:ListItem Value="3" Text="_top" />
-																</asp:DropDownList>
-															</EditItemTemplate>
-															<ItemTemplate>
-																<asp:Label ID="lblTarget" runat="server" Text='<%# TargetToString(Convert.ToByte(Eval("Target")))%>' />
-															</ItemTemplate>
-															<HeaderStyle CssClass="target" />
-															<ItemStyle CssClass="target" />
-														</asp:TemplateField>
-														<asp:TemplateField HeaderText="Show">
-															<ItemTemplate>
-																<asp:CheckBox CssClass="normalCheckBox" ID="CheckBox1" runat="server" Enabled="false" Checked='<%#Convert.ToBoolean(Eval("Visible"))%>' />
-															</ItemTemplate>
-															<EditItemTemplate>
-																<asp:CheckBox CssClass="normalCheckBox" runat="server" ID="cbDocumentVisible" Enabled="true" Checked='<%#Convert.ToBoolean(Eval("Visible"))%>' />
-															</EditItemTemplate>
-															<HeaderStyle CssClass="tdShow" />
-															<ItemStyle CssClass="tdShow" />
-														</asp:TemplateField>
-														<asp:TemplateField ShowHeader="false">
-															<ItemTemplate>
-																<asp:Label ID="lblPosition" runat="server" Text='<%# Bind("Position") %>' CssClass="rounded_inset_text_box" />
-															</ItemTemplate>
-															<EditItemTemplate>
-																<asp:TextBox ID="tbxPosition" runat="server" Text='<%# Bind("Position") %>' CssClass="light" />
-															</EditItemTemplate>
-															<HeaderStyle CssClass="position" />
-															<ItemStyle CssClass="position" />
-														</asp:TemplateField>
-														<asp:TemplateField ShowHeader="false">
-															<ItemTemplate>
-																<asp:LinkButton ID="lbDocMoveDown" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="Down" runat="server" CssClass="arrow down" resourcekey="lbDocMoveDownResource1" />
-																<asp:LinkButton ID="lbDocMoveUp" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="Up" runat="server" CssClass="arrow up" resourcekey="lbDocMoveUpResource1" />
-															</ItemTemplate>
-															<HeaderStyle CssClass="arrows" />
-															<ItemStyle CssClass="arrows" />
-														</asp:TemplateField>
-													</Columns>
-													<HeaderStyle CssClass="header_row" />
-												</asp:GridView>
-											</div>
-											<asp:Button ID="btnRecurringEventDocUploadRefresh" runat="server" Text="refresf" Style="display: none;" OnClick="btnRecurringEventDocUploadRefresh_Click" />
+																	<p>
+																		<asp:Label ID="lblFileSize" runat="server" Text='<%# EasyDNNSolutions.Modules.EasyDNNNews.StringHelpers.HumanReadableFileSize(Convert.ToDouble(Eval("FileSize"))) %>' />
+																	</p>
+																	<p>
+																		<asp:Label ID="lblDownloads" runat="server" Text='<%# NumberOfDownloadsText(Convert.ToString(Eval("NumberOfDownloads"))) %>' />
+																	</p>
+																</ItemTemplate>
+																<EditItemTemplate>
+																	<p>
+																		<asp:Label ID="lbFilenameEdit" runat="server" Text='<%# GetDocumentFilename(Convert.ToString(Eval("Filename")),Convert.ToString(Eval("FileExtension"))) %>' />
+																	</p>
+																	<div id="divReplaceFileContainer" runat="server" class="replace_file">
+																		<p>
+																			<asp:Label ID="lblReplaceFile" runat="server" Text="Replace existing file:" resourcekey="lblDocumentsReplaceFile" />
+																		</p>
+																		<asp:FileUpload ID="fuReplaceFile" runat="server" />
+																	</div>
+																</EditItemTemplate>
+																<HeaderStyle CssClass="info" />
+																<ItemStyle CssClass="info" />
+															</asp:TemplateField>
+															<asp:TemplateField HeaderText="Lang">
+																<ItemTemplate>
+																	<asp:Label ID="lblLang" runat="server" Text='<%# GetDocumentLocalization(Convert.ToString(Eval("SelectedLocales"))) %>' />
+																</ItemTemplate>
+																<EditItemTemplate>
+																	<div class="language_selection_container">
+																		<asp:ListBox ID="lbEditDocUploadLanguage" runat="server" SelectionMode="Multiple" />
+																	</div>
+																</EditItemTemplate>
+																<HeaderStyle CssClass="language" />
+																<ItemStyle CssClass="language" />
+															</asp:TemplateField>
+															<asp:TemplateField HeaderText="Target">
+																<EditItemTemplate>
+																	<asp:DropDownList ID="ddlLinkTarget" runat="server">
+																		<asp:ListItem Value="0" Text="_self" Selected="True" />
+																		<asp:ListItem Value="1" Text="_blank" />
+																		<asp:ListItem Value="2" Text="_parent" />
+																		<asp:ListItem Value="3" Text="_top" />
+																	</asp:DropDownList>
+																</EditItemTemplate>
+																<ItemTemplate>
+																	<asp:Label ID="lblTarget" runat="server" Text='<%# TargetToString(Convert.ToByte(Eval("Target")))%>' />
+																</ItemTemplate>
+																<HeaderStyle CssClass="target" />
+																<ItemStyle CssClass="target" />
+															</asp:TemplateField>
+															<asp:TemplateField HeaderText="Show">
+																<ItemTemplate>
+																	<asp:CheckBox CssClass="normalCheckBox" ID="CheckBox1" runat="server" Enabled="false" Checked='<%#Convert.ToBoolean(Eval("Visible"))%>' />
+																</ItemTemplate>
+																<EditItemTemplate>
+																	<asp:CheckBox CssClass="normalCheckBox" runat="server" ID="cbDocumentVisible" Enabled="true" Checked='<%#Convert.ToBoolean(Eval("Visible"))%>' />
+																</EditItemTemplate>
+																<HeaderStyle CssClass="tdShow" />
+																<ItemStyle CssClass="tdShow" />
+															</asp:TemplateField>
+															<asp:TemplateField ShowHeader="false">
+																<ItemTemplate>
+																	<asp:Label ID="lblPosition" runat="server" Text='<%# Bind("Position") %>' CssClass="rounded_inset_text_box" />
+																</ItemTemplate>
+																<EditItemTemplate>
+																	<asp:TextBox ID="tbxPosition" runat="server" Text='<%# Bind("Position") %>' CssClass="light" />
+																</EditItemTemplate>
+																<HeaderStyle CssClass="position" />
+																<ItemStyle CssClass="position" />
+															</asp:TemplateField>
+															<asp:TemplateField ShowHeader="false">
+																<ItemTemplate>
+																	<asp:LinkButton ID="lbDocMoveDown" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="Down" runat="server" CssClass="arrow down" resourcekey="lbDocMoveDownResource1" />
+																	<asp:LinkButton ID="lbDocMoveUp" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="Up" runat="server" CssClass="arrow up" resourcekey="lbDocMoveUpResource1" />
+																</ItemTemplate>
+																<HeaderStyle CssClass="arrows" />
+																<ItemStyle CssClass="arrows" />
+															</asp:TemplateField>
+														</Columns>
+														<HeaderStyle CssClass="header_row" />
+													</asp:GridView>
+												</div>
+												<asp:Button ID="btnRecurringEventDocUploadRefresh" runat="server" Text="refresf" Style="display: none;" OnClick="btnRecurringEventDocUploadRefresh_Click" />
+											</asp:Panel>
+											<br />
+											<asp:Button ID="btnSaveRecurringEventContent" runat="server" Text="Save" OnClick="btnSaveRecurringEventContent_Click" />
+											<asp:Button ID="btnSaveAndCloseRecurringEventContent" runat="server" Text="Save & Close" OnClick="btnSaveAndCloseRecurringEventContent_Click" />
+											<asp:Button ID="btnCloseRecurringEventContent" runat="server" Text="Close" OnClick="btnCloseRecurringEventContent_Click" />
 										</asp:Panel>
-										<br />
-										<asp:Button ID="btnSaveRecurringEventContent" runat="server" Text="Save" OnClick="btnSaveRecurringEventContent_Click" />
-										<asp:Button ID="btnSaveAndCloseRecurringEventContent" runat="server" Text="Save & Close" OnClick="btnSaveAndCloseRecurringEventContent_Click" />
-										<asp:Button ID="btnCloseRecurringEventContent" runat="server" Text="Close" OnClick="btnCloseRecurringEventContent_Click" />
-									</asp:Panel>
-								</div>
-							</asp:Panel>
+									</div>
+								</asp:Panel>
 
-							<table runat="server" id="tblEventRegistration" class="settings_table no_margin">
-								<tr>
-									<td class="left">
-										<label for="<%=cbRegistrationOnEvent.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationOnEvent.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationOnEvent.Text") %></label>
-									</td>
-									<td class="right">
-										<div class="styledCheckbox">
-											<asp:CheckBox CssClass="normalCheckBox" ID="cbRegistrationOnEvent" resourcekey="cbRegistrationOnEvent" runat="server" Text="Enable registrations" AutoPostBack="True" OnCheckedChanged="cbRegistrationOnEvent_CheckedChanged" />
-
-											<asp:Label ID="lblRegistrationInfo" runat="server" EnableViewState="false" ResourceKey="lbMustSaveBeforeEnable"></asp:Label>
-										</div>
-									</td>
-								</tr>
-							</table>
-
-							<asp:Panel runat="server" ID="pnlPostSettings" Visible="true">
-								<table class="settings_table no_margin eventregistration">
+								<table runat="server" id="tblEventRegistration" class="settings_table no_margin">
 									<tr>
 										<td class="left">
-											<label for="<%=cbSendInvitations.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSendInvitations.Help", true) %>" data-tooltip-position="top-right"><%=_("lblSendInvitations.Text") %></label>
+											<label for="<%=cbRegistrationOnEvent.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationOnEvent.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationOnEvent.Text") %></label>
 										</td>
 										<td class="right">
 											<div class="styledCheckbox">
-												<asp:CheckBox CssClass="normalCheckBox" ID="cbSendInvitations" resourcekey="cbSendInvitations" Text="Use default invitations" runat="server" />
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="left">
-											<label for="<%=cbSendReminders.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSendReminders.Help", true) %>" data-tooltip-position="top-right"><%=_("lblSendReminders.Text") %></label>
-										</td>
-										<td class="right">
-											<div class="styledCheckbox">
-												<asp:CheckBox CssClass="normalCheckBox" ID="cbSendReminders" resourcekey="cbSendReminders" Text="Use default reminders" runat="server" />
+												<asp:CheckBox CssClass="normalCheckBox" ID="cbRegistrationOnEvent" resourcekey="cbRegistrationOnEvent" runat="server" Text="Enable registrations" AutoPostBack="True" OnCheckedChanged="cbRegistrationOnEvent_CheckedChanged" />
+
+												<asp:Label ID="lblRegistrationInfo" runat="server" EnableViewState="false" ResourceKey="lbMustSaveBeforeEnable"></asp:Label>
 											</div>
 										</td>
 									</tr>
 								</table>
-							</asp:Panel>
 
-							<asp:Panel runat="server" ID="pnlEventRegistration" Visible="false">
-								<div class="rounded3dBox">
-
+								<asp:Panel runat="server" ID="pnlPostSettings" Visible="true">
 									<table class="settings_table no_margin eventregistration">
 										<tr>
 											<td class="left">
-												<label for="<%=rblEventRegistrationType.ClientID %>"><%=_("liRegistrationType.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline">
-													<asp:RadioButtonList ID="rblEventRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblEventRegistrationType_SelectedIndexChanged">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liRegistrationTypeClassinc" Text="Classic" Selected="True" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liRegistrationTypeSocial" Text="Social (only for registered users)" />
-													</asp:RadioButtonList>
-												</div>
-											</td>
-										</tr>
-										<tr runat="server" id="rowEventMaxNumberOfTickets">
-											<td class="left">
-												<label for="<%=tbxMaxNumberOfTickets.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventMaxNumberOfTickets.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventMaxNumberOfTickets.Text") %></label>
-											</td>
-											<td class="right">
-												<asp:TextBox ID="tbxMaxNumberOfTickets" runat="server" CssClass="smallCentered" Text="0" /><asp:Label ID="lblNumberofseatsunlimited" resourcekey="lblNumberofseatsunlimited.Text" runat="server" Text="(0 is unlimited)"></asp:Label>
-												<asp:RequiredFieldValidator ID="rfvMaxNumberOfTickets" resourcekey="rfvMaxNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxMaxNumberOfTickets" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-												<asp:CompareValidator ID="cvMaxNumberOfTickets" resourcekey="cvMaxNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxMaxNumberOfTickets" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-												<asp:RegularExpressionValidator ID="revMaxNumberOfTickets" resourcekey="revMaxNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxMaxNumberOfTickets" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle"
-													SetFocusOnError="True" ForeColor="Red" />
-											</td>
-										</tr>
-										<tr>
-											<td class="left">
-												<label for="<%=rblEnableRegistrationType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEnableRegistration.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEnableRegistration.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline floatLeft" style="margin-right: 5px;">
-													<asp:RadioButtonList ID="rblEnableRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblEnableRegistrationType_SelectedIndexChanged">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liAfterpublishdate" Text="After publish date" Selected="True" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liNumberofdaysbeforeeventstartdate" Text="Number of days before event start date" />
-													</asp:RadioButtonList>
-												</div>
-												<asp:Panel runat="server" ID="pnlEnableRegistrationType" Visible="false">
-													<asp:TextBox ID="tbxEnableDaysBeforeStartDate" runat="server" Width="30px" Text="10" />
-													<asp:RequiredFieldValidator ID="rfvEnableDaysBeforeStartDate" resourcekey="rfvEnableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxEnableDaysBeforeStartDate" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:CompareValidator ID="cvEnableDaysBeforeStartDate" resourcekey="cvEnableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxEnableDaysBeforeStartDate" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:RegularExpressionValidator ID="revEnableDaysBeforeStartDate" resourcekey="revEnableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxEnableDaysBeforeStartDate" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle"
-														SetFocusOnError="True" ForeColor="Red" />
-												</asp:Panel>
-											</td>
-										</tr>
-										<tr>
-											<td class="left">
-												<label for="<%=rblDisableRegistrationType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDisableRegistration.Help", true) %>" data-tooltip-position="top-right"><%=_("lblDisableRegistration.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline floatleft" style="margin-right: 5px;">
-													<asp:RadioButtonList ID="rblDisableRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblDisableRegistrationType_SelectedIndexChanged">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liWheneventstarts" Text="When event starts" Selected="True" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liNumberofdaysbeforeeventstartdate" Text="Number of days before event start date" />
-													</asp:RadioButtonList>
-												</div>
-												<asp:Panel runat="server" ID="pnlDisableRegistrationType" Visible="false">
-													<asp:TextBox ID="tbxDisableDaysBeforeStartDate" runat="server" Width="30px" Text="10" />
-													<asp:RequiredFieldValidator ID="rfvDisableDaysBeforeStartDate" resourcekey="rfvDisableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxDisableDaysBeforeStartDate" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:CompareValidator ID="cvDisableDaysBeforeStartDate" resourcekey="cvDisableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxDisableDaysBeforeStartDate" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:RegularExpressionValidator ID="revDisableDaysBeforeStartDate" resourcekey="revDisableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxDisableDaysBeforeStartDate" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle" SetFocusOnError="True" ForeColor="Red" />
-												</asp:Panel>
-											</td>
-										</tr>
-										<tr runat="server" id="rowTicketsUserCanRegister">
-											<td class="left">
-												<label for="<%=rblTicketsUserCanRegister.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblTicketsUserCanRegister.Help", true) %>" data-tooltip-position="top-right"><%=_("lblTicketsUserCanRegister.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline floatLeft" style="margin-right: 5px;">
-													<asp:RadioButtonList ID="rblTicketsUserCanRegister" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblTicketsUserCanRegister_SelectedIndexChanged">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liUnlimited" Text="Unlimited" Selected="True" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liMinMaxvalue" Text="Min - Max value" />
-													</asp:RadioButtonList>
-												</div>
-												<asp:Panel runat="server" ID="pnlTicketsUserCanRegister" Visible="false">
-													<asp:TextBox ID="tbxEventRegisterMinTickets" runat="server" Width="30px" Text="1" />
-													<asp:RequiredFieldValidator ID="rfvEventRegisterMinTickets" resourcekey="rfvEventRegisterMinTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMinTickets" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:CompareValidator ID="cvEventRegisterMinTickets" resourcekey="cvEventRegisterMinTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMinTickets" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:RegularExpressionValidator ID="revEventRegisterMinTickets" resourcekey="revEventRegisterMinTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMinTickets" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle" SetFocusOnError="True" ForeColor="Red" />
-													<asp:TextBox ID="tbxEventRegisterMaxTickets" runat="server" Width="30px" Text="1" />
-													<asp:RequiredFieldValidator ID="rfEventRegisterMaxTickets" resourcekey="rfEventRegisterMaxTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMaxTickets" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:CompareValidator ID="cvEventRegisterMaxTickets" resourcekey="cvEventRegisterMaxTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMaxTickets" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
-													<asp:RegularExpressionValidator ID="revEventRegisterMaxTickets" resourcekey="revEventRegisterMaxTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMaxTickets" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle" SetFocusOnError="True" ForeColor="Red" />
-												</asp:Panel>
-											</td>
-										</tr>
-										<tr runat="server" id="rowRegistrationType">
-											<td class="left">
-												<label for="<%=rblRegistrationType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationType.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationType.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline">
-													<asp:RadioButtonList ID="rblRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liRegistrationonsiteisnecessary" Text="Registration on site is necessary" Selected="True" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liRegistrationonsiteisnotnecessary" Text="Registration on site is not necessary" />
-													</asp:RadioButtonList>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="left">
-												<label for="<%=rblEventRegistrationRole.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventRegistrationRole.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventRegistrationRole.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline">
-													<asp:RadioButtonList ID="rblEventRegistrationRole" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblEventRegistrationRole_SelectedIndexChanged">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liNone" Text="None" Selected="True" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liSelectrole" Text="Select role" />
-													</asp:RadioButtonList>
-												</div>
-												<asp:Panel runat="server" ID="pnlEventRegistrationRole" Visible="false">
-													<asp:DropDownList ID="ddlEventRegistrationRoles" runat="server"></asp:DropDownList>
-												</asp:Panel>
-											</td>
-										</tr>
-										<tr runat="server" id="rowRegistrationApproval">
-											<td class="left">
-												<label for="<%=cbRegistrationApproval.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationApproval.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationApproval.Text") %></label>
+												<label for="<%=cbSendInvitations.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSendInvitations.Help", true) %>" data-tooltip-position="top-right"><%=_("lblSendInvitations.Text") %></label>
 											</td>
 											<td class="right">
 												<div class="styledCheckbox">
-													<asp:CheckBox CssClass="normalCheckBox" ID="cbRegistrationApproval" resourcekey="cbRegistrationApproval" Text="Required approval" runat="server" />
+													<asp:CheckBox CssClass="normalCheckBox" ID="cbSendInvitations" resourcekey="cbSendInvitations" Text="Use default invitations" runat="server" />
 												</div>
 											</td>
 										</tr>
 										<tr>
 											<td class="left">
-												<label for="<%=cbDisableFurtherRegistration.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDisableFurtherRegistration.Help", true) %>" data-tooltip-position="top-right"><%=_("lblDisableFurtherRegistration.Text") %></label>
+												<label for="<%=cbSendReminders.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblSendReminders.Help", true) %>" data-tooltip-position="top-right"><%=_("lblSendReminders.Text") %></label>
 											</td>
 											<td class="right">
 												<div class="styledCheckbox">
-													<asp:CheckBox CssClass="normalCheckBox" ID="cbDisableFurtherRegistration" resourcekey="cbDisableFurtherRegistration" Text="Disable further registrations" runat="server" />
+													<asp:CheckBox CssClass="normalCheckBox" ID="cbSendReminders" resourcekey="cbSendReminders" Text="Use default reminders" runat="server" />
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td class="left">
-												<label for="<%=cbEnableCancelRegistrations.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEnableCancelRegistrations.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEnableCancelRegistrations.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="styledCheckbox">
-													<asp:CheckBox CssClass="normalCheckBox" ID="cbEnableCancelRegistrations" resourcekey="cbEnableCancelRegistrations" Text="Enable cancel registrations" runat="server" />
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="left">
-												<label for="<%=rblShowRegistredUsersTo.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblShowRegistredUsersRole.Help", true) %>" data-tooltip-position="top-right"><%=_("lblShowRegistredUsersRole.Text") %></label>
-											</td>
-											<td class="right">
-												<div class="edNews_inputGroup displayInline">
-													<asp:RadioButtonList ID="rblShowRegistredUsersTo" runat="server" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblShowRegistredUsersTo_SelectedIndexChanged">
-														<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liNone" Text="None" />
-														<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liAll" Text="All" Selected="True" />
-														<asp:ListItem Value="2" class="normalRadioButton" resourcekey="liSelectrole" Text="Select role" />
-													</asp:RadioButtonList>
-												</div>
-												<asp:DropDownList ID="ddlShowRegistredUsersRole" runat="server"></asp:DropDownList>
-											</td>
-										</tr>
-										<tr runat="server" id="rowRegistrationCFtemplateID">
-											<td class="left">
-												<label for="<%=ddlRegistrationCFtemplateID.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationCFtemplateID.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationCFtemplateID.Text") %></label>
-											</td>
-											<td class="right">
-												<asp:DropDownList ID="ddlRegistrationCFtemplateID" runat="server"></asp:DropDownList>
-											</td>
-										</tr>
-
 									</table>
+								</asp:Panel>
 
-									<asp:Panel runat="server" ID="pnlEventPayment" Visible="false">
+								<asp:Panel runat="server" ID="pnlEventRegistration" Visible="false">
+									<div class="rounded3dBox">
 
-										<asp:HiddenField ID="hfCostPerAttendee" runat="server" />
-										<asp:HiddenField ID="hfAttendeesDiscount" runat="server" />
+										<table class="settings_table no_margin eventregistration">
+											<tr>
+												<td class="left">
+													<label for="<%=rblEventRegistrationType.ClientID %>"><%=_("liRegistrationType.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline">
+														<asp:RadioButtonList ID="rblEventRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblEventRegistrationType_SelectedIndexChanged">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liRegistrationTypeClassinc" Text="Classic" Selected="True" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liRegistrationTypeSocial" Text="Social (only for registered users)" />
+														</asp:RadioButtonList>
+													</div>
+												</td>
+											</tr>
+											<tr runat="server" id="rowEventMaxNumberOfTickets">
+												<td class="left">
+													<label for="<%=tbxMaxNumberOfTickets.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventMaxNumberOfTickets.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventMaxNumberOfTickets.Text") %></label>
+												</td>
+												<td class="right">
+													<asp:TextBox ID="tbxMaxNumberOfTickets" runat="server" CssClass="smallCentered" Text="0" /><asp:Label ID="lblNumberofseatsunlimited" resourcekey="lblNumberofseatsunlimited.Text" runat="server" Text="(0 is unlimited)"></asp:Label>
+													<asp:RequiredFieldValidator ID="rfvMaxNumberOfTickets" resourcekey="rfvMaxNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxMaxNumberOfTickets" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+													<asp:CompareValidator ID="cvMaxNumberOfTickets" resourcekey="cvMaxNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxMaxNumberOfTickets" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+													<asp:RegularExpressionValidator ID="revMaxNumberOfTickets" resourcekey="revMaxNumberOfTickets.ErrorMessage" runat="server" ControlToValidate="tbxMaxNumberOfTickets" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle"
+														SetFocusOnError="True" ForeColor="Red" />
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=rblEnableRegistrationType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEnableRegistration.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEnableRegistration.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline floatLeft" style="margin-right: 5px;">
+														<asp:RadioButtonList ID="rblEnableRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblEnableRegistrationType_SelectedIndexChanged">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liAfterpublishdate" Text="After publish date" Selected="True" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liNumberofdaysbeforeeventstartdate" Text="Number of days before event start date" />
+														</asp:RadioButtonList>
+													</div>
+													<asp:Panel runat="server" ID="pnlEnableRegistrationType" Visible="false">
+														<asp:TextBox ID="tbxEnableDaysBeforeStartDate" runat="server" Width="30px" Text="10" />
+														<asp:RequiredFieldValidator ID="rfvEnableDaysBeforeStartDate" resourcekey="rfvEnableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxEnableDaysBeforeStartDate" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:CompareValidator ID="cvEnableDaysBeforeStartDate" resourcekey="cvEnableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxEnableDaysBeforeStartDate" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:RegularExpressionValidator ID="revEnableDaysBeforeStartDate" resourcekey="revEnableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxEnableDaysBeforeStartDate" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle"
+															SetFocusOnError="True" ForeColor="Red" />
+													</asp:Panel>
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=rblDisableRegistrationType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDisableRegistration.Help", true) %>" data-tooltip-position="top-right"><%=_("lblDisableRegistration.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline floatleft" style="margin-right: 5px;">
+														<asp:RadioButtonList ID="rblDisableRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblDisableRegistrationType_SelectedIndexChanged">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liWheneventstarts" Text="When event starts" Selected="True" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liNumberofdaysbeforeeventstartdate" Text="Number of days before event start date" />
+														</asp:RadioButtonList>
+													</div>
+													<asp:Panel runat="server" ID="pnlDisableRegistrationType" Visible="false">
+														<asp:TextBox ID="tbxDisableDaysBeforeStartDate" runat="server" Width="30px" Text="10" />
+														<asp:RequiredFieldValidator ID="rfvDisableDaysBeforeStartDate" resourcekey="rfvDisableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxDisableDaysBeforeStartDate" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:CompareValidator ID="cvDisableDaysBeforeStartDate" resourcekey="cvDisableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxDisableDaysBeforeStartDate" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:RegularExpressionValidator ID="revDisableDaysBeforeStartDate" resourcekey="revDisableDaysBeforeStartDate.ErrorMessage" runat="server" ControlToValidate="tbxDisableDaysBeforeStartDate" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle" SetFocusOnError="True" ForeColor="Red" />
+													</asp:Panel>
+												</td>
+											</tr>
+											<tr runat="server" id="rowTicketsUserCanRegister">
+												<td class="left">
+													<label for="<%=rblTicketsUserCanRegister.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblTicketsUserCanRegister.Help", true) %>" data-tooltip-position="top-right"><%=_("lblTicketsUserCanRegister.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline floatLeft" style="margin-right: 5px;">
+														<asp:RadioButtonList ID="rblTicketsUserCanRegister" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblTicketsUserCanRegister_SelectedIndexChanged">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liUnlimited" Text="Unlimited" Selected="True" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liMinMaxvalue" Text="Min - Max value" />
+														</asp:RadioButtonList>
+													</div>
+													<asp:Panel runat="server" ID="pnlTicketsUserCanRegister" Visible="false">
+														<asp:TextBox ID="tbxEventRegisterMinTickets" runat="server" Width="30px" Text="1" />
+														<asp:RequiredFieldValidator ID="rfvEventRegisterMinTickets" resourcekey="rfvEventRegisterMinTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMinTickets" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:CompareValidator ID="cvEventRegisterMinTickets" resourcekey="cvEventRegisterMinTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMinTickets" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:RegularExpressionValidator ID="revEventRegisterMinTickets" resourcekey="revEventRegisterMinTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMinTickets" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle" SetFocusOnError="True" ForeColor="Red" />
+														<asp:TextBox ID="tbxEventRegisterMaxTickets" runat="server" Width="30px" Text="1" />
+														<asp:RequiredFieldValidator ID="rfEventRegisterMaxTickets" resourcekey="rfEventRegisterMaxTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMaxTickets" CssClass="NormalRed" Display="Dynamic" ErrorMessage="Required." ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:CompareValidator ID="cvEventRegisterMaxTickets" resourcekey="cvEventRegisterMaxTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMaxTickets" Display="Dynamic" ErrorMessage="Please enter number only." Operator="DataTypeCheck" Type="Integer" ValidationGroup="vgEditArticle" SetFocusOnError="True" />
+														<asp:RegularExpressionValidator ID="revEventRegisterMaxTickets" resourcekey="revEventRegisterMaxTickets.ErrorMessage" runat="server" ControlToValidate="tbxEventRegisterMaxTickets" ErrorMessage="Only positive numbers. Zero is for all." ValidationExpression="^[0-9]*$" Display="Dynamic" ValidationGroup="vgEditArticle" SetFocusOnError="True" ForeColor="Red" />
+													</asp:Panel>
+												</td>
+											</tr>
+											<tr runat="server" id="rowRegistrationType">
+												<td class="left">
+													<label for="<%=rblRegistrationType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationType.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationType.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline">
+														<asp:RadioButtonList ID="rblRegistrationType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liRegistrationonsiteisnecessary" Text="Registration on site is necessary" Selected="True" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liRegistrationonsiteisnotnecessary" Text="Registration on site is not necessary" />
+														</asp:RadioButtonList>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=rblEventRegistrationRole.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventRegistrationRole.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventRegistrationRole.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline">
+														<asp:RadioButtonList ID="rblEventRegistrationRole" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblEventRegistrationRole_SelectedIndexChanged">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liNone" Text="None" Selected="True" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liSelectrole" Text="Select role" />
+														</asp:RadioButtonList>
+													</div>
+													<asp:Panel runat="server" ID="pnlEventRegistrationRole" Visible="false">
+														<asp:DropDownList ID="ddlEventRegistrationRoles" runat="server"></asp:DropDownList>
+													</asp:Panel>
+												</td>
+											</tr>
+											<tr runat="server" id="rowRegistrationApproval">
+												<td class="left">
+													<label for="<%=cbRegistrationApproval.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationApproval.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationApproval.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="styledCheckbox">
+														<asp:CheckBox CssClass="normalCheckBox" ID="cbRegistrationApproval" resourcekey="cbRegistrationApproval" Text="Required approval" runat="server" />
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=cbDisableFurtherRegistration.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDisableFurtherRegistration.Help", true) %>" data-tooltip-position="top-right"><%=_("lblDisableFurtherRegistration.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="styledCheckbox">
+														<asp:CheckBox CssClass="normalCheckBox" ID="cbDisableFurtherRegistration" resourcekey="cbDisableFurtherRegistration" Text="Disable further registrations" runat="server" />
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=cbEnableCancelRegistrations.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEnableCancelRegistrations.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEnableCancelRegistrations.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="styledCheckbox">
+														<asp:CheckBox CssClass="normalCheckBox" ID="cbEnableCancelRegistrations" resourcekey="cbEnableCancelRegistrations" Text="Enable cancel registrations" runat="server" />
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=rblShowRegistredUsersTo.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblShowRegistredUsersRole.Help", true) %>" data-tooltip-position="top-right"><%=_("lblShowRegistredUsersRole.Text") %></label>
+												</td>
+												<td class="right">
+													<div class="edNews_inputGroup displayInline">
+														<asp:RadioButtonList ID="rblShowRegistredUsersTo" runat="server" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" AutoPostBack="true" OnSelectedIndexChanged="rblShowRegistredUsersTo_SelectedIndexChanged">
+															<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liNone" Text="None" />
+															<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liAll" Text="All" Selected="True" />
+															<asp:ListItem Value="2" class="normalRadioButton" resourcekey="liSelectrole" Text="Select role" />
+														</asp:RadioButtonList>
+													</div>
+													<asp:DropDownList ID="ddlShowRegistredUsersRole" runat="server"></asp:DropDownList>
+												</td>
+											</tr>
+											<tr runat="server" id="rowRegistrationCFtemplateID">
+												<td class="left">
+													<label for="<%=ddlRegistrationCFtemplateID.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRegistrationCFtemplateID.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRegistrationCFtemplateID.Text") %></label>
+												</td>
+												<td class="right">
+													<asp:DropDownList ID="ddlRegistrationCFtemplateID" runat="server"></asp:DropDownList>
+												</td>
+											</tr>
 
-										<asp:UpdatePanel ID="upEventPayment" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
-											<ContentTemplate>
-												<div class="edn_admin_progress_overlay_container">
-													<asp:UpdateProgress ID="uppEventPayment" runat="server" AssociatedUpdatePanelID="upEventPayment" DisplayAfter="100" DynamicLayout="true">
-														<ProgressTemplate>
-															<div class="edn_admin_progress_overlay">
-															</div>
-														</ProgressTemplate>
-													</asp:UpdateProgress>
+										</table>
 
-													<table class="settings_table no_margin eventregistration">
-														<tr>
-															<td class="left">
-																<label for="<%=rblEventPayment.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventPayment.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventPayment.Text") %></label>
-															</td>
-															<td class="right">
-																<div class="edNews_inputGroup displayInline">
-																	<asp:RadioButtonList ID="rblEventPayment" runat="server" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" OnSelectedIndexChanged="rblEventPayment_SelectedIndexChanged" AutoPostBack="true">
-																		<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liFree" Text="Free" Selected="True" />
-																		<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liPaid" Text="Paid" />
-																	</asp:RadioButtonList>
+										<asp:Panel runat="server" ID="pnlEventPayment" Visible="false">
+
+											<asp:HiddenField ID="hfCostPerAttendee" runat="server" />
+											<asp:HiddenField ID="hfAttendeesDiscount" runat="server" />
+
+											<asp:UpdatePanel ID="upEventPayment" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
+												<ContentTemplate>
+													<div class="edn_admin_progress_overlay_container">
+														<asp:UpdateProgress ID="uppEventPayment" runat="server" AssociatedUpdatePanelID="upEventPayment" DisplayAfter="100" DynamicLayout="true">
+															<ProgressTemplate>
+																<div class="edn_admin_progress_overlay">
 																</div>
-															</td>
-														</tr>
-													</table>
+															</ProgressTemplate>
+														</asp:UpdateProgress>
 
-													<div runat="server" id="pnlEventPaymentSettings" visible="false">
 														<table class="settings_table no_margin eventregistration">
 															<tr>
 																<td class="left">
-																	<label for="<%=rblEventPaymentType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventChargeBy.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventChargeBy.Text") %></label>
+																	<label for="<%=rblEventPayment.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventPayment.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventPayment.Text") %></label>
 																</td>
 																<td class="right">
 																	<div class="edNews_inputGroup displayInline">
-																		<asp:RadioButtonList ID="rblEventPaymentType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" OnSelectedIndexChanged="rblEventPaymentType_SelectedIndexChanged" AutoPostBack="true">
-																			<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liFixedPrice" Text="Fixed price" Selected="True" />
-																			<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liAttendee" Text="Attendee" />
-																			<asp:ListItem Value="2" class="normalRadioButton" resourcekey="liDateRestriction" Text="Date restriction" />
+																		<asp:RadioButtonList ID="rblEventPayment" runat="server" CssClass="styledRadio inlineList smallRadio" RepeatLayout="UnorderedList" OnSelectedIndexChanged="rblEventPayment_SelectedIndexChanged" AutoPostBack="true">
+																			<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liFree" Text="Free" Selected="True" />
+																			<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liPaid" Text="Paid" />
 																		</asp:RadioButtonList>
 																	</div>
 																</td>
 															</tr>
-															<tr>
-																<td class="left"></td>
-																<td class="right">
-																	<asp:Label ID="lblPortalCurrency" runat="server" />
-																</td>
-															</tr>
 														</table>
 
-														<asp:Panel runat="server" ID="pnlEventCostByBooking" Visible="false">
+														<div runat="server" id="pnlEventPaymentSettings" visible="false">
 															<table class="settings_table no_margin eventregistration">
 																<tr>
 																	<td class="left">
-																		<label for="<%=tbxEventCost.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblCostPerBooking.Help", true) %>" data-tooltip-position="top-right"><%=_("lblCostPerBooking.Text") %></label>
+																		<label for="<%=rblEventPaymentType.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblEventChargeBy.Help", true) %>" data-tooltip-position="top-right"><%=_("lblEventChargeBy.Text") %></label>
 																	</td>
 																	<td class="right">
-																		<asp:TextBox ID="tbxEventCost" runat="server"></asp:TextBox>
-																		<asp:RequiredFieldValidator ID="rfvEventCost" runat="server" ControlToValidate="tbxEventCost" CssClass="input_validation_error" Display="Dynamic" ErrorMessage="This field is required." resourcekey="rfvTaxRate" SetFocusOnError="True" ValidationGroup="vgEditArticle" />
-																		<asp:CompareValidator ID="cvEventCost" ControlToValidate="tbxEventCost" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgEditArticle"></asp:CompareValidator>
-																	</td>
-																</tr>
-															</table>
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlEventCostByAttendee" Visible="false">
-															<table class="settings_table no_margin eventregistration">
-																<tr>
-																	<td class="left">
-																		<label class="edNews_tooltip" data-tooltip-content="<%=_("lblCostPerAttendee.Help", true) %>" data-tooltip-position="top-right"><%=_("lblCostPerAttendee.Text") %></label>
-																	</td>
-																	<td class="right">
-																		<table runat="server" class="tblCostPerAttendee" id="tblCostPerAttendee">
-																			<thead>
-																				<tr>
-																					<th><%=_("Name.Text") %></th>
-																					<th><%=_("Cost.Text") %></th>
-																					<th></th>
-																				</tr>
-																			</thead>
-																			<tr valign="top">
-																				<td>
-																					<input runat="server" id="eds_costid" name="eds_costid" type="hidden" />
-																					<input runat="server" id="eds_CostRowName" type="text" class="eds_table_cell_input" name="eds_CostRowName" value="" placeholder="Name" />
-																				</td>
-																				<td>
-																					<input runat="server" id="eds_CostRowValue" type="text" class="eds_table_cell_input" name="eds_CostRowValue" value="" placeholder="Cost" />
-																					<asp:CompareValidator ID="cv_eds_CostRowValue" ControlToValidate="eds_CostRowValue" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgEditArticle"></asp:CompareValidator>
-																				</td>
-																				<td>
-																					<a href="javascript:void(0);" id="eds_add_cost_per_attendee">Add</a>
-																				</td>
-																			</tr>
-																		</table>
-
-																		<span id="s_eds_CostPerAttendeeInfo" style="color: red;"></span>
-
+																		<div class="edNews_inputGroup displayInline">
+																			<asp:RadioButtonList ID="rblEventPaymentType" CssClass="styledRadio inlineList smallRadio" runat="server" RepeatLayout="UnorderedList" OnSelectedIndexChanged="rblEventPaymentType_SelectedIndexChanged" AutoPostBack="true">
+																				<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liFixedPrice" Text="Fixed price" Selected="True" />
+																				<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liAttendee" Text="Attendee" />
+																				<asp:ListItem Value="2" class="normalRadioButton" resourcekey="liDateRestriction" Text="Date restriction" />
+																			</asp:RadioButtonList>
+																		</div>
 																	</td>
 																</tr>
 																<tr>
-																	<td class="left">
-																		<label for="<%=tblAttendeesDiscount.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblBulkDiscount.Help", true) %>" data-tooltip-position="top-right"><%=_("lblBulkDiscount.Text") %></label>
-																	</td>
+																	<td class="left"></td>
 																	<td class="right">
-																		<table runat="server" class="tblAttendeesDiscount" id="tblAttendeesDiscount">
-																			<thead>
-																				<tr>
-																					<th><%=_("Attendees.Text") %></th>
-																					<th><%=_("Discount.Text") %></th>
-																					<th></th>
-																					<th></th>
-																				</tr>
-																			</thead>
-																			<tr valign="top">
-																				<td>
-																					<input runat="server" id="eds_RowName" type="text" class="eds_table_cell_input" name="eds_RowName" value="" placeholder="Min number +" />
-																				</td>
-																				<td>
-																					<input runat="server" id="eds_RowValue" type="text" class="eds_table_cell_input" name="eds_RowValue" value="" placeholder="Discount" />
-																				</td>
-																				<td>
-																					<select runat="server" id="eds_valueTypeID" name="eds_valueType" class="eds_table_cell_select">
-																						<option value="0">Unit</option>
-																						<option value="1">Percent</option>
-																					</select>
-																				</td>
-																				<td>
-																					<a href="javascript:void(0);" id="eds_add_attendees_discount">Add</a>
-																				</td>
-																			</tr>
-																		</table>
-
-																		<span id="s_eds_AttendeesDiscount" style="color: red;"></span>
+																		<asp:Label ID="lblPortalCurrency" runat="server" />
 																	</td>
 																</tr>
 															</table>
-															<asp:TextBox ID="tbxCheckDecimal" runat="server" Style="display: none"></asp:TextBox>
-															<asp:CompareValidator ID="cvCheckDecimal" ControlToValidate="tbxCheckDecimal" runat="server" ErrorMessage="" Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="false" ValidationGroup="vgCheckDecimal"></asp:CompareValidator>
-														</asp:Panel>
-														<asp:Panel runat="server" ID="pnlEventCostByDateRestriction" Visible="false">
-															<asp:HiddenField runat="server" ID="hfDateCostMatrix" />
-															<asp:HiddenField runat="server" ID="hfDateCostMatrixViewSpecific" />
-															<div id="eds__CostByDateRestriction" class="edNews_manipulatingTable"></div>
-															<asp:TextBox ID="tbValidateDecimal" runat="server" Style="display: none"></asp:TextBox>
-															<asp:CompareValidator ID="cvValidateDecimal" ControlToValidate="tbValidateDecimal" runat="server" ErrorMessage="" Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="false" ValidationGroup="vgValidateDecimal"></asp:CompareValidator>
-														</asp:Panel>
+
+															<asp:Panel runat="server" ID="pnlEventCostByBooking" Visible="false">
+																<table class="settings_table no_margin eventregistration">
+																	<tr>
+																		<td class="left">
+																			<label for="<%=tbxEventCost.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblCostPerBooking.Help", true) %>" data-tooltip-position="top-right"><%=_("lblCostPerBooking.Text") %></label>
+																		</td>
+																		<td class="right">
+																			<asp:TextBox ID="tbxEventCost" runat="server"></asp:TextBox>
+																			<asp:RequiredFieldValidator ID="rfvEventCost" runat="server" ControlToValidate="tbxEventCost" CssClass="input_validation_error" Display="Dynamic" ErrorMessage="This field is required." resourcekey="rfvTaxRate" SetFocusOnError="True" ValidationGroup="vgEditArticle" />
+																			<asp:CompareValidator ID="cvEventCost" ControlToValidate="tbxEventCost" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgEditArticle"></asp:CompareValidator>
+																		</td>
+																	</tr>
+																</table>
+															</asp:Panel>
+															<asp:Panel runat="server" ID="pnlEventCostByAttendee" Visible="false">
+																<table class="settings_table no_margin eventregistration">
+																	<tr>
+																		<td class="left">
+																			<label class="edNews_tooltip" data-tooltip-content="<%=_("lblCostPerAttendee.Help", true) %>" data-tooltip-position="top-right"><%=_("lblCostPerAttendee.Text") %></label>
+																		</td>
+																		<td class="right">
+																			<table runat="server" class="tblCostPerAttendee" id="tblCostPerAttendee">
+																				<thead>
+																					<tr>
+																						<th><%=_("Name.Text") %></th>
+																						<th><%=_("Cost.Text") %></th>
+																						<th></th>
+																					</tr>
+																				</thead>
+																				<tr valign="top">
+																					<td>
+																						<input runat="server" id="eds_costid" name="eds_costid" type="hidden" />
+																						<input runat="server" id="eds_CostRowName" type="text" class="eds_table_cell_input" name="eds_CostRowName" value="" placeholder="Name" />
+																					</td>
+																					<td>
+																						<input runat="server" id="eds_CostRowValue" type="text" class="eds_table_cell_input" name="eds_CostRowValue" value="" placeholder="Cost" />
+																						<asp:CompareValidator ID="cv_eds_CostRowValue" ControlToValidate="eds_CostRowValue" runat="server" ErrorMessage="Please add valid decimal." Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="true" ValidationGroup="vgEditArticle"></asp:CompareValidator>
+																					</td>
+																					<td>
+																						<a href="javascript:void(0);" id="eds_add_cost_per_attendee">Add</a>
+																					</td>
+																				</tr>
+																			</table>
+
+																			<span id="s_eds_CostPerAttendeeInfo" style="color: red;"></span>
+
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class="left">
+																			<label for="<%=tblAttendeesDiscount.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblBulkDiscount.Help", true) %>" data-tooltip-position="top-right"><%=_("lblBulkDiscount.Text") %></label>
+																		</td>
+																		<td class="right">
+																			<table runat="server" class="tblAttendeesDiscount" id="tblAttendeesDiscount">
+																				<thead>
+																					<tr>
+																						<th><%=_("Attendees.Text") %></th>
+																						<th><%=_("Discount.Text") %></th>
+																						<th></th>
+																						<th></th>
+																					</tr>
+																				</thead>
+																				<tr valign="top">
+																					<td>
+																						<input runat="server" id="eds_RowName" type="text" class="eds_table_cell_input" name="eds_RowName" value="" placeholder="Min number +" />
+																					</td>
+																					<td>
+																						<input runat="server" id="eds_RowValue" type="text" class="eds_table_cell_input" name="eds_RowValue" value="" placeholder="Discount" />
+																					</td>
+																					<td>
+																						<select runat="server" id="eds_valueTypeID" name="eds_valueType" class="eds_table_cell_select">
+																							<option value="0">Unit</option>
+																							<option value="1">Percent</option>
+																						</select>
+																					</td>
+																					<td>
+																						<a href="javascript:void(0);" id="eds_add_attendees_discount">Add</a>
+																					</td>
+																				</tr>
+																			</table>
+
+																			<span id="s_eds_AttendeesDiscount" style="color: red;"></span>
+																		</td>
+																	</tr>
+																</table>
+																<asp:TextBox ID="tbxCheckDecimal" runat="server" Style="display: none"></asp:TextBox>
+																<asp:CompareValidator ID="cvCheckDecimal" ControlToValidate="tbxCheckDecimal" runat="server" ErrorMessage="" Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="false" ValidationGroup="vgCheckDecimal"></asp:CompareValidator>
+															</asp:Panel>
+															<asp:Panel runat="server" ID="pnlEventCostByDateRestriction" Visible="false">
+																<asp:HiddenField runat="server" ID="hfDateCostMatrix" />
+																<asp:HiddenField runat="server" ID="hfDateCostMatrixViewSpecific" />
+																<div id="eds__CostByDateRestriction" class="edNews_manipulatingTable"></div>
+																<asp:TextBox ID="tbValidateDecimal" runat="server" Style="display: none"></asp:TextBox>
+																<asp:CompareValidator ID="cvValidateDecimal" ControlToValidate="tbValidateDecimal" runat="server" ErrorMessage="" Display="Dynamic" Type="Double" Operator="DataTypeCheck" SetFocusOnError="false" ValidationGroup="vgValidateDecimal"></asp:CompareValidator>
+															</asp:Panel>
+														</div>
 													</div>
-												</div>
-											</ContentTemplate>
-										</asp:UpdatePanel>
+												</ContentTemplate>
+											</asp:UpdatePanel>
 
-									</asp:Panel>
+										</asp:Panel>
 
-								</div>
+									</div>
+								</asp:Panel>
 							</asp:Panel>
 
 						</asp:Panel>
@@ -2923,139 +2914,145 @@
 					<div class="content">
 						<asp:UpdatePanel ID="upAdvancedSettings" runat="server" OnUnload="UpdatePanel_Unload">
 							<ContentTemplate>
-								<div class="edn_admin_progress_overlay_container">
-									<asp:UpdateProgress ID="uppAdvancedSettings" runat="server" AssociatedUpdatePanelID="upAdvancedSettings" DisplayAfter="100" DynamicLayout="true">
-										<ProgressTemplate>
-											<div class="edn_admin_progress_overlay">
-											</div>
-										</ProgressTemplate>
-									</asp:UpdateProgress>
-									<table class="settings_table" id="tblChangeOwner" runat="server" visible="false">
-										<tr>
-											<td class="left edn_articleOwner">
-												<label class="edNews_tooltip" data-tooltip-content="<%=_("lblowner.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblowner.Text") %></label>
-											</td>
-											<td class="right">
-												<asp:Label ID="tbArticleAuthorName" runat="server" />
-											</td>
-										</tr>
-										<tr>
-											<td class="left">
-												<label for="<%=ddlRoles.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblChOwner.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblChOwner.Text") %></label>
-											</td>
-											<td class="right">
-												<asp:DropDownList ID="ddlRoles" runat="server" AppendDataBoundItems="True" AutoPostBack="True" CssClass="ddlgeneral" OnSelectedIndexChanged="ddlRoles_SelectedIndexChanged" Visible="false">
-													<asp:ListItem Value="-1" resourcekey="ListItemResource25">Select role</asp:ListItem>
-												</asp:DropDownList>
-												<asp:DropDownList ID="ddlAuthors" runat="server" AppendDataBoundItems="True" AutoPostBack="True" CssClass="ddlgeneral" OnSelectedIndexChanged="ddlAuthors_SelectedIndexChanged" Visible="false">
-													<asp:ListItem Value="-1" resourcekey="ListItemResource26">Select author</asp:ListItem>
-												</asp:DropDownList>
-											</td>
-										</tr>
-									</table>
-									<table class="settings_table" id="tblAuthorAlias" runat="server" visible="false">
-										<tr>
-											<td class="left">
-												<label for="<%=tbAuthorAliasName.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAuthorAlias.Help", true) %>" data-tooltip-position="top-right"><%=_("lblAuthorAlias.Text") %></label>
-											</td>
-											<td class="right">
-												<asp:TextBox ID="tbAuthorAliasName" runat="server" MaxLength="100" Width="200px" />
-											</td>
-										</tr>
-									</table>
-									<table class="settings_table" id="tblContactEmail" runat="server" visible="false">
-										<tr>
-											<td class="left">
-												<label for="<%=tbxContactEmail.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblContactEmail.Help", true) %>" data-tooltip-position="top-right"><%=_("lblContactEmail.Text") %></label>
-											</td>
-											<td class="right">
-												<asp:TextBox ID="tbxContactEmail" runat="server" MaxLength="256" Width="200px" />
-											</td>
-										</tr>
-									</table>
-									<asp:Panel ID="pnlChangeTheme" runat="server">
-										<table id="tblUseDefaultTemplate" runat="server" class="settings_table">
+								<asp:Panel runat="server" ID="pnlAdvancedSettingsContent">
+									<div class="edn_admin_progress_overlay_container">
+										<asp:UpdateProgress ID="uppAdvancedSettings" runat="server" AssociatedUpdatePanelID="upAdvancedSettings" DisplayAfter="100" DynamicLayout="true">
+											<ProgressTemplate>
+												<div class="edn_admin_progress_overlay">
+												</div>
+											</ProgressTemplate>
+										</asp:UpdateProgress>
+										<table class="settings_table" id="tblChangeOwner" runat="server" visible="false">
 											<tr>
-												<td class="left" style="width: 250px;">
-													<label for="<%=cbUseDefaultTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblUseDefaultTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblUseDefaultTemplate.Text") %></label>
+												<td class="left edn_articleOwner">
+													<label class="edNews_tooltip" data-tooltip-content="<%=_("lblowner.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblowner.Text") %></label>
 												</td>
 												<td class="right">
-													<div class="styledCheckbox">
-														<asp:CheckBox CssClass="normalCheckBox" ID="cbUseDefaultTemplate" runat="server" Text=" " AutoPostBack="True" Checked="True" OnCheckedChanged="cbUseDefaultTemplate_CheckedChanged"  />
-													</div>
+													<asp:Label ID="tbArticleAuthorName" runat="server" />
+												</td>
+											</tr>
+											<tr>
+												<td class="left">
+													<label for="<%=ddlRoles.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblChOwner.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblChOwner.Text") %></label>
+												</td>
+												<td class="right">
+													<asp:DropDownList ID="ddlRoles" runat="server" AppendDataBoundItems="True" AutoPostBack="True" CssClass="ddlgeneral" OnSelectedIndexChanged="ddlRoles_SelectedIndexChanged" Visible="false">
+														<asp:ListItem Value="-1" resourcekey="ListItemResource25">Select role</asp:ListItem>
+													</asp:DropDownList>
+													<asp:DropDownList ID="ddlAuthors" runat="server" AppendDataBoundItems="True" AutoPostBack="True" CssClass="ddlgeneral" OnSelectedIndexChanged="ddlAuthors_SelectedIndexChanged" Visible="false">
+														<asp:ListItem Value="-1" resourcekey="ListItemResource26">Select author</asp:ListItem>
+													</asp:DropDownList>
 												</td>
 											</tr>
 										</table>
-										<asp:Panel ID="pnlSelectThemes" runat="server" Visible="false">
-											<table class="settings_table no_margin">
-												<tr>
-													<td class="left" style="width: 250px;">
-														<label for="<%=ddlArticleDetailsTheme.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleDetailsTheme.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleDetailsTheme.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlArticleDetailsTheme" runat="server" AutoPostBack="True" CausesValidation="True" CssClass="ddlgeneral" OnSelectedIndexChanged="ddlArticleDetailsFolder_SelectedIndexChanged" />
-													</td>
-												</tr>
+										<asp:Panel ID="pnlAuthorAlias" runat="server">
+											<table class="settings_table" id="tblAuthorAlias" runat="server" visible="false">
 												<tr>
 													<td class="left">
-														<label for="<%=ddlDisplayStyle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleCSSStyle.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleCSSStyle.Text") %></label>
+														<label for="<%=tbAuthorAliasName.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAuthorAlias.Help", true) %>" data-tooltip-position="top-right"><%=_("lblAuthorAlias.Text") %></label>
 													</td>
 													<td class="right">
-														<asp:DropDownList ID="ddlDisplayStyle" runat="server" />
-													</td>
-												</tr>
-												<tr>
-													<td class="left">
-														<label for="<%=ddlArticleDetailsTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleDetailsTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleDetailsTemplate.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlArticleDetailsTemplate" runat="server" CssClass="ddlgeneral" />
-													</td>
-												</tr>
-												<tr class="second">
-													<td class="left">
-														<label for="<%=ddlDetailsDocumentsTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDetailsDocumentsTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblDetailsDocumentsTemplate.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlDetailsDocumentsTemplate" runat="server" />
-													</td>
-												</tr>
-												<tr class="second">
-													<td class="left">
-														<label for="<%=ddlDetailsLinksTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDetailsLinksTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblDetailsLinksTemplate.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlDetailsLinksTemplate" runat="server" />
-													</td>
-												</tr>
-												<tr class="second">
-													<td class="left">
-														<label for="<%=ddlDetailsRelatedArticlesTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDetailsRelatedArticlesTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblDetailsRelatedArticlesTemplate.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlDetailsRelatedArticlesTemplate" runat="server" />
-													</td>
-												</tr>
-												<tr>
-													<td class="left">
-														<label for="<%=ddlCommentsTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleCommentsTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleCommentsTemplate.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlCommentsTemplate" runat="server" CssClass="ddlgeneral" />
-													</td>
-												</tr>
-												<tr>
-													<td class="left">
-														<label for="<%=ddlGravityGallerySelectTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblGravityGallerySelectTemplate.Help", true) %>" data-tooltip-position="top-right"><%=_("lblGravityGallerySelectTemplate.Text") %></label>
-													</td>
-													<td class="right">
-														<asp:DropDownList ID="ddlGravityGallerySelectTemplate" runat="server"></asp:DropDownList>
+														<asp:TextBox ID="tbAuthorAliasName" runat="server" MaxLength="100" Width="200px" />
 													</td>
 												</tr>
 											</table>
 										</asp:Panel>
-									</asp:Panel>
-								</div>
+										<asp:Panel ID="pnlContactEmail" runat="server">
+											<table class="settings_table" id="tblContactEmail" runat="server" visible="false">
+												<tr>
+													<td class="left">
+														<label for="<%=tbxContactEmail.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblContactEmail.Help", true) %>" data-tooltip-position="top-right"><%=_("lblContactEmail.Text") %></label>
+													</td>
+													<td class="right">
+														<asp:TextBox ID="tbxContactEmail" runat="server" MaxLength="256" Width="200px" />
+													</td>
+												</tr>
+											</table>
+										</asp:Panel>
+										<asp:Panel ID="pnlChangeTheme" runat="server">
+											<table id="tblUseDefaultTemplate" runat="server" class="settings_table">
+												<tr>
+													<td class="left" style="width: 250px;">
+														<label for="<%=cbUseDefaultTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblUseDefaultTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblUseDefaultTemplate.Text") %></label>
+													</td>
+													<td class="right">
+														<div class="styledCheckbox">
+															<asp:CheckBox CssClass="normalCheckBox" ID="cbUseDefaultTemplate" runat="server" Text=" " AutoPostBack="True" Checked="True" OnCheckedChanged="cbUseDefaultTemplate_CheckedChanged" />
+														</div>
+													</td>
+												</tr>
+											</table>
+											<asp:Panel ID="pnlSelectThemes" runat="server" Visible="false">
+												<table class="settings_table no_margin">
+													<tr>
+														<td class="left" style="width: 250px;">
+															<label for="<%=ddlArticleDetailsTheme.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleDetailsTheme.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleDetailsTheme.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlArticleDetailsTheme" runat="server" AutoPostBack="True" CausesValidation="True" CssClass="ddlgeneral" OnSelectedIndexChanged="ddlArticleDetailsFolder_SelectedIndexChanged" />
+														</td>
+													</tr>
+													<tr>
+														<td class="left">
+															<label for="<%=ddlDisplayStyle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleCSSStyle.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleCSSStyle.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlDisplayStyle" runat="server" />
+														</td>
+													</tr>
+													<tr>
+														<td class="left">
+															<label for="<%=ddlArticleDetailsTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleDetailsTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleDetailsTemplate.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlArticleDetailsTemplate" runat="server" CssClass="ddlgeneral" />
+														</td>
+													</tr>
+													<tr class="second">
+														<td class="left">
+															<label for="<%=ddlDetailsDocumentsTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDetailsDocumentsTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblDetailsDocumentsTemplate.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlDetailsDocumentsTemplate" runat="server" />
+														</td>
+													</tr>
+													<tr class="second">
+														<td class="left">
+															<label for="<%=ddlDetailsLinksTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDetailsLinksTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblDetailsLinksTemplate.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlDetailsLinksTemplate" runat="server" />
+														</td>
+													</tr>
+													<tr class="second">
+														<td class="left">
+															<label for="<%=ddlDetailsRelatedArticlesTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDetailsRelatedArticlesTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblDetailsRelatedArticlesTemplate.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlDetailsRelatedArticlesTemplate" runat="server" />
+														</td>
+													</tr>
+													<tr>
+														<td class="left">
+															<label for="<%=ddlCommentsTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleCommentsTemplate.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblArticleCommentsTemplate.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlCommentsTemplate" runat="server" CssClass="ddlgeneral" />
+														</td>
+													</tr>
+													<tr>
+														<td class="left">
+															<label for="<%=ddlGravityGallerySelectTemplate.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblGravityGallerySelectTemplate.Help", true) %>" data-tooltip-position="top-right"><%=_("lblGravityGallerySelectTemplate.Text") %></label>
+														</td>
+														<td class="right">
+															<asp:DropDownList ID="ddlGravityGallerySelectTemplate" runat="server"></asp:DropDownList>
+														</td>
+													</tr>
+												</table>
+											</asp:Panel>
+										</asp:Panel>
+									</div>
+								</asp:Panel>
 							</ContentTemplate>
 						</asp:UpdatePanel>
 					</div>
@@ -3125,7 +3122,6 @@
 						<td></td>
 					</tr>
 				</table>
-
 				<asp:Panel ID="pnlPerArticlePermissions" runat="server" Visible="false">
 					<asp:UpdatePanel ID="upPerArticlePermissions" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
 						<ContentTemplate>
@@ -3280,6 +3276,52 @@
 						</ContentTemplate>
 					</asp:UpdatePanel>
 				</asp:Panel>
+				<div class="section_box white_border_1 dark_grey workFlowInfo">
+					<div runat="server" id="divWorkflowinfo">
+						<h1 class="section_box_title">
+							<span><%=_("Workflow")%></span>
+							<span id="spnCurrentWorkFlow" runat="server"></span>
+						</h1>
+						<div class="clearFix"></div>
+						<div class="content">
+							<div class="clearFix"></div>
+							<div class="edNews_inputGroup">
+								<asp:Literal runat="server" ID="ltWorkflowStatesList"></asp:Literal>
+							</div>
+						</div>
+					</div>
+					<div class="content">
+						<div class="topPadded bottomPadded">
+							<div class="edNews_inputGroup noWidthLabel textCenter">
+								<label runat="server" id="lblApprove">
+									<label for="<%=cbApproveArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content='<%=_("Approve.HelpText")%>' data-tooltip-position="top-right"><%=_("Approve")%></label>
+								</label>
+								<label runat="server" id="lblApproveDirectPublish">
+									<label for="<%=cbApproveArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content='<%=_("Publish.HelpText")%>' data-tooltip-position="top-right" visible="False"><%=_("Publish")%></label>
+								</label>
+								<div class="eds__approveArticle switchCheckbox">
+									<asp:CheckBox CssClass="normalCheckBox" ID="cbApproveArticle" runat="server" Text="Approve article" />
+								</div>
+							</div>
+							<div id="divRejectArticle" runat="server" visible="false" class="edNews_inputGroup noWidthLabel textCenter">
+								<label for="<%=cbRejectArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("Reject.HelpText")%>" data-tooltip-position="top-right"><%=_("Reject")%></label>
+								<div class="eds__rejectArticle switchCheckbox">
+									<asp:CheckBox CssClass="normalCheckBox" ID="cbRejectArticle" runat="server" Text="Reject article" />
+								</div>
+								<div class="eds__rejectArticleMessageText text_input_set" style="display: none">
+									<div style="padding: 0 20px;">
+										<label for="<%=tbRejectMessage.ClientID %>" class="edNews_tooltip" data-tooltip-content="Please enter reject message" data-tooltip-position="top-right"><%=_("PleaseEnterRejectMessage") %></label>
+										<asp:TextBox ID="tbRejectMessage" runat="server" MaxLength="2000" TextMode="MultiLine" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<label runat="server" class="infoMessages edNews_smallerInlineBlock info" id="spnIsRevision" visible="false"><%=_("YouAreEditingArticleRevision")%></label>
+					</div>
+					<div id="divCurrentWorkflowStateList" runat="server" class="collapsible_box" visible="false">
+						<asp:Literal runat="server" ID="liCurrentWorkFlowState"></asp:Literal>
+					</div>
+				</div>
 				<div class="main_action_buttons">
 					<div id="pnlSocialSharing" class="social_sharing_box social_media" runat="server" visible="false">
 						<p id="lblSocialSharingTitle" runat="server" style="font-weight: bold;">
@@ -3319,14 +3361,6 @@
 								<asp:CheckBox CssClass="normalCheckBox" ID="cbPostToJournal" runat="server" /><asp:Label ID="lblPostToJournal" resourcekey="lblPostToJournal" runat="server" Text="Post to Journal" /></span>
 						</p>
 					</div>
-					<div class="edNews_inputGroup textCenter">
-						<asp:RadioButtonList ID="rblDraftPublish" CssClass="styledRadio inlineList" runat="server" RepeatLayout="UnorderedList">
-							<asp:ListItem Value="Draft" class="normalRadioButton" resourcekey="ListItemResource27" Selected="True">Draft Article</asp:ListItem>
-							<asp:ListItem Value="Publish" class="normalRadioButton" resourcekey="ListItemResource28">Publish Article</asp:ListItem>
-						</asp:RadioButtonList>
-					</div>
-					<asp:Label ID="lblApprovingMessage" runat="server" CssClass="EDN_warning" Text="After update, article must be approved again." Style="display: none" resourcekey="lblApprovingMessageResource1" />
-
 					<div class="mainActions">
 						<asp:LinkButton ID="btnAddNewArticle" CssClass="add" Visible="false" runat="server" OnClick="AddNewArticle_Click" Text="Save article" OnClientClick="return EdsSaveButtonClick('vgEditArticle');" ValidationGroup="vgEditArticle" resourcekey="btnAddNewArticle" />
 						<asp:LinkButton ID="btnAddAndClose" CssClass="downSaveClose" Visible="false" runat="server" OnClick="AddAndClose_Click" Text="Save and close" UseSubmitBehavior="false" OnClientClick="return EdsSaveButtonClick('vgEditArticle');" ValidationGroup="vgEditArticle" resourcekey="btnAddAndClose" />
@@ -3362,32 +3396,20 @@
 				</div>
 			</asp:Panel>
 		</div>
-		<asp:ObjectDataSource ID="odsArticleImages" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" runat="server" SelectMethod="GetImagesFromGallery" UpdateMethod="UpdatePictureTitleDescription" DeleteMethod="DeleteImage">
+		<asp:ObjectDataSource ID="odsArticleImages" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" runat="server" SelectMethod="GetImageListFromGallery" UpdateMethod="UpdatePictureTitleDescription" DeleteMethod="DeleteImage">
 			<DeleteParameters>
 				<asp:Parameter Name="PictureID" Type="Int32" />
 			</DeleteParameters>
 			<SelectParameters>
 				<asp:Parameter Name="GalleryID" Type="Int32" />
 				<asp:Parameter Name="orderByDesc" Type="Boolean" />
+				<asp:Parameter Name="RevisionId" Type="Int32" />
 			</SelectParameters>
 			<UpdateParameters>
 				<asp:Parameter Name="PictureID" Type="Int32" />
 				<asp:Parameter Name="Title" Type="String" />
 				<asp:Parameter Name="Description" Type="String" />
-			</UpdateParameters>
-		</asp:ObjectDataSource>
-		<asp:ObjectDataSource ID="odsGalleryImages" runat="server" DeleteMethod="DeleteImage" SelectMethod="GetImagesFromGallery" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" UpdateMethod="UpdatePictureTitleDescription">
-			<DeleteParameters>
-				<asp:Parameter Name="PictureID" Type="Int32" />
-			</DeleteParameters>
-			<SelectParameters>
-				<asp:Parameter Name="GalleryID" Type="Int32" />
-				<asp:Parameter Name="orderByDesc" Type="Boolean" />
-			</SelectParameters>
-			<UpdateParameters>
-				<asp:Parameter Name="PictureID" Type="Int32" />
-				<asp:Parameter Name="Title" Type="String" />
-				<asp:Parameter Name="Description" Type="String" />
+				<asp:Parameter Name="RevisionId" Type="Int32" />
 			</UpdateParameters>
 		</asp:ObjectDataSource>
 		<asp:ObjectDataSource ID="odsGetTagsByName" runat="server" EnablePaging="True" SelectCountMethod="GetCloudTagsSortByNameCount" SelectMethod="odsGetCloudTagsSortByName" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.TagCloudDB" MaximumRowsParameterName="To"
@@ -3432,13 +3454,71 @@
 	</asp:Panel>
 </asp:Panel>
 <asp:Panel ID="pnlErrorInfo" runat="server" Visible="false" EnableViewState="false">
-	<%=Youdonothavepermision%>
+	<div class="edNews_adminWrapper mainContentWrapper topPadded bottomPadded">
+		<div id="EDNadmin" class="contentSection">
+			<div class="titleWrapper">
+				<span>Error</span>
+			</div>
+			<div class="main_content">
+				<div class="section_box white_border_1">
+					<h1 class="section_box_title">
+						<span><%=Youdonothavepermision%></span>
+					</h1>
+					<div class="content">
+						<div class="section_box">
+							<span id="lblErrorReasonMessage" class="infoMessages error" runat="server" visible="false" enableviewstate="False" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </asp:Panel>
 <script type="text/javascript">
+
 	// <![CDATA[
 	<%=alertConfirm%>
 	<%=initTextEditorCountMaxChar%>
 	var isEdsSaveButtonClicked = false;
+	function closingCode() {
+		$.ajax({
+			type: 'GET',
+			url: '<%=_ControlPath%>/ashx/ArticleEditAction.ashx',
+			dataType: 'json',
+			data: {
+				portalId: <%=PortalId%>,
+				moduleId: <%=ModuleId%>,
+				tabid: <%=TabId%>,
+				articleid:<%=editArticleId%>,
+				action: 'releaselock'
+			},
+			success: function (response) {
+			},
+			complete: function () {
+			}
+		});
+	};
+
+	function cleararticleCacheLock() {
+		$.ajax({
+			type: 'GET',
+			url: '<%=_ControlPath%>/ashx/ArticleEditAction.ashx',
+			dataType: 'json',
+			data: {
+				portalId: <%=PortalId%>,
+				moduleId: <%=ModuleId%>,
+				tabid: <%=TabId%>,
+				articleid:<%=editArticleId%>,
+				action: 'clearlock'
+			},
+			success: function (response) {
+			},
+			complete: function () {
+			}
+		});
+	};
+
 	function EdsSaveButtonClick(validationGroup) {
 		if (typeof (Page_ClientValidate) == 'function') {
 			if (Page_ClientValidate(validationGroup) == false)
@@ -3460,21 +3540,21 @@
 					return false;
 			}
 		}
-
-		if(!isEdsSaveButtonClicked) {
+		if (!isEdsSaveButtonClicked) {
 			isEdsSaveButtonClicked = true;
+			<%--if ('<%=IS_ARTICLE_REVISION%>' == 'True')
+				eds2_2("#<%=pnlCustomFieldsSelect.ClientID%> :input").attr("disabled", false);--%>
 			return true;
 		}
-
 		return false;
 	}
 
-	function ClearCFFileUpload(clearFuID){
-		var input = $('#'+clearFuID);
+	function ClearCFFileUpload(clearFuID) {
+		var input = $('#' + clearFuID);
 		input.replaceWith(input.val('').clone(true));
 	}
 
-	function ToggleCFFileUpload(CustomFieldID, divHideID, divShowID, action){
+	function ToggleCFFileUpload(CustomFieldID, divHideID, divShowID, action) {
 		var divToHide = document.getElementById(divHideID);
 		if (divToHide != null)
 			divToHide.style.display = "none";
@@ -3486,11 +3566,11 @@
 		var hfUploadFieldStateValue = document.getElementById('<%=hfUploadFieldState.ClientID%>').value;
 		if (hfUploadFieldStateValue.length != 0) {
 			var indexOd = hfUploadFieldStateValue.indexOf('|' + CustomFieldID + ':')
-			if (indexOd != -1){
+			if (indexOd != -1) {
 
 				var newState = 'change';
 
-				if(action == 'change')
+				if (action == 'change')
 					newState = 'cancel';
 
 				var pocetak = hfUploadFieldStateValue.substring(indexOd + CustomFieldID.length + 2); // cut
@@ -3503,45 +3583,45 @@
 	}
 
 	function InitCFDateTimePickers(id) {
-		eds2_2(id).datepick({ dateFormat: "<%=dateFormat%>"});
+		eds2_2(id).datepick({ dateFormat: "<%=dateFormat%>" });
 	}
 
 	function FillEventAttendeesDiscountHf() {
 		$("#s_eds_AttendeesDiscount").html("");
 		document.getElementById('<%=hfAttendeesDiscount.ClientID%>').value = "";
 
-		$('#<%=tblAttendeesDiscount.ClientID%> tr').each(function() {
+		$('#<%=tblAttendeesDiscount.ClientID%> tr').each(function () {
 			var attendees = $(this).find('input[name*="eds_RowName"]').val();
 			var value = $(this).find('input[name*="eds_RowValue"]').val();
 			var valueType = $(this).find('select.eds_table_cell_select').val();
 
-			if(value != null && attendees != null && valueType != null){
+			if (value != null && attendees != null && valueType != null) {
 
 				var decimalCheck = true;
 
-				if(value.length > 0){
+				if (value.length > 0) {
 
 					var textbox = document.getElementById('<%=tbxCheckDecimal.ClientID%>');
 					textbox.value = value;
 
-					if (Page_ClientValidate('vgCheckDecimal')){
+					if (Page_ClientValidate('vgCheckDecimal')) {
 					}
-					else{
+					else {
 						decimalCheck = false;
 						$("#s_eds_AttendeesDiscount").html("Enter valid decimal value.");
 					}
 				}
-				if(attendees.length > 0){
-					if(!isNaN(attendees) && (attendees%1)===0) {
-						if(attendees < 2)
+				if (attendees.length > 0) {
+					if (!isNaN(attendees) && (attendees % 1) === 0) {
+						if (attendees < 2)
 							$("#s_eds_AttendeesDiscount").html("At least 2 attendees!");
 					}
 					else
 						$("#s_eds_AttendeesDiscount").html("Enter valid integer. (e.g. >=2)!");
 				}
 
-				if((!isNaN(attendees) || attendees.length == 0) && (decimalCheck || value.length == 0)){
-					document.getElementById('<%=hfAttendeesDiscount.ClientID%>').value += '<discount attendees="' + attendees + '" value="' + value + '" type="'+ valueType +'"/>'
+				if ((!isNaN(attendees) || attendees.length == 0) && (decimalCheck || value.length == 0)) {
+					document.getElementById('<%=hfAttendeesDiscount.ClientID%>').value += '<discount attendees="' + attendees + '" value="' + value + '" type="' + valueType + '"/>'
 				}
 			}
 		});
@@ -3557,28 +3637,28 @@
 		$("#s_eds_CostPerAttendeeInfo").html("");
 		document.getElementById('<%=hfCostPerAttendee.ClientID%>').value = "";
 
-		$('#<%=tblCostPerAttendee.ClientID%> tr').each(function() {
+		$('#<%=tblCostPerAttendee.ClientID%> tr').each(function () {
 			var name = $(this).find('input[name*="eds_CostRowName"]').val();
 			var value = $(this).find('input[name*="eds_CostRowValue"]').val();
 			var costId = $(this).find('input[name*="eds_costid"]').val();
 
-			if(value != null && name != null && costId != null){
-				if(value.length > 0){
+			if (value != null && name != null && costId != null) {
+				if (value.length > 0) {
 
 					var textbox = document.getElementById('<%=tbxCheckDecimal.ClientID%>');
 					textbox.value = value;
 
 					if (Page_ClientValidate('vgCheckDecimal'))
-						document.getElementById('<%=hfCostPerAttendee.ClientID%>').value += '<cost id="'+ costId +'"><name><![CDATA[' + name + ']]></name><value>' + value + '</value></cost>';
+						document.getElementById('<%=hfCostPerAttendee.ClientID%>').value += '<cost id="' + costId + '"><name><![CDATA[' + name + ']]></name><value>' + value + '</value></cost>';
 					else
 						$("#s_eds_CostPerAttendeeInfo").html("Enter valid decimal value.");
 				}
-				else if(name.trim().length > 0)
-					document.getElementById('<%=hfCostPerAttendee.ClientID%>').value += '<cost id="'+ costId +'"><name><![CDATA[' + name + ']]></name><value>' + value + '</value></cost>'
-		}
+				else if (name.trim().length > 0)
+					document.getElementById('<%=hfCostPerAttendee.ClientID%>').value += '<cost id="' + costId + '"><name><![CDATA[' + name + ']]></name><value>' + value + '</value></cost>'
+			}
 		});
 
-	var hfvalue = document.getElementById('<%=hfCostPerAttendee.ClientID%>').value;
+		var hfvalue = document.getElementById('<%=hfCostPerAttendee.ClientID%>').value;
 
 		if (hfvalue.value !== "") {
 			document.getElementById('<%=hfCostPerAttendee.ClientID%>').value = "<costs>" + hfvalue + "</costs>";
@@ -3592,7 +3672,7 @@
 			var hfValue = document.getElementById('<%=hfParenSelectedValue.ClientID%>').value;
 			if (hfValue.length != 0) {
 				var indexOd = hfValue.indexOf(ControlClientID + ';')
-				if (indexOd != -1){
+				if (indexOd != -1) {
 					var pocetak = hfValue.substring(indexOd + ControlClientID.length + 1); // cut
 					var indexOdBroja = pocetak.indexOf('|');
 					var kraj = pocetak.substring(0, indexOdBroja);
@@ -3614,18 +3694,17 @@
 			var options = chkBox.getElementsByTagName('input');
 			var checkedValues = '';
 
-			for (var i = 0; i < options.length; i++)
-			{
-				if(options[i].checked)
+			for (var i = 0; i < options.length; i++) {
+				if (options[i].checked)
 					checkedValues += options[i].value + ',';
 			}
 
-			if(checkedValues.length > 0){
+			if (checkedValues.length > 0) {
 				checkedValues = checkedValues.substring(0, checkedValues.length - 1);
 				var hfValue = document.getElementById('<%=hfParenSelectedValue.ClientID%>').value;
 				if (hfValue.length != 0) {
 					var indexOd = hfValue.indexOf(ControlClientID + ';')
-					if (indexOd != -1){
+					if (indexOd != -1) {
 						var pocetak = hfValue.substring(indexOd + ControlClientID.length + 1); // cut
 						var indexOdBroja = pocetak.indexOf('|');
 						var kraj = pocetak.substring(0, indexOdBroja);
@@ -3639,11 +3718,11 @@
 					document.getElementById('<%=hfLastSelectedIndexChanged.ClientID%>').value = cfid;
 				}
 			}
-			else{
+			else {
 				var hfValue = document.getElementById('<%=hfParenSelectedValue.ClientID%>').value;
 				if (hfValue.length != 0) {
 					var indexOd = hfValue.indexOf(ControlClientID + ';')
-					if (indexOd != -1){
+					if (indexOd != -1) {
 						var pocetak = hfValue.substring(indexOd + ControlClientID.length + 1); // cut
 						var indexOdBroja = pocetak.indexOf('|');
 						var kraj = pocetak.substring(0, indexOdBroja);
@@ -3673,101 +3752,102 @@
 		gmaps_token_editor_edit_marker_button_confirm: '<%=Confirm%>',
 		gmaps_token_editor_edit_marker_button_cancel: '<%=Cancel%>'
 	},
-	fineUploaderLocalization = function () {
-		return <%=FineUploaderLocalizationJs()%>;
-	},
-	galleryFineUploaderSettings = function () {
-		return {
-			endpoint: '<%=_ControlPath%>htmluploader.ashx?portalid=<%=PortalId%>',
-			params: {
-				moduleId: '<%=ModuleId%>',
-				galleryId: document.getElementById('<%=curentActiveGalleryId.ClientID%>').value,
-				resize: document.getElementById('<%=hfResize.ClientID%>').value,
-				width: document.getElementById('<%=hfResizeWidth.ClientID%>').value,
-				height: document.getElementById('<%=hfResizeHeight.ClientID%>').value,
-				jsonResponse: true
-			},
-			onAllUploadsComplete: function () {
-				document.getElementById('<%=galleryUploadComplete.ClientID%>').click();
-			},
-			localization: fineUploaderLocalization(),
-			allowedExtensions: [
-				'jpg',
-				'jpeg',
-				'gif',
-				'png',
-				'bmp'
-			],
-			allowPreviewThumbnails: true
-		}
-	},
-	documentsFineUploaderSettings = function () {
-		var uploadedDocumentsJson = [],
-			hfUploadedDocs = document.getElementById('<%=hfUploadedDocs.ClientID%>');
+		fineUploaderLocalization = function () {
+			return <%=FineUploaderLocalizationJs()%>;
+		},
+		galleryFineUploaderSettings = function () {
+			return {
+				endpoint: '<%=_ControlPath%>htmluploader.ashx?portalid=<%=PortalId%>',
+				params: {
+					moduleId: '<%=ModuleId%>',
+					galleryId: document.getElementById('<%=curentActiveGalleryId.ClientID%>').value,
+					resize: document.getElementById('<%=hfResize.ClientID%>').value,
+					width: document.getElementById('<%=hfResizeWidth.ClientID%>').value,
+					height: document.getElementById('<%=hfResizeHeight.ClientID%>').value,
+					revisionid: <%=RevisionHistoryEntryID%>,
+					articleId: <%=editArticleId%>,
+					jsonResponse: true
+				},
+				onAllUploadsComplete: function () {
+					document.getElementById('<%=galleryUploadComplete.ClientID%>').click();
+				},
+				localization: fineUploaderLocalization(),
+				allowedExtensions: [
+					'jpg',
+					'jpeg',
+					'gif',
+					'png',
+					'bmp'
+				],
+				allowPreviewThumbnails: true
+			}
+		},
+		documentsFineUploaderSettings = function () {
+			var uploadedDocumentsJson = [],
+				hfUploadedDocs = document.getElementById('<%=hfUploadedDocs.ClientID%>');
 
-		return {
-			endpoint: '<%=_ControlPath%>htmldocumentuploader.ashx?portalid=<%=PortalId%>',
-			params: {
-				articleid:'<%=Article_EDITING == null ? 0 : Article_EDITING.ArticleID%>',
-				moduleId:'<%=ModuleId%>',
-				guid:'<%=hfGUID.Value%>',
-				jsonResponse: true
-			},
-			onEachUploadComplete: function (response) {
-				if('<%=Article_EDITING == null ? 0 : Article_EDITING.ArticleID%>' == '0')
-					uploadedDocumentsJson.push(response.document);
-			},
-			onAllUploadsComplete: function () {
-				hfUploadedDocs.value= JSON.stringify(uploadedDocumentsJson);
-				document.getElementById('<%=btnDocUploadRefresh.ClientID%>').click();
-			},
-			localization: fineUploaderLocalization(),
-			allowedExtensions: [],
-			allowPreviewThumbnails: true
-		}
-	},
-	recurringDocumentsFineUploaderSettings = function () {
-		return {
-			endpoint: '<%=_ControlPath%>htmldocumentuploader.ashx?portalid=<%=PortalId%>',
-			params: {
-				articleid:'<%=Article_EDITING == null ? 0 : Article_EDITING.ArticleID%>',
-				recurringId: '<%=EditEventRecurringID%>',
-				moduleId:'<%=ModuleId%>',
-				jsonResponse: true
-			},
-			onAllUploadsComplete: function () {
-				document.getElementById('<%=btnRecurringEventDocUploadRefresh.ClientID%>').click();
-			},
-			localization: fineUploaderLocalization(),
-			allowedExtensions: [],
-			allowPreviewThumbnails: true
-		}
-	};
+			return {
+				endpoint: '<%=_ControlPath%>htmldocumentuploader.ashx?portalid=<%=PortalId%>',
+				params: {
+					articleid:'<%=Article_EDITING == null ? 0 : Article_EDITING.ArticleID%>',
+					moduleId:'<%=ModuleId%>',
+					guid: '<%=hfGUID.Value%>',
+					revisionid: <%=RevisionHistoryEntryID%>,
+					jsonResponse: true
+				},
+				onEachUploadComplete: function (response) {
+					if ('<%=Article_EDITING == null ? 0 : Article_EDITING.ArticleID%>' == '0')
+						uploadedDocumentsJson.push(response.document);
+				},
+				onAllUploadsComplete: function () {
+					hfUploadedDocs.value = JSON.stringify(uploadedDocumentsJson);
+					document.getElementById('<%=btnDocUploadRefresh.ClientID%>').click();
+				},
+				localization: fineUploaderLocalization(),
+				allowedExtensions: [],
+				allowPreviewThumbnails: true
+			}
+		},
+		recurringDocumentsFineUploaderSettings = function () {
+			return {
+				endpoint: '<%=_ControlPath%>htmldocumentuploader.ashx?portalid=<%=PortalId%>',
+				params: {
+					articleid:'<%=Article_EDITING == null ? 0 : Article_EDITING.ArticleID%>',
+					recurringId: '<%=EditEventRecurringID%>',
+					moduleId: '<%=ModuleId%>',
+					jsonResponse: true
+				},
+				onAllUploadsComplete: function () {
+					document.getElementById('<%=btnRecurringEventDocUploadRefresh.ClientID%>').click();
+				},
+				localization: fineUploaderLocalization(),
+				allowedExtensions: [],
+				allowPreviewThumbnails: true
+			}
+		};
 
 	function ClientValidateEmbedURL(source, arguments) {
 		var textBox = document.getElementById("<%=tbEmbedVideoURL.ClientID %>");
-		if(source.id.indexOf("Shared")!=-1)
+		if (source.id.indexOf("Shared") != -1)
 			textBox = document.getElementById("<%=tbSharedEmbedVideoURL.ClientID %>");
-		else if (source.id.indexOf("Custom")!=-1)
+		else if (source.id.indexOf("Custom") != -1)
 			textBox = document.getElementById("<%=tbCustomEmbedVideoURL.ClientID %>");
 
-	var s = textBox.value;
-	if((s.indexOf("youtube.com") != -1 && s.indexOf("v=") != -1)||(s.indexOf("youtu.be/") != -1)||(s.indexOf("vimeo.com") != -1)||(s.indexOf("wistia.com") != -1)||(s.indexOf("wistia.net") != -1))
-		arguments.IsValid = true;
-	else
-		arguments.IsValid = false;
-}
-
-function ClientValidateStructuredDataTemplate(source, arguments) {
-	var jsonTemplate = document.getElementById("<%=tbStructuredDataJSON.ClientID %>").value;
-	if(jsonTemplate.indexOf("Placeholder") == -1 )
-	{
-		arguments.IsValid = true;
+		var s = textBox.value;
+		if ((s.indexOf("youtube.com") != -1 && s.indexOf("v=") != -1) || (s.indexOf("youtu.be/") != -1) || (s.indexOf("vimeo.com") != -1) || (s.indexOf("wistia.com") != -1) || (s.indexOf("wistia.net") != -1))
+			arguments.IsValid = true;
+		else
+			arguments.IsValid = false;
 	}
-	else
-	{
-		arguments.IsValid = false;
-		$('#<%=pnlSEO.ClientID%>').children('.content').slideDown(0);
+
+	function ClientValidateStructuredDataTemplate(source, arguments) {
+		var jsonTemplate = document.getElementById("<%=tbStructuredDataJSON.ClientID %>").value;
+		if (jsonTemplate.indexOf("Placeholder") == -1) {
+			arguments.IsValid = true;
+		}
+		else {
+			arguments.IsValid = false;
+			$('#<%=pnlSEO.ClientID%>').children('.content').slideDown(0);
 			$('#<%=pnlSEO.ClientID%> h1').addClass('close');
 			$('#<%=pnlSEO.ClientID%>').find('.edsTabStructuredData').click();
 			$('#<%=tbStructuredDataJSON.ClientID %>').focus();
@@ -3778,7 +3858,7 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 	window.edn_module_root = '<%=_ControlPath%>';
 	window.edn_geolocation_request = <%=askForLocation%>;
 
-	function initializeUploadify (inputId, galleryId) {
+	function initializeUploadify(inputId, galleryId) {
 		(function ($) {
 			if ($('#EDNadmin .uploadify_container').length == 0)
 				return;
@@ -3786,7 +3866,7 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 			$('#' + inputId).uploadify({
 				'uploader': '<%=_ControlPath%>js/uploadify.swf',
 				'script': '<%=_ControlPath%>UploadImages.ashx?tabid=<%=TabId%>',
-				'scriptData': { 'moduleId': <%=ModuleId%>, 'galleryId': galleryId },
+				'scriptData': { 'moduleId': <%=ModuleId%>, 'galleryId': galleryId, 'revisionid': <%=RevisionHistoryEntryID%>, 'articleId': <%=editArticleId%>},
 				'cancelImg': '<%=_ControlPath%>images/cancel.png',
 				'multi': true,
 				'fileDesc': 'Image Files',
@@ -3826,15 +3906,15 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 							life: 3000,
 							sticky: false
 						}
-				);
+					);
 				}
 			});
 		})($);
-		}
+	}
 
 	<%=initDocumentUploadRblSelection%>
 
-	function CostByDateRestriction_Init(){
+	function CostByDateRestriction_Init() {
 		eds2_2('#eds__CostByDateRestriction').eds2_2_DateRestrictionPayment_Edit_1_0_0({
 			hfStateId: '#<%=hfDateCostMatrix.ClientID%>',
 			hfStateViewSpecificId: '#<%=hfDateCostMatrixViewSpecific.ClientID%>',
@@ -3864,19 +3944,20 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 			data: {
 				portalId: <%=PortalId%>,
 				moduleId: <%=ModuleId%>,
+				articleId: <%=editArticleId%>,
 				tabid: <%=TabId%>,
 				templateName: encodeURIComponent(e.target.value),
 				action: 'getMetaDataTemplate'
 			},
 			success: function (response) {
 				if (response != null && response.success != undefined && response.success && response.message != undefined) {
-					if(templateType=="openGraph")
+					if (templateType == "openGraph")
 						document.getElementById("<%=tbOpenGraphMetaTags.ClientID %>").value = response.message;
 
-					if(templateType=="structuredData")
+					if (templateType == "structuredData")
 						document.getElementById("<%=tbStructuredDataJSON.ClientID %>").value = response.message;
 
-					if(templateType=="twitterCards")
+					if (templateType == "twitterCards")
 						document.getElementById("<%=tbTwitterCardMetaTags.ClientID %>").value = response.message;
 				}
 			},
@@ -3886,19 +3967,160 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 		});
 		return false;
 	}
+	function ApproveClicked(elem, forceCheck) {
+		var $clicked = $(elem);
+
+		if ($clicked[0].checked) {
+			var $selectedState = $('.eds__selectedWorkFlowState', '.eds__workflowStateList'),
+				$rejectInput = $('.eds__rejectArticle');
+
+			$('input', $rejectInput).prop('disabled', true);
+
+			if ($selectedState.length > 0) {
+				$nextState = $($selectedState).next('li');
+				if ($nextState.length > 0) {
+					$($selectedState).removeClass('eds__selectedWorkFlowState');
+					$($nextState).addClass('eds__selectedWorkFlowState');
+					if ($($nextState).data('publishstate') == 'publish' || $($nextState).data('publishstate') == 'approve') {
+						$("#<%=btnUpdateArticle.ClientID%>").hide();
+						$("#<%=btnAddNewArticle.ClientID%>").hide();
+						var $social_sharing_box = $('#<%=pnlSocialSharing.ClientID%>'),
+							$PostToJournal = $('#<%=pnlPostToJournal.ClientID%>');
+						if ($($nextState).data('publishstate') == 'publish') {
+							$social_sharing_box.stop(true, true).fadeTo(200, 1);
+							$PostToJournal.stop(true, true).fadeTo(200, 1);
+						}
+					}
+				}
+			}
+			else {
+				var $social_sharing_box = $('#<%=pnlSocialSharing.ClientID%>'),
+					$PostToJournal = $('#<%=pnlPostToJournal.ClientID%>');
+				$social_sharing_box.stop(true, true).fadeTo(200, 1);
+				$PostToJournal.stop(true, true).fadeTo(200, 1);
+
+			}
+		}
+		else {
+			if (!forceCheck) {
+				var $selectedState = $('.eds__selectedWorkFlowState', '.eds__workflowStateList'),
+					$rejectInput = $('.eds__rejectArticle');
+
+				$('input', $rejectInput).prop('disabled', false);
+
+				if ($selectedState.length > 0) {
+					$prevState = $($selectedState).prev('li');
+					if ($prevState.length > 0) {
+						$($selectedState).removeClass('eds__selectedWorkFlowState');
+						$($prevState).addClass('eds__selectedWorkFlowState');
+						//if ($($selectedState).data('publishstate') == 'publish' || $($selectedState).data('publishstate') == 'approve') {
+						$("#<%=btnUpdateArticle.ClientID%>").show();
+						$("#<%=btnAddNewArticle.ClientID%>").show();
+						var $social_sharing_box = $('#<%=pnlSocialSharing.ClientID%>'),
+							$PostToJournal = $('#<%=pnlPostToJournal.ClientID%>');
+						$social_sharing_box.stop(true, true).fadeTo(0, 0);
+						$PostToJournal.stop(true, true).fadeTo(0, 0);
+						//}
+					}
+				}
+				else {
+					var $social_sharing_box = $('#<%=pnlSocialSharing.ClientID%>'),
+						$PostToJournal = $('#<%=pnlPostToJournal.ClientID%>');
+					$social_sharing_box.stop(true, true).fadeTo(0, 0);
+					$PostToJournal.stop(true, true).fadeTo(0, 0);
+				}
+			}
+			else {
+				var $social_sharing_box = $('#<%=pnlSocialSharing.ClientID%>'),
+					$PostToJournal = $('#<%=pnlPostToJournal.ClientID%>');
+				$social_sharing_box.stop(true, true).fadeTo(0, 0);
+				$PostToJournal.stop(true, true).fadeTo(0, 0);
+			}
+		}
+	}
+
+	function RejectClicked(elem, forceCheck) {
+		var $clicked = $(elem);
+
+		if ($clicked[0].checked) {
+			var $selectedState = $('.eds__selectedWorkFlowState', '.eds__workflowStateList'),
+				$approveArticle = $('.eds__approveArticle'),
+				$rejectMessage = $('.eds__rejectArticleMessageText');
+
+			$('input', $approveArticle).prop('disabled', true);
+
+			if ($selectedState.length > 0) {
+				$prevState = $($selectedState).prev('li');
+				if ($prevState.length > 0) {
+					$($selectedState).removeClass('eds__selectedWorkFlowState');
+					$($prevState).addClass('eds__selectedWorkFlowState');
+					$rejectMessage.show();
+					if ($($prevState).data('publishstate') == 'approve' || $($prevState).data('publishstate') == 'draft') {
+						$("#<%=btnUpdateArticle.ClientID%>").hide();
+					}
+				}
+			}
+		}
+		else {
+			if (!forceCheck) {
+				var $selectedState = $('.eds__selectedWorkFlowState', '.eds__workflowStateList'),
+					$approveArticle = $('.eds__approveArticle'),
+					$rejectMessage = $('.eds__rejectArticleMessageText');
+
+				$('input', $approveArticle).prop('disabled', false);
+
+				if ($selectedState.length > 0) {
+					$nextState = $($selectedState).next('li');
+					if ($nextState.length > 0) {
+						$($selectedState).removeClass('eds__selectedWorkFlowState');
+						$($nextState).addClass('eds__selectedWorkFlowState');
+						$rejectMessage.hide();
+						if ($("#<%=btnUpdateArticle.ClientID%>").length)
+							$("#<%=btnUpdateArticle.ClientID%>").show();
+					}
+				}
+			}
+		}
+	}
 
 	eds2_2(function ($) {
+		$(document).ready(function () {
 
-		$("#<%=ddlOpenGraphTemplate.ClientID%>" ).change(function(event) {
-			if(event.target.value!="0")
+			ApproveClicked($("#<%=cbApproveArticle.ClientID%>"), true);
+			if ($("#<%=cbRejectArticle.ClientID%>").length)
+				RejectClicked($("#<%=cbRejectArticle.ClientID%>"), true);
+
+			$("#<%=cbApproveArticle.ClientID%>").on('click', function (e) {
+				ApproveClicked(this, false)
+			})
+
+			$("#<%=cbRejectArticle.ClientID%>").on('click', function (e) {
+				RejectClicked(this, false)
+			})
+
+			if ('<%=articleLockNeeded%>' == 'True') {
+				eds2_2('a', '.edNews_adminNavigationMenu').click(function () {
+					cleararticleCacheLock();
+					return true;
+				});
+				setInterval(function () {
+					closingCode();
+				}, 270000);
+			}
+
+			<%--if ('<%=IS_ARTICLE_REVISION%>' == 'True')
+				$("#<%=pnlCustomFieldsSelect.ClientID%> :input").attr("disabled", true);--%>
+		});
+		$("#<%=ddlOpenGraphTemplate.ClientID%>").change(function (event) {
+			if (event.target.value != "0")
 				changeMetaDataTemplate(event, "openGraph");
 		});
 
-		$("#<%=ddlStructuredDataTemplate.ClientID%>" ).change(function(event) {
+		$("#<%=ddlStructuredDataTemplate.ClientID%>").change(function (event) {
 			changeMetaDataTemplate(event, "structuredData");
 		});
 
-		$("#<%=ddlTwitterCardsTemplate.ClientID%>" ).change(function(event) {
+		$("#<%=ddlTwitterCardsTemplate.ClientID%>").change(function (event) {
 			changeMetaDataTemplate(event, "twitterCards");
 		});
 
@@ -3911,51 +4133,51 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 			emptyText: '<span class="empty">None</span>'
 		});
 
-		$("#eds_add_attendees_discount").click(function(){
+		$("#eds_add_attendees_discount").click(function () {
 			AddRowToEventDiscountTable('<%=tblAttendeesDiscount.ClientID%>');
 		});
 
-		$('#<%=tblAttendeesDiscount.ClientID%>').on('click', '.eds_removeRow', function(){
+		$('#<%=tblAttendeesDiscount.ClientID%>').on('click', '.eds_removeRow', function () {
 			$(this).parent().parent().remove();
 			FillEventAttendeesDiscountHf();
 		});
 
-		$('#<%=tblAttendeesDiscount.ClientID%>').on('keyup', '.eds_table_cell_input', function(){
-			if($(this).parent().parent().next('tr').length == 0)
+		$('#<%=tblAttendeesDiscount.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
+			if ($(this).parent().parent().next('tr').length == 0)
 				AddRowToEventDiscountTable('<%=tblAttendeesDiscount.ClientID%>');
 
 			FillEventAttendeesDiscountHf();
 		});
 
-		$(function() {
+		$(function () {
 			$('#<%=tblAttendeesDiscount.ClientID%> tbody').sortable({
 				cursor: "pointer",
-				update: function(event, ui) {
+				update: function (event, ui) {
 					FillEventAttendeesDiscountHf();
 				}
 			});
 		});
 
-		$("#eds_add_cost_per_attendee").click(function(){
+		$("#eds_add_cost_per_attendee").click(function () {
 			AddRowToEventCostTable('<%=tblCostPerAttendee.ClientID%>');
 		});
 
-		$('#<%=tblCostPerAttendee.ClientID%>').on('click', '.eds_removeRow', function(){
+		$('#<%=tblCostPerAttendee.ClientID%>').on('click', '.eds_removeRow', function () {
 			$(this).parent().parent().remove();
 			FillEventAttendeesCostHf();
 		});
 
-		$('#<%=tblCostPerAttendee.ClientID%>').on('keyup', '.eds_table_cell_input', function(){
-			if($(this).parent().parent().next('tr').length == 0)
+		$('#<%=tblCostPerAttendee.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
+			if ($(this).parent().parent().next('tr').length == 0)
 				AddRowToEventCostTable('<%=tblCostPerAttendee.ClientID%>');
 
 			FillEventAttendeesCostHf();
 		});
 
-		$(function() {
+		$(function () {
 			$('#<%=tblCostPerAttendee.ClientID%> tbody').sortable({
 				cursor: "pointer",
-				update: function(event, ui) {
+				update: function (event, ui) {
 					FillEventAttendeesCostHf();
 				}
 			});
@@ -4117,12 +4339,6 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 						</div>');
 		});
 
-		var $social_sharing_box = $('#<%=pnlSocialSharing.ClientID%>'),
-			$PostToJournal = $('#<%=pnlPostToJournal.ClientID%>'),
-		$draft_radio = $('#<%=rblDraftPublish.ClientID%>_0'),
-		$publish_radio = $('#<%=rblDraftPublish.ClientID%>_1'),
-		$approveMsg = $('#<%=lblApprovingMessage.ClientID%>');
-
 		if (typeof toogleDocumentPanels == 'function')
 			toogleDocumentPanels();
 
@@ -4132,29 +4348,16 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 		if (typeof toogleRecurringEventDocumentPanels == 'function')
 			toogleRecurringEventDocumentPanels();
 
-		$draft_radio
-			.bind('change', function () {
-				$social_sharing_box.stop(true,true).fadeTo(200,0);
-				$PostToJournal.stop(true,true).fadeTo(200,0);
-				if(<%=ApproveUpdatedArticlesASCX.ToString().ToLower()%>) $approveMsg.stop(true,true).fadeTo(200,0);
-			});
-
-		$publish_radio
-			.bind('change', function () {
-				$social_sharing_box.stop(true,true).fadeTo(200,1);
-				$PostToJournal.stop(true,true).fadeTo(200,1);
-				if(<%=ApproveUpdatedArticlesASCX.ToString().ToLower()%>) $approveMsg.stop(true,true).fadeTo(200,1);
-			});
-
-		$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat%>"});
+		$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat%>" });
 
 		$('#<%=tbEventStartTime.ClientID%>,#<%=tbEventEndTime.ClientID%>,#<%=tbxRecurringEventStartTime.ClientID%>,#<%=tbxRecurringEventEndTime.ClientID%>,#<%=tbPublishTime.ClientID%>,#<%=tbExpireTime.ClientID%>').timePicker({
 			startTime: "00:00",
 			endTime: new Date(0, 0, 0, 23, 59, 0),
 			show24Hours: <%=time24h %>,
 			separator: ':',
-			step: 30}
-	);
+			step: 30
+		}
+		);
 
 		$("#EDN_admin_included_galleries")
 			.sortable()
@@ -4184,7 +4387,7 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 		});
 
 		$('#EDNadmin .main_content').delegate('#<%=hlOpenImageTitleDescriptionOptions.ClientID%>', 'click', function () {
-			var clickedLink = $(this),targetToOpen = $('#<%=pnlImageTitleDescriptionOptions.ClientID%>');
+			var clickedLink = $(this), targetToOpen = $('#<%=pnlImageTitleDescriptionOptions.ClientID%>');
 			if (targetToOpen.is(':visible')) {
 				targetToOpen.slideUp(300);
 				clickedLink.removeClass('close');
@@ -4211,14 +4414,14 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 					$gal_settings_pnl.stop(false, true).hide(300);
 					$toggle_button
 						.html('<%=Viewsettings%>')
-					.removeClass('up_arrows')
-					.addClass('down_arrows');
+						.removeClass('up_arrows')
+						.addClass('down_arrows');
 				} else {
 					$gal_settings_pnl.stop(false, true).show(300);
 					$toggle_button
 						.html('<%=Closesettings%>')
-					.removeClass('down_arrows')
-					.addClass('up_arrows');
+						.removeClass('down_arrows')
+						.addClass('up_arrows');
 				}
 				return false;
 			});
@@ -4234,18 +4437,18 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 
 		initializeUploadify(
 			'<%=fileInput.ClientID%>',
-		$('#<%=hfGalID.ClientID%>').val()
-	);
+			$('#<%=hfGalID.ClientID%>').val()
+		);
 
 		initializeUploadify(
 			'<%=SharedfileInput.ClientID%>',
-		$('#<%=hfSharedGalID.ClientID%>').val()
-	);
+			$('#<%=hfSharedGalID.ClientID%>').val()
+		);
 
 		initializeUploadify(
 			'<%=GalfileInput.ClientID%>',
-		'1'
-	);
+			'1'
+		);
 
 		if (document.getElementById('<%=hfResize.ClientID%>') != null)
 			eds2_2('.galleryFineUploader').edsFineUploader_1_3(galleryFineUploaderSettings());
@@ -4264,12 +4467,10 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 	<%=includeLanguageListboxFunctions%>
 	<%=includeDocumentLanguageJS%>
 
-	function AddRowToEventDiscountTable(TableName)
-	{
+	function AddRowToEventDiscountTable(TableName) {
 		eds2_2('#' + TableName).append('<tr valign="top"><td><input type="text" class="eds_table_cell_input" name="eds_RowName" value="" placeholder="Number of" /> </td><td> <input type="text" class="eds_table_cell_input" name="eds_RowValue" value="" placeholder="Discount" /> </td><td><select name="eds_valueType" class="eds_table_cell_select"><option value="0">Unit</option><option value="1">Percent</option></select></td><td><img src="<%=_ControlPath%>images/move2red.png" height="16" width="16"></td><td> <a href="javascript:void(0);" class="eds_removeRow">Remove</a></td></tr>');
 	}
-	function AddRowToEventCostTable(TableName)
-	{
+	function AddRowToEventCostTable(TableName) {
 		eds2_2('#' + TableName).append('<tr valign="top"><td><input type="text" class="eds_table_cell_input" name="eds_CostRowName" value="" placeholder="Name" /> </td><td><input type="hidden" class="eds_table_cell_input" name="eds_costid" value="" />  <input type="text" class="eds_table_cell_input" name="eds_CostRowValue" value="" placeholder="Cost" /> </td><td><img src="<%=_ControlPath%>images/move2red.png" height="16" width="16"></td><td> <a href="javascript:void(0);" class="eds_removeRow">Remove</a></td></tr>');
 	}
 
@@ -4279,64 +4480,65 @@ function ClientValidateStructuredDataTemplate(source, arguments) {
 
 				CostByDateRestriction_Init();
 
-				$("#eds_add_attendees_discount").click(function(){
+				$("#eds_add_attendees_discount").click(function () {
 					AddRowToEventDiscountTable('<%=tblAttendeesDiscount.ClientID%>');
 				});
 
-				eds2_2('#<%=tblAttendeesDiscount.ClientID%>').on('click', '.eds_removeRow', function(){
+				eds2_2('#<%=tblAttendeesDiscount.ClientID%>').on('click', '.eds_removeRow', function () {
 					$(this).parent().parent().remove();
 					FillEventAttendeesDiscountHf();
 				});
 
-				eds2_2('#<%=tblAttendeesDiscount.ClientID%>').on('keyup', '.eds_table_cell_input', function(){
-					if($(this).parent().parent().next('tr').length == 0)
+				eds2_2('#<%=tblAttendeesDiscount.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
+					if ($(this).parent().parent().next('tr').length == 0)
 						AddRowToEventDiscountTable('<%=tblAttendeesDiscount.ClientID%>');
 
 					FillEventAttendeesDiscountHf();
 				});
 
-				$(function() {
+				$(function () {
 					$('#<%=tblAttendeesDiscount.ClientID%> tbody').sortable({
 						cursor: "pointer",
-						update: function(event, ui) {
+						update: function (event, ui) {
 							FillEventAttendeesDiscountHf();
 						}
 					});
 				});
 
-				$("#eds_add_cost_per_attendee").click(function(){
+				$("#eds_add_cost_per_attendee").click(function () {
 					AddRowToEventCostTable('<%=tblCostPerAttendee.ClientID%>');
 				});
 
-				eds2_2('#<%=tblCostPerAttendee.ClientID%>').on('click', '.eds_removeRow', function(){
+				eds2_2('#<%=tblCostPerAttendee.ClientID%>').on('click', '.eds_removeRow', function () {
 					$(this).parent().parent().remove();
 					FillEventAttendeesCostHf();
 				});
 
-				eds2_2('#<%=tblCostPerAttendee.ClientID%>').on('keyup', '.eds_table_cell_input', function(){
-					if($(this).parent().parent().next('tr').length == 0)
+				eds2_2('#<%=tblCostPerAttendee.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
+					if ($(this).parent().parent().next('tr').length == 0)
 						AddRowToEventCostTable('<%=tblCostPerAttendee.ClientID%>');
 
 					FillEventAttendeesCostHf();
 				});
 
-				$(function() {
+				$(function () {
 					$('#<%=tblCostPerAttendee.ClientID%> tbody').sortable({
 						cursor: "pointer",
-						update: function(event, ui) {
+						update: function (event, ui) {
 							FillEventAttendeesCostHf();
 						}
 					});
 				});
 
-				$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat%>"});
+				$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat%>" });
 
 				$('#<%=tbEventStartTime.ClientID%>,#<%=tbEventEndTime.ClientID%>,#<%=tbxRecurringEventStartTime.ClientID%>,#<%=tbxRecurringEventEndTime.ClientID%>,#<%=tbPublishTime.ClientID%>,#<%=tbExpireTime.ClientID%>').timePicker({
 					startTime: "00:00",
 					endTime: new Date(0, 0, 0, 23, 59, 0),
 					show24Hours: <%=time24h %>,
 					separator: ':',
-					step: 30}
+					step: 30
+				}
 				);
 
 				if ($('#<%=upArticleImages.ClientID%> .uploadifyQueue').length == 0) {

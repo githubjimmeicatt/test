@@ -1242,6 +1242,194 @@
           }
         }
       },
+      "articleVoting": {
+        "name": "Article Voting",
+        "show": [
+          "newsDetailsDefault",
+          "newsDetailsCatalogDefault"
+        ],
+        "properties": {
+          "icons": {
+            "type": "text",
+            "name": "Icons",
+            "subCollection": "news",
+            "states": [
+              {
+                "id": "default",
+                "selectors": [
+                  " .edn_ArticleVoting > span > i"
+                ],
+                "name": "Normal",
+                "forbidden": [
+                  "fontFamily",
+                  "style",
+                  "weight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "inactive",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__voted > i",
+                  " .edn_ArticleVoting > span.edn__voted:hover > i"
+                ],
+                "name": "Inactive",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "active",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp > i",
+                  " .edn_ArticleVoting > span.edn__votedDown > i"
+                ],
+                "name": "Active",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "hover",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp:hover > i",
+                  " .edn_ArticleVoting > span.edn__votedDown:hover > i",
+                  " .edn_ArticleVoting > span:hover > i"
+                ],
+                "name": "Hover",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              }
+            ]
+          },
+          "text": {
+            "type": "text",
+            "name": "Text",
+            "subCollection": "news",
+            "states": [
+              {
+                "id": "default",
+                "selectors": [
+                  " .edn_ArticleVoting > span"
+                ],
+                "name": "Normal",
+                "forbidden": [
+                  "transform"
+                ]
+              },
+              {
+                "id": "inactive",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__voted",
+                  " .edn_ArticleVoting > span.edn__voted:hover"
+                ],
+                "name": "Inactive",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              },
+              {
+                "id": "active",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp",
+                  " .edn_ArticleVoting > span.edn__votedDown"
+                ],
+                "name": "Active",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              },
+              {
+                "id": "hover",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp:hover",
+                  " .edn_ArticleVoting > span.edn__votedDown:hover",
+                  " .edn_ArticleVoting > span:hover"
+                ],
+                "name": "Hover",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              }
+            ]
+          }
+        },
+        "sections": {
+          "tooltip": {
+            "name": "Tooltip",
+            "properties": {
+              "backgroundColor": {
+                "type": "background",
+                "name": "Background Color",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_ArticleVoting .edn_voteTooltip",
+                      " .edn_ArticleVoting .edn_voteTooltip::before"
+                    ],
+                    "name": "Normal",
+                    "forbidden": [
+                      "image",
+                      "position",
+                      "repeat",
+                      "attachment",
+                      "animation"
+                    ]
+                  }
+                ]
+              },
+              "text": {
+                "type": "text",
+                "name": "Text",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_ArticleVoting .edn_voteTooltip"
+                    ],
+                    "name": "Normal"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "articleTags": {
         "name": "Article Tags",
         "properties": {
@@ -2434,7 +2622,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -2445,7 +2633,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage::after"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -2463,7 +2651,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal"
                   }
@@ -2477,14 +2665,14 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal"
                   },
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage::after"
                     ],
                     "name": "Hover"
                   }
@@ -2498,7 +2686,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -2512,7 +2700,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage::after"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -4819,8 +5007,8 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before",
-                  " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span:before"
+                  " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label::before",
+                  " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -4831,8 +5019,8 @@
               {
                 "id": "selected",
                 "selectors": [
-                  " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label:before",
-                  " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span:before"
+                  " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label::before",
+                  " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span::before"
                 ],
                 "name": "Selected",
                 "forbidden": [
@@ -4850,7 +5038,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edncf_AdvancedSearch .edncf_container .edncf_RadioButtonList label:before"
+                  " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -4861,7 +5049,7 @@
               {
                 "id": "selected",
                 "selectors": [
-                  " .edncf_AdvancedSearch .edncf_container .edncf_RadioButtonList .edncf_RadioButtonGroup .edncf_RadioButton input[type=\"radio\"]:checked + label:before"
+                  " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label::before"
                 ],
                 "name": "Selected",
                 "forbidden": [
@@ -4987,7 +5175,7 @@
                     "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span:after"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -6525,7 +6713,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .eds_GravityGallery_NewsTwo a.edsgg_galleryBackLink:before"
+                      " .eds_GravityGallery_NewsTwo a.edsgg_galleryBackLink::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -6538,7 +6726,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .eds_GravityGallery_NewsTwo a.edsgg_galleryBackLink:hover:before"
+                      " .eds_GravityGallery_NewsTwo a.edsgg_galleryBackLink:hover::before"
                     ],
                     "name": "Hover",
                     "forbidden": [

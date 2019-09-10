@@ -77,7 +77,7 @@ GoogleHelper = function (parent) {
 					var tagId = 'eds_googleMapsApi',
 						gMapsKey = self.options.maps.api.key,
 						script,
-						src = 'https://maps.googleapis.com/maps/api/js?v=3.31&callback=' + self.parent.options.instanceGlobal + '.google.maps.api.callback';
+						src = 'https://maps.googleapis.com/maps/api/js?v=3.34&callback=' + self.parent.options.instanceGlobal + '.google.maps.api.callback';
 
 					if ($('script#' + tagId, self.parent.$head).length == 0) {
 						if (typeof gMapsKey != 'string')

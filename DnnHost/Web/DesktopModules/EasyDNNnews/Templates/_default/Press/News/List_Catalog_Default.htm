@@ -1,0 +1,70 @@
+<!--TemplateGroup:listCatalogDefault-->
+<!--CatalogArticleTemplate-->
+<!--BreadCrumbTemplate-->
+<a href="[EasyDNNnews:CatalogBreadCrumbLink]">[EasyDNNnews:CatalogBreadCrumbTitle]</a>
+<!--BreadCrumbEnd-->
+<!--CatalogArticleEnd-->
+<!--CatalogArticleTemplate-->
+<!--HeaderTemplate-->
+<header class="edn_categoryInfo">
+	<h1 class="edn_articleTitle">[EasyDNNnews:CatalogCategoryTitle]</h1>
+	[EasyDNNnews:CatalogCategoryDescription]
+</header>
+<!--HeaderEnd-->
+<!--CatalogArticleEnd-->
+
+<!--ArticleRepeat:Before:-->
+<div class="[EasyDNNnews:ArticleListWrapperClass] edn_cols edn_clear edn_colGutter edNews_inlineBlock">
+<!--RepeatEnd:Before:-->
+
+<!--CatalogArticleTemplate-->
+<!--CategoryTemplate-->
+<div class="edn_articleStyle3 edn_width25 edn_nGW">
+	<section>
+		<a href="[EasyDNNnews:CatalogCategoryURL]" title="[EasyDNNnews:CatalogCategoryTitle]"><img alt="[EasyDNNnews:CatalogCategoryTitle]" src="[EasyDNNnews:CatalogCategoryImage:Width:240:Height:160:Resize:Crop]" [EasyDNNnews:CatalogCategoryImage:Visibility] width="275" height="160"/></a>
+	</section>
+	<h2 class="edn_articleTitle"><a href="[EasyDNNnews:CatalogCategoryURL]" title="[EasyDNNnews:CatalogCategoryTitle]">[EasyDNNnews:CatalogCategoryTitle]</a></h2>
+</div>
+<!--CategoryEnd-->
+<!--CatalogArticleEnd-->
+
+<!--CatalogArticleTemplate-->
+
+<!--ArticleTemplate-->
+	<article class="edn_articleStyle1 edn_width25 edn_nGW">
+		[EasyDNNnews:IfExists:Image]
+		<section>
+			<a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]"><img class="edn_articleImage" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image:Width:300:Height:200:Resize:Crop]"/></a>
+			<div>
+				<span class="edn_category">[EasyDNNnews:Categories separator=" " last]</span>
+			</div>
+			[EasyDNNnews:IfExists:Comments]
+			<span class="edn_numberOfComments"><a href="[EasyDNNnews:ReadMore]#[EasyDNNnewsLocalizedText:CommentsAnchor]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Comments]</a></span>
+			[EasyDNNnews:EndIf:Comments]
+		</section>
+		[EasyDNNnews:EndIf:Image]
+		[EasyDNNnews:IfNotExists:Image]
+		<section class="edn_noImage">
+			<div>
+				<span class="edn_category">[EasyDNNnews:Categories separator=" " last]</span>
+			</div>
+			[EasyDNNnews:IfExists:Comments]
+			<span class="edn_numberOfComments"><a href="[EasyDNNnews:ReadMore]#[EasyDNNnewsLocalizedText:CommentsAnchor]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Comments]</a></span>
+			[EasyDNNnews:EndIf:Comments]
+		</section>
+		[EasyDNNnews:EndIf:Image]
+		<h3 class="edn_articleTitle edn_articleSubTitle">[EasyDNNnews:SubTitle:Limit:80]</h3>
+		<h2 class="edn_articleTitle"><a href="[EasyDNNnews:ReadMore]" target="[EasyDNNnews:DetailTarget]">[EasyDNNnews:Title]</a></h2>
+		<div class="edn_articleSummary">[EasyDNNnews:Summary:Limit:150]</div>
+	</article>
+<!--ArticleEnd-->
+<!--CatalogArticleEnd-->
+
+<!--ArticleRepeat:After:-->
+</div>
+[EasyDNNnews:IfExists:RSS]
+<div class="edn_articlesRssWrapper">
+	<a href="[EasyDNNnews:RSSLink]" target="_blank"><span>[EasyDNNnewsLocalizedText:RSSLinkText]</span></a>
+</div>
+[EasyDNNnews:EndIf:RSS]
+<!--RepeatEnd:After:-->

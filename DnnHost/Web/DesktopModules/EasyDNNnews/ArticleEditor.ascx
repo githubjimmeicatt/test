@@ -178,19 +178,16 @@
 									<asp:TemplateField>
 										<FooterTemplate>
 											<span class="floatRight smallText" style="margin-top: 17px;"><%#TotalCount%></span>
-											<i class="fa fa-mail-reply fa-rotate-180"></i>
-											<div class="mainActions noMargin smallActions displayInline">
+											<div class="mainActions noMargin smallActions displayInline" runat="server" id="divMainActions" Visible="<%#!ApproveMode %>">
+												<i class="fa fa-mail-reply fa-rotate-180"></i>
 												<a id="ibFooterSelectAll" class="secondaryAction"><i class="fa fa-list-alt"></i><%=_("ibFooterSelectAllResource1") %></a>
 												<a id="ibFooterUnSelectAll" class="secondaryAction"><i class="fa fa-times-circle-o"></i><%=_("ibFooterUnSelectAllResource1") %></a>
 											</div>
 											<div class="edNews_inputGroup displayInline">
 												<asp:DropDownList ID="ddlFotterActionForSelected" runat="server" Visible="<%#!ApproveMode%>" AutoPostBack="true" OnSelectedIndexChanged="ddlFotterActionForSelected_SelectedIndexChanged">
 													<asp:ListItem resourcekey="liSelectAction" Value="-1" Text="Select action" />
-													<asp:ListItem resourcekey="ListItemResource33" Value="Publish" Text="Publish" />
 													<asp:ListItem resourcekey="ListItemResource34" Value="Unpublish" Text="Unpublish" />
 													<asp:ListItem resourcekey="ListItemResource35" Value="Delete" Text="Delete" />
-													<asp:ListItem resourcekey="ListItemResource36" Value="Approve" Text="Approve" />
-													<asp:ListItem resourcekey="ListItemResource37" Value="Unapprove" Text="Unapprove" />
 													<asp:ListItem resourcekey="ListItemResource38" Value="Feature" Text="Feature" />
 													<asp:ListItem resourcekey="ListItemResource39" Value="Unfeature" Text="Unfeature" />
 													<asp:ListItem resourcekey="liChangePublishDate" Value="ChangePublishDate" Text="Change publish date" />
@@ -198,11 +195,11 @@
 													<asp:ListItem resourcekey="liMoveToCategories" Value="MoveToCategories" Text="Move to categories" />
 													<asp:ListItem resourcekey="liCopyToCategories" Value="CopyToCategories" Text="Copy to categories" />
 												</asp:DropDownList>
-												<asp:DropDownList ID="ddlFotterActionForSelectedApprove" runat="server" Visible="<%#ApproveMode%>">
+												<%--<asp:DropDownList ID="ddlFotterActionForSelectedApprove" runat="server" Visible="<%#ApproveMode%>">
 													<asp:ListItem resourcekey="liSelectAction" Value="-1" Text="Select action" />
 													<asp:ListItem resourcekey="ListItemResource36" Value="Approve" Text="Approve" />
 													<asp:ListItem resourcekey="ListItemResource37" Value="Unapprove" Text="Unapprove" />
-												</asp:DropDownList>
+												</asp:DropDownList>--%>
 
 												<asp:Panel runat="server" ID="divFotterCategoryFilterList" class="edNews__styledSelect" Style="display: none"></asp:Panel>
 												<asp:HiddenField runat="server" ID="hfFotterSelectedFilterCategories" />
@@ -216,13 +213,13 @@
 												<asp:Label ID="lblPubDateError" ResourceKey="lblPubDateError" runat="server" ForeColor="Red" Text="Invalid date." Visible="false" />
 											</asp:Panel>
 											<div class="mainActions noMargin smallActions displayInline">
-												<asp:Button ID="ibFooterOK" runat="server" CssClass="primaryAction" ValidationGroup="vgGVArticleListFutter" CausesValidation="true" OnClick="ibFooterOK_Click" OnClientClick="return ShowValue();" resourcekey="ok" />
+												<asp:Button ID="ibFooterOK" runat="server" CssClass="primaryAction" ValidationGroup="vgGVArticleListFutter" CausesValidation="true" OnClick="ibFooterOK_Click" OnClientClick="return ShowValue();" Visible="<%#!ApproveMode %>" resourcekey="ok" />
 											</div>
 										</FooterTemplate>
 										<ItemTemplate>
 											<asp:HiddenField ID="hfMainArticleID" runat="server" Value='<%# Bind("ArticleID") %>' />
 											<div class="styledCheckbox noLabel">
-												<asp:CheckBox ID="cbSelectRow" runat="server" Text="Select Row" />
+												<asp:CheckBox ID="cbSelectRow" runat="server" Text="Select Row" Visible="<%#!ApproveMode %>" />
 											</div>
 										</ItemTemplate>
 										<ItemStyle Width="30px" CssClass="textCenter" />
@@ -230,12 +227,12 @@
 									<asp:TemplateField HeaderText="Action">
 										<ItemTemplate>
 											<div class="edNews_boxedActions edNews_threeInRow">
-												<asp:HyperLink ID="hlEditThisArticle" runat="server" CssClass="edNews_aaEdit edNews_tooltip" NavigateUrl='<%# GetArticleEditUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' resourcekey="lbEditThisArticleResource1" Visible="<%#!ApproveMode%>" data-tooltip-content="<%#EditToolTip%>" data-tooltip-position="top-left"></asp:HyperLink>
-												<asp:LinkButton ID="lbDeleteArticle" runat="server" CssClass="edNews_aaDelete edNews_tooltip" CausesValidation="False" CommandArgument='<%# Eval("ArticleID") %>' CommandName="DeleteArticle" Visible="<%#!ApproveMode%>" data-tooltip-content="<%#DeleteTooltip%>" data-tooltip-position="top-left" />
+												<asp:HyperLink ID="hlEditThisArticle" runat="server" CssClass="edNews_aaEdit edNews_tooltip" NavigateUrl='<%# GetArticleEditUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' resourcekey="lbEditThisArticleResource1" Visible='<%#!ApproveMode && GetWorkflowUserEdit(Eval("WorkflowState"))%>' data-tooltip-content="<%#EditToolTip%>" data-tooltip-position="top-left"></asp:HyperLink>
+												<asp:LinkButton ID="lbDeleteArticle" runat="server" CssClass="edNews_aaDelete edNews_tooltip" CausesValidation="False" CommandArgument='<%# Eval("ArticleID") %>' CommandName="DeleteArticle" Visible='<%#!ApproveMode&&(NewsModuleSettings.PreventArticleDeletion && Convert.ToBoolean(Eval("Published")) && !UserInfo.IsSuperUser && !UserInfo.IsInRole(PortalSettings.AdministratorRoleName))%>' data-tooltip-content="<%#DeleteTooltip%>" data-tooltip-position="top-left" />
 												<asp:HyperLink ID="hlPreviewArticle" runat="server" CssClass="edNews_aaView edNews_tooltip" NavigateUrl='<%# GetArticleUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' Target="_blank" data-tooltip-content="<%#ViewTooltip%>" data-tooltip-position="top-left"></asp:HyperLink>
 												<asp:HyperLink ID="hlEditComments" runat="server" CssClass="edNews_aaComments edNews_tooltip" resourcekey="hlEditCommentsResource1" NavigateUrl='<%# GetEditCommentsUrl(Convert.ToInt32(Eval("ArticleID"))) %>' Target="_self" Visible="<%#!ApproveMode%>" data-tooltip-content="<%#ViewCommentsTooltip%>" data-tooltip-position="bottom-left" />
-												<asp:HyperLink ID="hlCreateNewArticle" runat="server" CssClass="edNews_aaCreateAsNew edNews_tooltip" resourcekey="hlCreateNewArticleResource1" NavigateUrl='<%# GetArticleCopyUrl(Convert.ToInt32(Eval("ArticleID"))) %>' Target="_blank" Visible="<%#!ApproveMode%>" data-tooltip-content="<%#CopyArticleTooltip%>" data-tooltip-position="bottom-left" />
-												<asp:HyperLink ID="hlLocalizeArticle" runat="server" CssClass="edNews_aaLocalization edNews_tooltip" NavigateUrl='<%# GetArticleLocalizeUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' resourcekey="hlLocalizeArticleResource1" Visible="<%#!ApproveMode%>" data-tooltip-content="<%#LocalizeArticleToolTip%>" data-tooltip-position="bottom-left"></asp:HyperLink>
+												<asp:HyperLink ID="hlCreateNewArticle" runat="server" CssClass="edNews_aaCreateAsNew edNews_tooltip" resourcekey="hlCreateNewArticleResource1" NavigateUrl='<%# GetArticleCopyUrl(Convert.ToInt32(Eval("ArticleID"))) %>' Target="_blank" Visible='<%#!ApproveMode && GetWorkflowUserEdit(Eval("WorkflowState"))%>' data-tooltip-content="<%#CopyArticleTooltip%>" data-tooltip-position="bottom-left" />
+												<asp:HyperLink ID="hlLocalizeArticle" runat="server" CssClass="edNews_aaLocalization edNews_tooltip" NavigateUrl='<%# GetArticleLocalizeUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' resourcekey="hlLocalizeArticleResource1" Visible='<%#!ApproveMode && GetWorkflowUserEdit(Eval("WorkflowState"))%>' data-tooltip-content="<%#LocalizeArticleToolTip%>" data-tooltip-position="bottom-left"></asp:HyperLink>
 												<asp:HiddenField ID="hfRegistrationEnabled" runat="server" Value='<%#Convert.ToBoolean(Eval("RegistrationEnabled"))%>' />
 												<asp:HiddenField ID="hfEventArticle" runat="server" Value='<%#Convert.ToBoolean(Eval("EventArticle"))%>' />
 											</div>
@@ -289,18 +286,16 @@
 									<asp:TemplateField HeaderText="Action">
 										<ItemTemplate>
 											<div class="itemActions displayBlock">
-												<asp:LinkButton ID="lbArticleListPublished" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Publish" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Active"))) %>' resourcekey="lbArticleListPublishedResource1" Visible="<%#!ApproveMode%>">
+												<asp:LinkButton ID="lbArticleListPublished" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Publish" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Active"))) %>' resourcekey="lbArticleListPublishedResource1" Visible='<%#!ApproveMode && (Convert.ToBoolean(Eval("Active")) && Convert.ToBoolean(Eval("Approved"))) && GetWorkflowUserEdit(Eval("WorkflowState"))%>'>
 													<asp:Label runat="server" Text="Published" ID="lblArticleListPublished" resourcekey="lblArticleListPublishedResource1" />
 												</asp:LinkButton>
-												<asp:LinkButton ID="lbArticleListApproved" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Approve" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Approved"))) %>' Enabled="<%# EnableApprove() %>" resourcekey="lbArticleListApprovedResource1">
-													<asp:Label runat="server" Text="Approved" ID="lblArticleListApproved" resourcekey="lblArticleListApprovedResource1"></asp:Label>
-												</asp:LinkButton>
-												<asp:LinkButton ID="lbArticleListFeatured" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Feature" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Featured"))) %>' resourcekey="lbArticleListFeaturedResource1" Enabled="<%# EnabledFeatured() %>" Visible="<%#!ApproveMode%>">
+												<asp:LinkButton ID="lbArticleListFeatured" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Feature" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Featured"))) %>' resourcekey="lbArticleListFeaturedResource1" Visible='<%#!ApproveMode && GetWorkflowUserEdit(Eval("WorkflowState"))%>'>
 													<asp:Label runat="server" Text="Featured" ID="lblArticleListFeatured" resourcekey="lblArticleListFeaturedResource1" />
 												</asp:LinkButton>
-												<asp:LinkButton ID="lbArticleListReject" resourcekey="lbArticleListReject" Visible='<%# GetRejectVisible(Convert.ToBoolean(Eval("Approved")),Convert.ToBoolean(Eval("Active"))) %>' runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Reject" CssClass="rejectAction" Enabled="<%# EnableApprove() %>">
-													<asp:Label runat="server" Text="Reject" ID="lblArticleListReject" />
-												</asp:LinkButton>
+												<%--<asp:LinkButton ID="lbArticleListApproved" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Approve" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Approved"))) %>' Enabled="<%# EnableApprove() %>" Visible="<%#ApproveMode%>" resourcekey="lbArticleListApprovedResource1">
+													<asp:Label runat="server" Text="Approved" ID="lblArticleListApproved" resourcekey="lblArticleListApprovedResource1"></asp:Label>
+												</asp:LinkButton>--%>
+												<asp:HyperLink ID="hlEditThisArticletest" runat="server" NavigateUrl='<%# GetApproveArticleEditUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' Visible='<%# GetWorkflowUserEdit(Eval("WorkflowState")) && (ApproveMode || !(Convert.ToBoolean(Eval("Active")) && Convert.ToBoolean(Eval("Approved"))))%>' data-tooltip-content="<%#EditToolTip%>" data-tooltip-position="top-left" Text="Approve"></asp:HyperLink>
 											</div>
 											<asp:Panel runat="server" ID="pnlRejectMessage" Visible="false" CssClass="edNews_popUp edNews_bottomLeft">
 												<div class="edNews_inputGroup">
@@ -451,11 +446,11 @@
 				dropdownList = eds2_2(this);
 			});
 		}
-		else {
+		<%--else {
 			eds2_2("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelectedApprove']").each(function (index) {
 				dropdownList = eds2_2(this);
 			});
-		}
+		}--%>
 		if (dropdownList.val() == '-1') {
 			alert('<%=selectAction%>');
 		}

@@ -19,7 +19,7 @@
 						</ProgressTemplate>
 					</asp:UpdateProgress>
 					<asp:Panel ID="pnlTagsGridView" runat="server" Visible="true" CssClass="sectionBox noPadding">
-						<asp:GridView ID="gvTags" runat="server" EnableModelValidation="True" AutoGenerateColumns="False" DataSourceID="odsTags" CssClass="strippedTable fullWidthTable noBorder tablePadding5 textCenter" DataKeyNames="TagID" OnRowCommand="gvTags_RowCommand" AllowPaging="True" OnPageIndexChanging="gvTags_PageIndexChanging" resourcekey="gvTagsResource1">
+						<asp:GridView ID="gvTags" runat="server" EnableModelValidation="True" AutoGenerateColumns="False" DataSourceID="odsTags" CssClass="strippedTable fullWidthTable noBorder tablePadding5 textCenter" DataKeyNames="TagID" OnRowCommand="gvTags_RowCommand" AllowPaging="True" OnPageIndexChanging="gvTags_PageIndexChanging">
 							<Columns>
 								<asp:TemplateField ShowHeader="False">
 									<EditItemTemplate>

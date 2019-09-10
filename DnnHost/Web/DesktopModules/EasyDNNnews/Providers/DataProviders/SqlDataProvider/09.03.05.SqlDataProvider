@@ -1,0 +1,745 @@
+﻿IF NOT EXISTS (SELECT UpdateVersion FROM {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate] WHERE UpdateVersion = '09.03.05')
+BEGIN
+	INSERT {databaseOwner}[{objectQualifier}EasyDNNNewsUpdate]([UpdateVersion],[Finished],[InstallType]) VALUES(N'09.03.05',0, N'DNN')
+END
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsGroupsAndAuthors]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGroupsAndAuthors]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsGetGroupsAndAuthors]') AND type in (N'P', N'PC'))
+DROP PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGetGroupsAndAuthors]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsGetGroupsAndAuthors]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGetGroupsAndAuthors] AS' 
+END
+GO
+ALTER PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGetGroupsAndAuthors]
+	@PortalID INT,
+	@ModuleID INT,
+	@NotInGroupPosition BIT, -- 0 gore, 1 dolje - uvjek false
+	@DisplayAll BIT = 1,
+	@RoleID INT = -1, -- -1 if role id is not main filter
+	@FilterPortals NVARCHAR(MAX) = NULL
+AS 
+SET NOCOUNT ON;
+DECLARE @PortalsTable TABLE (SharingPortalID INT NOT NULL PRIMARY KEY);
+
+IF @FilterPortals IS NULL
+	INSERT INTO @PortalsTable
+	SELECT [SharingPortalID]
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID;
+ELSE IF @FilterPortals <> '-1' -- force current portal
+	INSERT INTO @PortalsTable
+	SELECT fp.KeyID FROM {databaseOwner}[{objectQualifier}EDS_StringListToTable](@FilterPortals) AS fp
+
+IF NOT EXISTS(SELECT 1 FROM @PortalsTable)
+	INSERT INTO @PortalsTable SELECT @PortalID;
+
+DECLARE @i INT, @MaxI INT, @GroupID INT;
+DECLARE @TableGroups Table (
+	[PortalID] INT NOT NULL
+	,[GroupID] INT NOT NULL
+	,[GroupName] NVARCHAR(250) NOT NULL
+	,[GroupInfo] NVARCHAR(4000) NULL
+	,[GroupImage] NVARCHAR(1000) NULL
+	,[FacebookURL] NVARCHAR(1000) NULL
+	,[TwitterURL] NVARCHAR(1000) NULL
+	,[GooglePlusURL] NVARCHAR(1000) NULL
+	,[LinkedInURL] NVARCHAR(1000) NULL
+	,[Parent] INT NULL
+	,[Level] INT NOT NULL
+	,[Position] INT NOT NULL
+	,[GroupLinkType] tinyINT NOT NULL
+	,[GroupURL] NVARCHAR(1000) NULL
+	,[MyRowCount] Int IDENTITY(1,1));
+DECLARE @resultTable Table (
+	[OrderBy] INT IDENTITY(1,1)
+	,[UserID] INT NULL
+	,[UserPortalID] INT NULL
+	,[Username] NVARCHAR(100) NULL
+	,[FirstName] NVARCHAR(50) NULL
+	,[LastName] NVARCHAR(50) NULL
+	,[Email] NVARCHAR(256) NULL
+	,[DisplayName] NVARCHAR(128) NULL
+	,[AuthorProfileID] INT NULL
+	,[ShortInfo] NVARCHAR(4000) NULL
+	,[ProfileImage] NVARCHAR(1000) NULL
+	,[FacebookURL] NVARCHAR(1000) NULL
+	,[TwitterURL] NVARCHAR(1000) NULL
+	,[GooglePlusURL] NVARCHAR(1000) NULL
+	,[LinkedInURL] NVARCHAR(1000) NULL
+	,[DateAdded] DATETIME NULL
+	,[Active] BIT NULL
+	,[ArticleCount] INT NULL
+	,[AuthorLinkType] TINYINT NULL
+	,[AuthorURL] NVARCHAR(1000) NULL
+	,[GroupID] INT NULL
+	,[PortalID] INT NULL
+	,[GroupName] NVARCHAR(250) NULL
+	,[GroupInfo] NVARCHAR(4000) NULL
+	,[GroupImage] NVARCHAR(1000) NULL
+	,[GFacebookURL] NVARCHAR(1000) NULL
+	,[GTwitterURL] NVARCHAR(1000) NULL
+	,[GGooglePlusURL] NVARCHAR(1000) NULL
+	,[GLinkedInURL] NVARCHAR(1000) NULL
+	,[Parent] INT NULL
+	,[Level] INT NULL
+	,[Position] INT NULL
+	,[GroupLinkType] TINYINT NULL
+	,[GroupURL] NVARCHAR(1000) NULL);
+
+IF @RoleID <> -1
+BEGIN
+	INSERT INTO @resultTable
+		SELECT u.[UserID]
+			,ap.PortalID AS UserPortalID
+			,u.[Username]
+			,u.[FirstName]
+			,u.[LastName]
+			,u.[Email]
+			,u.[DisplayName]
+			,ap.[AuthorProfileID]
+			,ap.[ShortInfo]
+			,ap.[ProfileImage]
+			,ap.[FacebookURL]
+			,ap.[TwitterURL]
+			,ap.[GooglePlusURL]
+			,ap.[LinkedInURL]
+			,ap.[DateAdded]
+			,ap.[Active]
+			,ap.[ArticleCount]
+			,ap.[LinkType] AS AuthorLinkType
+			,ap.[AuthorURL]
+			,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+		FROM {databaseOwner}[{objectQualifier}Users] AS u
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+			INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.UserID = ap.UserID
+			INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+		WHERE ur.RoleID = @RoleID
+		ORDER BY u.DisplayName
+END
+ELSE
+BEGIN
+	IF @NotInGroupPosition = 0 -- autori koji nisu u grupi su gore
+	BEGIN
+		IF @DisplayAll = 1 -- prikazi sve autore
+		BEGIN
+			INSERT INTO @resultTable
+			SELECT u.[UserID]
+				,ap.PortalID AS UserPortalID
+				,u.[Username]
+				,u.[FirstName]
+				,u.[LastName]
+				,u.[Email]
+				,u.[DisplayName]
+				,ap.[AuthorProfileID]
+				,ap.[ShortInfo]
+				,ap.[ProfileImage]
+				,ap.[FacebookURL]
+				,ap.[TwitterURL]
+				,ap.[GooglePlusURL]
+				,ap.[LinkedInURL]
+				,ap.[DateAdded]
+				,ap.[Active]
+				,ap.[ArticleCount]
+				,ap.[LinkType] AS AuthorLinkType
+				,ap.[AuthorURL]
+				,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			FROM {databaseOwner}[{objectQualifier}Users] AS u
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+			WHERE ap.AuthorProfileID NOT IN (
+				SELECT AuthorProfileID
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems]
+			)
+			ORDER BY u.DisplayName
+		END
+		ELSE
+		BEGIN
+			INSERT INTO @resultTable
+			SELECT u.[UserID]
+				,ap.PortalID AS UserPortalID
+				,u.[Username]
+				,u.[FirstName]
+				,u.[LastName]
+				,u.[Email]
+				,u.[DisplayName]
+				,ap.[AuthorProfileID]
+				,ap.[ShortInfo]
+				,ap.[ProfileImage]
+				,ap.[FacebookURL]
+				,ap.[TwitterURL]
+				,ap.[GooglePlusURL]
+				,ap.[LinkedInURL]
+				,ap.[DateAdded]
+				,ap.[Active]
+				,ap.[ArticleCount]
+				,ap.[LinkType] AS AuthorLinkType
+				,ap.[AuthorURL]
+				,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			FROM {databaseOwner}[{objectQualifier}Users] AS u
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleAuthorsItems] as mai ON mai.UserID = ap.UserID AND mai.ModuleID = @ModuleID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+			WHERE ap.AuthorProfileID NOT IN (
+				SELECT AuthorProfileID
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] as agi
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] as mgi ON agi.GroupId = mgi.GroupID
+				WHERE mgi.ModuleID = @ModuleID)
+			ORDER BY u.DisplayName
+		END
+	END
+	
+	IF @DisplayAll = 1
+	BEGIN
+		INSERT INTO @TableGroups
+		SELECT nag.[PortalID]
+			,nag.[GroupID]
+			,nag.[GroupName]
+			,nag.[GroupInfo]
+			,nag.[GroupImage]
+			,nag.[FacebookURL]
+			,nag.[TwitterURL]
+			,nag.[GooglePlusURL]
+			,nag.[LinkedInURL]
+			,nag.[Parent]
+			,nag.[Level]
+			,nag.[Position]
+			,nag.[LinkType] as GroupLinkType
+			,nag.[GroupURL]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] AS nag
+		WHERE nag.[GroupID] IN (
+			SELECT DISTINCT nag.GroupID
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] as nag
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON agi.GroupID = nag.GroupID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = nag.PortalID
+		)
+		ORDER BY nag.Position;
+	END
+	ELSE
+	BEGIN
+		INSERT INTO @TableGroups
+		SELECT DISTINCT nag.[PortalID]
+			,nag.[GroupID]
+			,nag.[GroupName]
+			,nag.[GroupInfo]
+			,nag.[GroupImage]
+			,nag.[FacebookURL]
+			,nag.[TwitterURL]
+			,nag.[GooglePlusURL]
+			,nag.[LinkedInURL]
+			,nag.[Parent]
+			,nag.[Level]
+			,nag.[Position]
+			,nag.[LinkType] as GroupLinkType
+			,nag.[GroupURL]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] AS nag
+		WHERE nag.[GroupID] IN (
+			SELECT DISTINCT nag.GroupID
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] as nag
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON agi.GroupID = nag.GroupID
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] AS mgi ON nag.GroupID = mgi.GroupID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = nag.PortalID
+			WHERE mgi.ModuleID = @ModuleID
+		)
+		ORDER BY nag.Position;
+	END
+	
+	SELECT @MaxI = @@RowCount;
+	SELECT @i = 0;
+    WHILE @i < @MaxI
+	BEGIN
+		SET @i = @i + 1;
+		SELECT @GroupID = GroupID FROM @TableGroups Where MyRowCount = @i
+		
+		INSERT INTO @resultTable
+		SELECT
+			NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			,[GroupID]
+			,[PortalID]
+			,[GroupName]
+			,[GroupInfo]
+			,[GroupImage]
+			,[FacebookURL]
+			,[TwitterURL]
+			,[GooglePlusURL]
+			,[LinkedInURL]
+			,[Parent]
+			,[Level]
+			,[Position]
+			,[GroupLinkType]
+			,[GroupURL]
+		FROM @TableGroups WHERE MyRowCount = @i
+		
+		INSERT INTO @resultTable
+		SELECT u.[UserID]
+			,ap.PortalID AS UserPortalID
+			,u.[Username]
+			,u.[FirstName]
+			,u.[LastName]
+			,u.[Email]
+			,u.[DisplayName]
+			,ap.[AuthorProfileID]
+			,ap.[ShortInfo]
+			,ap.[ProfileImage]
+			,ap.[FacebookURL]
+			,ap.[TwitterURL]
+			,ap.[GooglePlusURL]
+			,ap.[LinkedInURL]
+			,ap.[DateAdded]
+			,ap.[Active]
+			,ap.[ArticleCount]
+			,ap.[LinkType] AS AuthorLinkType
+			,ap.[AuthorURL]
+			,@GroupID AS GroupID,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+		FROM {databaseOwner}[{objectQualifier}Users] AS u
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON agi.AuthorProfileID = ap.AuthorProfileID
+		WHERE agi.GroupID = @GroupID
+		ORDER BY u.DisplayName
+	END
+	IF @NotInGroupPosition = 1
+	BEGIN
+		IF @DisplayAll = 1
+		BEGIN
+			INSERT INTO @resultTable
+			SELECT u.[UserID]
+				,ap.PortalID AS UserPortalID
+				,u.[Username]
+				,u.[FirstName]
+				,u.[LastName]
+				,u.[Email]
+				,u.[DisplayName]
+				,ap.[AuthorProfileID]
+				,ap.[ShortInfo]
+				,ap.[ProfileImage]
+				,ap.[FacebookURL]
+				,ap.[TwitterURL]
+				,ap.[GooglePlusURL]
+				,ap.[LinkedInURL]
+				,ap.[DateAdded]
+				,ap.[Active]
+				,ap.[ArticleCount]
+				,ap.[LinkType] AS AuthorLinkType
+				,ap.[AuthorURL]
+				,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			FROM {databaseOwner}[{objectQualifier}Users] AS u
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+			WHERE ap.AuthorProfileID NOT IN (
+				SELECT AuthorProfileID
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems]
+			)
+			ORDER BY u.DisplayName
+		END
+		ELSE
+		BEGIN
+			INSERT INTO @resultTable
+				SELECT u.[UserID]
+					,ap.PortalID AS UserPortalID
+					,u.[Username]
+					,u.[FirstName]
+					,u.[LastName]
+					,u.[Email]
+					,u.[DisplayName]
+					,ap.[AuthorProfileID]
+					,ap.[ShortInfo]
+					,ap.[ProfileImage]
+					,ap.[FacebookURL]
+					,ap.[TwitterURL]
+					,ap.[GooglePlusURL]
+					,ap.[LinkedInURL]
+					,ap.[DateAdded]
+					,ap.[Active]
+					,ap.[ArticleCount]
+					,ap.[LinkType] AS AuthorLinkType
+					,ap.[AuthorURL]
+					,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+				FROM {databaseOwner}[{objectQualifier}Users] AS u
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleAuthorsItems] as mai ON mai.UserID = ap.UserID AND mai.ModuleID = @ModuleID
+					INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+				WHERE ap.AuthorProfileID NOT IN (
+					SELECT AuthorProfileID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] as agi
+						INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] as mgi ON agi.GroupId = mgi.GroupID
+					WHERE mgi.ModuleID = @ModuleID
+				)
+				ORDER BY u.DisplayName
+	  END
+	END
+ END 
+ 
+ SELECT * FROM @resultTable ORDER BY OrderBy;
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNnewsGroupsAndAuthors]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGroupsAndAuthors] AS' 
+END
+GO
+ALTER PROCEDURE {databaseOwner}[{objectQualifier}EasyDNNnewsGroupsAndAuthors]
+	@PortalID INT,
+	@ModuleID INT,
+	@NotInGroupPosition BIT, -- 0 gore, 1 dolje - uvjek false
+	@DisplayAll BIT = 1,
+	@RoleID INT = -1, -- -1 if role id is not main filter
+	@FilterPortals NVARCHAR(MAX) = NULL
+AS 
+SET NOCOUNT ON;
+DECLARE @PortalsTable TABLE (SharingPortalID INT NOT NULL PRIMARY KEY);
+
+IF @FilterPortals IS NULL
+	INSERT INTO @PortalsTable
+	SELECT [SharingPortalID]
+	FROM {databaseOwner}[{objectQualifier}EasyDNNNewsModulePortals] WHERE ModuleID = @ModuleID;
+ELSE IF @FilterPortals <> '-1' -- force current portal
+	INSERT INTO @PortalsTable
+	SELECT fp.KeyID FROM {databaseOwner}[{objectQualifier}EDS_StringListToTable](@FilterPortals) AS fp
+
+IF NOT EXISTS(SELECT 1 FROM @PortalsTable)
+	INSERT INTO @PortalsTable SELECT @PortalID;
+
+DECLARE @i INT, @MaxI INT, @GroupID INT;
+DECLARE @TableGroups Table (
+	[PortalID] INT NOT NULL
+	,[GroupID] INT NOT NULL
+	,[GroupName] NVARCHAR(250) NOT NULL
+	,[GroupInfo] NVARCHAR(4000) NULL
+	,[GroupImage] NVARCHAR(1000) NULL
+	,[FacebookURL] NVARCHAR(1000) NULL
+	,[TwitterURL] NVARCHAR(1000) NULL
+	,[GooglePlusURL] NVARCHAR(1000) NULL
+	,[LinkedInURL] NVARCHAR(1000) NULL
+	,[Parent] INT NULL
+	,[Level] INT NOT NULL
+	,[Position] INT NOT NULL
+	,[GroupLinkType] tinyINT NOT NULL
+	,[GroupURL] NVARCHAR(1000) NULL
+	,[MyRowCount] Int IDENTITY(1,1));
+DECLARE @resultTable Table (
+	[OrderBy] INT IDENTITY(1,1)
+	,[UserID] INT NULL
+	,[UserPortalID] INT NULL
+	,[Username] NVARCHAR(100) NULL
+	,[FirstName] NVARCHAR(50) NULL
+	,[LastName] NVARCHAR(50) NULL
+	,[Email] NVARCHAR(256) NULL
+	,[DisplayName] NVARCHAR(128) NULL
+	,[AuthorProfileID] INT NULL
+	,[ShortInfo] NVARCHAR(4000) NULL
+	,[ProfileImage] NVARCHAR(1000) NULL
+	,[FacebookURL] NVARCHAR(1000) NULL
+	,[TwitterURL] NVARCHAR(1000) NULL
+	,[GooglePlusURL] NVARCHAR(1000) NULL
+	,[LinkedInURL] NVARCHAR(1000) NULL
+	,[DateAdded] DATETIME NULL
+	,[Active] BIT NULL
+	,[ArticleCount] INT NULL
+	,[AuthorLinkType] TINYINT NULL
+	,[AuthorURL] NVARCHAR(1000) NULL
+	,[GroupID] INT NULL
+	,[PortalID] INT NULL
+	,[GroupName] NVARCHAR(250) NULL
+	,[GroupInfo] NVARCHAR(4000) NULL
+	,[GroupImage] NVARCHAR(1000) NULL
+	,[GFacebookURL] NVARCHAR(1000) NULL
+	,[GTwitterURL] NVARCHAR(1000) NULL
+	,[GGooglePlusURL] NVARCHAR(1000) NULL
+	,[GLinkedInURL] NVARCHAR(1000) NULL
+	,[Parent] INT NULL
+	,[Level] INT NULL
+	,[Position] INT NULL
+	,[GroupLinkType] TINYINT NULL
+	,[GroupURL] NVARCHAR(1000) NULL);
+
+IF @RoleID <> -1
+BEGIN
+	INSERT INTO @resultTable
+		SELECT u.[UserID]
+			,ap.PortalID AS UserPortalID
+			,u.[Username]
+			,u.[FirstName]
+			,u.[LastName]
+			,u.[Email]
+			,u.[DisplayName]
+			,ap.[AuthorProfileID]
+			,ap.[ShortInfo]
+			,ap.[ProfileImage]
+			,ap.[FacebookURL]
+			,ap.[TwitterURL]
+			,ap.[GooglePlusURL]
+			,ap.[LinkedInURL]
+			,ap.[DateAdded]
+			,ap.[Active]
+			,ap.[ArticleCount]
+			,ap.[LinkType] AS AuthorLinkType
+			,ap.[AuthorURL]
+			,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+		FROM {databaseOwner}[{objectQualifier}Users] AS u
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+			INNER JOIN {databaseOwner}[{objectQualifier}UserRoles] AS ur ON ur.UserID = ap.UserID
+			INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+		WHERE ur.RoleID = @RoleID
+		ORDER BY u.DisplayName
+END
+ELSE
+BEGIN
+	IF @NotInGroupPosition = 0 -- autori koji nisu u grupi su gore
+	BEGIN
+		IF @DisplayAll = 1 -- prikazi sve autore
+		BEGIN
+			INSERT INTO @resultTable
+			SELECT u.[UserID]
+				,ap.PortalID AS UserPortalID
+				,u.[Username]
+				,u.[FirstName]
+				,u.[LastName]
+				,u.[Email]
+				,u.[DisplayName]
+				,ap.[AuthorProfileID]
+				,ap.[ShortInfo]
+				,ap.[ProfileImage]
+				,ap.[FacebookURL]
+				,ap.[TwitterURL]
+				,ap.[GooglePlusURL]
+				,ap.[LinkedInURL]
+				,ap.[DateAdded]
+				,ap.[Active]
+				,ap.[ArticleCount]
+				,ap.[LinkType] AS AuthorLinkType
+				,ap.[AuthorURL]
+				,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			FROM {databaseOwner}[{objectQualifier}Users] AS u
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+			WHERE ap.AuthorProfileID NOT IN (
+				SELECT AuthorProfileID
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems]
+			)
+			ORDER BY u.DisplayName
+		END
+		ELSE
+		BEGIN
+			INSERT INTO @resultTable
+			SELECT u.[UserID]
+				,ap.PortalID AS UserPortalID
+				,u.[Username]
+				,u.[FirstName]
+				,u.[LastName]
+				,u.[Email]
+				,u.[DisplayName]
+				,ap.[AuthorProfileID]
+				,ap.[ShortInfo]
+				,ap.[ProfileImage]
+				,ap.[FacebookURL]
+				,ap.[TwitterURL]
+				,ap.[GooglePlusURL]
+				,ap.[LinkedInURL]
+				,ap.[DateAdded]
+				,ap.[Active]
+				,ap.[ArticleCount]
+				,ap.[LinkType] AS AuthorLinkType
+				,ap.[AuthorURL]
+				,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			FROM {databaseOwner}[{objectQualifier}Users] AS u
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleAuthorsItems] as mai ON mai.UserID = ap.UserID AND mai.ModuleID = @ModuleID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+			WHERE ap.AuthorProfileID NOT IN (
+				SELECT AuthorProfileID
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] as agi
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] as mgi ON agi.GroupId = mgi.GroupID
+				WHERE mgi.ModuleID = @ModuleID)
+			ORDER BY u.DisplayName
+		END
+	END
+	
+	IF @DisplayAll = 1
+	BEGIN
+		INSERT INTO @TableGroups
+		SELECT nag.[PortalID]
+			,nag.[GroupID]
+			,nag.[GroupName]
+			,nag.[GroupInfo]
+			,nag.[GroupImage]
+			,nag.[FacebookURL]
+			,nag.[TwitterURL]
+			,nag.[GooglePlusURL]
+			,nag.[LinkedInURL]
+			,nag.[Parent]
+			,nag.[Level]
+			,nag.[Position]
+			,nag.[LinkType] as GroupLinkType
+			,nag.[GroupURL]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] AS nag
+		WHERE nag.[GroupID] IN (
+			SELECT DISTINCT nag.GroupID
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] as nag
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON agi.GroupID = nag.GroupID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = nag.PortalID
+		)
+		ORDER BY nag.Position;
+	END
+	ELSE
+	BEGIN
+		INSERT INTO @TableGroups
+		SELECT DISTINCT nag.[PortalID]
+			,nag.[GroupID]
+			,nag.[GroupName]
+			,nag.[GroupInfo]
+			,nag.[GroupImage]
+			,nag.[FacebookURL]
+			,nag.[TwitterURL]
+			,nag.[GooglePlusURL]
+			,nag.[LinkedInURL]
+			,nag.[Parent]
+			,nag.[Level]
+			,nag.[Position]
+			,nag.[LinkType] as GroupLinkType
+			,nag.[GroupURL]
+		FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] AS nag
+		WHERE nag.[GroupID] IN (
+			SELECT DISTINCT nag.GroupID
+			FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorGroups] as nag
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON agi.GroupID = nag.GroupID
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] AS mgi ON nag.GroupID = mgi.GroupID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = nag.PortalID
+			WHERE mgi.ModuleID = @ModuleID
+		)
+		ORDER BY nag.Position;
+	END
+	
+	SELECT @MaxI = @@RowCount;
+	SELECT @i = 0;
+    WHILE @i < @MaxI
+	BEGIN
+		SET @i = @i + 1;
+		SELECT @GroupID = GroupID FROM @TableGroups Where MyRowCount = @i
+		
+		INSERT INTO @resultTable
+		SELECT
+			NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			,[GroupID]
+			,[PortalID]
+			,[GroupName]
+			,[GroupInfo]
+			,[GroupImage]
+			,[FacebookURL]
+			,[TwitterURL]
+			,[GooglePlusURL]
+			,[LinkedInURL]
+			,[Parent]
+			,[Level]
+			,[Position]
+			,[GroupLinkType]
+			,[GroupURL]
+		FROM @TableGroups WHERE MyRowCount = @i
+		
+		INSERT INTO @resultTable
+		SELECT u.[UserID]
+			,ap.PortalID AS UserPortalID
+			,u.[Username]
+			,u.[FirstName]
+			,u.[LastName]
+			,u.[Email]
+			,u.[DisplayName]
+			,ap.[AuthorProfileID]
+			,ap.[ShortInfo]
+			,ap.[ProfileImage]
+			,ap.[FacebookURL]
+			,ap.[TwitterURL]
+			,ap.[GooglePlusURL]
+			,ap.[LinkedInURL]
+			,ap.[DateAdded]
+			,ap.[Active]
+			,ap.[ArticleCount]
+			,ap.[LinkType] AS AuthorLinkType
+			,ap.[AuthorURL]
+			,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+		FROM {databaseOwner}[{objectQualifier}Users] AS u
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+			INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] AS agi ON agi.AuthorProfileID = ap.AuthorProfileID
+		WHERE agi.GroupID = @GroupID
+		ORDER BY u.DisplayName
+	END
+	IF @NotInGroupPosition = 1
+	BEGIN
+		IF @DisplayAll = 1
+		BEGIN
+			INSERT INTO @resultTable
+			SELECT u.[UserID]
+				,ap.PortalID AS UserPortalID
+				,u.[Username]
+				,u.[FirstName]
+				,u.[LastName]
+				,u.[Email]
+				,u.[DisplayName]
+				,ap.[AuthorProfileID]
+				,ap.[ShortInfo]
+				,ap.[ProfileImage]
+				,ap.[FacebookURL]
+				,ap.[TwitterURL]
+				,ap.[GooglePlusURL]
+				,ap.[LinkedInURL]
+				,ap.[DateAdded]
+				,ap.[Active]
+				,ap.[ArticleCount]
+				,ap.[LinkType] AS AuthorLinkType
+				,ap.[AuthorURL]
+				,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+			FROM {databaseOwner}[{objectQualifier}Users] AS u
+				INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+				INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+			WHERE ap.AuthorProfileID NOT IN (
+				SELECT AuthorProfileID
+				FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems]
+			)
+			ORDER BY u.DisplayName
+		END
+		ELSE
+		BEGIN
+			INSERT INTO @resultTable
+				SELECT u.[UserID]
+					,ap.PortalID AS UserPortalID
+					,u.[Username]
+					,u.[FirstName]
+					,u.[LastName]
+					,u.[Email]
+					,u.[DisplayName]
+					,ap.[AuthorProfileID]
+					,ap.[ShortInfo]
+					,ap.[ProfileImage]
+					,ap.[FacebookURL]
+					,ap.[TwitterURL]
+					,ap.[GooglePlusURL]
+					,ap.[LinkedInURL]
+					,ap.[DateAdded]
+					,ap.[Active]
+					,ap.[ArticleCount]
+					,ap.[LinkType] AS AuthorLinkType
+					,ap.[AuthorURL]
+					,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+				FROM {databaseOwner}[{objectQualifier}Users] AS u
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsAuthorProfile] AS ap ON u.UserID = ap.UserID
+					INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleAuthorsItems] as mai ON mai.UserID = ap.UserID AND mai.ModuleID = @ModuleID
+					INNER JOIN @PortalsTable AS pt ON pt.SharingPortalID = ap.PortalID
+				WHERE ap.AuthorProfileID NOT IN (
+					SELECT AuthorProfileID FROM {databaseOwner}[{objectQualifier}EasyDNNNewsAutorGroupItems] as agi
+						INNER JOIN {databaseOwner}[{objectQualifier}EasyDNNNewsModuleGroupItems] as mgi ON agi.GroupId = mgi.GroupID
+					WHERE mgi.ModuleID = @ModuleID
+				)
+				ORDER BY u.DisplayName
+	  END
+	END
+ END 
+ 
+ SELECT * FROM @resultTable ORDER BY OrderBy;
+GO

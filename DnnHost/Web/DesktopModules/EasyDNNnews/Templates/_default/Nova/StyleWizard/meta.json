@@ -1,6 +1,6 @@
 {
   "name": "Nova",
-  "version": 2,
+  "version": 3,
   "assetsClientPath": "assets/",
   "customFontFamilies": [
     {
@@ -14,6 +14,16 @@
   ],
   "styleDefinitions": {
     "properties": {
+      "globalColors": {
+        "type": "globalColors",
+        "name": "Global Colors",
+        "states": [
+          {
+            "id": "default",
+            "name": "Color 1"
+          }
+        ]
+      },
       "headings": {
         "type": "text",
         "name": "Headings",
@@ -4824,8 +4834,8 @@
           }
         }
       },
-      "socialShareRating": {
-        "name": "Social Share Buttons & Rating",
+      "socialShareRatingVoting": {
+        "name": "Social Share Buttons, Rating, Voting",
         "show": [
           "detailsArticleFixedHeader",
           "detailsArticleClassic"
@@ -5161,6 +5171,196 @@
           }
         }
       },
+      "articleVoting": {
+        "name": "Article Voting",
+        "show": [
+          "detailsArticleDefault",
+          "detailsArticleClassic",
+          "detailsArticleFixedHeader",
+          "detailsCatalogDefault"
+        ],
+        "properties": {
+          "icons": {
+            "type": "text",
+            "name": "Icons",
+            "subCollection": "news",
+            "states": [
+              {
+                "id": "default",
+                "selectors": [
+                  " .edn_ArticleVoting > span > i"
+                ],
+                "name": "Normal",
+                "forbidden": [
+                  "fontFamily",
+                  "style",
+                  "weight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "inactive",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__voted > i",
+                  " .edn_ArticleVoting > span.edn__voted:hover > i"
+                ],
+                "name": "Inactive",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "active",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp > i",
+                  " .edn_ArticleVoting > span.edn__votedDown > i"
+                ],
+                "name": "Active",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "hover",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp:hover > i",
+                  " .edn_ArticleVoting > span.edn__votedDown:hover > i",
+                  " .edn_ArticleVoting > span:hover > i"
+                ],
+                "name": "Hover",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              }
+            ]
+          },
+          "text": {
+            "type": "text",
+            "name": "Text",
+            "subCollection": "news",
+            "states": [
+              {
+                "id": "default",
+                "selectors": [
+                  " .edn_ArticleVoting > span"
+                ],
+                "name": "Normal",
+                "forbidden": [
+                  "transform"
+                ]
+              },
+              {
+                "id": "inactive",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__voted",
+                  " .edn_ArticleVoting > span.edn__voted:hover"
+                ],
+                "name": "Inactive",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              },
+              {
+                "id": "active",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp",
+                  " .edn_ArticleVoting > span.edn__votedDown"
+                ],
+                "name": "Active",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              },
+              {
+                "id": "hover",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp:hover",
+                  " .edn_ArticleVoting > span.edn__votedDown:hover",
+                  " .edn_ArticleVoting > span:hover"
+                ],
+                "name": "Hover",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              }
+            ]
+          }
+        },
+        "sections": {
+          "tooltip": {
+            "name": "Tooltip",
+            "properties": {
+              "backgroundColor": {
+                "type": "background",
+                "name": "Background Color",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_ArticleVoting .edn_voteTooltip",
+                      " .edn_ArticleVoting .edn_voteTooltip::before"
+                    ],
+                    "name": "Normal",
+                    "forbidden": [
+                      "image",
+                      "position",
+                      "repeat",
+                      "attachment",
+                      "animation"
+                    ]
+                  }
+                ]
+              },
+              "text": {
+                "type": "text",
+                "name": "Text",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_ArticleVoting .edn_voteTooltip"
+                    ],
+                    "name": "Normal"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "categories": {
         "name": "Categories",
         "hide": [
@@ -5432,9 +5632,6 @@
             "type": "boxShadow",
             "name": "Shadow",
             "subcollection": "news",
-            "show": [
-              "detailsArticleFixedHeader"
-            ],
             "states": [
               {
                 "id": "default",
@@ -5549,6 +5746,56 @@
           }
         },
         "sections": {
+          "image": {
+            "name": "Image",
+            "properties": {
+              "border": {
+                "type": "border",
+                "name": "Border",
+                "subcollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_authorGroupDetails > img"
+                    ],
+                    "name": "Normal"
+                  }
+                ]
+              },
+              "borderRadius": {
+                "type": "borderRadius",
+                "name": "Border Radius",
+                "subcollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_authorGroupDetails > img"
+                    ],
+                    "name": "Normal",
+                    "forbidden": [
+                      "second"
+                    ]
+                  }
+                ]
+              },
+              "boxShadow": {
+                "type": "boxShadow",
+                "name": "Shadow",
+                "subcollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_authorGroupDetails > img"
+                    ],
+                    "name": "Normal"
+                  }
+                ]
+              }
+            }
+          },
           "contactBioButtons": {
             "name": "Contact And Full Biography Buttons",
             "properties": {
@@ -5952,6 +6199,56 @@
               }
             },
             "sections": {
+              "image": {
+                "name": "Image",
+                "properties": {
+                  "border": {
+                    "type": "border",
+                    "name": "Border",
+                    "subcollection": "news",
+                    "states": [
+                      {
+                        "id": "default",
+                        "selectors": [
+                          " .edn_authorGroupDetails.edn_groupDetails > img"
+                        ],
+                        "name": "Normal"
+                      }
+                    ]
+                  },
+                  "borderRadius": {
+                    "type": "borderRadius",
+                    "name": "Border Radius",
+                    "subcollection": "news",
+                    "states": [
+                      {
+                        "id": "default",
+                        "selectors": [
+                          " .edn_authorGroupDetails.edn_groupDetails > img"
+                        ],
+                        "name": "Normal",
+                        "forbidden": [
+                          "second"
+                        ]
+                      }
+                    ]
+                  },
+                  "boxShadow": {
+                    "type": "boxShadow",
+                    "name": "Shadow",
+                    "subcollection": "news",
+                    "states": [
+                      {
+                        "id": "default",
+                        "selectors": [
+                          " .edn_authorGroupDetails.edn_groupDetails > img"
+                        ],
+                        "name": "Normal"
+                      }
+                    ]
+                  }
+                }
+              },
               "contactButton": {
                 "name": "Contact Button",
                 "properties": {

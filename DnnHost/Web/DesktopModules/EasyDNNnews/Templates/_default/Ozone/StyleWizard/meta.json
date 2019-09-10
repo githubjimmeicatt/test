@@ -1,6 +1,6 @@
 {
   "name": "Ozone",
-  "version": 2,
+  "version": 3,
   "assetsClientPath": "assets/",
   "customFontFamilies": [
     {
@@ -14,6 +14,16 @@
   ],
   "styleDefinitions": {
     "properties": {
+      "globalColors": {
+        "type": "globalColors",
+        "name": "Global Colors",
+        "states": [
+          {
+            "id": "default",
+            "name": "Color 1"
+          }
+        ]
+      },
       "headings": {
         "type": "text",
         "name": "Headings",
@@ -1404,7 +1414,7 @@
         "subCollection": "tagCloud",
         "states": [
           {
-          "id": "default",
+            "id": "default",
             "selectors": [
               " > div a span:first-child"
             ],
@@ -1439,7 +1449,7 @@
         "subCollection": "tagCloud",
         "states": [
           {
-          "id": "default",
+            "id": "default",
             "selectors": [
               " > div a"
             ],
@@ -1706,7 +1716,7 @@
         "subCollection": "categoryMenu",
         "states": [
           {
-          "id": "default",
+            "id": "default",
             "selectors": [
               " .edn_category_menu_wrapper li > div"
             ],
@@ -2528,7 +2538,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                           " .edn_calendarExport.edn_toolTip:hover > .edn_toolTipContent"
+                          " .edn_calendarExport.edn_toolTip:hover > .edn_toolTipContent"
                         ],
                         "name": "Normal",
                         "important": [
@@ -2547,7 +2557,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                           " .edn_calendarExport.edn_toolTip:hover > .edn_toolTipContent"
+                          " .edn_calendarExport.edn_toolTip:hover > .edn_toolTipContent"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -2571,7 +2581,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                           " .edn_calendarExport.edn_toolTip:hover .edn_toolTipContent"
+                          " .edn_calendarExport.edn_toolTip:hover .edn_toolTipContent"
                         ],
                         "name": "Normal",
                         "important": [
@@ -5137,6 +5147,196 @@
           }
         }
       },
+      "articleVoting": {
+        "name": "Article Voting",
+        "show": [
+          "detailsArticleDefault",
+          "detailsArticleDefaultAccordion",
+          "detailsArticleDefaultTabs",
+          "detailsCatalogDefault"
+        ],
+        "properties": {
+          "icons": {
+            "type": "text",
+            "name": "Icons",
+            "subCollection": "news",
+            "states": [
+              {
+                "id": "default",
+                "selectors": [
+                  " .edn_ArticleVoting > span > i"
+                ],
+                "name": "Normal",
+                "forbidden": [
+                  "fontFamily",
+                  "style",
+                  "weight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "inactive",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__voted > i",
+                  " .edn_ArticleVoting > span.edn__voted:hover > i"
+                ],
+                "name": "Inactive",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "active",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp > i",
+                  " .edn_ArticleVoting > span.edn__votedDown > i"
+                ],
+                "name": "Active",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              },
+              {
+                "id": "hover",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp:hover > i",
+                  " .edn_ArticleVoting > span.edn__votedDown:hover > i",
+                  " .edn_ArticleVoting > span:hover > i"
+                ],
+                "name": "Hover",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "weight",
+                  "lineHeight",
+                  "transform",
+                  "decorations"
+                ]
+              }
+            ]
+          },
+          "text": {
+            "type": "text",
+            "name": "Text",
+            "subCollection": "news",
+            "states": [
+              {
+                "id": "default",
+                "selectors": [
+                  " .edn_ArticleVoting > span"
+                ],
+                "name": "Normal",
+                "forbidden": [
+                  "transform"
+                ]
+              },
+              {
+                "id": "inactive",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__voted",
+                  " .edn_ArticleVoting > span.edn__voted:hover"
+                ],
+                "name": "Inactive",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              },
+              {
+                "id": "active",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp",
+                  " .edn_ArticleVoting > span.edn__votedDown"
+                ],
+                "name": "Active",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              },
+              {
+                "id": "hover",
+                "selectors": [
+                  " .edn_ArticleVoting > span.edn__votedUp:hover",
+                  " .edn_ArticleVoting > span.edn__votedDown:hover",
+                  " .edn_ArticleVoting > span:hover"
+                ],
+                "name": "Hover",
+                "forbidden": [
+                  "fontFamily",
+                  "size",
+                  "style",
+                  "lineHeight",
+                  "transform"
+                ]
+              }
+            ]
+          }
+        },
+        "sections": {
+          "tooltip": {
+            "name": "Tooltip",
+            "properties": {
+              "backgroundColor": {
+                "type": "background",
+                "name": "Background Color",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_ArticleVoting .edn_voteTooltip",
+                      " .edn_ArticleVoting .edn_voteTooltip::before"
+                    ],
+                    "name": "Normal",
+                    "forbidden": [
+                      "image",
+                      "position",
+                      "repeat",
+                      "attachment",
+                      "animation"
+                    ]
+                  }
+                ]
+              },
+              "text": {
+                "type": "text",
+                "name": "Text",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_ArticleVoting .edn_voteTooltip"
+                    ],
+                    "name": "Normal"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "articleTags": {
         "name": "Article Tags",
         "show": [
@@ -5462,130 +5662,130 @@
               "listArticleWithTabs"
             ],
             "properties": {
-               "title": {
-                  "type": "text",
-                  "name": "Title",
-                  "subCollection": "news",
-                  "states": [
-                    {
-                      "id": "default",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header > h3"
-                      ],
-                      "name": "Normal"
-                    },
-                    {
-                      "id": "hover",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header:hover > h3"
-                      ],
-                      "name": "Hover",
-                      "forbidden": [
-                        "fontFamily",
-                        "size",
-                        "style",
-                        "weight",
-                        "lineHeight",
-                        "transform"
-                      ]
-                    },
-                    {
-                      "id": "active",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header > h3"
-                      ],
-                      "name": "Active",
-                      "forbidden": [
-                        "fontFamily",
-                        "size",
-                        "style",
-                        "lineHeight",
-                        "transform"
-                      ]
-                    }
-                  ]
+              "title": {
+                "type": "text",
+                "name": "Title",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header > h3"
+                    ],
+                    "name": "Normal"
+                  },
+                  {
+                    "id": "hover",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header:hover > h3"
+                    ],
+                    "name": "Hover",
+                    "forbidden": [
+                      "fontFamily",
+                      "size",
+                      "style",
+                      "weight",
+                      "lineHeight",
+                      "transform"
+                    ]
+                  },
+                  {
+                    "id": "active",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header > h3"
+                    ],
+                    "name": "Active",
+                    "forbidden": [
+                      "fontFamily",
+                      "size",
+                      "style",
+                      "lineHeight",
+                      "transform"
+                    ]
+                  }
+                ]
               },
               "date": {
-                  "type": "text",
-                  "name": "Date",
-                  "subCollection": "news",
-                  "states": [
-                    {
-                      "id": "default",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header .edn_metaDetails > time"
-                      ],
-                      "name": "Normal"
-                    },
-                    {
-                      "id": "hover",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header:hover .edn_metaDetails > time"
-                      ],
-                      "name": "Hover",
-                      "forbidden": [
-                        "fontFamily",
-                        "size",
-                        "style",
-                        "weight",
-                        "lineHeight",
-                        "transform"
-                      ]
-                    },
-                    {
-                      "id": "active",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header .edn_metaDetails > time"
-                      ],
-                      "name": "Active",
-                      "forbidden": [
-                        "fontFamily",
-                        "size",
-                        "style",
-                        "lineHeight",
-                        "transform"
-                      ]
-                    }
-                  ]
+                "type": "text",
+                "name": "Date",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header .edn_metaDetails > time"
+                    ],
+                    "name": "Normal"
+                  },
+                  {
+                    "id": "hover",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion > header:hover .edn_metaDetails > time"
+                    ],
+                    "name": "Hover",
+                    "forbidden": [
+                      "fontFamily",
+                      "size",
+                      "style",
+                      "weight",
+                      "lineHeight",
+                      "transform"
+                    ]
+                  },
+                  {
+                    "id": "active",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header .edn_metaDetails > time"
+                    ],
+                    "name": "Active",
+                    "forbidden": [
+                      "fontFamily",
+                      "size",
+                      "style",
+                      "lineHeight",
+                      "transform"
+                    ]
+                  }
+                ]
               },
               "activeBackground": {
-                  "type": "background",
-                  "name": "Active Background",
-                  "subCollection": "news",
-                  "states": [
-                    {
-                      "id": "default",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header"
-                      ],
-                      "name": "Normal",
-                      "forbidden": [
-                        "attachment",
-                        "animation"
-                      ]
-                    }
-                  ]
+                "type": "background",
+                "name": "Active Background",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header"
+                    ],
+                    "name": "Normal",
+                    "forbidden": [
+                      "attachment",
+                      "animation"
+                    ]
+                  }
+                ]
               },
               "activePointer": {
-                  "type": "border",
-                  "name": "Active Pointer",
-                  "subCollection": "news",
-                  "states": [
-                    {
-                      "id": "default",
-                      "selectors": [
-                        " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header::before"
-                      ],
-                      "name": "Normal",
-                      "forbidden": [
-                        "width",
-                        "style",
-                        "topSide",
-                        "bottomSide",
-                        "leftSide"
-                      ]
-                    }
-                  ]
+                "type": "border",
+                "name": "Active Pointer",
+                "subCollection": "news",
+                "states": [
+                  {
+                    "id": "default",
+                    "selectors": [
+                      " .edn_articleAccordion .edsAccordion_section.edn_listArticle3.edn_verticalAccordion.edsAccordion_active > header::before"
+                    ],
+                    "name": "Normal",
+                    "forbidden": [
+                      "width",
+                      "style",
+                      "topSide",
+                      "bottomSide",
+                      "leftSide"
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -9441,7 +9641,7 @@
             "subCollection": "categoryMenu",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .edn_category_menu_wrapper li .edn_articlecount"
                 ],
@@ -9476,7 +9676,7 @@
             "subCollection": "categoryMenu",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .edn_category_menu_wrapper li .edn_articlecount"
                 ],
@@ -9568,7 +9768,7 @@
             "subCollection": "search",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .search_input",
                   " .search_input .do_search",
@@ -9606,7 +9806,7 @@
             "subCollection": "search",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .search_input",
                   " .search_input.button_outside .input input[type=\"text\"]",
@@ -9630,7 +9830,7 @@
             "subCollection": "search",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .search_input",
                   " .search_input.button_outside .input input[type=\"text\"]",
@@ -9689,7 +9889,7 @@
             "subCollection": "search",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .search_input.button_outside .do_search"
                 ],
@@ -9701,7 +9901,7 @@
                 ]
               },
               {
-              "id": "hover",
+                "id": "hover",
                 "selectors": [
                   " .search_input.button_outside .do_search:hover"
                 ],
@@ -9739,7 +9939,7 @@
             "subCollection": "search",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .search_input.button_outside .do_search"
                 ],
@@ -9797,7 +9997,7 @@
             "subCollection": "search",
             "states": [
               {
-              "id": "default",
+                "id": "default",
                 "selectors": [
                   " .search_input.button_outside .do_search"
                 ],
@@ -10040,7 +10240,7 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span",
                       " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice",
@@ -10063,13 +10263,13 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
-                       " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span",
-                       " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span:after",
-                       " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice",
-                       " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice > div",
-                       " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span:after",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice > div",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop"
                     ],
                     "name": "Normal"
                   }
@@ -10178,7 +10378,7 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_Text .edncf_TextInput input"
                     ],
@@ -10869,9 +11069,9 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
-                     " .edncf_AdvancedSearch .edncf_container .edncf_dateSearchField .form-control"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_dateSearchField .form-control"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -11041,7 +11241,7 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit"
                     ],
@@ -11070,14 +11270,14 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit"
                     ],
                     "name": "Normal"
                   },
                   {
-                  "id": "hover",
+                    "id": "hover",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit:hover"
                     ],
@@ -11112,14 +11312,14 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit"
                     ],
                     "name": "Normal"
                   },
                   {
-                  "id": "hover",
+                    "id": "hover",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit:hover"
                     ],
@@ -11204,7 +11404,7 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_reset"
                     ],
@@ -11233,14 +11433,14 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_reset"
                     ],
                     "name": "Normal"
                   },
                   {
-                  "id": "hover",
+                    "id": "hover",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_reset:hover"
                     ],
@@ -11275,14 +11475,14 @@
                 "subCollection": "search",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_reset"
                     ],
                     "name": "Normal"
                   },
                   {
-                  "id": "hover",
+                    "id": "hover",
                     "selectors": [
                       " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_reset:hover"
                     ],
@@ -11740,8 +11940,8 @@
                   {
                     "id": "default",
                     "selectors": [
-                       " .edn_styledSelect > span",
-                       " .edn_styledSelect > span::after"
+                      " .edn_styledSelect > span",
+                      " .edn_styledSelect > span::after"
                     ],
                     "name": "Normal"
                   }
@@ -11843,7 +12043,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .month_selection",
                       " .fc-header-toolbar"
@@ -11862,7 +12062,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .month_selection",
                       " .fc-header-toolbar"
@@ -11887,7 +12087,7 @@
                     "subCollection": "calendar",
                     "states": [
                       {
-                      "id": "default",
+                        "id": "default",
                         "selectors": [
                           " .month_selection td.next_prev_months a",
                           " .fc-button-group .fc-prev-button",
@@ -11896,7 +12096,7 @@
                         "name": "Normal"
                       },
                       {
-                      "id": "hover",
+                        "id": "hover",
                         "selectors": [
                           " .month_selection td.next_prev_months a:hover",
                           " .fc-button-group .fc-prev-button:hover",
@@ -11935,7 +12135,7 @@
                     "subCollection": "calendar",
                     "states": [
                       {
-                      "id": "default",
+                        "id": "default",
                         "selectors": [
                           " .month_selection td.next_prev_months a",
                           " .fc-button-group .fc-prev-button",
@@ -11968,7 +12168,7 @@
                     "subCollection": "calendar",
                     "states": [
                       {
-                      "id": "default",
+                        "id": "default",
                         "selectors": [
                           " .month_selection td.next_prev_months a",
                           " .fc-button-group .fc-prev-button",
@@ -12041,7 +12241,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .calendar_table td.week_days",
                       " .fc-widget-header"
@@ -12060,7 +12260,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .calendar_table td.week_days",
                       " .fc-widget-header th.fc-day-header"
@@ -12075,7 +12275,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .calendar_table td.week_days",
                       " .fc-widget-header th.fc-day-header"
@@ -12113,7 +12313,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .fc-widget-header th.fc-week-number"
                     ],
@@ -12131,7 +12331,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .fc-widget-header th.fc-week-number"
                     ],
@@ -12145,7 +12345,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .fc-widget-header th.fc-week-number"
                     ],
@@ -12178,7 +12378,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .fc td.fc-week-number"
                     ],
@@ -12196,7 +12396,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .fc td.fc-week-number"
                     ],
@@ -12210,7 +12410,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .fc td.fc-week-number"
                     ],
@@ -14369,7 +14569,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .top_calendar_actions > a",
                       " .fc-button"
@@ -14417,7 +14617,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .top_calendar_actions > a",
                       " .fc-button"
@@ -14451,7 +14651,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .top_calendar_actions > a",
                       " .fc-button"
@@ -14477,7 +14677,7 @@
                 "subCollection": "calendar",
                 "states": [
                   {
-                  "id": "default",
+                    "id": "default",
                     "selectors": [
                       " .top_calendar_actions > a",
                       " .fc-button"
@@ -16843,7 +17043,7 @@
                   }
                 ]
               },
-              "backgroundColor":{
+              "backgroundColor": {
                 "type": "background",
                 "name": "Background Color",
                 "subCollection": "calendar",
@@ -16878,7 +17078,7 @@
                   }
                 ]
               },
-              "text":{
+              "text": {
                 "type": "text",
                 "name": "Text",
                 "subCollection": "calendar",
@@ -17693,7 +17893,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                     " .eds_GravityGallery_Ozone a.edsgg_galleryBackLink:hover"
+                      " .eds_GravityGallery_Ozone a.edsgg_galleryBackLink:hover"
                     ],
                     "name": "Hover"
                   }
@@ -18191,7 +18391,7 @@
               {
                 "id": "default",
                 "selectors": [
-                   " .chameleon_slider.Ozone .thumb_wrapper"
+                  " .chameleon_slider.Ozone .thumb_wrapper"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -18209,7 +18409,7 @@
               {
                 "id": "default",
                 "selectors": [
-                   " .chameleon_slider.Ozone .thumb_wrapper"
+                  " .chameleon_slider.Ozone .thumb_wrapper"
                 ],
                 "name": "Normal"
               }
@@ -18223,7 +18423,7 @@
               {
                 "id": "default",
                 "selectors": [
-                   " .chameleon_slider.Ozone .thumb_wrapper .navigation:after"
+                  " .chameleon_slider.Ozone .thumb_wrapper .navigation:after"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -18237,7 +18437,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                   " .chameleon_slider.Ozone .thumb_wrapper .navigation:hover:after"
+                  " .chameleon_slider.Ozone .thumb_wrapper .navigation:hover:after"
                 ],
                 "name": "Hover",
                 "forbidden": [

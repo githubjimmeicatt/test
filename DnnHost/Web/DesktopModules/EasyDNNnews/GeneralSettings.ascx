@@ -48,6 +48,16 @@
 						</div>
 					</td>
 				</tr>
+				<tr>
+					<td class="tdLabel">
+						<asp:Label ID="lblRedirectArticlesTo404" runat="server" Text="Return 404 for non existing articles:" resourcekey="lblRedirectArticlesTo404"></asp:Label>
+					</td>
+					<td>
+						<div class="switchCheckbox">
+							<asp:CheckBox ID="cbRedirectArticlesTo404" runat="server" Text="Return 404 for non existing articles" />
+						</div>
+					</td>
+				</tr>
 			</table>
 			<div class="sectionBoxSubtitle highlighted3">
 				<asp:Label ID="lblArticlehistory" runat="server" Text="Article history" resourcekey="lblArticlehistoryResource1"></asp:Label>
@@ -143,6 +153,16 @@
 					</td>
 					<td>
 						<asp:Label ID="lblPageAuthorTitlePreview" runat="server" resourcekey="lblPageAuthorTitlePreviewResource1"></asp:Label>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdLabel">
+						<label for="<%=cbIncludePageNumberInPageTitle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblIncludePageNumberInPageTitle.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblIncludePageNumberInPageTitle.Text") %></label>
+					</td>
+					<td>
+						<div class="switchCheckbox">
+							<asp:CheckBox ID="cbIncludePageNumberInPageTitle" runat="server" Text="Include page number" AutoPostBack="true" />
+						</div>
 					</td>
 				</tr>
 				<tr id="trDaylightSavingTimeTitle" runat="server">

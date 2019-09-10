@@ -1,0 +1,164 @@
+2016-10-21 01:57:24,283 [Jaguar][Thread:10][ERROR] DotNetNuke.Framework.Reflection - Icatt.DotNetNuke.Modules.Response.ResponseController
+System.Web.HttpException (0x80004005): Could not load type 'Icatt.DotNetNuke.Modules.Response.ResponseController'.
+   at System.Web.Compilation.BuildManager.GetType(String typeName, Boolean throwOnError, Boolean ignoreCase)
+   at DotNetNuke.Framework.Reflection.CreateType(String TypeName, String CacheKey, Boolean UseCache, Boolean IgnoreErrors)
+2016-10-21 02:20:22,598 [Jaguar][Thread:26][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): The file '/nl-nl/home2015/ikspaarpensioen/pensioenregeling/partnerenwezenpensioen.aspx' does not exist.
+   at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2016-10-21 09:09:48,974 [Jaguar][Thread:54][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 213.254.241.7
+	Port: 20039
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 9L903rUkeIxyeTjr0evDQYnmb0fEcBaH5YfYNe97AeUuJB8a01L4cqln4KtKgd qT/rTZwK88pcoRjz6PnbxNsQ0loUYYEE4iZ8nu3lGXL 0MM1S9Vpuei8QJ/91thXejRMYmu5I3rRq3M1fSD edT vJjpVPc9OF s OWEGhinS19Iw1M8FboMlk1MrvydETbS4bTPY5YThWtvQoO0ZT1HD1eGY9n9xsXmEelTpv5Y/2vPb3Fc6zSyJq6pTbty3WjEXwUxntg6vDa2/HXAptvGnRym3cKpwi8ttsG3pt4aNUIlmf3ag430EIkqLvnDfFTQ6Sxq5CpgGqOCUmJCLm8JAHxmzjJrm13wW ET8Bt3TmEs3DTwuZsICs0PKqNTonSi7j/xHNUDtkZO232SHr7gQbt5jrczP2DWGdiFp2WTzd03IfOE421TDra08LaAy236JPSvQWBTzC qNwvTGjKbYchiCNtqNFTcZ48SViPTdiLWjpY0RFbdC2ycjyTwdeym6v55NyUMTeqV7szL1RrkmsMHuZyxa0LO/o5gS8POZz2TqDqr8kCVVP1o=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 09:09:48,974 [Jaguar][Thread:54][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 213.254.241.7
+	Port: 20039
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: 9L903rUkeIxyeTjr0evDQYnmb0fEcBaH5YfYNe97AeUuJB8a01L4cqln4KtKgd qT/rTZwK88pcoRjz6PnbxNsQ0loUYYEE4iZ8nu3lGXL 0MM1S9Vpuei8QJ/91thXejRMYmu5I3rRq3M1fSD edT vJjpVPc9OF s OWEGhinS19Iw1M8FboMlk1MrvydETbS4bTPY5YThWtvQoO0ZT1HD1eGY9n9xsXmEelTpv5Y/2vPb3Fc6zSyJq6pTbty3WjEXwUxntg6vDa2/HXAptvGnRym3cKpwi8ttsG3pt4aNUIlmf3ag430EIkqLvnDfFTQ6Sxq5CpgGqOCUmJCLm8JAHxmzjJrm13wW ET8Bt3TmEs3DTwuZsICs0PKqNTonSi7j/xHNUDtkZO232SHr7gQbt5jrczP2DWGdiFp2WTzd03IfOE421TDra08LaAy236JPSvQWBTzC qNwvTGjKbYchiCNtqNFTcZ48SViPTdiLWjpY0RFbdC2ycjyTwdeym6v55NyUMTeqV7szL1RrkmsMHuZyxa0LO/o5gS8POZz2TqDqr8kCVVP1o=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 10:11:37,138 [Jaguar][Thread:17][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.192
+	Port: 2023
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: HgJ7bdoqlCJ25fwRExW9qf9h2Ps6pvvFBrFw6evJcQPRla/odFhzbuOYGyGw2xkBatISKbdqQeNzSERfJVVCLxh0saSBBR4jcecTUulYvl8W7yMsrNOSMKJHMDOiC5tRDWTb8d pXas2sRH8AVsKVexBYQzTY98M tFk2QlDP4nnxw s9O9DmLc9RTR55PEsfYSXlbLHhC/XP5RYSta2 KcyZMGlQL2kb8iB xD17d2C8ydzrjIYlcdsri/oCsNVN5qB346361ZsJNEwc9YuN 7pPCIX7ziEtQb3Msu6jiaOId874agdS0kQA4U3XB5BJyn7/quXZkbqFkh57uAZ/iV92DJFHJ6H1RHlIn0oxF3i 3R2jQwPuSvX/ZqCjjxTMhS3oqj5vxWWjuCnCipBbzDPpXT6R0p8YqZ/HA45mNLaNaiPnxs3uxA6siBjoXfHKXqN/Ay4zcP9W9FbSAIfpyVWpIY0cJMGd8nTegZm754ALheXPPw7FVlbxUbY2aCBTXrqduqKQanQJAwICgRjHQS0sBLPiOt54K4H6Y/dU0kKvPL5mMe/ KxcXW4=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 10:11:37,138 [Jaguar][Thread:17][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.192
+	Port: 2023
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: HgJ7bdoqlCJ25fwRExW9qf9h2Ps6pvvFBrFw6evJcQPRla/odFhzbuOYGyGw2xkBatISKbdqQeNzSERfJVVCLxh0saSBBR4jcecTUulYvl8W7yMsrNOSMKJHMDOiC5tRDWTb8d pXas2sRH8AVsKVexBYQzTY98M tFk2QlDP4nnxw s9O9DmLc9RTR55PEsfYSXlbLHhC/XP5RYSta2 KcyZMGlQL2kb8iB xD17d2C8ydzrjIYlcdsri/oCsNVN5qB346361ZsJNEwc9YuN 7pPCIX7ziEtQb3Msu6jiaOId874agdS0kQA4U3XB5BJyn7/quXZkbqFkh57uAZ/iV92DJFHJ6H1RHlIn0oxF3i 3R2jQwPuSvX/ZqCjjxTMhS3oqj5vxWWjuCnCipBbzDPpXT6R0p8YqZ/HA45mNLaNaiPnxs3uxA6siBjoXfHKXqN/Ay4zcP9W9FbSAIfpyVWpIY0cJMGd8nTegZm754ALheXPPw7FVlbxUbY2aCBTXrqduqKQanQJAwICgRjHQS0sBLPiOt54K4H6Y/dU0kKvPL5mMe/ KxcXW4=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 11:00:03,534 [Jaguar][Thread:26][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.79.123.3
+	Port: 10319
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: wfeUje9mztHuhUVLLZIuwE0yYnoL5zQQb48Vr8H2ldMWWAEPKgl2 0rp FmdVGcgqsy35gXyztAZGZo6 oC6ZzZHLoom/B8ZU1sEZk1pCWMwBy7EQBrXBnJD9IeNTpgRbXd3sLrRjqZ3bOn2ErcA1qnrucLwmqNZl0/e9aWhY24Wr8eUpsWd1JO4BjRXtvOsT64d0HgH2jsKhX6AgQhDudrxf0JTnRbAR65m/g2X6szEy6sBuZKuSGTvGlUoZgbR5PVufuzVCARrFn02tF/c3No7XSkwXkXR4V5kvSG3ngFSeVdH4JIhO9FlRwgW D8XQDJGaJ63LXl9pZy6O7i5JEGalToBGKwSOsXF4tY86LVDGZbk9iCPCUgju3w6ae094u8mAz88w45ad6mkb55gcEKXxktE7Sk d zob AvjxQqEwu4h6Kcc0lWcoEAtAL1/pxxiuSHylNVEz V/BgVashc/EBxky3/0yRSvfOvsS/oIkvEt706a5/WWDpd1026XLG76DqQk2K7sLS7ZbsGLmobOpApYK0QLx9NB7/ba1PbihzVEIU6tRXSns0=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 11:00:03,534 [Jaguar][Thread:26][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): Validation of viewstate MAC failed. If this application is hosted by a Web Farm or cluster, ensure that <machineKey> configuration specifies the same validationKey and validation algorithm. AutoGenerate cannot be used in a cluster.
+
+See http://go.microsoft.com/fwlink/?LinkID=314055 for more information. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 4.79.123.3
+	Port: 10319
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: wfeUje9mztHuhUVLLZIuwE0yYnoL5zQQb48Vr8H2ldMWWAEPKgl2 0rp FmdVGcgqsy35gXyztAZGZo6 oC6ZzZHLoom/B8ZU1sEZk1pCWMwBy7EQBrXBnJD9IeNTpgRbXd3sLrRjqZ3bOn2ErcA1qnrucLwmqNZl0/e9aWhY24Wr8eUpsWd1JO4BjRXtvOsT64d0HgH2jsKhX6AgQhDudrxf0JTnRbAR65m/g2X6szEy6sBuZKuSGTvGlUoZgbR5PVufuzVCARrFn02tF/c3No7XSkwXkXR4V5kvSG3ngFSeVdH4JIhO9FlRwgW D8XQDJGaJ63LXl9pZy6O7i5JEGalToBGKwSOsXF4tY86LVDGZbk9iCPCUgju3w6ae094u8mAz88w45ad6mkb55gcEKXxktE7Sk d zob AvjxQqEwu4h6Kcc0lWcoEAtAL1/pxxiuSHylNVEz V/BgVashc/EBxky3/0yRSvfOvsS/oIkvEt706a5/WWDpd1026XLG76DqQk2K7sLS7ZbsGLmobOpApYK0QLx9NB7/ba1PbihzVEIU6tRXSns0=
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 13:18:14,257 [Jaguar][Thread:20][FATAL] DotNetNuke.Framework.PageBase - An error has occurred while loading page.
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.194
+	Port: 3540
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: jdfjfLUxdhx/RVQKFQmpl0szfzuHr6lnqsGH/sWt52Gq4klia9jhGlIWv4ABT7mBelhzL6JTL8MUnohoT62Y2igGZtr/MNgmhMuEvSSq6nF8qpZn5mXxGCf9VO6nM98pdkJz2D m9SAdMSJjlsKF1zxzTHSBpwd7NgYj/GBREQZFISaVsw52iOFwq57qwqqxV KlACwZaDhIcwWig8ShwNmpcFP/rDoz7fXUl rg9RVLI2CRiGFlvjX6dKeqGPh/BL4udiX5GmXB4KMpVmkVt1eBTfjosi4dLhIWJgdOD5mn7hl5FyqwWjnQcsnIizJJ8Fqb4OZY6znEkNuVNw7o6oJlj1M8SPfaSHXZW3ZDbtChRXAWL9zpmg1kvwDpTVoBC2yKEg/dRqs9bguaD14izmLelxzbXP9IPWt3pH1mCvJMa VGlTW3FNtY4jgIxSTbaDbHYYnW1UTknwxOCxZbM9qDhIsoDKFUJlBP1N1F0tv5xdlE/b 4IssXQfdX ZxbmrLPCeEdLh 4DR9ASyqTvyZSzZfFfjXMQcnx9BiP183T4XoeY3e95P/YjAI= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 13:18:14,272 [Jaguar][Thread:20][ERROR] DotNetNuke.Services.Exceptions.Exceptions - ~/Default.aspx?tabid=243&error=An unexpected error has occurred&content=0
+System.Web.HttpException (0x80004005): The state information is invalid for this page and might be corrupted. ---> System.Web.UI.ViewStateException: Invalid viewstate. 
+	Client IP: 70.39.157.194
+	Port: 3540
+	Referer: 
+	Path: /Default.aspx
+	User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+	ViewState: jdfjfLUxdhx/RVQKFQmpl0szfzuHr6lnqsGH/sWt52Gq4klia9jhGlIWv4ABT7mBelhzL6JTL8MUnohoT62Y2igGZtr/MNgmhMuEvSSq6nF8qpZn5mXxGCf9VO6nM98pdkJz2D m9SAdMSJjlsKF1zxzTHSBpwd7NgYj/GBREQZFISaVsw52iOFwq57qwqqxV KlACwZaDhIcwWig8ShwNmpcFP/rDoz7fXUl rg9RVLI2CRiGFlvjX6dKeqGPh/BL4udiX5GmXB4KMpVmkVt1eBTfjosi4dLhIWJgdOD5mn7hl5FyqwWjnQcsnIizJJ8Fqb4OZY6znEkNuVNw7o6oJlj1M8SPfaSHXZW3ZDbtChRXAWL9zpmg1kvwDpTVoBC2yKEg/dRqs9bguaD14izmLelxzbXP9IPWt3pH1mCvJMa VGlTW3FNtY4jgIxSTbaDbHYYnW1UTknwxOCxZbM9qDhIsoDKFUJlBP1N1F0tv5xdlE/b 4IssXQfdX ZxbmrLPCeEdLh 4DR9ASyqTvyZSzZfFfjXMQcnx9BiP183T4XoeY3e95P/YjAI= ---> System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at System.Web.UI.ObjectStateFormatter.Deserialize(String inputString, Purpose purpose)
+   at System.Web.UI.Util.DeserializeWithAssert(IStateFormatter2 formatter, String serializedState, Purpose purpose)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   --- End of inner exception stack trace ---
+   at System.Web.UI.ViewStateException.ThrowError(Exception inner, String persistedState, String errorPageMessage, Boolean macValidationError)
+   at System.Web.UI.HiddenFieldPageStatePersister.Load()
+   at System.Web.UI.Page.LoadPageStateFromPersistenceMedium()
+   at System.Web.UI.Page.LoadAllState()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-10-21 14:07:26,122 [Jaguar][Thread:25][FATAL] DotNetNuke.Web.Common.Internal.DotNetNukeHttpApplication - System.Web.HttpException (0x80004005): The file '/nl-nl/home2016/financiëlesituatie/dekkingsgraad.aspx' does not exist.
+   at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)

@@ -1,0 +1,5 @@
+﻿IF NOT EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_{objectQualifier}EasyDNNnewsUrlNewProviderData_PortalID')
+	CREATE NONCLUSTERED INDEX [IX_{objectQualifier}EasyDNNnewsUrlNewProviderData_PortalID] ON {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] ([PortalID] ASC)
+GO
+ALTER INDEX ALL ON {databaseOwner}[{objectQualifier}EasyDNNnewsUrlNewProviderData] REBUILD
+GO

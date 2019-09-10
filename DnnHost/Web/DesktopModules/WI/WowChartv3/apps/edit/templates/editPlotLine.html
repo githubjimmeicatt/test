@@ -1,0 +1,77 @@
+﻿<div id="editPlotLineForm" name="editPlotLineForm" role="form" class="edit-form" data-ng-controller="editPlotLineCtrl as ctrl" data-ng-form novalidate data-ng-init="ctrl.init()" data-cg-busy="{promise:ctrl.appPromise}">
+    <table border="0" style="width:100%;">
+        <tr style="vertical-align:top;">
+            <td style="width:40%;padding-right:10px;">
+                <div class="form-group">
+                    <label for="name">Name: <span class="label label-warning" ng-show="editPlotLineForm.name.$error.required" title="This Field is Required">*</span></label><br />
+                    <input name="name" type="text" ng-model="ctrl.plotLine.Name" required />
+                </div>
+                <div class="form-group">
+                    <label for="dataSource">Data Source: <span class="label label-warning" ng-show="editPlotLineForm.dataSource.$error.required" title="This Field is Required">*</span></label>
+                    <select name="dataSource" ng-model="ctrl.plotLine.DataSource.TypeId" ng-options="ds.Id as ds.Text for ds in ctrl.DataSources" required>
+                        <option value="">Select Item</option>
+                    </select>
+                </div>
+                <div class="form-group" data-ng-if="ctrl.plotLine.DataSource.TypeId==1">
+                    <label for="lineValue">Value: <span class="label label-warning" ng-show="editPlotLineForm.lineValue.$error.required" title="This Field is Required">*</span></label><br />
+                    <input name="lineValue" type="number" ng-model="ctrl.plotLine.DataSource.Value" step="0.01" required />
+                </div>
+                <div class="form-group" data-ng-if="ctrl.plotLine.DataSource.TypeId==2">
+                    <label for="selectStat">Select Statement:<img src="{{ctrl.viewMoreImageUrl}}" title="Support DNN Token replacement.<br/>Support Chart point tokens: {POINT:X}, {POINT:Y} and {POINT:SERIES}.<br/>Support Filter tokens: {FILTER:NAME}." data-ng-tooltip="" /> <span class="label label-warning" ng-show="editPlotLineForm.selectStat.$error.required" title="This Field is Required">*</span></label><br />
+                    <textarea name="selectStat" type="text" ng-model="ctrl.plotLine.DataSource.SelectStat" style="width:100%" rows="4" required></textarea>
+                    <i>This query should return single row and single column</i>
+                </div>
+                <div class="form-group" data-ng-if="ctrl.plotLine.DataSource.TypeId==3">
+                    <label for="statFunction">Function: <span class="label label-warning" ng-show="editPlotLineForm.statFunction.$error.required" title="This Field is Required">*</span></label>
+                    <select name="statFunction" ng-model="ctrl.plotLine.DataSource.StatFunction" ng-options="i.Id as i.Text for i in ctrl.StatFunctions" required>
+                        <option value="">Select Item</option>
+                    </select>
+                </div>
+            </td>
+            <td style="width:30%">
+                <div class="form-group">
+                    <label for="lineColor">Color: <span class="label label-warning" ng-show="editPlotLineForm.lineColor.$error.required" title="This Field is Required">*</span></label><br />
+                    <input name="lineColor" type="text" colorpicker="hex" ng-model="ctrl.plotLine.Options.color" required />
+                </div>
+                <div class="form-group">
+                    <label for="lineStyle">Style: <span class="label label-warning" ng-show="editPlotLineForm.lineStyle.$error.required" title="This Field is Required">*</span></label><br />
+                    <select name="lineStyle" ng-model="ctrl.plotLine.Options.dashStyle" ng-options="style for style in ctrl.LineStyles" required>
+                        <option value="">Select Item</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lineWidth">Width: <span class="label label-warning" ng-show="editPlotLineForm.lineWidth.$error.required" title="This Field is Required">*</span></label><br />
+                    <input name="lineWidth" type="number" ng-model="ctrl.plotLine.Options.width" step="0.5" required />
+                </div>
+            </td>
+            <td style="width:30%">
+                <div class="form-group">
+                    <label for="lineLabel">Label: </label><br />
+                    <input name="lineLabel" type="text" ng-model="ctrl.plotLine.Options.label.text" />
+                </div>
+                <div class="form-group" ng-if="ctrl.plotLine.Options.label.text>''">
+                    <label for="lineLabelRotation">Rotation: </label><br />
+                    <input name="lineLabelRotation" type="number" ng-model="ctrl.plotLine.Options.label.rotation" />
+                </div>
+                <div class="form-group" ng-if="ctrl.plotLine.Options.label.text>''">
+                    <label for="lineLabelAlign">Align: </label><br />
+                    <select name="lineLabelAlign" ng-model="ctrl.plotLine.Options.label.align">
+                        <option value="center">Center</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                </div>
+                <div class="form-group" ng-if="ctrl.plotLine.Options.label.text>''">
+                    <label for="lineLabelX">Horizontal position:</label><br />
+                    <input name="lineLabelX" type="number" ng-model="ctrl.plotLine.Options.label.x" />
+                </div>
+                <div class="form-group" ng-if="ctrl.plotLine.Options.label.text>''">
+                    <label for="lineLabelY">Vertical position:</label><br />
+                    <input name="lineLabelY" type="number" ng-model="ctrl.plotLine.Options.label.y" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button type="button" class="btn" ng-click="ctrl.save()" ng-disabled="editPlotLineForm.$invalid">Save</button>
+    <button type="button" class="btn" ng-click="ctrl.cancel()">Cancel</button>
+</div>
