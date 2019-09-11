@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using Icatt.Digid.Access.Interface;
 using Icatt.Digid.Access.Proxy;
-using Icatt.SecureToken.Manager.TokenProvider.Interface;
-using Icatt.SecureToken.Manager.TokenProvider.Proxy;
 using Icatt.ServiceModel;
 using Icatt.Time;
 using Sphdhv.DeelnemerPortalApi.Interface;
@@ -56,6 +54,8 @@ using Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract;
 using Icatt.Azure.Access;
 using System.Security.Cryptography.X509Certificates;
 using Sphdhv.KlantPortaal.Host.WebHost.Properties;
+using Icatt.SecureToken.Manager.TokenProvider.Interface;
+using Icatt.SecureToken.Manager.TokenProvider.Proxy;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 {
