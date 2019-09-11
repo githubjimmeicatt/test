@@ -122,7 +122,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             else if (type == typeof(Manager.Authentication.Interface.IAuthenticationManager))
             {
                 proxy = new AuthorizationManagerProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
-                proxy.NoAuthorization();
+                proxy.NoAuth();
                 LogExceptions(proxy, false);
 
             }
