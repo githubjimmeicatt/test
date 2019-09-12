@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sphdhv.KlantPortaal.Engine.Pensioen.Interface;
-using Sphdhv.KlantPortaal.Engine.Pensioen.ServiceStub;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
-using Sphdhv.Test.KlantPortaal.Host;
 using EnginePolis = Sphdhv.KlantPortaal.Engine.Pensioen.Contract.Polis;
 using ManagerPolis = Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract.Polis;
 using EngineProfiel = Sphdhv.KlantPortaal.Engine.Pensioen.Contract.DeelnemerProfiel;

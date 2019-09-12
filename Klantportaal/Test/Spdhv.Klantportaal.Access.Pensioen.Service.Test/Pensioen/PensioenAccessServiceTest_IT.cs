@@ -4,11 +4,11 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sphdhv.DeelnemerPortalApi.Contract;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
-using Sphdhv.Test.KlantPortaal.Host;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Interface;
 using System.Data.Entity;
 using Sphdhv.KlantPortaal.Data.Pensioen.DbContext;
 using System.Linq;
+using Sphdhv.Test.KlantPortaal.Host;
 
 namespace Sphdhv.Test.KlantPortaal.Access.Pensioen
 {

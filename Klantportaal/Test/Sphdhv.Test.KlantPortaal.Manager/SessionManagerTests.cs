@@ -9,7 +9,6 @@ using Sphdhv.KlantPortaal.Common;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using Sphdhv.KlantPortaal.Manager.Session.Contract.Interface;
 using Sphdhv.KlantPortaal.Manager.Session.Service;
-using Sphdhv.Test.KlantPortaal.Host;
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Service;
 using Sphdhv.KlantPortaal.Data.TerminatedSession.DbContext;
 using Icatt.Auditing.Manager.AuditTrailWriter.Interface;
