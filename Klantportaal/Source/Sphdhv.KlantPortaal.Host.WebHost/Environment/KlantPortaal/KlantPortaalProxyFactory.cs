@@ -113,12 +113,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 
                 LogExceptions(proxy, false);
             }
-            else if (type == typeof(ISecureTokenManager))
-            {
-                proxy = new SecureTokenManagerProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
-                proxy.NoAuth();
-                LogExceptions(proxy, false);
-            }
             else if (type == typeof(Manager.Authentication.Interface.IAuthenticationManager))
             {
                 proxy = new AuthorizationManagerProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
