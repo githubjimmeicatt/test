@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json.Converters;
 using System.Net.Http;
 using System.Net;
+using Serilog;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost
 {
@@ -28,6 +29,10 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
                 .Insert(0, new JsonpFormatter());
 
             GlobalConfiguration.Configuration.Filters.Add(new EnableCorsHeaderFilter());
+
+            var logConfig = LoggingConfig.RegisterConfig();
+            //breid de config hier eventueel uit
+            Log.Logger = logConfig.CreateLogger();
         }
 
         private class EnableCorsHeaderFilter : System.Web.Http.Filters.ActionFilterAttribute
