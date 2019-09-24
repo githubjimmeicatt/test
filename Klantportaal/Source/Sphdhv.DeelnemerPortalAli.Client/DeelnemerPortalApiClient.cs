@@ -119,21 +119,21 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                         serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
 
 
-                        if (serialized is Pensioen)
-                        {
+                        //if (serialized is Pensioen)
+                        //{
 
-                        }
-                        else if (serialized is Verzekerde)
-                        {
+                        //}
+                        //else if (serialized is Verzekerde)
+                        //{
 
-                        }
-                        else if (serialized is Polis)
-                        {
+                        //}
+                        //else if (serialized is Polis)
+                        //{
 
-                        }
-                        else if (url.AbsoluteUri.Contains("api/documenten"))
+                        //}
+                        if (url.AbsoluteUri.Contains("api/documenten"))
                         {
-                            logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Aantal documenten: {0}", data.Length);
+                            logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Reponse lengte: {0}", data.Length);
 
                         }
                     }
