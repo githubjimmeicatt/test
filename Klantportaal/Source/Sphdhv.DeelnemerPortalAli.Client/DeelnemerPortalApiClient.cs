@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Icatt.Infrastructure;
 using Icatt.ServiceModel;
 using Icatt.Time;
 using Sphdhv.DeelnemerPortalApi.Contract;
@@ -12,9 +14,9 @@ using Sphdhv.DeelnemerPortalApi.Interface;
 
 namespace Sphdhv.DeelnemerPortalApi.Client
 {
-    public class DeelnemerPortalApiClient<TContext> : ServiceBase<TContext>,  IDeelnemerPortalApi where TContext : class,  IPiramideContext
+    public class DeelnemerPortalApiClient<TContext> : ServiceBase<TContext>, IDeelnemerPortalApi where TContext : class, IPiramideContext
     {
-  
+        private static TContext context;
 
         public DeelnemerPortalApiClient(TContext context, IFactoryContainer<TContext> factoryContainer) : base(context, factoryContainer)
         {
@@ -91,20 +93,22 @@ namespace Sphdhv.DeelnemerPortalApi.Client
             var url = new Uri($"{baseUrl}{endpoint}");
             var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
             var cert = GetX509Certificate(time);
-            return await GetRequestAsync<T>(url, cert);
+            var contextFactory = FactoryContainer.ProxyFactory.CreateProxy<IContextFactory>(context);
+            return await GetRequestAsync<T>(url, cert, contextFactory);
 
         }
 
 
-        private static async Task<T> GetRequestAsync<T>(Uri url, X509Certificate cert)
+        private static async Task<T> GetRequestAsync<T>(Uri url, X509Certificate cert, IContextFactory context)
         {
-
+            var logger = new Icatt.Log4Net.Log4NetLogger<ApplicationArea, LogMessage>(context);
             using (var handler = new WebRequestHandler())
             {
                 handler.ClientCertificates.Add(cert);
                 using (var client = new HttpClient(handler))
                 {
                     var result = await client.GetAsync(url);
+                    logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode);
 
 
                     var data = await result.Content.ReadAsStringAsync();
@@ -112,11 +116,30 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                     T serialized = default(T);
                     try
                     {
-                          serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+                        serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+
+
+                        if (serialized is Pensioen)
+                        {
+
+                        }
+                        else if (serialized is Verzekerde)
+                        {
+
+                        }
+                        else if (serialized is Polis)
+                        {
+
+                        }
+                        else if (url.AbsoluteUri.Contains("api/documenten"))
+                        {
+                            logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Aantal documenten: {0}", data.Length);
+
+                        }
                     }
                     catch (Exception e)
                     {
-                       
+                        logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
                     }
 
                     return serialized;
@@ -125,11 +148,11 @@ namespace Sphdhv.DeelnemerPortalApi.Client
         }
 
 
-        private  X509Certificate GetX509Certificate(ITimeMachine time)
+        private X509Certificate GetX509Certificate(ITimeMachine time)
         {
-            
+
             string certificateSubjectTestData = Properties.Settings.Default.CertificateSubject;
-            string certificateSubjectProdData= Properties.Settings.Default.CertificateSubjectPiramideAccept;
+            string certificateSubjectProdData = Properties.Settings.Default.CertificateSubjectPiramideAccept;
 
             string certificateSubject = Context.ImpersonateMode ? certificateSubjectProdData : certificateSubjectTestData;
 
@@ -139,7 +162,7 @@ namespace Sphdhv.DeelnemerPortalApi.Client
             {
                 store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
-                
+
                 var find = store.Certificates.Find(X509FindType.FindBySubjectName, certificateSubject, Properties.Settings.Default.CertificateMustBeValid); //CBA Client Authentication
                 cert = find.OfType<X509Certificate2>()
                     .Where(c => c.NotBefore <= time.UtcNow && c.NotAfter >= time.UtcNow)
@@ -153,6 +176,14 @@ namespace Sphdhv.DeelnemerPortalApi.Client
             return cert;
         }
 
-      
+
+    }
+    public enum ApplicationArea
+    {
+        DeelnemerportalApiClient
+    }
+    public enum LogMessage
+    {
+        Any
     }
 }
