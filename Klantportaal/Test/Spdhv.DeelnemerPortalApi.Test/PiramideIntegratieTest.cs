@@ -201,7 +201,16 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
             proxy.OnAuthenticate += (portaalContext, input) => true;
             proxy.OnAuthorize += (portaalContext, input) => true;
 
-            var result = await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
+            try
+            {
+                var result = await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
+            }
+            catch (FaultException e)
+            {
+
+                throw;
+            }
+            
 
         }
     }

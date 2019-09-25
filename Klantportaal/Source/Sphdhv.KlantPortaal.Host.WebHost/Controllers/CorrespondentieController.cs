@@ -25,6 +25,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 
         [HttpGet]
         [CsrfProtected]
+        [FaultExceptionFilter]
         [AuthenticationExceptionFilter]
         [GeneralExceptionFilter]
         public async Task<ResponseModel<CorrespondentieOverzicht>> CorrespondentieOverzicht()
@@ -35,16 +36,8 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             (context as IAuthenticationTicket).AuthenticationTicket = Utilities.Cookies.GetCookie(ControllerContext.Request, FormsAuthentication.FormsCookieName);
 
             var proxy = factoryContainer.ProxyFactory.CreateProxy<IMijnPensioenManager>(context);
-            try
-            {
-                var result = new ResponseModel<CorrespondentieOverzicht>(await proxy.DocumentenAsync());
-                return result;
-            }
-            catch (HttpRequestException ex)
-            {
-                return new ResponseModel<CorrespondentieOverzicht>(400, ex.Message);
-            }
-            
+            var result = new ResponseModel<CorrespondentieOverzicht>(await proxy.DocumentenAsync());
+            return result;
         }
 
         [HttpGet]
