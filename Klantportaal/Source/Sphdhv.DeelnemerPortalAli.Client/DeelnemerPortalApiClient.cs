@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Icatt.Infrastructure;
 using Icatt.ServiceModel;
 using Icatt.Time;
+using Serilog;
 using Sphdhv.DeelnemerPortalApi.Contract;
 using Sphdhv.DeelnemerPortalApi.Interface;
 
@@ -108,7 +109,8 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                 using (var client = new HttpClient(handler))
                 {
                     var result = await client.GetAsync(url);
-                    logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode);
+                    Log.Information("{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode); //loggen via global static
+                    //logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode);
 
 
                     var data = await result.Content.ReadAsStringAsync();
@@ -133,12 +135,15 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                         //}
                         if (url.AbsoluteUri.Contains("api/documenten"))
                         {
-                            logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Reponse lengte: {0}", data.Length);
+                            Log.Information("Response length: {0}", data.Length); //loggen via global static
+
+                            //logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Reponse lengte: {0}", data.Length);
 
                         }
                     }
                     catch (Exception e)
                     {
+                        Log.Error(e,"{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
                         logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
                     }
 
