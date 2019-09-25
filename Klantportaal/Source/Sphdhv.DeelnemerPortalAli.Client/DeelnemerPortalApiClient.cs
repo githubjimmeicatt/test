@@ -134,7 +134,7 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                         {
                             var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
                             Log.Error("{Error}", error);
-                            throw new HttpRequestException(string.Format("Er is een fout opgetreden. Probeer het opnieuw of nem contact op met de klantenservice."));
+                            throw new HttpRequestException(string.Format("Er is een fout opgetreden. Probeer het opnieuw of neem contact op met de klantenservice."));
                         }
                     }
                     catch (Exception e)

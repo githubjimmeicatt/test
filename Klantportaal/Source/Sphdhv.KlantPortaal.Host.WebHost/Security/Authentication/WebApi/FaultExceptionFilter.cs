@@ -16,7 +16,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
         {
             var ex = context.Exception;
 
-            if (!(ex is FaultException || ex is FaultException)) return;
+            if (!(ex is FaultException)) return;
 
             context.Response = new HttpResponseMessage();
             context.Response.Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
