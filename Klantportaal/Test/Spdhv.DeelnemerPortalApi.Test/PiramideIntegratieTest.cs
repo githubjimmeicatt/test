@@ -103,7 +103,7 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
             proxy.OnAuthenticate += (portaalContext, input) => true;
             proxy.OnAuthorize += (portaalContext, input) => true;
 
-            var result = await ((IDeelnemerPortalApi) proxy).Polissen(dossierNummer);
+            var result = await ((IDeelnemerPortalApi)proxy).Polissen(dossierNummer);
 
             Assert.AreEqual(0, result[0].ArbeidsgegevensVariabel.Count);
             Assert.AreEqual(0, result[0].ArbeidsgegevensVast.Count);
@@ -119,11 +119,11 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
             Assert.AreEqual(null, result[0].DatumEindeOpbouwOp);
             Assert.AreEqual(null, result[0].DatumExpiratieAop);
             Assert.AreEqual(null, result[0].DatumExpiratieTnbp);
-            Assert.AreEqual(new DateTime(2015, 1, 1),  result[0].DatumInDienst);
-            Assert.AreEqual(new DateTime(2048, 5, 15) , result[0].DatumPensioen);
+            Assert.AreEqual(new DateTime(2015, 1, 1), result[0].DatumInDienst);
+            Assert.AreEqual(new DateTime(2048, 5, 15), result[0].DatumPensioen);
             Assert.AreEqual(null, result[0].DatumRichtPensioenOp);
             Assert.AreEqual(null, result[0].DatumToetredingWao);
-            Assert.AreEqual(null  ,result[0].DatumUitDienst);
+            Assert.AreEqual(null, result[0].DatumUitDienst);
             Assert.AreEqual(null, result[0].DeelnemerSoortNaam);
             Assert.AreEqual(0, result[0].DienstjarenToekomstigOngewogen);
             Assert.AreEqual("0000307943", result[0].DossierId);
@@ -151,7 +151,7 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
             Assert.AreEqual(null, result[0].UrenSalaris);
             Assert.AreEqual(33, result[0].WerkgeverId);
             Assert.AreEqual("HaskoningDHV Nederland B.V. (RH)", result[0].WerkgeverNaam);
-            
+
         }
 
         [TestMethod]
@@ -201,17 +201,7 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
             proxy.OnAuthenticate += (portaalContext, input) => true;
             proxy.OnAuthorize += (portaalContext, input) => true;
 
-            try
-            {
-                var result = await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
-            }
-            catch (FaultException e)
-            {
-
-                throw;
-            }
-            
-
+            await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
         }
     }
 
