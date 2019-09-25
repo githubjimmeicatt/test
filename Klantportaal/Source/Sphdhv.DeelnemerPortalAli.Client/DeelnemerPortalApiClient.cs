@@ -118,33 +118,30 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                     T serialized = default(T);
                     try
                     {
-                        serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
-
-
-                        //if (serialized is Pensioen)
-                        //{
-
-                        //}
-                        //else if (serialized is Verzekerde)
-                        //{
-
-                        //}
-                        //else if (serialized is Polis)
-                        //{
-
-                        //}
-                        if (url.AbsoluteUri.Contains("api/documenten"))
+                        if (result.IsSuccessStatusCode)
                         {
-                            Log.Information("Response length: {0}", data.Length); //loggen via global static
+                            serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
 
-                            //logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Reponse lengte: {0}", data.Length);
+                            if (url.AbsoluteUri.Contains("api/documenten"))
+                            {
+                                Log.Information("Response length: {0}", data.Length); //loggen via global static
 
+                                //logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Reponse lengte: {0}", data.Length);
+
+                            }
+                        }
+                        else
+                        {
+                            var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
+                            Log.Error("{Error}", error);
+                            throw new HttpRequestException(string.Format("Er is een fout opgetreden. Probeer het opnieuw of nem contact op met de klantenservice."));
                         }
                     }
                     catch (Exception e)
                     {
                         Log.Error(e,"{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
                         logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
+                        throw e;
                     }
 
                     return serialized;

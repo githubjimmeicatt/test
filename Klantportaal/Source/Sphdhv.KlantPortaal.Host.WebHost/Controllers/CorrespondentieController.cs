@@ -35,8 +35,16 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             (context as IAuthenticationTicket).AuthenticationTicket = Utilities.Cookies.GetCookie(ControllerContext.Request, FormsAuthentication.FormsCookieName);
 
             var proxy = factoryContainer.ProxyFactory.CreateProxy<IMijnPensioenManager>(context);
+            try
+            {
+                var result = new ResponseModel<CorrespondentieOverzicht>(await proxy.DocumentenAsync());
+                return result;
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseModel<CorrespondentieOverzicht>(400, ex.Message);
+            }
             
-            return new ResponseModel<CorrespondentieOverzicht>(await proxy.DocumentenAsync());
         }
 
         [HttpGet]
