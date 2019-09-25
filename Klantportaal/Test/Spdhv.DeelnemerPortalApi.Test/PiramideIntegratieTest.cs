@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Icatt.ServiceModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sphdhv.DeelnemerPortalApi.Interface;
 using Sphdhv.DeelnemerPortalApi.Proxy;
@@ -181,6 +183,25 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
 
                 Assert.IsNotNull(result2.Data);
             }
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FaultException), "Leeg dossiernr moet fout gaan")]
+        public async Task IT_documenten_ophalen_obv_dossiernr_fail()
+        {
+            const string dossierNummer = "";
+
+            var factoryContainer = new KlantPortaalFactoryContainer();
+            var context = new KlantPortaalContext();
+            context.DossierNummer = dossierNummer;
+
+            var proxy = new DeelnemerPortalApiProxy<KlantPortaalContext>(context, factoryContainer);
+
+            proxy.OnAuthenticate += (portaalContext, input) => true;
+            proxy.OnAuthorize += (portaalContext, input) => true;
+
+            var result = await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
 
         }
     }
