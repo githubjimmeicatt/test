@@ -141,7 +141,10 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                     {
                         Log.Error(e,"{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
                         logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
-                        throw e;
+                        if (e is HttpRequestException)
+                        {
+                            throw;
+                        }
                     }
 
                     return serialized;
