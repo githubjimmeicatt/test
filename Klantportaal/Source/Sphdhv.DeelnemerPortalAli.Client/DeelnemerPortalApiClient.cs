@@ -134,17 +134,17 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                         {
                             var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
                             Log.Error("{Error}", error);
-                            throw new HttpRequestException(string.Format("Er is een fout opgetreden. Probeer het opnieuw of neem contact op met de klantenservice."));
+                            //throw new HttpRequestException(string.Format("Er is een fout opgetreden. Probeer het opnieuw of neem contact op met de klantenservice."));
                         }
                     }
                     catch (Exception e)
                     {
                         Log.Error(e,"{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
                         logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
-                        if (e is HttpRequestException)
-                        {
-                            throw;
-                        }
+                        //if (e is HttpRequestException)
+                        //{
+                        //    throw;
+                        //}
                     }
 
                     return serialized;

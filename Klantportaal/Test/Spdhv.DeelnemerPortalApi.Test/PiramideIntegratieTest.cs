@@ -186,23 +186,23 @@ namespace Sphdhv.Test.DeelnemerPortalApi.Proxy
 
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(FaultException), "Leeg dossiernr moet fout gaan")]
-        public async Task IT_documenten_ophalen_obv_dossiernr_fail()
-        {
-            const string dossierNummer = "";
+        //[TestMethod]
+        //[ExpectedException(typeof(FaultException), "Leeg dossiernr moet fout gaan")]
+        //public async Task IT_documenten_ophalen_obv_dossiernr_fail()
+        //{
+        //    const string dossierNummer = "";
 
-            var factoryContainer = new KlantPortaalFactoryContainer();
-            var context = new KlantPortaalContext();
-            context.DossierNummer = dossierNummer;
+        //    var factoryContainer = new KlantPortaalFactoryContainer();
+        //    var context = new KlantPortaalContext();
+        //    context.DossierNummer = dossierNummer;
 
-            var proxy = new DeelnemerPortalApiProxy<KlantPortaalContext>(context, factoryContainer);
+        //    var proxy = new DeelnemerPortalApiProxy<KlantPortaalContext>(context, factoryContainer);
 
-            proxy.OnAuthenticate += (portaalContext, input) => true;
-            proxy.OnAuthorize += (portaalContext, input) => true;
+        //    proxy.OnAuthenticate += (portaalContext, input) => true;
+        //    proxy.OnAuthorize += (portaalContext, input) => true;
 
-            await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
-        }
+        //    await ((IDeelnemerPortalApi)proxy).DocumentInfo(dossierNummer);
+        //}
     }
 
 }

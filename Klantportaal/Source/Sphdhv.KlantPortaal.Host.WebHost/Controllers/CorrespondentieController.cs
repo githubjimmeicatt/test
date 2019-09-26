@@ -25,7 +25,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 
         [HttpGet]
         [CsrfProtected]
-        [FaultExceptionFilter]
+        //[FaultExceptionFilter]
         [AuthenticationExceptionFilter]
         [GeneralExceptionFilter]
         public async Task<ResponseModel<CorrespondentieOverzicht>> CorrespondentieOverzicht()
