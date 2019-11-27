@@ -1,4 +1,5 @@
 ﻿using Icatt.ServiceModel;
+using Sphdhv.DeelnemerPortalApi.Contract;
 using Sphdhv.KlantPortaal.WebApi.MijnPensioen.Models;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,20 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
             if (!(ex is FaultException)) return;
 
             context.Response = new HttpResponseMessage();
-            context.Response.Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
-                new ResponseModel<ActueelPensioenModel>(400, ex.Message),
+
+            switch (ex.InnerException.GetType().Name)
+            {
+                case "PortalApiException":
+                    context.Response.Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
+                new ResponseModel<ActueelPensioenModel>(400, ex.InnerException.Message),
                 new JsonpFormatter(context.Request)
             );
+                    break;
+                default:
+                    return;
+            }
+
+
 
             base.OnException(context);
         }
