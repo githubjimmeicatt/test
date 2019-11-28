@@ -66,9 +66,15 @@ namespace Sphdhv.DeelnemerPortalApi.Client
         async Task<Document> IDeelnemerPortalApi.Document(string documentId, string dossierGuid)
         {
             var endpoint = $"api/documenten?query.documentId={documentId}&query.dossierGuid={dossierGuid}";
-            var result = await GetResult<Document>(endpoint);
-
-            return await Task.FromResult(result);
+            try
+            {
+                var result = await GetResult<Document>(endpoint);
+                return await Task.FromResult(result);
+            }
+            catch (Exception e)
+            {
+                throw documentException(e);
+            }
         }
 
         async Task<List<DocumentInfo>> IDeelnemerPortalApi.DocumentInfo(string dossierGuid, string documentId = null)
@@ -78,9 +84,22 @@ namespace Sphdhv.DeelnemerPortalApi.Client
             {
                 endpoint += $"&query.documentId={documentId}";
             }
-            var result = await GetResult<List<DocumentInfo>>(endpoint);
 
-            return await Task.FromResult(result);
+            try
+            {
+                var result = await GetResult<List<DocumentInfo>>(endpoint);
+                return await Task.FromResult(result);
+            }
+            catch (Exception e)
+            {
+                throw documentException(e);
+            }
+        }
+
+        private static PortalApiException documentException(Exception e)
+        {
+            Log.Error(e, "PortalApiException: Error downloading document");
+            return new PortalApiException(new Exception(string.Format("Het is momenteel niet mogelijk de documenten in te zien. Probeer het later opnieuw of neem contact op met het pensioenfonds. Dit kan via email op pensioenfonds@rhdhv.com", e)));
         }
 
         private async Task<T> GetResult<T>(string endpoint)
@@ -108,43 +127,24 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                 handler.ClientCertificates.Add(cert);
                 using (var client = new HttpClient(handler))
                 {
+                    T serialized = default(T);
                     var result = await client.GetAsync(url);
                     Log.Information("{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode); //loggen via global static
-                    //logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode);
-
-
                     var data = await result.Content.ReadAsStringAsync();
 
-                    T serialized = default(T);
-                    try
+                    if (result.IsSuccessStatusCode)
                     {
-                        if (result.IsSuccessStatusCode)
+                        serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+
+                        if (url.AbsoluteUri.Contains("api/documenten"))
                         {
-                            serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
-
-                            if (url.AbsoluteUri.Contains("api/documenten"))
-                            {
-                                Log.Information("Response length: {0}", data.Length); //loggen via global static
-
-                                //logger.Log(ApplicationArea.DeelnemerportalApiClient, Icatt.Logging.LoggingLevel.All, LogMessage.Any, "Reponse lengte: {0}", data.Length);
-
-                            }
-                        }
-                        else
-                        {
-                            var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
-                            Log.Error("{Error}", error);
-                            //throw new HttpRequestException(string.Format("Er is een fout opgetreden. Probeer het opnieuw of neem contact op met de klantenservice."));
+                            Log.Information("Response length: {0}", data.Length); //loggen via global static
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Log.Error(e,"{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
-                        logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
-                        //if (e is HttpRequestException)
-                        //{
-                        //    throw;
-                        //}
+                        var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
+                        Log.Error("{Error}", error);
                     }
 
                     return serialized;

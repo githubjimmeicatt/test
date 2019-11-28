@@ -32,10 +32,15 @@
 
             {/.Response}
             {:else}
-
-            <p>Je bent momenteel niet geautoriseerd om de inhoud van deze pagina te bekijken. <a href="/authentication/login">Log opnieuw in</a>.</p>
+                    {@eq key="{.StatusCode}" value="400"}
+                    <p>{ErrorResponse.Message}</p>
+                    {:else}
+                    <p>Je bent momenteel niet geautoriseerd om de inhoud van deze pagina te bekijken. <a href="/authentication/login">Log opnieuw in</a>.</p>
 
             {/eq}
+            {/eq}
+            
+            
         </div>
 
     </div>

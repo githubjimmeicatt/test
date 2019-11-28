@@ -1,4 +1,5 @@
 ﻿using Icatt.ServiceModel;
+using Sphdhv.DeelnemerPortalApi.Contract;
 using Sphdhv.KlantPortaal.WebApi.MijnPensioen.Models;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,17 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
         public override void OnException(HttpActionExecutedContext context)
         {
             var ex = context.Exception;
-
             if (!(ex is FaultException)) return;
 
-            context.Response = new HttpResponseMessage();
-            context.Response.Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
-                new ResponseModel<ActueelPensioenModel>(400, ex.Message),
-                new JsonpFormatter(context.Request)
-            );
-
+            if(ex.InnerException.GetType().Name == typeof(PortalApiException).Name)
+            {
+                context.Response = new HttpResponseMessage
+                {
+                    Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
+                    new ResponseModel<ActueelPensioenModel>(400, ex.InnerException.Message),
+                    new JsonpFormatter(context.Request))
+                };
+            }
             base.OnException(context);
         }
     }
