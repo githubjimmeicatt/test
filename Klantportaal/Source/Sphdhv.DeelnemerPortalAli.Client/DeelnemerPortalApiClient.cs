@@ -71,9 +71,9 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                 var result = await GetResult<Document>(endpoint);
                 return await Task.FromResult(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw documentException();
+                throw documentException(e);
             }
         }
 
@@ -90,15 +90,16 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                 var result = await GetResult<List<DocumentInfo>>(endpoint);
                 return await Task.FromResult(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw documentException();
+                throw documentException(e);
             }
         }
 
-        private static PortalApiException documentException()
+        private static PortalApiException documentException(Exception e)
         {
-            return new PortalApiException(new Exception(string.Format("Het is momenteel niet mogelijk de documenten in te zien. Probeer het later opnieuw of neem contact op met het pensioenfonds. Dit kan via email op pensioenfonds@rhdhv.com")));
+            Log.Error(e, "PortalApiException: Error downloading document");
+            return new PortalApiException(new Exception(string.Format("Het is momenteel niet mogelijk de documenten in te zien. Probeer het later opnieuw of neem contact op met het pensioenfonds. Dit kan via email op pensioenfonds@rhdhv.com", e)));
         }
 
         private async Task<T> GetResult<T>(string endpoint)
