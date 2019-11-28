@@ -66,9 +66,15 @@ namespace Sphdhv.DeelnemerPortalApi.Client
         async Task<Document> IDeelnemerPortalApi.Document(string documentId, string dossierGuid)
         {
             var endpoint = $"api/documenten?query.documentId={documentId}&query.dossierGuid={dossierGuid}";
-            var result = await GetResult<Document>(endpoint);
-
-            return await Task.FromResult(result);
+            try
+            {
+                var result = await GetResult<Document>(endpoint);
+                return await Task.FromResult(result);
+            }
+            catch (Exception)
+            {
+                throw documentException();
+            }
         }
 
         async Task<List<DocumentInfo>> IDeelnemerPortalApi.DocumentInfo(string dossierGuid, string documentId = null)
@@ -78,9 +84,21 @@ namespace Sphdhv.DeelnemerPortalApi.Client
             {
                 endpoint += $"&query.documentId={documentId}";
             }
-            var result = await GetResult<List<DocumentInfo>>(endpoint);
 
-            return await Task.FromResult(result);
+            try
+            {
+                var result = await GetResult<List<DocumentInfo>>(endpoint);
+                return await Task.FromResult(result);
+            }
+            catch (Exception)
+            {
+                throw documentException();
+            }
+        }
+
+        private static PortalApiException documentException()
+        {
+            return new PortalApiException(new Exception(string.Format("Het is momenteel niet mogelijk de documenten in te zien. Probeer het later opnieuw of neem contact op met het pensioenfonds. Dit kan via email op pensioenfonds@rhdhv.com")));
         }
 
         private async Task<T> GetResult<T>(string endpoint)
@@ -129,19 +147,14 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                         {
                             var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
                             Log.Error("{Error}", error);
-                            throw new PortalApiException(new Exception(string.Format("Het is momenteel niet mogelijk de documenten in te zien. Probeer het later opnieuw of neem contact op met het pensioenfonds. Dit kan via email op pensioenfonds@rhdhv.com")));
+                            
                         }
                     }
                     catch (Exception e)
                     {
                         Log.Error(e, "{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
-                        logger.LogException(ApplicationArea.DeelnemerportalApiClient, e);
-                        if (e is PortalApiException)
-                        {
-                            throw;
-                        }
+                        throw;
                     }
-
                     return serialized;
                 }
             }

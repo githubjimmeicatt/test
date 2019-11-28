@@ -16,25 +16,17 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
         public override void OnException(HttpActionExecutedContext context)
         {
             var ex = context.Exception;
-
             if (!(ex is FaultException)) return;
 
-            context.Response = new HttpResponseMessage();
-
-            switch (ex.InnerException.GetType().Name)
+            if(ex.InnerException.GetType().Name == typeof(PortalApiException).Name)
             {
-                case "PortalApiException":
-                    context.Response.Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
-                new ResponseModel<ActueelPensioenModel>(400, ex.InnerException.Message),
-                new JsonpFormatter(context.Request)
-            );
-                    break;
-                default:
-                    return;
+                context.Response = new HttpResponseMessage
+                {
+                    Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
+                    new ResponseModel<ActueelPensioenModel>(400, ex.InnerException.Message),
+                    new JsonpFormatter(context.Request))
+                };
             }
-
-
-
             base.OnException(context);
         }
     }
