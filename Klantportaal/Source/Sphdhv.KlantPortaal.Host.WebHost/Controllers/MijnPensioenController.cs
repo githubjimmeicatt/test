@@ -24,25 +24,18 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
         [AuthenticationExceptionFilter]
         public async Task<ResponseModel<ActueelPensioenModel>> ActueelPensioen(string dossierNr = null)
         {
-
-            return new ResponseModel<ActueelPensioenModel>(null);
-
-
             var factoryContainer = new KlantPortaalFactoryContainer();
             var context = new KlantPortaalContext();
 
             (context as IAuthenticationTicket).AuthenticationTicket = GetCookie(ControllerContext.Request, FormsAuthentication.FormsCookieName);
 
-            //call proxy
             var proxy = factoryContainer.ProxyFactory.CreateProxy<IMijnPensioenManager>(context);
+            var profiel = await proxy.DeelnemerProfielAsync();
 
-            var actueelPensioen = await proxy.ActueelPensioenAsync();
+            var response = new ActueelPensioenModel();
+            response.IsActief = profiel.IsActief;
 
-            //map result
-            var model = MapToViewModel(actueelPensioen, context);
-
-            return new ResponseModel<ActueelPensioenModel>(model);
-
+            return new ResponseModel<ActueelPensioenModel>(response);
         }
 
         [HttpGet]
