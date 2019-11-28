@@ -129,32 +129,23 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                     T serialized = default(T);
                     var result = await client.GetAsync(url);
                     Log.Information("{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{0,2}$)", "X"), result.StatusCode); //loggen via global static
+                    var data = await result.Content.ReadAsStringAsync();
 
-                    try
+                    if (result.IsSuccessStatusCode)
                     {
-                        var data = await result.Content.ReadAsStringAsync();
+                        serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
 
-                        if (result.IsSuccessStatusCode)
+                        if (url.AbsoluteUri.Contains("api/documenten"))
                         {
-                            serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
-
-                            if (url.AbsoluteUri.Contains("api/documenten"))
-                            {
-                                Log.Information("Response length: {0}", data.Length); //loggen via global static
-                            }
-                        }
-                        else
-                        {
-                            var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
-                            Log.Error("{Error}", error);
-                            
+                            Log.Information("Response length: {0}", data.Length); //loggen via global static
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Log.Error(e, "{0} | Status: {1}", Regex.Replace(url.AbsoluteUri, @"\d(?!\d{ 0,2}$)", "X"), result.StatusCode);
-                        throw;
+                        var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
+                        Log.Error("{Error}", error);
                     }
+
                     return serialized;
                 }
             }
