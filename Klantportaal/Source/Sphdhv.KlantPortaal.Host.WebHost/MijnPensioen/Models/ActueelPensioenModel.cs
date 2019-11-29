@@ -19,6 +19,8 @@ namespace Sphdhv.KlantPortaal.WebApi.MijnPensioen.Models
         public string CallChain { get; set; }
         [DataMember]
         public bool IsBlocked { get; set; }
+        [DataMember]
+        public bool IsActief { get; set; }
     }
 
     [DataContract]
