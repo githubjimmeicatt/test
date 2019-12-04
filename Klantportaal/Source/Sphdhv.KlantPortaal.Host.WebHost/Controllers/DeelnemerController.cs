@@ -14,8 +14,7 @@ using Sphdhv.KlantPortaal.Host.WebHost.Security.CsrfProtection.WebApi;
 using Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi;
 using System;
 using Sphdhv.Klantportaal.Manager.Deelnemer.Interface;
-
-
+using System.Net;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 {
@@ -43,7 +42,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
         [CsrfProtected]
         [AuthenticationExceptionFilter]
         [GeneralExceptionFilter]
-        public ResponseModel<bool> VerifyEmail(Guid guid)
+        public HttpResponseMessage VerifyEmail(Guid guid)
         {
             var factoryContainer = new KlantPortaalFactoryContainer();
             var context = new KlantPortaalContext();
@@ -51,7 +50,12 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             (context as IAuthenticationTicket).AuthenticationTicket = GetCookie(ControllerContext.Request, FormsAuthentication.FormsCookieName);
 
             var proxy = factoryContainer.ProxyFactory.CreateProxy<IDeelnemerManager>(context);
-            return new ResponseModel<bool>(proxy.VerifyEmail(guid));
+            proxy.VerifyEmail(guid);
+
+            var response = Request.CreateResponse(HttpStatusCode.Moved);
+            var baseUrl = RequestContext.Url.Request.RequestUri.GetComponents(UriComponents.Scheme | UriComponents.HostAndPort, UriFormat.Unescaped);
+            response.Headers.Location = new Uri(baseUrl);
+            return response;
         }
 
 
