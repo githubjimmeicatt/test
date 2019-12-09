@@ -80,7 +80,9 @@ namespace Sphdhv.Klantportaal.Manager.Deelnemer.Service
                 if (result == 0) return false;
 
                 //querystring verif mail zo opbouwen:
-                var url = $"{Properties.Settings.Default.DnnMijnOmgevingUrl}DesktopModules/Sphdhv/KlantPortaal/api/Deelnemer/VerifyEmail?guid={deelnemerupdate.VerificationId.ToString("D")}";
+                var rootUrl = Properties.Settings.Default.DnnMijnOmgevingUrl;
+                const string ActionPath = "#start$verifyemail$";
+                var url = $"{rootUrl}{ActionPath}{deelnemerupdate.VerificationId.ToString("N")}";
                 var prox = FactoryContainer.ProxyFactory.CreateProxy<INotification>(Context);
 
                 //verst email
