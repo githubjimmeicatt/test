@@ -64,7 +64,7 @@ namespace Sphdhv.UserExportTool
                 using (var package = new ExcelPackage())
                 {
                     package.Compatibility.IsWorksheets1Based = false;
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("MIP Export");
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("data");
 
                     var cells = worksheet.Cells;
 
