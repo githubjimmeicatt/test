@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Icatt.ServiceModel;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Contract;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
@@ -28,6 +29,10 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Proxy
             return Invoke(status, Service.UpdateEmailStatus);
         }
 
- 
+        public List<Contract.Deelnemer> Deelnemers()
+        {
+            return Invoke(Service.Deelnemers);
+        }
+
     }
 }

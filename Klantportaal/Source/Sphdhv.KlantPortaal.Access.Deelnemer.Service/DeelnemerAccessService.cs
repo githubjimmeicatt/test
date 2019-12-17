@@ -9,6 +9,7 @@ using Icatt.Security.Engine.Cryptographer.Interface;
 using Sphdhv.KlantPortaal.Data.Deelnemer.DbContext;
 using Sphdhv.KlantPortaal.Data.Deelnemer.Entities;
 using Icatt.Azure.Access;
+using System.Collections.Generic;
 
 namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
 {
@@ -16,7 +17,7 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
     {
         private ICryptographer _cryptoEngine;
         private string _connectionStringOrName;
-        
+
         private ICryptographer CryptoEngine => _cryptoEngine ?? (_cryptoEngine = FactoryContainer.ProxyFactory.CreateProxy<ICryptographer>(Context));
 
 
@@ -35,6 +36,23 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
         }
 
 
+        public List<Contract.Deelnemer> Deelnemers()
+        {
+            using (var context = new DeelnemerDbContext(_connectionStringOrName))
+            {
+                return context.Deelnemers
+                    .ToList()
+                    .Select(deelnemerEntity => new Contract.Deelnemer
+                    {
+                        Id = deelnemerEntity.Id,
+                        Email = DecryptWithKeyVault(deelnemerEntity.Email),
+                        Status = (Contract.DeelnemerStatus)deelnemerEntity.Status,
+                        ModifiedAtUtc = deelnemerEntity.ModifiedAtUtc,
+                        Bsn = DecryptWithKeyVault(deelnemerEntity.Bsn)
+                    })
+                    .ToList();
+            }
+        }
 
         public Contract.Deelnemer Deelnemer()
         {
