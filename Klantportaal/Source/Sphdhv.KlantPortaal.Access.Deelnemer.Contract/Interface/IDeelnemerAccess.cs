@@ -15,5 +15,7 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Interface
 
         int UpdateEmailStatus(DeelnemerStatus status);
 
+        List<Contract.Deelnemer> Deelnemers();
+
     }
 }
