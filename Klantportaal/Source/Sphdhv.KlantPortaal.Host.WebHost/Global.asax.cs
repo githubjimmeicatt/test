@@ -29,6 +29,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
                 .Insert(0, new JsonpFormatter());
 
             GlobalConfiguration.Configuration.Filters.Add(new EnableCorsHeaderFilter());
+            MvcHandler.DisableMvcResponseHeader = true;
 
             var logConfig = LoggingConfig.RegisterConfig();
             //breid de config hier eventueel uit
