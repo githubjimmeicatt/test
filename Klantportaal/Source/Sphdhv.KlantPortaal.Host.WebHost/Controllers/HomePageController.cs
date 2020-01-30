@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 {
-    public class HomeController : Controller
+    public class HomePageController : Controller
     {
         // GET: Home
         public ActionResult Index()
