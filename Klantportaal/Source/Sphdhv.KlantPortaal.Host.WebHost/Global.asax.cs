@@ -14,6 +14,7 @@ using Serilog;
 using NWebsec.Core.Common.HttpHeaders;
 using NWebsec.Core.Common.HttpHeaders.Configuration;
 using NWebsec.Mvc.HttpHeaders.Csp;
+using NWebsec.Mvc.HttpHeaders;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost
 {
@@ -43,6 +44,8 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
         }
 
     }
+
+
 
     public class JsonpFormatter : JsonMediaTypeFormatter
     {
