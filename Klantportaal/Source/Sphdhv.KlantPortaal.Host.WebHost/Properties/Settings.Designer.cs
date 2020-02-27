@@ -12,7 +12,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -88,7 +88,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/DesktopModules/Sphdhv/KlantPortaal/api/Authentication/Ver" +
+        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44391/DesktopModules/Sphdhv/KlantPortaal/api/Authentication/Ver" +
             "ifyToken")]
         public string DnnVerifyTokenEndpoint {
             get {
@@ -98,7 +98,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44391/")]
         public string DnnMijnOmgevingUrl {
             get {
                 return ((string)(this["DnnMijnOmgevingUrl"]));
@@ -116,7 +116,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/logoff")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44391/logoff")]
         public string DnnLogoffPage {
             get {
                 return ((string)(this["DnnLogoffPage"]));
@@ -206,7 +206,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("FDA96F574A9451D704D0EFAAA025A8352B2618B0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("67a674bd68a281d117648e1db4a19fcafae61972")]
         public string KeyVaultCertificateThumbprint {
             get {
                 return ((string)(this["KeyVaultCertificateThumbprint"]));

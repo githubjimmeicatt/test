@@ -11,6 +11,9 @@ using Newtonsoft.Json.Converters;
 using System.Net.Http;
 using System.Net;
 using Serilog;
+using NWebsec.Core.Common.HttpHeaders;
+using NWebsec.Core.Common.HttpHeaders.Configuration;
+using NWebsec.Mvc.HttpHeaders.Csp;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost
 {
@@ -33,6 +36,10 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
             var logConfig = LoggingConfig.RegisterConfig();
             //breid de config hier eventueel uit
             Log.Logger = logConfig.CreateLogger();
+
+            var headerGenerator = new HeaderGenerator();
+            var _config = new CspDirectiveConfiguration ();
+            
         }
 
     }

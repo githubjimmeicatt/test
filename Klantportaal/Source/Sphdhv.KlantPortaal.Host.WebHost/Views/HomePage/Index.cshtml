@@ -1,22 +1,24 @@
-﻿<script src="/cdn/js/dust/2.0.0/dust-full-2.0.0.min.js"></script>
-<script src="/cdn/js/dust-helpers/1.1.1/dust-helpers-1.1.1.min.js"></script>
-<script src="/cdn/js/jquery/3.4.1/jquery.min.js"></script>
-<script src="/cdn/js/jquery.paging/1.2.0/jquery.paging.min.js"></script>
-<script src="/cdn/js/jquery.query-object/1.0.0/jquery.query-object.min.js"></script>
+﻿@using NWebsec.Mvc.HttpHeaders.Csp
 
-<script src="/cdn/js/is.js/0.9.0/is.min.js"></script>
-<script src="/cdn/plugin/tooltipster/4.0/js/tooltipster.bundle.min.js"></script>
+<script src="/cdn/js/dust/2.0.0/dust-full-2.0.0.min.js" nws-csp-add-nonce="true"></script>
+<script src="/cdn/js/dust-helpers/1.1.1/dust-helpers-1.1.1.min.js" @Html.CspScriptNonce()></script>
+<script src="/cdn/js/jquery/3.4.1/jquery.min.js" @Html.CspScriptNonce()></script>
+<script src="/cdn/js/jquery.paging/1.2.0/jquery.paging.min.js" @Html.CspScriptNonce()></script>
+<script src="/cdn/js/jquery.query-object/1.0.0/jquery.query-object.min.js" @Html.CspScriptNonce()></script>
 
-<script src="/cdn/jsmvc/1.1/application-1.1.1.js"></script>
+<script src="/cdn/js/is.js/0.9.0/is.min.js" @Html.CspScriptNonce()></script>
+<script src="/cdn/plugin/tooltipster/4.0/js/tooltipster.bundle.min.js" @Html.CspScriptNonce()></script>
 
-<link href="/Portals/mijn/Skins/klantportaal/assets/css/main.css?cdv=263" type="text/css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;cdv=262" type="text/css" rel="stylesheet"/>
+<script src="/cdn/jsmvc/1.1/application-1.1.1.js" @Html.CspScriptNonce()></script>
 
-<script language="javascript" type="text/javascript">
+<link href="/Portals/mijn/Skins/klantportaal/assets/css/main.css?cdv=263" type="text/css" rel="stylesheet"@Html.CspStyleNonce() />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;cdv=262" type="text/css" rel="stylesheet"@Html.CspStyleNonce() />
 
-    (function($) {
+<script language="javascript" type="text/javascript" @Html.CspScriptNonce()>
 
-        $(function() {
+    (function ($) {
+
+        $(function () {
             //on document ready
 
             var data = '/';
@@ -78,7 +80,7 @@
                     return {
                         spin: function (app) {
 
-                            if(!timeout) {
+                            if (!timeout) {
                                 timeout = setTimeout(function () {
 
                                     $('body').addClass('jsmvc-is-loading');
@@ -132,37 +134,37 @@
                     placeholder: "#phMijnPensioenSpa",
                     controller: "mijnpensioen-tabcontroller",
                     controllers: [
-                    {
-                        placeholder: '#tabContent',
-                        controller: 'mijnpensioen-profiel'
-                    }]
+                        {
+                            placeholder: '#tabContent',
+                            controller: 'mijnpensioen-profiel'
+                        }]
                 },
                 berichten: {
                     placeholder: "#phMijnPensioenSpa",
                     controller: "mijnpensioen-tabcontroller",
                     controllers: [
-                    {
-                        placeholder: '#tabContent',
-                        controller: 'mijnpensioen-berichten'
-                    }]
+                        {
+                            placeholder: '#tabContent',
+                            controller: 'mijnpensioen-berichten'
+                        }]
                 },
                 email: {
                     placeholder: "#phMijnPensioenSpa",
                     controller: "mijnpensioen-content",
                     controllers: [
-                    {
-                        placeholder: '#content',
-                        controller: 'email-collect'
-                    }]
+                        {
+                            placeholder: '#content',
+                            controller: 'email-collect'
+                        }]
                 },
                 404: {
                     placeholder: "#phMijnPensioenSpa",
                     controller: "mijnpensioen-tabcontroller",
                     controllers: [
-                    {
-                        placeholder: '#tabContent',
-                        controller: '404'
-                    }]
+                        {
+                            placeholder: '#tabContent',
+                            controller: '404'
+                        }]
                 },
                 DigidStoring: {
                     placeholder: "#phMijnPensioenSpa",
