@@ -37,9 +37,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
             var logConfig = LoggingConfig.RegisterConfig();
             //breid de config hier eventueel uit
             Log.Logger = logConfig.CreateLogger();
-
-            var headerGenerator = new HeaderGenerator();
-            var _config = new CspDirectiveConfiguration ();
             
         }
 
