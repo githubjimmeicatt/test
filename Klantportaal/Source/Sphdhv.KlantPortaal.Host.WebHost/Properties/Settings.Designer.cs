@@ -206,7 +206,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("67a674bd68a281d117648e1db4a19fcafae61972")]
+        [global::System.Configuration.DefaultSettingValueAttribute("FDA96F574A9451D704D0EFAAA025A8352B2618B0")]
         public string KeyVaultCertificateThumbprint {
             get {
                 return ((string)(this["KeyVaultCertificateThumbprint"]));
