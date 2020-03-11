@@ -24,6 +24,9 @@ Exclude Sphdhv.Test.DeelnemerPortalApi.Proxy.dll from Build server tests (needs 
 
 IN DEV: Check je externe ip-adres, deze moet 193.172.125.195 zijn ivm whitelist bij idella/piramide/idella/visma
 
+Genereren van hashes voor CSP integrity checks:
+https://www.srihash.org/
+
 # Contribute
 
 If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
