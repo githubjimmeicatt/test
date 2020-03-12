@@ -17,7 +17,6 @@ namespace Sphdhv.KlantPortaal.Manager.Authentication.Service.Mapping
                 cfg.CreateMap<Engine.Claims.Contract.StatusCode, Contract.StatusCode>()
                 .ConvertUsing<StatusCodeConverter>();
 
-                cfg.CreateMissingTypeMaps = true;
                 cfg.AllowNullCollections = true;
             });
 

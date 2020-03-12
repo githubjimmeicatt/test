@@ -27,7 +27,6 @@ namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service.Mapping
                 //        (m.MutatieDatum == null) ? string.Empty:  m.MutatieDatum.Value.ToString("dd MMMM yyyy", new CultureInfo("nl-NL"))
                 //     ));
 
-                cfg.CreateMissingTypeMaps = true;
                 cfg.AllowNullCollections = true;
             });
 
