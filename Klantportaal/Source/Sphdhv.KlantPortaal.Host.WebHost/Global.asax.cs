@@ -35,7 +35,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
             MvcHandler.DisableMvcResponseHeader = true;
 
             var logConfig = LoggingConfig.RegisterConfig();
-            //breid de config hier eventueel uit
+            //breid de config hier eventueel uit 
             Log.Logger = logConfig.CreateLogger();
             
         }
