@@ -389,9 +389,9 @@ namespace Sphdhv.Test.KlantPortaal.Manager
 
                     var mock = new Mock<ICorrespondentieAccess>();
 
-                    mock.Setup(s => s.Overzicht()).ReturnsAsync(null);
+                    mock.Setup(s => s.Overzicht()).ReturnsAsync((CorrespondentieOverzicht)null);
 
-                    mock.Setup(s => s.CorrespondentieItem(It.IsAny<string>())).ReturnsAsync(null);
+                    mock.Setup(s => s.CorrespondentieItem(It.IsAny<string>())).ReturnsAsync((Document)null);
 
                     return mock.Object;
                 } }
