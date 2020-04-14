@@ -12,7 +12,7 @@ namespace Sphdhv.Klantportaal.Audit.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -43,7 +43,16 @@ namespace Sphdhv.Klantportaal.Audit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("B712127AD161A06130781A5C34E6E35D9C25E45E")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/")]
+        public string KeyVaultAuditSecretsUrl {
+            get {
+                return ((string)(this["KeyVaultAuditSecretsUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("430E933F3A11CA44EDA086849C4781240A916FB0")]
         public string KeyVaultCertificateThumbprint {
             get {
                 return ((string)(this["KeyVaultCertificateThumbprint"]));
@@ -52,19 +61,21 @@ namespace Sphdhv.Klantportaal.Audit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SphdhvKlantPortaalAuditKeyDEV/752d3a4ae0814700b0a5b8ffc60e01c6")]
-        public string KeyVaultAuditSecrect {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/SphdhvKlantPortaalAuditKeyDEV/752d" +
+            "3a4ae0814700b0a5b8ffc60e01c6")]
+        public string KeyVaultAuditSecretOld {
             get {
-                return ((string)(this["KeyVaultAuditSecrect"]));
+                return ((string)(this["KeyVaultAuditSecretOld"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/")]
-        public string KeyVaultAuditSecretsUrl {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/SphdhvKlantPortaalAuditKeyDEV/ba88" +
+            "5e480a84483785999be18181ddd9")]
+        public string KeyVaultAuditSecretNew {
             get {
-                return ((string)(this["KeyVaultAuditSecretsUrl"]));
+                return ((string)(this["KeyVaultAuditSecretNew"]));
             }
         }
     }

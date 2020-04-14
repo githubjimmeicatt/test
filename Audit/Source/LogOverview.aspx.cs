@@ -218,7 +218,7 @@ namespace Sphdhv.Klantportaal.Audit
                     var certificateAccess = new Engine.Certificate.CertificateAccess();
                     var cert = certificateAccess.FindCertificateByThumbprint(certificateThumbprint);
 
-                    var secret = Settings.Default.KeyVaultAuditSecrect; //path to the secret
+                    var secret = Settings.Default.KeyVaultAuditSecretOld; //path to the secret
                     var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
 
                     var keyVault = new KeyVault(cert, applicationId);

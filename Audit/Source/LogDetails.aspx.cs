@@ -33,7 +33,7 @@ namespace Sphdhv.Klantportaal.Audit
 
         private ICryptographer CryptoEngine => _cryptoEngine ?? (_cryptoEngine = new CryptographerEngine<object>(null, null));
 
- 
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,17 +58,18 @@ namespace Sphdhv.Klantportaal.Audit
             var certificateAccess = new Engine.Certificate.CertificateAccess();
             var cert = certificateAccess.FindCertificateByThumbprint(certificateThumbprint);
 
-            var secret = Settings.Default.KeyVaultAuditSecrect; //path to the secret
-            var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
-            
+            var secretOld = Settings.Default.KeyVaultAuditSecretOld; //path to the secret
+            var secretNew = Settings.Default.KeyVaultAuditSecretNew; //path to the secret
+            var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration var keyVault = new KeyVault(cert, applicationId);
+
             var keyVault = new KeyVault(cert, applicationId);
-            byte[] key = keyVault.GetSecret(secret);
 
-            var cipherName = "Aes256With16ByteIvPrefix";
+            byte[] detailsDecrypted = Decrypt(entry, secretNew, keyVault); ;
 
-
-            var detailsDecrypted = CryptoEngine.Decrypt(cipherName, key, entry.DetailsEncrypted);
-
+            if (detailsDecrypted == null)
+            {
+                detailsDecrypted = Decrypt(entry, secretOld, keyVault);
+            }
 
             if (entry != null)
             {
@@ -89,7 +90,15 @@ namespace Sphdhv.Klantportaal.Audit
             }
         }
 
+        private byte[] Decrypt(LogEntry entry, string secretOld, KeyVault keyVault)
+        {
+            byte[] key = keyVault.GetSecret(secretOld);
+
+            var cipherName = "Aes256With16ByteIvPrefix";
 
 
+            var detailsDecrypted = CryptoEngine.Decrypt(cipherName, key, entry.DetailsEncrypted);
+            return detailsDecrypted;
+        }
     }
 }
