@@ -193,27 +193,27 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
     }
 
 
-    internal class Decryptor
-    {
-        private string cipherName;
-        private byte[] keyValue;
-        private ICryptographer cryptoEngine;
+    //internal class Decryptor
+    //{
+    //    private string cipherName;
+    //    private byte[] keyValue;
+    //    private ICryptographer cryptoEngine;
 
-        public Decryptor(string cipherName, byte[] keyValue, ICryptographer cryptoEngine)
-        {
-            this.cipherName = cipherName;
-            this.keyValue = keyValue;
-            this.cryptoEngine = cryptoEngine;
-        }
+    //    public Decryptor(string cipherName, byte[] keyValue, ICryptographer cryptoEngine)
+    //    {
+    //        this.cipherName = cipherName;
+    //        this.keyValue = keyValue;
+    //        this.cryptoEngine = cryptoEngine;
+    //    }
 
-        public string Decrypt(byte[] encrypted, string plainText = null)
-        {
-            if (encrypted == null)
-            {
-                return plainText;
-            }
+    //    public string Decrypt(byte[] encrypted, string plainText = null)
+    //    {
+    //        if (encrypted == null)
+    //        {
+    //            return plainText;
+    //        }
 
-            return cryptoEngine.DecryptString(cipherName, keyValue, encrypted);
-        }
-    }
+    //        return cryptoEngine.DecryptString(cipherName, keyValue, encrypted);
+    //    }
+    //}
 }
