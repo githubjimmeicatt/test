@@ -43,15 +43,6 @@ namespace ReEncryptor.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ddddd")]
-        public string KeyVaultAuditSecrectOld {
-            get {
-                return ((string)(this["KeyVaultAuditSecrectOld"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("430E933F3A11CA44EDA086849C4781240A916FB0")]
         public string KeyVaultCertificateThumbprint {
             get {
@@ -65,6 +56,26 @@ namespace ReEncryptor.Properties {
         public string KeyVaultApplicationId {
             get {
                 return ((string)(this["KeyVaultApplicationId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/SphdhvKlantPortaalAuditKeyDEV/752d" +
+            "3a4ae0814700b0a5b8ffc60e01c6")]
+        public string KeyVaultAuditSecrectOld {
+            get {
+                return ((string)(this["KeyVaultAuditSecrectOld"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/SphdhvKlantPortaalAuditKeyDEV/ba88" +
+            "5e480a84483785999be18181ddd9")]
+        public string KeyVaultAuditSecrectNew {
+            get {
+                return ((string)(this["KeyVaultAuditSecrectNew"]));
             }
         }
     }

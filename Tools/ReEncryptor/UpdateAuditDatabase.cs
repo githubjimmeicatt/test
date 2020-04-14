@@ -38,11 +38,12 @@ namespace ReEncryptor
 
         public void Update(System.Security.Cryptography.X509Certificates.X509Certificate2 cert)
         {
-            var secret = Settings.Default.KeyVaultAuditSecrectOld; //path to the secret
+            var secretOld = Settings.Default.KeyVaultAuditSecrectOld; 
+            var secretNew = Settings.Default.KeyVaultAuditSecrectNew; 
             var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
 
             var keyVault = new KeyVault(cert, applicationId);
-            byte[] key = keyVault.GetSecret(secret);
+            byte[] key = keyVault.GetSecret(secretOld);
 
             var cipherName = "Aes256With16ByteIvPrefix";
 
