@@ -1,12 +1,10 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EngineContract = Sphdhv.KlantPortaal.Engine.Pensioen.Contract;
-using AccessContract = Sphdhv.KlantPortaal.Access.Pensioen.Contract;
-using CorrespondentieAccessContract = Sphdhv.KlantPortaal.Access.Correspondentie.Contract;
-using ManagerContract = Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract;
 using Sphdhv.KlantPortaal.Manager.MijnPensioen.Service.Mapping;
 using System.Linq;
+using AccessContract = Sphdhv.KlantPortaal.Access.Pensioen.Contract;
+using EngineContract = Sphdhv.KlantPortaal.Engine.Pensioen.Contract;
+using ManagerContract = Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract;
 
 namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.ServiceTest
 {
