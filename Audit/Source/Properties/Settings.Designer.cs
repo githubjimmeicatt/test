@@ -61,21 +61,20 @@ namespace Sphdhv.Klantportaal.Audit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/SphdhvKlantPortaalAuditKeyDEV/752d" +
-            "3a4ae0814700b0a5b8ffc60e01c6")]
-        public string KeyVaultAuditSecretOld {
-            get {
-                return ((string)(this["KeyVaultAuditSecretOld"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/secrets/SphdhvKlantPortaalAuditKeyDEV/ba88" +
             "5e480a84483785999be18181ddd9")]
         public string KeyVaultAuditSecretNew {
             get {
                 return ((string)(this["KeyVaultAuditSecretNew"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string KeyVaultAuditSecretOld {
+            get {
+                return ((string)(this["KeyVaultAuditSecretOld"]));
             }
         }
     }

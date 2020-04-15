@@ -53,30 +53,31 @@ namespace Sphdhv.Klantportaal.Audit
                 entry = rep.GetLogEntry(entryId, createdAtUtc);
             }
 
-
-            var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
-            var certificateAccess = new Engine.Certificate.CertificateAccess();
-            var cert = certificateAccess.FindCertificateByThumbprint(certificateThumbprint);
-
-            var secretOld = Settings.Default.KeyVaultAuditSecretOld; //path to the secret
-            var secretNew = Settings.Default.KeyVaultAuditSecretNew; //path to the secret
-            var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration var keyVault = new KeyVault(cert, applicationId);
-
-            var keyVault = new KeyVault(cert, applicationId);
-
-            byte[] detailsDecrypted = Decrypt(entry, secretNew, keyVault); ;
-
-            if (detailsDecrypted == null)
-            {
-                detailsDecrypted = Decrypt(entry, secretOld, keyVault);
-            }
-
             if (entry != null)
             {
+
+                var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
+                var certificateAccess = new Engine.Certificate.CertificateAccess();
+                var cert = certificateAccess.FindCertificateByThumbprint(certificateThumbprint);
+
+                var secretOld = Settings.Default.KeyVaultAuditSecretOld; //path to the secret
+                var secretNew = Settings.Default.KeyVaultAuditSecretNew; //path to the secret
+                var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration var keyVault = new KeyVault(cert, applicationId);
+
+                var keyVault = new KeyVault(cert, applicationId);
+
+                byte[] detailsDecrypted = Decrypt(entry, secretNew, keyVault);
+
+                if (detailsDecrypted == null && !string.IsNullOrWhiteSpace(secretOld))
+                {
+                    detailsDecrypted = Decrypt(entry, secretOld, keyVault);
+                }
+
+
                 litCreatedDate.Text = entry.CreatedAtUtc.ToLocalTime().ToString("yyyy MM dd - HH:mm:ss.fffffff") + " with timestamp " + entry.Timestamp;
                 litMessage.Text = entry.Message;
                 litApplicationArea.Text = entry.ApplicationArea;
-                litDetails.Text = Encoding.UTF8.GetString(detailsDecrypted);
+                litDetails.Text = detailsDecrypted == null ? "" : Encoding.UTF8.GetString(detailsDecrypted);
 
                 var levelName = "Waarde komt niet voor in LogLevel enumeratie";
                 if (Enum.IsDefined(typeof(LoggingLevel), entry.LogLevel))
