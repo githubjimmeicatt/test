@@ -13,6 +13,15 @@ namespace Sphdhv.KlantPortaal.Engine.Pensioen.Service.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<AccessContract.ActueelPensioen, EngineContract.ActueelPensioen>();
+                cfg.CreateMap<AccessContract.Polis, EngineContract.Polis>();
+                cfg.CreateMap<AccessContract.ArbeidVast, EngineContract.ArbeidVast>();
+                cfg.CreateMap<AccessContract.ArbeidVariabel, EngineContract.ArbeidVariabel>();
+                cfg.CreateMap<AccessContract.Pensioenrecht, EngineContract.Pensioenrecht>();
+                cfg.CreateMap<AccessContract.Pensioen, EngineContract.Pensioen>();
+                cfg.CreateMap<AccessContract.DeelnemerProfiel, EngineContract.DeelnemerProfiel>();
+                cfg.CreateMap<AccessContract.Bereikbaarheid, EngineContract.Bereikbaarheid>();
+                cfg.CreateMap<AccessContract.Adres, EngineContract.Adres>();
+                cfg.CreateMap<AccessContract.Huidigepartner, EngineContract.Huidigepartner>();
             });
             Mapper = new Mapper(config);
         }
