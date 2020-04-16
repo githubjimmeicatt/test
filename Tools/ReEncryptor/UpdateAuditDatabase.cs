@@ -43,23 +43,42 @@ namespace ReEncryptor
             var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
 
             var keyVault = new KeyVault(cert, applicationId);
-            byte[] key = keyVault.GetSecret(secretOld);
+            byte[] keyOld = keyVault.GetSecret(secretOld);
+            byte[] keyNew = keyVault.GetSecret(secretNew);
 
             var cipherName = "Aes256With16ByteIvPrefix";
 
+            Console.WriteLine("even geduld");
 
-           
             using (var rep = Factory.Create())
             {
-                var list = rep.GetLogEntries(new LogEntryFilter()).ToList();
+                var list = rep.GetLogEntries(new LogEntryFilter());
                 foreach (var item in list)
                 {
-                    var detailsDecrypted = CryptoEngine.Decrypt(cipherName, key, item.DetailsEncrypted);
-                    Console.WriteLine(Encoding.UTF8.GetString(detailsDecrypted));
+                    var decryptedBytes = CryptoEngine.Decrypt(cipherName, keyOld, item.DetailsEncrypted);
+
+                    // mocht het niet in een keer goed gaan en de tool wordt opnieuw gedraait 
+                    // dan laat hij records die al correct geupdate zijn met rust
+                    if (decryptedBytes != null)
+                    {
+                        item.DetailsEncrypted = CryptoEngine.Encrypt(cipherName, keyNew, decryptedBytes);                        
+                        try
+                        {
+                            var result = rep.SaveLogEntry(item);                          
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"fout bij opslaan id {item.Id}");
+                            Console.Write(e);
+                        }
+
+                    }
                 }
+               
 
             }
-            Console.ReadLine();
+            Console.WriteLine("klaar");
+            Console.ReadKey();
         }
     }
 }

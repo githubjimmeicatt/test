@@ -25,14 +25,7 @@ namespace ReEncryptor
         static void Main(string[] args)
         {
 
-
-            Console.WriteLine("heb je dewebsite uitgezet? (j/n) ");
-            var keyInfoWebsiteUit = Console.ReadKey();
-            if (keyInfoWebsiteUit.KeyChar != 'j')
-            {
-                return;
-            }
-            Console.WriteLine();
+                  
 
             Console.WriteLine($"je gaat deze omgeving opnieuw versleutelen: {Settings.Default.Omgeving}. Ok? (j/n) ");
             var keyInfoOmgeving = Console.ReadKey();
