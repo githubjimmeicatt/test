@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Web.UI;
 using Icatt.Logging;
 using Icatt.Logging.DataAccess;
 using Icatt.Logging.Entities;
 using Sphdhv.Klantportaal.Audit.Properties;
-using System.Text;
-using Icatt.Security.Engine.Cryptographer.Interface;
-using Icatt.Security.Engine.Cryptographer.Service;
-using Icatt.Azure.Access;
+using Sphdhv.Klantportaal.Audit.Engines.Crypto;
 
 namespace Sphdhv.Klantportaal.Audit
 {
@@ -27,11 +23,15 @@ namespace Sphdhv.Klantportaal.Audit
             }
         }
 
+        private DecryptionEngine _decryptionEngine;
 
-
-        private ICryptographer _cryptoEngine;
-
-        private ICryptographer CryptoEngine => _cryptoEngine ?? (_cryptoEngine = new CryptographerEngine<object>(null, null));
+        public DecryptionEngine DecryptionEngine
+        {
+            get
+            {
+                return _decryptionEngine ?? (_decryptionEngine = new DecryptionEngine());
+            }
+        }
 
 
 
@@ -54,30 +54,11 @@ namespace Sphdhv.Klantportaal.Audit
             }
 
             if (entry != null)
-            {
-
-                var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
-                var certificateAccess = new Engine.Certificate.CertificateAccess();
-                var cert = certificateAccess.FindCertificateByThumbprint(certificateThumbprint);
-
-                var secretOld = Settings.Default.KeyVaultAuditSecretOld; //path to the secret
-                var secretNew = Settings.Default.KeyVaultAuditSecretNew; //path to the secret
-                var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration var keyVault = new KeyVault(cert, applicationId);
-
-                var keyVault = new KeyVault(cert, applicationId);
-
-                byte[] detailsDecrypted = Decrypt(entry, secretNew, keyVault);
-
-                if (detailsDecrypted == null && !string.IsNullOrWhiteSpace(secretOld))
-                {
-                    detailsDecrypted = Decrypt(entry, secretOld, keyVault);
-                }
-
-
+            {                               
                 litCreatedDate.Text = entry.CreatedAtUtc.ToLocalTime().ToString("yyyy MM dd - HH:mm:ss.fffffff") + " with timestamp " + entry.Timestamp;
                 litMessage.Text = entry.Message;
                 litApplicationArea.Text = entry.ApplicationArea;
-                litDetails.Text = detailsDecrypted == null ? "" : Encoding.UTF8.GetString(detailsDecrypted);
+                litDetails.Text = DecryptionEngine.Decrypt(entry.DetailsEncrypted); 
 
                 var levelName = "Waarde komt niet voor in LogLevel enumeratie";
                 if (Enum.IsDefined(typeof(LoggingLevel), entry.LogLevel))
@@ -91,15 +72,8 @@ namespace Sphdhv.Klantportaal.Audit
             }
         }
 
-        private byte[] Decrypt(LogEntry entry, string secretOld, KeyVault keyVault)
-        {
-            byte[] key = keyVault.GetSecret(secretOld);
+  
 
-            var cipherName = "Aes256With16ByteIvPrefix";
-
-
-            var detailsDecrypted = CryptoEngine.Decrypt(cipherName, key, entry.DetailsEncrypted);
-            return detailsDecrypted;
-        }
+      
     }
 }

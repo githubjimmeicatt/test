@@ -7,23 +7,14 @@ using System.Web.UI.WebControls;
 using Icatt.Logging.DataAccess;
 using Sphdhv.Klantportaal.Audit.Properties;
 using Icatt.Logging;
-
-using Icatt.Security.Engine.Cryptographer.Interface;
-
-using Icatt.Security.Engine.Cryptographer.Service;
-using System.Text;
 using Icatt.Logging.Entities;
-using Icatt.Azure.Access;
+using Sphdhv.Klantportaal.Audit.Engines.Crypto;
 
 namespace Sphdhv.Klantportaal.Audit
 {
     public partial class LogOverview : Page
     {
-
-
-
-
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             gvwLog.PagerSettings.Mode = PagerButtons.NumericFirstLast;
@@ -63,8 +54,7 @@ namespace Sphdhv.Klantportaal.Audit
             txtVoor.Text = LogEntries.EndTime;
             txtNa.Text = LogEntries.StartTime;
         }
-
-
+        
     }
 
 
@@ -74,13 +64,15 @@ namespace Sphdhv.Klantportaal.Audit
         private LoggingRepositoryFactory _factory;
 
 
-        private ICryptographer _cryptoEngine;
+        private DecryptionEngine _decryptionEngine;
 
-
-
-        private ICryptographer CryptoEngine => _cryptoEngine ?? (_cryptoEngine = new CryptographerEngine<object>(null, null));
-
-
+        public DecryptionEngine DecryptionEngine
+        {
+            get
+            {
+                return _decryptionEngine ?? (_decryptionEngine = new DecryptionEngine());
+            }
+        }
 
         public LogEntries()
         {
@@ -211,28 +203,11 @@ namespace Sphdhv.Klantportaal.Audit
 
                 if (!string.IsNullOrWhiteSpace(containedInDetail))
                 {
-
-
-
-                    var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
-                    var certificateAccess = new Engine.Certificate.CertificateAccess();
-                    var cert = certificateAccess.FindCertificateByThumbprint(certificateThumbprint);
-
-                    var secret = Settings.Default.KeyVaultAuditSecretOld; //path to the secret
-                    var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
-
-                    var keyVault = new KeyVault(cert, applicationId);
-
-                    var cipherName = "Aes256With16ByteIvPrefix";
-                    
                     itemsContainingDetailSearch = list.Where(l =>
-                    {
-                        byte[] key = keyVault.GetSecret(secret);
-                        var decrypted = Encoding.UTF8.GetString(CryptoEngine.Decrypt(cipherName, key, l.DetailsEncrypted));
+                    {                      
+                        var decrypted = DecryptionEngine.Decrypt(l.DetailsEncrypted);
                         return (decrypted.Contains(containedInDetail));        
                     });
-
-
                 }
 
                 var result = itemsContainingDetailSearch ?? list;
