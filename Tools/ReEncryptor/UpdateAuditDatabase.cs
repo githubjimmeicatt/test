@@ -6,6 +6,7 @@ using ReEncryptor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,8 +16,16 @@ namespace ReEncryptor
 
 
 
-    public class UpdateAuditDatabase
+    public class AuditDatabaseUpdater
     {
+
+
+        public AuditDatabaseUpdater( string connectionstring, X509Certificate2 certificate)
+        {
+            this.connectionstring = connectionstring;
+            this.certificate = certificate;
+        }
+
 
         private LoggingRepositoryFactory _factory;
 
@@ -26,23 +35,25 @@ namespace ReEncryptor
             {
                 return _factory ??
                        (_factory =
-                           new LoggingRepositoryFactory("name=" + Settings.Default.Database));
+                           new LoggingRepositoryFactory(connectionstring));
             }
         }
 
         private ICryptographer _cryptoEngine;
+        private readonly string connectionstring;
+        private readonly X509Certificate2 certificate;
 
         private ICryptographer CryptoEngine => _cryptoEngine ?? (_cryptoEngine = new CryptographerEngine<object>(null, null));
 
 
 
-        public void Update(System.Security.Cryptography.X509Certificates.X509Certificate2 cert)
+        public void Update()
         {
             var secretOld = Settings.Default.KeyVaultAuditSecrectOld; 
             var secretNew = Settings.Default.KeyVaultAuditSecrectNew; 
             var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
 
-            var keyVault = new KeyVault(cert, applicationId);
+            var keyVault = new KeyVault(certificate, applicationId);
             byte[] keyOld = keyVault.GetSecret(secretOld);
             byte[] keyNew = keyVault.GetSecret(secretNew);
 

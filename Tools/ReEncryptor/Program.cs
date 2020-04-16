@@ -11,12 +11,15 @@ namespace ReEncryptor
 {
 
 
-
     /// <summary>
     /// fetches all encrypted records
     /// decrypts with old key
     /// encrypts with new key
     /// stores values back in database
+    /// start de applicatie en volg de instructies op het scherm
+    /// voorwaarden:
+    /// - het certificaat voor toegang tot de juiste store moet op de machine waarop dit uitgevoerd wordt aanwezig zijn
+    /// - je moet de connectionstring van de database bij de hand hebben
     /// </summary>
     class Program
     {
@@ -24,25 +27,45 @@ namespace ReEncryptor
 
         static void Main(string[] args)
         {
+            string certificateThumb = null;
 
-                  
+            //dev: Data Source=OTA-DB.ICATT.LOCAL;Initial Catalog=SPHDHV.KlantPortaal.DEV.Audit;User ID=SPHDHV.KlantPortaal.DEV.Audit;Password=sgf345^%$bF4*#gH)9!fcF$#gvgvf67uy3
+            Console.WriteLine($" voer de connectiestring in van de database die je opnieuw wil versleutelen");
 
-            Console.WriteLine($"je gaat deze omgeving opnieuw versleutelen: {Settings.Default.Omgeving}. Ok? (j/n) ");
-            var keyInfoOmgeving = Console.ReadKey();
-            if (keyInfoOmgeving.KeyChar != 'j')
+            string connectionstring = Console.ReadLine();
+
+            // dev: 430E933F3A11CA44EDA086849C4781240A916FB0
+            Console.WriteLine($" voer de omgeving in die je wil versleutelen (o,a,p) ");
+
+            string omgeving = Console.ReadLine();
+
+
+            if (omgeving == "o")
             {
-                return;
+                certificateThumb = Settings.Default.KeyVaultCertificateThumbprint;
             }
-            Console.WriteLine();
 
-            var x = new UpdateAuditDatabase();
-            var cert = new Cert().FindCertificateByThumbprint(Settings.Default.KeyVaultCertificateThumbprint);
+            if (!string.IsNullOrWhiteSpace(connectionstring) && !string.IsNullOrWhiteSpace(certificateThumb))
+            {
+                Console.WriteLine($"weet je zeker dat je de database nu opnieuw wilt versleutelen? (j/n) ");
 
-            x.Update(cert);
-       
+                var keyInfoOmgeving = Console.ReadKey();
+                if (keyInfoOmgeving.KeyChar != 'j')
+                {
+                    return;
+                }
+                Console.WriteLine();
+
+
+                var cert = new Cert().FindCertificateByThumbprint(certificateThumb);
+
+                var x = new AuditDatabaseUpdater(connectionstring, cert);
+                x.Update();
+
+            }
 
         }
- 
+
 
 
     }
