@@ -40,10 +40,20 @@ namespace ReEncryptor
             string omgeving = Console.ReadLine();
 
 
-            if (omgeving == "o")
+            switch (omgeving)
             {
-                certificateThumb = Settings.Default.KeyVaultCertificateThumbprint;
+                case "o":
+                    certificateThumb = Settings.Default.KeyVaultCertificateThumbprintOntwikkel;
+                    break;
+                case "a":
+                    certificateThumb = Settings.Default.KeyVaultCertificateThumbprintAccept;
+                    break;
+                case "p":
+                    certificateThumb = Settings.Default.KeyVaultCertificateThumbprintProductie;
+                    break;
             }
+
+
 
             if (!string.IsNullOrWhiteSpace(connectionstring) && !string.IsNullOrWhiteSpace(certificateThumb))
             {

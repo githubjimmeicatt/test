@@ -44,9 +44,9 @@ namespace ReEncryptor.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("430E933F3A11CA44EDA086849C4781240A916FB0")]
-        public string KeyVaultCertificateThumbprint {
+        public string KeyVaultCertificateThumbprintOntwikkel {
             get {
-                return ((string)(this["KeyVaultCertificateThumbprint"]));
+                return ((string)(this["KeyVaultCertificateThumbprintOntwikkel"]));
             }
         }
         
@@ -76,6 +76,24 @@ namespace ReEncryptor.Properties {
         public string KeyVaultAuditSecrectNew {
             get {
                 return ((string)(this["KeyVaultAuditSecrectNew"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F7106BA0B0979FE69E7F85ACB3B63F32C2C4B73C")]
+        public string KeyVaultCertificateThumbprintAccept {
+            get {
+                return ((string)(this["KeyVaultCertificateThumbprintAccept"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4B856799B415C4F15D5AD22CF1ADB039B4770670")]
+        public string KeyVaultCertificateThumbprintProductie {
+            get {
+                return ((string)(this["KeyVaultCertificateThumbprintProductie"]));
             }
         }
     }
