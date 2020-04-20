@@ -22,6 +22,12 @@ namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service.Mapping
               //  cfg.CreateMap<CorrespondentieAccessContract.CorrespondentieOverzicht, ManagerContract.CorrespondentieOverzicht>();
                 cfg.CreateMap<CorrespondentieAccessContract.Document, ManagerContract.Document>();
 
+
+                cfg.CreateMap<AccessContract.Huidigepartner, ManagerContract.Huidigepartner>();
+                cfg.CreateMap<AccessContract.Bereikbaarheid, ManagerContract.Bereikbaarheid>();
+                cfg.CreateMap<AccessContract.Adres, ManagerContract.Adres>();
+
+
                 //cfg.CreateMap<CorrespondentieAccessContract.Item, ManagerContract.Item>()
                 //    .ForMember(dest => dest.MutatieDatum, opt => opt.ResolveUsing(m =>                
                 //        (m.MutatieDatum == null) ? string.Empty:  m.MutatieDatum.Value.ToString("dd MMMM yyyy", new CultureInfo("nl-NL"))
