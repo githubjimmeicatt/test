@@ -6,6 +6,7 @@ using KlantportaalReEncryptor.Properties;
 using Sphdhv.KlantPortaal.Data.Deelnemer.DbContext;
 using Sphdhv.KlantPortaal.Data.Deelnemer.Entities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -16,7 +17,7 @@ namespace KlantportaalReEncryptor
     {
         private string connectionstring;
         private X509Certificate2 certificate;
-        
+
         private ICryptographer _cryptoEngine;
 
         private ICryptographer CryptoEngine => _cryptoEngine ?? (_cryptoEngine = new CryptographerEngine<object>(null, null));
@@ -43,8 +44,8 @@ namespace KlantportaalReEncryptor
 
             Console.WriteLine("even geduld");
 
-            Deelnemer xx = null;
-            byte[] eemailnew = null;
+            var bijgewerkteDeeelnemers = new List<Deelnemer>();
+
             using (var context = new DeelnemerDbContext(connectionstring))
             {
                 var deelnemers = context.Deelnemers;
@@ -58,69 +59,48 @@ namespace KlantportaalReEncryptor
                     // dan laat hij records die al correct geupdate zijn met rust
                     if (decryptedBsn != null)
                     {
+                        item.Bsn = CryptoEngine.EncryptString(cipherName, keyNew, decryptedBsn);
+                    }
+
+                    if (decryptedEmail != null)
+                    {
                         item.Email = CryptoEngine.EncryptString(cipherName, keyNew, decryptedEmail);
 
-                          eemailnew   = CryptoEngine.EncryptString(cipherName, keyNew, decryptedEmail);
-
-                        item.Bsn = CryptoEngine.EncryptString(cipherName, keyNew, decryptedBsn);
-                        item.ModifiedAtUtc = DateTime.Now.AddDays(111111);
-                        try
-                        {
-
-                            //DIT WERKT NIET
-                            context.Deelnemers.Attach(item);
-                            context.Entry(item).State = EntityState.Modified;
-                            context.ChangeTracker.DetectChanges();
-                            var x = context.ChangeTracker.HasChanges();
-                            var z = context.ChangeTracker.Entries();
-
-
-
-                            xx = item;
-                            foreach (var entry in context.ChangeTracker.Entries<IObjectWithState>())
-                            {
-                                entry.State = EntityState.Modified;
-                                entry.Entity.State = ObjectState.Unchanged;
-                            }
-
-
-                            var result = context.Save();
-                            var u = context.SaveChanges();
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine($"fout bij opslaan id {item.Id}");
-                            Console.Write(e);
-                        }
-
                     }
+
+                    if (decryptedBsn != null || decryptedEmail != null)
+                    {
+                        bijgewerkteDeeelnemers.Add(item);
+                    }
+
+                   
 
                 }
             }
 
-            if (xx != null)
+            foreach (var item in bijgewerkteDeeelnemers)
             {
-                xx.Email = eemailnew;
-
-                xx.State = ObjectState.Modified;
-
-
+                item.State = ObjectState.Modified;
                 using (var context = new DeelnemerDbContext(connectionstring))
                 {
 
                     context.ChangeTracker.DetectChanges();
-                    var x = context.ChangeTracker.HasChanges();
-                    var z = context.ChangeTracker.Entries();
 
-
-                    context.Deelnemers.Attach(xx);
-                  //DIT WERKT WEL
-                    var cc = context.Save();
-
-
+                    context.Deelnemers.Attach(item);
+                    //DIT WERKT WEL
+                    try
+                    {
+                        var result = context.Save();
+                        Console.WriteLine($"klaar. {result} records bijgewerkt.");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"fout bij opslaan id {item.Id}");
+                        Console.Write(e);
+                    }
                 }
             }
 
-            }
+        }
     }
 }

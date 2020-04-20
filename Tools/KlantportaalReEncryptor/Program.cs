@@ -16,11 +16,12 @@ namespace KlantportaalReEncryptor
             string certificateThumb = null;
 
             //dev: Data Source=OTA-DB.ICATT.LOCAL;Initial Catalog=HaskoningDHV.Klantportaal.DEV.AspNetMembership;User ID=HaskoningDHV.Klantportaal.DEV.AspNetMembership;Password=dsg*9hsdKJH785w3))123GbdfgdfgbnHSHDHSDFHJ345dfg345;MultipleActiveResultSets=True
-            Console.WriteLine($" voer de connectiestring in van de database die je opnieuw wil versleutelen");
+            Console.WriteLine($"voer de connectiestring in van de database die je opnieuw wil versleutelen");
 
             string connectionstring = Console.ReadLine();
 
-            Console.WriteLine($" voer de omgeving in die je wil versleutelen (o,a,p) ");
+            Console.WriteLine($"zorg dat het key vault certificaat voor de omgeving die je wilt verslutelen op deze machine geinstalleerd is");
+            Console.WriteLine($"welk certificaat wil je versleutelen? (o,a,p) ");
 
             string omgeving = Console.ReadLine();
 
