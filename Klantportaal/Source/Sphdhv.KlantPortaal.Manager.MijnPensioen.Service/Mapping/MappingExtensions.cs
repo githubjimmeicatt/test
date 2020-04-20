@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using EngineContract = Sphdhv.KlantPortaal.Engine.Pensioen.Contract;
 using AccessContract = Sphdhv.KlantPortaal.Access.Pensioen.Contract;
-using CorrespondentieAccessContract = Sphdhv.KlantPortaal.Access.Correspondentie.Contract;
+using EngineContract = Sphdhv.KlantPortaal.Engine.Pensioen.Contract;
 using ManagerContract = Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract;
-using System.Globalization;
 
 namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service.Mapping
 {
@@ -16,22 +14,21 @@ namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<EngineContract.ActueelPensioen, ManagerContract.ActueelPensioen>();
+                cfg.CreateMap<EngineContract.Polis, ManagerContract.Polis>();
+                cfg.CreateMap<EngineContract.ArbeidVast, ManagerContract.ArbeidVast>();
+                cfg.CreateMap<EngineContract.ArbeidVariabel, ManagerContract.ArbeidVariabel>();
+                cfg.CreateMap<EngineContract.Pensioenrecht, ManagerContract.Pensioenrecht>();
+                cfg.CreateMap<EngineContract.Pensioen, ManagerContract.Pensioen>();
+                cfg.CreateMap<EngineContract.DeelnemerProfiel, ManagerContract.DeelnemerProfiel>();
+                cfg.CreateMap<EngineContract.Adres, ManagerContract.Adres>();
+                cfg.CreateMap<EngineContract.Bereikbaarheid, ManagerContract.Bereikbaarheid>();
+                cfg.CreateMap<EngineContract.Huidigepartner, ManagerContract.Huidigepartner>();
+
                 cfg.CreateMap<AccessContract.DeelnemerProfiel, ManagerContract.DeelnemerProfiel>();
-                cfg.CreateMap<AccessContract.Pensioenrecht, ManagerContract.Pensioenrecht>();
-
-              //  cfg.CreateMap<CorrespondentieAccessContract.CorrespondentieOverzicht, ManagerContract.CorrespondentieOverzicht>();
-                cfg.CreateMap<CorrespondentieAccessContract.Document, ManagerContract.Document>();
-
-
-                cfg.CreateMap<AccessContract.Huidigepartner, ManagerContract.Huidigepartner>();
-                cfg.CreateMap<AccessContract.Bereikbaarheid, ManagerContract.Bereikbaarheid>();
                 cfg.CreateMap<AccessContract.Adres, ManagerContract.Adres>();
-
-
-                //cfg.CreateMap<CorrespondentieAccessContract.Item, ManagerContract.Item>()
-                //    .ForMember(dest => dest.MutatieDatum, opt => opt.ResolveUsing(m =>                
-                //        (m.MutatieDatum == null) ? string.Empty:  m.MutatieDatum.Value.ToString("dd MMMM yyyy", new CultureInfo("nl-NL"))
-                //     ));
+                cfg.CreateMap<AccessContract.Bereikbaarheid, ManagerContract.Bereikbaarheid>();
+                cfg.CreateMap<AccessContract.Huidigepartner, ManagerContract.Huidigepartner>();
+                cfg.CreateMap<AccessContract.Pensioenrecht, ManagerContract.Pensioenrecht>();
 
                 cfg.AllowNullCollections = true;
             });
@@ -47,16 +44,6 @@ namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service.Mapping
 
 
         public static TResult Map<TResult>(this AccessContract.DeelnemerProfiel managerContract)
-        {
-            return Mapper.Map<TResult>(managerContract);
-        }
-
-        //public static TResult Map<TResult>(this CorrespondentieAccessContract.CorrespondentieOverzicht managerContract)
-        //{
-        //    return Mapper.Map<TResult>(managerContract);
-        //}
-
-        public static TResult Map<TResult>(this CorrespondentieAccessContract.Document managerContract)
         {
             return Mapper.Map<TResult>(managerContract);
         }
