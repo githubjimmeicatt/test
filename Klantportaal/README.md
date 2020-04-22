@@ -22,7 +22,8 @@ Add nuget package source http://nuget.icatt.local/nuget
 Set Sphdhv.KlantPortaal.Host.WebHost as Startup project
 Exclude Sphdhv.Test.DeelnemerPortalApi.Proxy.dll from Build server tests (needs to be added to ip-whitelist by Idella (formerly Piramide))
 
-IN DEV: Check je externe ip-adres, deze moet 193.172.125.195 zijn ivm whitelist bij idella/piramide/idella/visma
+IN DEV:  ivm whitelist bij idella/piramide/idella/visma moet je internet verkeer naar piramide via een andere route. dat stel je eenmalig in.
+open een command prompt in admin mode en voer dit commando uit: route add -p 217.114.98.195 MASK 255.255.255.255 192.168.1.10 
 
 Genereren van hashes voor CSP integrity checks:
 https://www.srihash.org/

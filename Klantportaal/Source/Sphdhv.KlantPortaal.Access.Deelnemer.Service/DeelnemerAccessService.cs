@@ -98,15 +98,6 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
                 var bsnEncrypted = EncryptWithKeyVault(Context.Bsn);
                 var emailEncrypted = EncryptWithKeyVault(deelnemer.Email ?? "");
 
-                var withKeyVaultBsn = EncryptWithKeyVault(Context.Bsn);
-                var withKeyVaultEmail = EncryptWithKeyVault(deelnemer.Email ?? "");
-
-                var b64Bsn = Convert.ToBase64String(bsnEncrypted);
-                var b64Email = Convert.ToBase64String(emailEncrypted);
-                var b64BsnVault = Convert.ToBase64String(withKeyVaultBsn);
-                var b64EmailVault = Convert.ToBase64String(withKeyVaultEmail);
-
-
                 // als deelnemer al bestaat...
                 // map naar deelnamer entity - alleen unenctrypted velden
                 // ophalen uit db
@@ -141,19 +132,33 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
         {
             var keyVault = FactoryContainer.ProxyFactory.CreateProxy<IKeyVault>(Context);
 
-            var secret = Properties.Settings.Default.KeyVaultSecrect;
+            string result = DecryptWithKey(keyVault, value, Properties.Settings.Default.KeyVaultSecrectNew);
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                //misschien was dit nog met de vorige sleutel versleuteld. probeer nog eens met die sleutel
+                result = DecryptWithKey(keyVault, value, Properties.Settings.Default.KeyVaultSecrectOld);
+
+            }
+
+            return result;
+        }
+
+        private string DecryptWithKey(IKeyVault keyVault, byte[] value, string secret)
+        {
             byte[] key = keyVault.GetSecret(secret);
 
             var cipherName = "Aes256With16ByteIvPrefix";
 
-            return CryptoEngine.DecryptString(cipherName, key, value);
+            var result = CryptoEngine.DecryptString(cipherName, key, value);
+            return result;
         }
 
         private byte[] EncryptWithKeyVault(string value)
         {
             var keyVault = FactoryContainer.ProxyFactory.CreateProxy<IKeyVault>(Context);
 
-            var secret = Properties.Settings.Default.KeyVaultSecrect;
+            var secret = Properties.Settings.Default.KeyVaultSecrectNew;
             byte[] key = keyVault.GetSecret(secret);
 
             var cipherName = "Aes256With16ByteIvPrefix";
@@ -193,27 +198,27 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
     }
 
 
-    internal class Decryptor
-    {
-        private string cipherName;
-        private byte[] keyValue;
-        private ICryptographer cryptoEngine;
+    //internal class Decryptor
+    //{
+    //    private string cipherName;
+    //    private byte[] keyValue;
+    //    private ICryptographer cryptoEngine;
 
-        public Decryptor(string cipherName, byte[] keyValue, ICryptographer cryptoEngine)
-        {
-            this.cipherName = cipherName;
-            this.keyValue = keyValue;
-            this.cryptoEngine = cryptoEngine;
-        }
+    //    public Decryptor(string cipherName, byte[] keyValue, ICryptographer cryptoEngine)
+    //    {
+    //        this.cipherName = cipherName;
+    //        this.keyValue = keyValue;
+    //        this.cryptoEngine = cryptoEngine;
+    //    }
 
-        public string Decrypt(byte[] encrypted, string plainText = null)
-        {
-            if (encrypted == null)
-            {
-                return plainText;
-            }
+    //    public string Decrypt(byte[] encrypted, string plainText = null)
+    //    {
+    //        if (encrypted == null)
+    //        {
+    //            return plainText;
+    //        }
 
-            return cryptoEngine.DecryptString(cipherName, keyValue, encrypted);
-        }
-    }
+    //        return cryptoEngine.DecryptString(cipherName, keyValue, encrypted);
+    //    }
+    //}
 }
