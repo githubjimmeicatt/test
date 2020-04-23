@@ -29,6 +29,10 @@ namespace ReEncryptor
         {
             string certificateThumb = null;
 
+            Console.WriteLine($"Vervang in de config file van deze tool de waardes van de KeyVaultApplicationId en de KeyVaultAuditSecrectOld en KeyVaultAuditSecrectNew ");
+            Console.WriteLine($"zorg dat de user waaronder je deze tool draait rechten heeft op het bijbehorende certificaat ");
+            Console.WriteLine($"als je bovenstaande nog niet gedaan had moet je de tool opnieuw starten. sorry.");
+
             //dev: Data Source=OTA-DB.ICATT.LOCAL;Initial Catalog=SPHDHV.KlantPortaal.DEV.Audit;User ID=SPHDHV.KlantPortaal.DEV.Audit;Password=sgf345^%$bF4*#gH)9!fcF$#gvgvf67uy3
             Console.WriteLine($" voer de connectiestring in van de database die je opnieuw wil versleutelen");
 

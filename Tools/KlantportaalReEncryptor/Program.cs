@@ -15,6 +15,13 @@ namespace KlantportaalReEncryptor
 
             string certificateThumb = null;
 
+
+
+            Console.WriteLine($"Vervang in de config file van deze tool de waardes van de KeyVaultApplicationId en de KeyVaultAuditSecrectOld en KeyVaultAuditSecrectNew ");
+            Console.WriteLine($"zorg dat de user waaronder je deze tool draait rechten heeft op het bijbehorende certificaat ");
+            Console.WriteLine($"als je bovenstaande nog niet gedaan had moet je de tool opnieuw starten. sorry.");
+
+
             //dev: Data Source=OTA-DB.ICATT.LOCAL;Initial Catalog=HaskoningDHV.Klantportaal.DEV.AspNetMembership;User ID=HaskoningDHV.Klantportaal.DEV.AspNetMembership;Password=dsg*9hsdKJH785w3))123GbdfgdfgbnHSHDHSDFHJ345dfg345;MultipleActiveResultSets=True
             Console.WriteLine($"voer de connectiestring in van de database die je opnieuw wil versleutelen");
 
