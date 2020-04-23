@@ -1,8 +1,11 @@
 ﻿build de tool in production mode
 kopier de inhoud van Sphdhv.UserExportTool\bin\Release naar de server (D:\UserExportTool)
 open Sphdhv.UserExportTool.exe.config
-vervang de conncetionstring , KeyVaultApplicationId, KeyVaultCertificateThumbprint en KeyVaultSecrect met de 
+vervang de conncetionstring , KeyVaultApplicationId, KeyVaultCertificateThumbprint, KeyVaultSecrectOld en KeyVaultSecrectNew met de 
   corresponderende waardes uit de web.config van de website (D:\LIVE\SPHDHV\Pensioenfonds\Klantportaal\Web\web.config)
 zorg dat de user waarmee je ingelogd bent toegang heeft(manage private keys) tot het certificaat :  Sphdhv.Klantportaal.Webhost.PROD
 start de Sphdhv.UserExportTool.exe
 de excel komt in d:\
+
+nb. normaal gesproken mag KeyVaultSecrectOld mag leeg zijn of gelijk aan KeyVaultSecrectNew
+tijdens een keywissel kunnen er tijdelijk twee keys actief zijn. zet dan de nieuwe in KeyVaultSecrectNew en de oude in KeyVaultSecrectOld
