@@ -185,7 +185,7 @@
 											<div class="edNews_boxedActions edNews_threeInRow">
 												<asp:LinkButton ID="lbEditThisArticle" runat="server" CssClass="edNews_aaEdit edNews_tooltip" Text="Edit event" CausesValidation="False" CommandArgument='<%# Eval("ArticleID") + ";" + Eval("RecurringID") %>' CommandName="EditArticle" data-tooltip-content='<%#_("Editevent.Text")%>' data-tooltip-position="top-left" resourcekey="lbEditThisArticle" />
 												<asp:HyperLink runat="server" ID="hlEditAttendees" CssClass="edNews_aaEditUser edNews_tooltip" data-tooltip-content='<%#_("hlEditAttendees.Text")%>' data-tooltip-position="top-left" resourcekey="hlEditAttendees" NavigateUrl='<%# CreateLinkForListAttendees(Eval("ArticleID"),Eval("RecurringID")) %>' Text="Edit attendees" Enabled='<%# HasAttendees(Eval("HasAttendees")) %>'></asp:HyperLink>
-												<asp:HyperLink runat="server" ID="hlAddAttendee" CssClass="edNews_aaAddUser edNews_tooltip" data-tooltip-content='<%#_("hlAddAttendee.Text")%>' data-tooltip-position="top-left" resourcekey="hlAddAttendee" NavigateUrl='<%# CreateLinkForAddAttendee(Eval("ArticleID"),Eval("RecurringID")) %>' Text="Add attendees" Visible='<%# CanAddAttendee %>'></asp:HyperLink><%=CanAddAttendee ? "" : "" %>
+												<asp:HyperLink runat="server" ID="hlAddAttendee" CssClass="edNews_aaAddUser edNews_tooltip" data-tooltip-content='<%#_("hlAddAttendee.Text")%>' data-tooltip-position="top-left" resourcekey="hlAddAttendee" NavigateUrl='<%# CreateLinkForAddAttendee(Eval("ArticleID"),Eval("RecurringID")) %>' Text="Add attendees" Visible='<%# CanAddAttendee ||(UserInfo.UserID==(int)Eval("UserId")) %>'></asp:HyperLink><%=CanAddAttendee ? "" : "" %>
 												<asp:HyperLink runat="server" ID="hlEditInvitations" CssClass="edNews_aaEdit2 edNews_tooltip" data-tooltip-content='<%#_("hlEditInvitations.Text")%>' data-tooltip-position="bottom-left" resourcekey="hlEditInvitations" NavigateUrl='<%# CreateLinkForSendInvitations(Eval("ArticleID"),Eval("RecurringID")) %>' Text="Edit invitations"></asp:HyperLink>
 												<asp:HyperLink runat="server" ID="hlEditReminders" CssClass="edNews_aaEdit2 color8 edNews_tooltip" data-tooltip-content='<%#_("hlEditReminders.Text")%>' data-tooltip-position="bottom-left" resourcekey="hlEditReminders" NavigateUrl='<%# CreateLinkForSendReminders(Eval("ArticleID"),Eval("RecurringID")) %>' Text="Edit reminders"></asp:HyperLink>
 											</div>
@@ -1588,8 +1588,8 @@
 	function ShowValue() {
 		var dropdownList;
 
-		eds2_2("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
-			dropdownList = eds2_2(this);
+		eds3_5_jq("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
+			dropdownList = eds3_5_jq(this);
 		});
 
 		if (dropdownList.val() == '-1') {
@@ -1603,8 +1603,8 @@
 	function ShowValueEventAttendess() {
 		var dropdownList;
 
-		eds2_2("#<%=gvEventAttendess.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
-			dropdownList = eds2_2(this);
+		eds3_5_jq("#<%=gvEventAttendess.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
+			dropdownList = eds3_5_jq(this);
 		});
 
 		if (dropdownList.val() == '-1') {
@@ -1644,8 +1644,8 @@
 			});
 		});
 
-		eds2_2('[id*=datePickerSearchFromDate]', eds2_2('#<%= pnlListOfEventsWithEnabledRegistration.ClientID%>')).each(function () {
-			eds2_2(this).datetimepicker({
+		eds3_5_jq('[id*=datePickerSearchFromDate]', eds3_5_jq('#<%= pnlListOfEventsWithEnabledRegistration.ClientID%>')).each(function () {
+			eds3_5_jq(this).datetimepicker({
 				sideBySide: false,
 				showTodayButton: false,
 				showClear: false,
@@ -1655,7 +1655,7 @@
 		});
 	}
 
-	eds2_2(document).ready(function ($) {
+	eds3_5_jq(document).ready(function ($) {
 
 		GridViewActions_Init();
 
@@ -1680,7 +1680,7 @@
 	function pageLoad(sender, args) {
 		if (args.get_isPartialLoad()) {
 			GridViewActions_Init();
-			eds2_2('.edNews_tooltip').eds_tooltipster();
+			eds3_5_jq('.edNews_tooltip').eds_tooltipster();
 		}
 	}
 	// ]]>

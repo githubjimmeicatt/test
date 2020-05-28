@@ -3,7 +3,7 @@
 	/* <![CDATA[ */
     <%=PortalSharingJS%>
 
-	eds2_2(document).ready(function ($) {
+	eds3_5_jq(document).ready(function ($) {
 		FullCalendarSettings_Init($);
 		//FullCalendarHeight_Init($);
 
@@ -218,7 +218,7 @@ function ClientValidateAuthors(source, arguments) {
 
 	function pageLoad(sender, args) {
 		if (args.get_isPartialLoad()) {
-			eds2_2(document).ready(function ($) {
+			eds3_5_jq(document).ready(function ($) {
 				FullCalendarSettings_Init($);
 				//FullCalendarHeight_Init($);
 

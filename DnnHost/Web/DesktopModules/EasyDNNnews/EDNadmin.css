@@ -435,7 +435,7 @@ html {
 #EDNadmin .clear_floated {
   overflow: hidden;
 }
-#EDNadmin .bulletLink:before {
+#EDNadmin .bulletLink::before {
   content: "•";
   font-size: 24px;
   line-height: 17px;
@@ -657,6 +657,12 @@ html {
 #EDNadmin .collapsible_box.advanced_settings {
   margin-bottom: 20px;
 }
+#EDNadmin .collapsible_box.advanced_settings .settings_table {
+  margin-top: 0;
+}
+#EDNadmin .collapsible_box.advanced_settings .content {
+  padding-top: 20px;
+}
 #EDNadmin .collapsible_box h1.collapsible_box_title {
   font-weight: bold;
   font-size: 15px;
@@ -852,10 +858,17 @@ html {
   margin-bottom: 20px;
   margin-top: 20px;
 }
+#EDNadmin .main_content .customfields-table td {
+  padding: 6px;
+  vertical-align: top;
+}
 #EDNadmin .main_content .customfields-table td.leftcol {
   width: 25%;
   text-align: right;
   vertical-align: top;
+}
+#EDNadmin .main_content .customfields-table td.leftcol > label {
+  padding-top: 7px;
 }
 #EDNadmin .main_content .customfields-table td.leftcol .dnnLabel {
   margin: 0 0 8px;
@@ -893,6 +906,7 @@ html {
   border-radius: 3px 3px 3px 3px;
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(0, 0, 0, 0.1) inset;
   min-width: 300px;
+  width: 80%;
   height: 100px;
   border-top: 1px solid #bdbdbd;
   border-left: 1px solid #bdbdbd;
@@ -1029,7 +1043,7 @@ html {
 #EDNadmin .main_content .grid_view_table tr.row {
   display: table-row;
 }
-#EDNadmin .main_content .grid_view_table tr.row:before, #EDNadmin .main_content .grid_view_table tr.row:after {
+#EDNadmin .main_content .grid_view_table tr.row::before, #EDNadmin .main_content .grid_view_table tr.row::after {
   content: none !important;
 }
 #EDNadmin .main_content .grid_view_table tr.header_row {
@@ -1222,10 +1236,13 @@ html {
 #EDNadmin .main_content .text_input_set {
   margin: 20px 0 0;
 }
+#EDNadmin .main_content .text_input_set label + label {
+  margin-left: 20px;
+}
 #EDNadmin .main_content .text_input_set.edNews_textEditorDetails {
   margin-top: 0;
 }
-#EDNadmin .main_content .text_input_set:after {
+#EDNadmin .main_content .text_input_set::after {
   display: block;
   content: "";
   clear: both;
@@ -1318,7 +1335,7 @@ html {
   float: left;
   background-color: #189fd3;
 }
-#EDNadmin .main_content .section_box_title:after {
+#EDNadmin .main_content .section_box_title::after {
   display: table;
   content: "";
   clear: both;
@@ -1352,7 +1369,7 @@ html {
   overflow: visible;
   cursor: pointer;
 }
-#EDNadmin .main_content .edn_toolTip:after, #EDNadmin .main_content .edn_toolTip:before {
+#EDNadmin .main_content .edn_toolTip::after, #EDNadmin .main_content .edn_toolTip::before {
   display: block;
   content: "";
   clear: both;
@@ -1434,10 +1451,6 @@ html {
 #EDNadmin .main_content .section_box.customfieldpanel label, #EDNadmin .main_content .section_box.customfieldpanel a, #EDNadmin .main_content .section_box.customfieldpanel p, #EDNadmin .main_content .section_box.customfieldpanel span {
   font-size: 13px;
   line-height: 1.2;
-}
-#EDNadmin .main_content .section_box.customfieldpanel tr td {
-  padding: 4px;
-  vertical-align: middle;
 }
 #EDNadmin .main_content .section_box.document_upload h1::before {
   font: 21px/31px "FontAwesome";
@@ -1584,7 +1597,7 @@ html {
 #EDNadmin .main_content .section_box .detailshtmleditor .dnnTextEditor {
   margin-bottom: 0px;
 }
-#EDNadmin .main_content .section_box:after {
+#EDNadmin .main_content .section_box::after {
   display: block;
   content: "";
   clear: both;
@@ -3606,7 +3619,7 @@ html {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   line-height: 19px;
 }
-#EDNadmin .main_content.gridview_content_manager .content_wrapper.eventmanager .edn_exportUsersToExcel:before {
+#EDNadmin .main_content.gridview_content_manager .content_wrapper.eventmanager .edn_exportUsersToExcel::before {
   content: "";
   background: url("images/icons/export-icon.png") center center no-repeat;
   background-size: cover;
@@ -3747,7 +3760,7 @@ html {
   border: 1px solid #fff;
   display: table-row;
 }
-#EDNadmin .main_content.gridview_content_manager .content_wrapper .grid_view_table tr.row:before, #EDNadmin .main_content.gridview_content_manager .content_wrapper .grid_view_table tr.row:after {
+#EDNadmin .main_content.gridview_content_manager .content_wrapper .grid_view_table tr.row::before, #EDNadmin .main_content.gridview_content_manager .content_wrapper .grid_view_table tr.row::after {
   content: none !important;
 }
 #EDNadmin .main_content.gridview_content_manager .content_wrapper .grid_view_table tr.row td {
@@ -3827,7 +3840,7 @@ html {
 #EDNadmin .main_content.gridview_content_manager.approve_comments .grid_view_table tr.row {
   display: table-row;
 }
-#EDNadmin .main_content.gridview_content_manager.approve_comments .grid_view_table tr.row:before, #EDNadmin .main_content.gridview_content_manager.approve_comments .grid_view_table tr.row:after {
+#EDNadmin .main_content.gridview_content_manager.approve_comments .grid_view_table tr.row::before, #EDNadmin .main_content.gridview_content_manager.approve_comments .grid_view_table tr.row::after {
   content: none !important;
 }
 #EDNadmin .main_content.gridview_content_manager.approve_comments .grid_view_table tr.row td .checkbox_action {
@@ -3891,7 +3904,7 @@ html {
 #EDNadmin .main_content.gridview_content_manager.article_manager .content_wrapper .grid_view_table tr.row {
   display: table-row;
 }
-#EDNadmin .main_content.gridview_content_manager.article_manager .content_wrapper .grid_view_table tr.row:before, #EDNadmin .main_content.gridview_content_manager.article_manager .content_wrapper .grid_view_table tr.row:after {
+#EDNadmin .main_content.gridview_content_manager.article_manager .content_wrapper .grid_view_table tr.row::before, #EDNadmin .main_content.gridview_content_manager.article_manager .content_wrapper .grid_view_table tr.row::after {
   content: none !important;
 }
 #EDNadmin .main_content.gridview_content_manager.article_manager .content_wrapper .grid_view_table tr.row td div.action_set.underbuttons {

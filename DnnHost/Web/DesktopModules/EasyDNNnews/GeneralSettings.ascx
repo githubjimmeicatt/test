@@ -2,8 +2,8 @@
 <script type="text/javascript">
 	function ValidateCheckBoxList(sender, args) {
 		args.IsValid = false;
-		eds2_2("#<%=cblPortalSelection.ClientID%>").find(":checkbox").each(function () {
-			if (eds2_2(this).prop("checked")) {
+		eds3_5_jq("#<%=cblPortalSelection.ClientID%>").find(":checkbox").each(function () {
+			if (eds3_5_jq(this).prop("checked")) {
 				args.IsValid = true;
 				return;
 			}

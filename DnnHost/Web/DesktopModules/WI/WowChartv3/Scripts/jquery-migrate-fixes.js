@@ -14,10 +14,3 @@ jQuery.camelCase = function (string) {
             jQuery._data.apply(this, arguments);
     }
 };
-
-try {
-    if (angular.version.major != 1 ||
-        angular.version.minor < 6) {
-        alert('Another angular library ver. ' + angular.version.full + ' is loaded and module might not working propertly. Please contact support.');
-    }
-} catch{ }

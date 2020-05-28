@@ -1,6 +1,5 @@
 ﻿<%@ control language="C#" inherits="EasyDNNSolutions.Modules.EasyDNNNews.ViewEasyDNNNews, App_Web_vieweasydnnnews.ascx.d988a5ac" autoeventwireup="true" enableviewstate="true" %>
-<%@ Register TagPrefix="dnnCTRL" Assembly="DotNetNuke" Namespace="DotNetNuke.UI.WebControls" %>
-<%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
+
 <script type="text/javascript">
 	/*<![CDATA[*/
 	<%=includeRegistrationDatePickerJS%>
@@ -15,7 +14,7 @@
 	<%=includeContactAuthorAgreementValidationJs%>
 	<%=includeArticleVotingJS%>
 
-	eds2_2(function ($) {
+	eds3_5_jq(function ($) {
 		if (typeof edn_fluidvids != 'undefined')
 			edn_fluidvids.init({
 				selector: ['.edn_fluidVideo iframe'],
@@ -34,7 +33,7 @@
 <div class="<%=MainDivClass%>">
 	<p id="themeDeveloperModeActive" runat="server" enableviewstate="false" visible="false" class="eds_themeDeveloperModeActive"><span id="themeDeveloperModeActiveText" runat="server"></span></p>
 
-	<asp:Panel ID="pnlUserDashBoard" runat="server" Visible="false" CssClass="user_dashboard" EnableViewState="false">
+	<asp:Panel ID="pnlUserDashBoard" runat="server" Visible="false" CssClass="user_dashboard edn_userDashboard" EnableViewState="false">
 		<asp:HyperLink ID="lbAddArticles" runat="server" Visible="false" EnableViewState="false" CssClass="add_article"><%=Localization.GetString("lbAddArticles.Text", ControlResxFile)%></asp:HyperLink>
 		<asp:HyperLink ID="lbArticleEditor" runat="server" Visible="false" EnableViewState="false" CssClass="article_manager"><%=Localization.GetString("lbArticleEditor.Text", ControlResxFile)%></asp:HyperLink>
 		<asp:HyperLink ID="lbEventsManager" runat="server" Visible="false" EnableViewState="false" CssClass="event_manager"><%=Localization.GetString("lbEventsManager.Text", ControlResxFile)%></asp:HyperLink>
@@ -43,6 +42,9 @@
 		<asp:HyperLink ID="lbApproveRoles" runat="server" Visible="false" EnableViewState="false" CssClass="approve_articles"><%=Localization.GetString("lbApproveRoles.Text", ControlResxFile)%></asp:HyperLink>
 		<asp:HyperLink ID="lbDashboard" runat="server" Visible="false" EnableViewState="false" CssClass="dashboard"><%=Localization.GetString("lbDashboard.Text", ControlResxFile)%></asp:HyperLink>
 		<asp:HyperLink ID="lbModuleSettings" runat="server" Visible="false" EnableViewState="false" CssClass="settings"><%=Localization.GetString("lbDBSettings.Text", ControlResxFile)%></asp:HyperLink>
+		<div runat="server" id="divThemeSelection" visible="false">
+			<a class="themeSettings eds_openModal edn_OpenThemeSelector" data-moduleid="<%=ModuleId %>" data-portalid="<%=PortalId %>" data-tabid="<%=TabId %>" data-target-id='<%=string.Format("themeSelection{0}",ModuleId)%>' data-basepath="<%=basePath %>"><%=Localization.GetString("lbThemeSelection.Text", ControlResxFile)%></a>
+		</div>
 		<asp:HyperLink ID="lbAboutMe" runat="server" Visible="false" EnableViewState="false" CssClass="author_profile"><%=Localization.GetString("lbAboutMe.Text", ControlResxFile)%></asp:HyperLink>
 	</asp:Panel>
 
@@ -107,6 +109,7 @@
 						<li>
 							<a href='<%#Eval("FileName")%>' rel="ednSmbLight" data-smbdata='<%#Eval("SmbData")%>'>
 								<asp:Image alt='<%#Eval("Title")%>' ID="imgArticleGalleryImage" ImageUrl='<%#Eval("Thumburl")%>' runat="server" /></a>
+							</a>
 						</li>
 					</ItemTemplate>
 				</asp:Repeater>
@@ -116,7 +119,7 @@
 		<asp:HiddenField ID="hfRate" runat="server" />
 		<script type="text/javascript">
 			// <![CDATA[
-			eds2_2(function ($) {
+			eds3_5_jq(function ($) {
 				var isArticleRated = false;
 				if (!<%=DisableApplicationCookies.ToString().ToLowerInvariant()%>)
 					isArticleRated = $.cookie("<%=EDNViewArticleID%>");
@@ -367,6 +370,18 @@
 		<%=GenerateArticleHtml("EDNBottom")%>
 	</asp:Panel>
 	<asp:Label ID="lblInfoMassage" runat="server" Style="font-weight: bold" EnableViewState="false" Visible="false" />
+	<div id="themeSelectionWrapper" runat="server" visible="false">
+		<div id="themeSelection<%=ModuleId %>" class="eds_modalWrapper eds_themeSettings eds_resizable">
+			<div class="eds_modalContent eds_animated">
+				<h3><%=Localization.GetString("lbThemeSelection.Text", ControlResxFile)%></h3>
+				<div class="edn__contentLoading">
+					<img src="<%=_ControlPath%>images/ajax-loader.gif" />
+				</div>
+				<div id="themeSelectionModal<%=ModuleId %>" class="edNews_adminTheme"></div>
+			</div>
+		</div>
+	</div>
+	<asp:Literal runat="server" ID="ltJavaScript"></asp:Literal>
 </div>
 
 <div id="pnlEventRegistrationForm" runat="server" class="eds_modalWrapper eds_resizable">
@@ -377,15 +392,24 @@
 			<div runat="server" id="pnlRegistrationForm">
 				<asp:Panel ID="pnlEventRegistrationLogedInUser" runat="server">
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblFirstNameLogedIn" runat="server" ControlName="lblFirstNameLogedInValue" />
+						<span class="edNews_tooltip">
+							<span id="lblFirstNameLogedInHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblFirstNameLogedIn" runat="server" ControlName="lblFirstNameLogedInValue" />
+						</span>
 						<asp:TextBox ID="lblFirstNameLogedInValue" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblLastNameLogedIn" runat="server" ControlName="lblLastNameLogedInValue" />
+						<span class="edNews_tooltip">
+							<span id="lblLastNameLogedInHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblLastNameLogedIn" runat="server" ControlName="lblLastNameLogedInValue" />
+						</span>
 						<asp:TextBox ID="lblLastNameLogedInValue" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblEmailLogedIn" runat="server" ControlName="lblEmailLogedInValue" />
+						<span class="edNews_tooltip">
+							<span id="lblEmailLogedInHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblEmailLogedIn" runat="server" ControlName="lblEmailLogedInValue" />
+						</span>
 						<asp:TextBox ID="lblEmailLogedInValue" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 				</asp:Panel>
@@ -410,27 +434,45 @@
 
 				<asp:Panel ID="pnlExtendedUserData" runat="server">
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblStreet" runat="server" ControlName="tbxStreet" />
+						<span class="edNews_tooltip">
+							<span id="lblStreetHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblStreet" runat="server" ControlName="tbxStreet" />
+						</span>
 						<asp:TextBox ID="tbxStreet" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblCity" runat="server" ControlName="tbxCity" />
+						<span class="edNews_tooltip">
+							<span id="lblCityHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblCity" runat="server" ControlName="tbxCity" />
+						</span>
 						<asp:TextBox ID="tbxCity" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblRegion" runat="server" ControlName="tbxRegion" />
+						<span class="edNews_tooltip">
+							<span id="lblRegionHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblRegion" runat="server" ControlName="tbxRegion" />
+						</span>
 						<asp:TextBox ID="tbxRegion" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblCountry" runat="server" ControlName="tbxCountry" />
+						<span class="edNews_tooltip">
+							<span id="lblCountryHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblCountry" runat="server" ControlName="tbxCountry" />
+						</span>
 						<asp:TextBox ID="tbxCountry" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblPostalCode" runat="server" ControlName="tbxPostalCode" />
+						<span class="edNews_tooltip">
+							<span id="lblPostalCodeHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblPostalCode" runat="server" ControlName="tbxPostalCode" />
+						</span>
 						<asp:TextBox ID="tbxPostalCode" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 					<div class="eds_labelAndInput">
-						<dnn:Label ID="lblTelephone" runat="server" ControlName="tbxTelephone" />
+						<span class="edNews_tooltip">
+							<span id="lblTelephoneHelp" class="edNews_tooltipContent" runat="server"></span>
+							<asp:Label ID="lblTelephone" runat="server" ControlName="tbxTelephone" />
+						</span>
 						<asp:TextBox ID="tbxTelephone" runat="server" CausesValidation="false" Enabled="false"></asp:TextBox>
 					</div>
 				</asp:Panel>
@@ -472,7 +514,7 @@
 				<div class="eds_labelAndInput" runat="server" id="divEventRegistrationTermsAndConditionsAgreement">
 					<script type="text/javascript">
 						function validateEventRegistrationTermsAndConditionsAgreement(source, arguments) {
-							if (eds2_2('#<%=cbEventRegistrationTermsAndConditionsAgreement.ClientID%>')[0].checked) {
+							if (eds3_5_jq('#<%=cbEventRegistrationTermsAndConditionsAgreement.ClientID%>')[0].checked) {
 								arguments.IsValid = true; return true;
 							}
 							else {
@@ -488,7 +530,7 @@
 				<div class="eds_labelAndInput" runat="server" id="divEventRegistrationEmailUseAgreement">
 					<script type="text/javascript">
 						function validateEventRegistrationEmailUseAgreement(source, arguments) {
-							if (eds2_2('#<%=cbEventRegistrationEmailUseAgreement.ClientID%>')[0].checked) {
+							if (eds3_5_jq('#<%=cbEventRegistrationEmailUseAgreement.ClientID%>')[0].checked) {
 								arguments.IsValid = true; return true;
 							}
 							else {

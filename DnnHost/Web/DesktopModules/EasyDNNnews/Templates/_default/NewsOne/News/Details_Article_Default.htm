@@ -4,11 +4,15 @@
 	<div class="article details">
 		<div class="article_image left_image" [EasyDNNnews:Image:Visibility] style="max-width:100%;">
 			[EasyDNNnews:IfMediaType:Image]
-			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]" style="max-width:100%;"/>
+			<picture>
+				<source media="(max-width: 480px)" srcset="[EasyDNNnews:Image:Width:400:Height:400:Resize:Proportional]">
+				<source media="(max-width: 640px)" srcset="[EasyDNNnews:Image:Width:600:Height:600:Resize:Proportional]">
+				<img class="article_image" alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]" style="max-width: 100%;" />
+			</picture>
 			[EasyDNNnews:EndIfMediaType]
 			[EasyDNNnews:IfMediaType:EmbedMedia]
 			<div class="eds_mediaWrapper" style="width:[EasyDNNnews:MainArticleImageWidth]">
-			[EasyDNNnews:MainMedia]
+				[EasyDNNnews:MainMedia]
 			</div>
 			[EasyDNNnews:EndIfMediaType]
 			[EasyDNNnews:IfExists:GalleryBackLink]

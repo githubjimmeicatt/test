@@ -1,9 +1,5 @@
-/*
-DotNetNuke® - http://www.dotnetnuke.com
-Copyright (c) 2002-2018
-by DotNetNuke Corporation
-All Rights Reserved
-*/
+// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 /*
 * Module responsible to Css Editor

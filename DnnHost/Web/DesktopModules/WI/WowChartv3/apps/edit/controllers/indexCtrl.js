@@ -18,11 +18,11 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     self.cancelUploadCSVFile = cancelUploadCSVFile;
     self.onFileDataSourceInfoChanged = onFileDataSourceInfoChanged;
 
-    self.newSeriesColor = newSeriesColor;
-    self.removeSeriesColor = removeSeriesColor;
-    self.saveSeriesColor = saveSeriesColor;
-    self.validSeriesColor = validSeriesColor;
-    self.cancelSeriesColor = cancelSeriesColor;
+    self.newSeriesType = newSeriesType;
+    self.removeSeriesType = removeSeriesType;
+    self.saveSeriesType = saveSeriesType;
+    self.validSeriesType = validSeriesType;
+    self.cancelSeriesType = cancelSeriesType;
 
     self.newYAxisPlotBand = newYAxisPlotBand;
     self.removeYAxisPlotBand = removeYAxisPlotBand;
@@ -68,7 +68,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
 
         if (tId == 3 || tId == 6
             || tId == 14 || tId == 15
-            || tId == 30) {
+            || tId == 30 || tId == 31) {
             return self.ChartSettings.Options.chart.typeId < 200;
         } else if (tId == 4 || tId == 5
             || tId == 19 || tId == 20) {
@@ -172,7 +172,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
         };
 
         // Open the dialog using template from script
-        dialogService.open(model.DialogId, ModuleInfo.TemplatesUrl + 'editPlotLine.html?' + ver, model, options).then(
+        dialogService.open(model.DialogId, ModuleInfo.TemplatesUrl + 'editPlotLine.html?' + ModuleInfo.Version, model, options).then(
             function (plotLine) {
                 if (xLine == true) {
                     if (angular.isUndefinedOrNull(plotLine.id)) {
@@ -322,7 +322,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
         $scope.$broadcast('onDataChanged', self.data);
     }
     function exit() {
-        window.location.href = ModuleInfo.BackUrl;
+        window.location = ModuleInfo.BackUrl;
     }
     function newChart() {
         if (self.previewMode == true)
@@ -454,15 +454,20 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             }
 
             settings.Options = angular.deepExtend(utils.getInitialChartOptions(), settings.Options);
-            if (settings.Options.series[0].colors == undefined) settings.Options.series[0].colors = [];
-            if (settings.Options.series[0].pointsColors == undefined) settings.Options.series[0].pointsColors = [];
+            if (angular.isUndefinedOrNull(settings.Options.series[0].pointsColors)) { settings.Options.series[0].pointsColors = []; }
+            if (angular.isUndefinedOrNull(settings.Options.series[0].types)) { settings.Options.series[0].types = []; }
+            if (angular.isUndefinedOrNull(settings.FileDataSourceInfo)) { settings.FileDataSourceInfo = {}; }
+            if (angular.isUndefinedOrNull(settings.PlotLinesDataSource)) { settings.PlotLinesDataSource = { xAxis: {}, yAxis: {} }; }
 
-            if (angular.isUndefinedOrNull(settings.FileDataSourceInfo)) {
-                settings.FileDataSourceInfo = {};
-            }
-
-            if (angular.isUndefinedOrNull(settings.PlotLinesDataSource)) {
-                settings.PlotLinesDataSource = { xAxis: {}, yAxis: {} };
+            if (!angular.isUndefinedOrNull(settings.Options.series[0].colors)) {
+                var types = settings.Options.series[0].types;
+                angular.forEach(settings.Options.series[0].colors, function (value) {
+                    if (!angular.isUndefinedOrNull(value.name) && !angular.isUndefinedOrNull(value.color)) {
+                        var type = { id: types.length + 1, name: value.name, color: value.color };
+                        types.push(type);
+                    }
+                });
+                delete settings.Options.series[0].colors;
             }
 
             settings.PreviewHtml = getPreviewHtml(self.selectedChart.Id, settings);
@@ -655,47 +660,49 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
         delete self.selectedYAxisPlotBand;
     }
 
-    function newSeriesColor() {
-        self.selectedSeriesColor = {
+    function newSeriesType() {
+        self.selectedSeriesType = {
         };
     }
-    function removeSeriesColor() {
-        if (self.selectedSeriesColor.id) {
-            var colors = self.ChartSettings.Options.series[0].colors;
-            if (confirm('Are You Sure You Want To Remove This Color?') == true) {
-                for (var i = 0; i < colors.length; i++) {
-                    if (colors[i].id == self.selectedSeriesColor.id) {
-                        colors.splice(i, 1);
-                        cancelSeriesColor();
+    function removeSeriesType() {
+        if (self.selectedSeriesType.id) {
+            var types = self.ChartSettings.Options.series[0].types;
+            if (confirm("Are You Sure You Want To Remove Series '" + self.selectedSeriesType.name + "' Type?") == true) {
+                for (var i = 0; i < types.length; i++) {
+                    if (types[i].id == self.selectedSeriesType.id) {
+                        types.splice(i, 1);
+                        cancelSeriesType();
                         break;
                     }
                 }
             }
         }
     }
-    function saveSeriesColor() {
-        var col = angular.copy(self.selectedSeriesColor);
-        if (angular.isUndefinedOrNull(col.id)) {
-            var colors = self.ChartSettings.Options.series[0].colors;
-            col.id = colors.length + 1;
-            colors.push(col);
-            self.selectedSeriesColor = colors[colors.length - 1];
+    function saveSeriesType() {
+        var type = angular.copy(self.selectedSeriesType);
+        if (angular.isUndefinedOrNull(type.id)) {
+            var types = self.ChartSettings.Options.series[0].types;
+            type.id = types.length + 1;
+            types.push(type);
+            self.selectedSeriesType = types[types.length - 1];
         }
 
-        cancelSeriesColor();
+        cancelSeriesType();
     }
-    function validSeriesColor() {
-        if (self.selectedSeriesColor) {
-            if (angular.isUndefinedOrNull(self.selectedSeriesColor.name)) return false;
-            if (angular.isUndefinedOrNull(self.selectedSeriesColor.color)) return false;
+    function validSeriesType() {
+        if (self.selectedSeriesType) {
+            if (angular.isUndefinedOrNull(self.selectedSeriesType.name)) return false;
+            if (angular.isUndefinedOrNull(self.selectedSeriesType.type)
+                && angular.isUndefinedOrNull(self.selectedSeriesType.color)
+                && angular.isUndefinedOrNull(self.selectedSeriesType.zIndex)) return false;
 
             return true;
         } else {
             return false;
         }
     }
-    function cancelSeriesColor() {
-        delete self.selectedSeriesColor;
+    function cancelSeriesType() {
+        delete self.selectedSeriesType;
     }
 
     function onFileDataSourceInfoChanged() {
@@ -855,9 +862,8 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             self.xAxesColumnText = "Word";
             self.yAxesColumnText = "Weight";
         } else {
-            settings.Options.series[0].colorByPoint = false;
-            self.xAxesColumnText = "X-Axes";
-            self.yAxesColumnText = "Y-Axes";
+            self.xAxesColumnText = "X-Axis";
+            self.yAxesColumnText = "Y-Axis";
         }
 
         settings.Options.legend.labelFormat = '{name}';
@@ -915,6 +921,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     function onEditModelInitialized(event, editModel) {
         self.Charts = editModel.charts;
         self.ChartTypes = editModel.chartTypes;
+        self.SeriesChartTypes = editModel.seriesChartTypes;
         self.Folders = editModel.folders;
         self.DriveTables = editModel.driveTables;
         self.DriveCharts = editModel.driveCharts;
@@ -931,8 +938,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
 
         self.Files = [];
         self.showCsvUploadField = false;
-        self.UploadCSVFileModel = {
-        };
+        self.UploadCSVFileModel = {};
         self.viewMoreImageUrl = ModuleInfo.ViewMoreImageUrl;
 
         if (ModuleInfo.UserInfoMessage.length > 0)

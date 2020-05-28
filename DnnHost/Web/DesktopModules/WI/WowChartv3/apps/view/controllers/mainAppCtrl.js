@@ -44,6 +44,8 @@ function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, Modu
         $scope.$broadcast('onDataChanged');
     }
     function initChart(chartId, settings) {
+        delete self.settings;
+
         self.chartId = chartId;
 
         if (settings.Options.chart.typeId == null) {

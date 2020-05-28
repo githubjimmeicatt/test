@@ -1,4 +1,4 @@
-eds2_2(document).ready(function ($) {
+eds3_5_jq(document).ready(function ($) {
 	var $edn_admin = $('#EDNadmin'),
 	$edNews_adminWrapper = $('.edNews_adminWrapper'),
 		$body = $('body'),

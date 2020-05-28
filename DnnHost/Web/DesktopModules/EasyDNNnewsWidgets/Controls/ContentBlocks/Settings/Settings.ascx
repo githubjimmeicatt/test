@@ -242,6 +242,16 @@
 				</div>
 			</td>
 		</tr>
+		<tr>
+			<td class="tdLabel">
+				<label for="<%=cbShowAllCategoriesButton.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblShowAllCategoriesButton.Help", true) %>" data-tooltip-position="top-right"><%=_("lblShowAllCategoriesButton.Text") %></label>
+			</td>
+			<td>
+				<div class="switchCheckbox">
+					<asp:CheckBox CssClass="normalCheckBox" ID="cbShowAllCategoriesButton" runat="server" Checked="True" Text=" " />
+				</div>
+			</td>
+		</tr>
 	</table>
 	<div class="sectionBoxSubtitle highlighted3">
 		<span><%=_("Theme.Text")%></span>

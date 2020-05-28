@@ -4,7 +4,7 @@
 <div class="<%=MainDivClass%>">
 	<asp:PlaceHolder ID="phincludeParentDDLJavaScript" runat="server" />
 	<asp:Literal ID="litIncludeDatePickerJavaScript" runat="server" />
-	<asp:UpdatePanel ID="upSearch" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
+	<asp:UpdatePanel ID="upSearch" runat="server" UpdateMode="Conditional">
 		<ContentTemplate>
 			<asp:Panel ID="pnlAdvancedSearch" runat="server">
 				<asp:PlaceHolder ID="phCustomFields" Visible="false" runat="server">

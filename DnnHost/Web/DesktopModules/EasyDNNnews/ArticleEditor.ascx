@@ -228,7 +228,7 @@
 										<ItemTemplate>
 											<div class="edNews_boxedActions edNews_threeInRow">
 												<asp:HyperLink ID="hlEditThisArticle" runat="server" CssClass="edNews_aaEdit edNews_tooltip" NavigateUrl='<%# GetArticleEditUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' resourcekey="lbEditThisArticleResource1" Visible='<%#!ApproveMode && GetWorkflowUserEdit(Eval("WorkflowState"))%>' data-tooltip-content="<%#EditToolTip%>" data-tooltip-position="top-left"></asp:HyperLink>
-												<asp:LinkButton ID="lbDeleteArticle" runat="server" CssClass="edNews_aaDelete edNews_tooltip" CausesValidation="False" CommandArgument='<%# Eval("ArticleID") %>' CommandName="DeleteArticle" Visible='<%#!ApproveMode&&(NewsModuleSettings.PreventArticleDeletion && Convert.ToBoolean(Eval("Published")) && !UserInfo.IsSuperUser && !UserInfo.IsInRole(PortalSettings.AdministratorRoleName))%>' data-tooltip-content="<%#DeleteTooltip%>" data-tooltip-position="top-left" />
+												<asp:LinkButton ID="lbDeleteArticle" runat="server" CssClass="edNews_aaDelete edNews_tooltip" CausesValidation="False" CommandArgument='<%# Eval("ArticleID") %>' CommandName="DeleteArticle" Visible='<%#!ApproveMode && ((UserInfo.IsSuperUser || UserInfo.IsInRole(PortalSettings.AdministratorRoleName)) || (!NewsModuleSettings.PreventArticleDeletion) ||  (NewsModuleSettings.PreventArticleDeletion && Convert.ToBoolean(Eval("Published"))))%>' data-tooltip-content="<%#DeleteTooltip%>" data-tooltip-position="top-left" />
 												<asp:HyperLink ID="hlPreviewArticle" runat="server" CssClass="edNews_aaView edNews_tooltip" NavigateUrl='<%# GetArticleUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' Target="_blank" data-tooltip-content="<%#ViewTooltip%>" data-tooltip-position="top-left"></asp:HyperLink>
 												<asp:HyperLink ID="hlEditComments" runat="server" CssClass="edNews_aaComments edNews_tooltip" resourcekey="hlEditCommentsResource1" NavigateUrl='<%# GetEditCommentsUrl(Convert.ToInt32(Eval("ArticleID"))) %>' Target="_self" Visible="<%#!ApproveMode%>" data-tooltip-content="<%#ViewCommentsTooltip%>" data-tooltip-position="bottom-left" />
 												<asp:HyperLink ID="hlCreateNewArticle" runat="server" CssClass="edNews_aaCreateAsNew edNews_tooltip" resourcekey="hlCreateNewArticleResource1" NavigateUrl='<%# GetArticleCopyUrl(Convert.ToInt32(Eval("ArticleID"))) %>' Target="_blank" Visible='<%#!ApproveMode && GetWorkflowUserEdit(Eval("WorkflowState"))%>' data-tooltip-content="<%#CopyArticleTooltip%>" data-tooltip-position="bottom-left" />
@@ -295,7 +295,7 @@
 												<%--<asp:LinkButton ID="lbArticleListApproved" runat="server" CommandArgument='<%# Eval("ArticleID") %>' CommandName="Approve" CssClass='<%# GetIconClas(Convert.ToBoolean(Eval("Approved"))) %>' Enabled="<%# EnableApprove() %>" Visible="<%#ApproveMode%>" resourcekey="lbArticleListApprovedResource1">
 													<asp:Label runat="server" Text="Approved" ID="lblArticleListApproved" resourcekey="lblArticleListApprovedResource1"></asp:Label>
 												</asp:LinkButton>--%>
-												<asp:HyperLink ID="hlEditThisArticletest" runat="server" NavigateUrl='<%# GetApproveArticleEditUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' Visible='<%# GetWorkflowUserEdit(Eval("WorkflowState")) && (ApproveMode || !(Convert.ToBoolean(Eval("Active")) && Convert.ToBoolean(Eval("Approved"))))%>' data-tooltip-content="<%#EditToolTip%>" data-tooltip-position="top-left" Text="Approve"></asp:HyperLink>
+												<asp:HyperLink ID="hlEditThisArticletest" runat="server" NavigateUrl='<%# GetApproveArticleEditUrl(Convert.ToInt32(Eval("ArticleID")), Eval("IsRecurring")) %>' Visible='<%# GetWorkflowUserEdit(Eval("WorkflowState")) && (ApproveMode || !(Convert.ToBoolean(Eval("Active")) && Convert.ToBoolean(Eval("Approved"))))%>' data-tooltip-content="<%#EditToolTip%>" data-tooltip-position="top-left" Text='<%#_("lblArticleListApproveArticle")%>'></asp:HyperLink>
 											</div>
 											<asp:Panel runat="server" ID="pnlRejectMessage" Visible="false" CssClass="edNews_popUp edNews_bottomLeft">
 												<div class="edNews_inputGroup">
@@ -349,24 +349,24 @@
 </asp:Panel>
 <asp:Literal ID="generatedHtm" runat="server" Visible="False" />
 <script type="text/javascript">
-	eds2_2(document).on('click', function (e) {
-		eds2_2('.edNews__styledSelect')
-			.not(eds2_2('.edNews__styledSelect').has(eds2_2(e.target)))
+	eds3_5_jq(document).on('click', function (e) {
+		eds3_5_jq('.edNews__styledSelect')
+			.not(eds3_5_jq('.edNews__styledSelect').has(eds3_5_jq(e.target)))
 			.removeClass('edNews_selectOpen');
 	});
 
 	var CategoryDll_Init = function (placeHolderId, hiddenFieldId) {
-		var $divCategoryFilterList = eds2_2('#' + placeHolderId),
-			$hfSelectedFilterCategories = eds2_2('#' + hiddenFieldId),
+		var $divCategoryFilterList = eds3_5_jq('#' + placeHolderId),
+			$hfSelectedFilterCategories = eds3_5_jq('#' + hiddenFieldId),
 			edn_all_categories = <%=GetAllCategoriesObject() %>,
 			toInteger = function (number) {
 				return Math.round(Number(number));
 			},
 			resizeDropDown = function () {
-				var $dropDown = eds2_2('.edNews__dropdown', $divCategoryFilterList);
+				var $dropDown = eds3_5_jq('.edNews__dropdown', $divCategoryFilterList);
 				if ($dropDown.length > 0) {
-					var $windowheight = eds2_2(window).height();
-					var maxHeight = $windowheight - $dropDown.offset().top - eds2_2(window).scrollTop() - (0.03 * $windowheight);
+					var $windowheight = eds3_5_jq(window).height();
+					var maxHeight = $windowheight - $dropDown.offset().top - eds3_5_jq(window).scrollTop() - (0.03 * $windowheight);
 					if (maxHeight < 100)
 						maxHeight = 100;
 					$dropDown.attr('style', 'max-height:' + (toInteger(maxHeight)) + 'px');
@@ -425,14 +425,14 @@
 			});
 
 			var isResizeEventAttached = false;
-			if (eds2_2._data(window).events && eds2_2._data(window).events.resize) {
-				eds2_2._data(window).events.resize.map(function (resizeEvent) {
+			if (eds3_5_jq._data(window).events && eds3_5_jq._data(window).events.resize) {
+				eds3_5_jq._data(window).events.resize.map(function (resizeEvent) {
 					if (resizeEvent.handler.name == 'eds__DropdownResize')
 						isResizeEventAttached = true;
 				})
 			}
 			if (!isResizeEventAttached) {
-				eds2_2(window).on('resize', function eds__DropdownResize() {
+				eds3_5_jq(window).on('resize', function eds__DropdownResize() {
 					resizeDropDown();
 				});
 			}
@@ -442,13 +442,13 @@
 	function ShowValue() {
 		var dropdownList;
 		if ('<%=!ApproveMode%>' == 'True') {
-			eds2_2("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
-				dropdownList = eds2_2(this);
+			eds3_5_jq("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
+				dropdownList = eds3_5_jq(this);
 			});
 		}
 		<%--else {
-			eds2_2("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelectedApprove']").each(function (index) {
-				dropdownList = eds2_2(this);
+			eds3_5_jq("#<%=gvArticleList.ClientID %> select[id*='ddlFotterActionForSelectedApprove']").each(function (index) {
+				dropdownList = eds3_5_jq(this);
 			});
 		}--%>
 		if (dropdownList.val() == '-1') {
@@ -508,8 +508,8 @@
 			});
 		});
 
-		eds2_2('[id*=datePickerSearchFromDate]', eds2_2('#<%= gvArticleList.ClientID%>')).each(function () {
-			eds2_2(this).datetimepicker({
+		eds3_5_jq('[id*=datePickerSearchFromDate]', eds3_5_jq('#<%= gvArticleList.ClientID%>')).each(function () {
+			eds3_5_jq(this).datetimepicker({
 				sideBySide: false,
 				showTodayButton: false,
 				showClear: false,
@@ -518,8 +518,8 @@
 			});
 		});
 
-		eds2_2('[id*=datePickerSearchFromDate]', eds2_2('#<%= pnlArticleFilterSettings.ClientID%>')).each(function () {
-			eds2_2(this).datetimepicker({
+		eds3_5_jq('[id*=datePickerSearchFromDate]', eds3_5_jq('#<%= pnlArticleFilterSettings.ClientID%>')).each(function () {
+			eds3_5_jq(this).datetimepicker({
 				sideBySide: false,
 				showTodayButton: false,
 				showClear: false,
@@ -575,7 +575,7 @@
 		});
 	}
 
-	eds2_2(document).ready(function ($) {
+	eds3_5_jq(document).ready(function ($) {
 		GridViewActions_Init();
 
 		Filter_Init();
@@ -611,7 +611,7 @@
 			CategoryDll_Init('<%=divCategoryFilterList.ClientID%>', '<%=hfSelectedFilterCategories.ClientID%>');
 			CategoryDll_Init('<%=GetDivFotterCategoryFilterList%>', '<%=GetHfFotterSelectedFilterCategories%>');
 
-			eds2_2('.edNews_tooltip').eds_tooltipster();
+			eds3_5_jq('.edNews_tooltip').eds_tooltipster();
 		}
 	}
 

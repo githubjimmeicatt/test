@@ -4,8 +4,8 @@
 <script type="text/javascript">
 	function ShowValue() {
 		var dropdownList;
-		eds2_2("#<%=gvComments.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
-			dropdownList = eds2_2(this);
+		eds3_5_jq("#<%=gvComments.ClientID %> select[id*='ddlFotterActionForSelected']").each(function (index) {
+			dropdownList = eds3_5_jq(this);
 		});
 
 		if (dropdownList.val() == '-1')
@@ -63,11 +63,27 @@
 								<asp:CheckBox ID="cbFilterByCategory" runat="server" Text="Category" CssClass="normalCheckBox" OnCheckedChanged="cbFilterByCategory_CheckedChanged" AutoPostBack="True" resourcekey="cbFilterByCategoryResource1" />
 							</div>
 							<label for="<%=cbFilterByCategory.ClientID %>"><%=_("cbFilterByCategoryResource1.Text") %></label>
-							<asp:DropDownList ID="ddlCategorySelect" runat="server" Enabled="False" OnSelectedIndexChanged="ddlCategorySelect_SelectedIndexChanged" AutoPostBack="True">
+							<asp:DropDownList ID="ddlCategorySelect" runat="server" Enabled="False">
 								<asp:ListItem Value="-1" resourcekey="ListItemResource3">Select category</asp:ListItem>
 							</asp:DropDownList>
 						</asp:Panel>
 					</div>
+					<div class="edNews_OptionBoxes">
+						<asp:Panel ID="pnlApprovedFilter" runat="server" CssClass="dis_box">
+							<div class="switchCheckbox">
+								<asp:CheckBox ID="cbApprovedFilter" runat="server" Text="Approved" CssClass="normalCheckBox" OnCheckedChanged="cbApprovedFilter_CheckedChanged" AutoPostBack="True" />
+							</div>
+							<label for="<%=cbApprovedFilter.ClientID %>"><%=_("cbApprovedFilter.Text") %></label>
+							<asp:DropDownList ID="ddlApprovedFilter" runat="server" Enabled="False">
+								<asp:ListItem Value="-1" resourcekey="liAll">All</asp:ListItem>
+								<asp:ListItem Value="1" resourcekey="liApproved">Approved</asp:ListItem>
+								<asp:ListItem Value="2" resourcekey="liUnapproved">Unapproved</asp:ListItem>
+							</asp:DropDownList>
+						</asp:Panel>
+					</div>
+				</div>
+				<div class="mainActions noMargin">
+					<asp:LinkButton ID="btnFilerComments" class="filterAction" runat="server" resourcekey="btnFilterComments" OnClick="btnFilerComments_Click"></asp:LinkButton>
 				</div>
 				<asp:HiddenField ID="hfFilterSettingsState" runat="server" Value="closed" />
 			</asp:Panel>
@@ -190,20 +206,8 @@
 		<asp:Parameter Name="portalIds" Type="String" />
 		<asp:Parameter Name="maximumRows" Type="Int32" DefaultValue="1" />
 		<asp:Parameter Name="startRowIndex" Type="Int32" DefaultValue="10" />
-	</SelectParameters>
-</asp:ObjectDataSource>
-<asp:ObjectDataSource ID="odsGetCommentsByCategoryID" runat="server" DeleteMethod="DeleteComment" EnablePaging="True" SelectCountMethod="SelectTotalNumberOfCommentsByCategoryID" SelectMethod="GetCommentsByCategoryID" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" UpdateMethod="UpdateComment">
-	<DeleteParameters>
-		<asp:Parameter Name="CommentID" Type="Int32" />
-	</DeleteParameters>
-	<UpdateParameters>
-		<asp:Parameter Name="CommentID" Type="Int32" />
-		<asp:Parameter Name="Comment" Type="String" />
-	</UpdateParameters>
-	<SelectParameters>
-		<asp:Parameter Name="CategoryID" Type="Int32" />
-		<asp:Parameter Name="maximumRows" Type="Int32" DefaultValue="1" />
-		<asp:Parameter Name="startRowIndex" Type="Int32" DefaultValue="10" />
+		<asp:Parameter Name="categoryId" Type="Int32" DefaultValue="-1" />
+			<asp:Parameter Name="approved" Type="Int32" DefaultValue="-1" />
 	</SelectParameters>
 </asp:ObjectDataSource>
 <asp:ObjectDataSource ID="odsGetCommentsByArticleID" runat="server" DeleteMethod="DeleteComment" EnablePaging="True" SelectCountMethod="SelectNumberOfCommentsByArticleID" SelectMethod="GetCommentsByArticleID" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" UpdateMethod="UpdateComment">

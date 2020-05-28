@@ -248,7 +248,8 @@
                     colorByPoint: false,
                     colors: [],
                     pointsColors: [],
-                    fillOpacity: 1.0
+                    fillOpacity: 1.0,
+                    types: [],
                 }],
                 title: {
                     text: null,
@@ -292,7 +293,8 @@
                     floating: false,
                     x: 0,
                     y: 0,
-                    labelFormat: '{name}'
+                    labelFormat: '{name}',
+                    disableClick: false
                 },
                 pane: {
                     size: '85%',
@@ -314,14 +316,17 @@
                             color: null,
                             borderWidth: 0,
                             borderColor: undefined,
-                            borderRadius: 0
+                            borderRadius: 0,
+                            distance: 30
                         },
                         showInLegend: true,
                         animation: true,
                         stacking: null,
                         point: {
                             events: {}
-                        }
+                        },
+                        allowPointSelect: false,
+                        events: {}
                     },
                     pie: {
                         depth: 0,

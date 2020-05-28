@@ -1960,6 +1960,13 @@ BEGIN
 		DROP TABLE {databaseOwner}[{objectQualifier}EasyGalleryImageSizes]
 	END
 
+	IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyGalleryWebpImageSizes]') AND type in (N'U'))
+	BEGIN
+		IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[FK_{objectQualifier}EasyGalleryWebpImageSizes_EasyGalleryPictures]') AND parent_object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyGalleryWebpImageSizes]'))
+		ALTER TABLE {databaseOwner}[{objectQualifier}EasyGalleryWebpImageSizes] DROP CONSTRAINT [FK_{objectQualifier}EasyGalleryWebpImageSizes_EasyGalleryPictures]
+		DROP TABLE {databaseOwner}[{objectQualifier}EasyGalleryWebpImageSizes]
+	END
+
 	IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyGalleryPictures]') AND type in (N'U'))
 	DROP TABLE {databaseOwner}[{objectQualifier}EasyGalleryPictures]
 	IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}EasyDNNMediaLocalization]') AND type in (N'U'))

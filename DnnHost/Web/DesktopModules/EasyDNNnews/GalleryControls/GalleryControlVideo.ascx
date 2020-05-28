@@ -31,7 +31,7 @@
 													</div>
 													<asp:Label ID="lblVGEVMediaDescription3" runat="server" Text='<%#HttpUtility.HtmlDecode(DataBinder.Eval(Container.DataItem, "Description").ToString())%>' Visible="<%#settings.ShowDescription%>"></asp:Label>
 													<script type="text/javascript">
-														eds2_2(document).ready(function () {
+														eds3_5_jq(document).ready(function () {
 															var flashvars = {};
 															var params = {};
 															params.wmode = 'transparent';

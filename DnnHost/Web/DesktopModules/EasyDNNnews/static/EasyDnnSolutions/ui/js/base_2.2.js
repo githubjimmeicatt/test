@@ -57,7 +57,7 @@ $.fn.eds_floatingLabel = function (action) {
 	});
 };
 
-})(eds2_2);
+})(eds3_5_jq);
 
 
 (function ($, undefined) {
@@ -89,10 +89,10 @@ $.fn.eds_tooltipster = function () {
 	});
 };
 
-})(eds2_2);
+})(eds3_5_jq);
 
 
-eds2_2(function ($) {
+eds3_5_jq(function ($) {
 	var $flashMessages = $('.edNews_topBarWrapper .flashMessage');
 
 	$('.floatingLabel > select, .floatingLabel > input, .floatingLabel > textarea').eds_floatingLabel();
@@ -158,9 +158,9 @@ eds2_2(function ($) {
 		});
 	};
 
-})(eds2_2, window);
+})(eds3_5_jq, window);
 
-eds2_2(function ($) {
+eds3_5_jq(function ($) {
 
 	$('.eds_Tabs').edsTabulator_1();
 

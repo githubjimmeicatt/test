@@ -66,7 +66,7 @@ $.fn.ednDynamicArticleLoader = function (settings) {
 						}
 
 						if (settings.addThisProfileId && settings.addThisProfileId.length > 0) {
-							eds2_2(document).ready(function ($) {
+							eds3_5_jq(document).ready(function ($) {
 								var addthis_config = addthis_config || {};
 								addthis_config.pubid = settings.addThisProfileId;
 								addthis.layers.refresh();
@@ -136,4 +136,4 @@ $.fn.ednDynamicArticleLoader = function (settings) {
 		}
 	});
 };
-})(eds2_2);
+})(eds3_5_jq);

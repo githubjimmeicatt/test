@@ -1,1 +1,2874 @@
-!function(e){var t,a=!1,s=function(){var e,t=0,a="summary";return null!=(e=location.href.match(/\/userid\/\d+\//i))?(t=e[0].match(/\d+/)[0],a="profile"):null!=(e=location.href.match(/\/groupid\/\d+\//i))&&(t=e[0].match(/\d+/)[0],a="group"),{type:a,target:t}},n=function(e,t){return-1!==e.indexOf(t,e.length-t.length)};"undefined"!=typeof eds2_2&&((t=eds2_2).fn.socialMediaBox=function(){var a,o,r,l,c,d,p,m,u,h,v,f,g,y,b,w,k,C,I,D,x,T,j,_,A,M,q,z,W,B,S,O,H,R,P,E,L,$,U,N,J,Y,X,G,F,K,Z,Q,V,ee,te,ae,ie,se,ne,oe,re={},le={openAt:0,baseClass:"",localized:{},flowplayerSwf:"",flowplayer:{key:"",logo:""},thumbnails:{show:!0,width:100,height:100},itemDetails:{show:!0,rightSide:!0,comments:{notifySocialGroup:!1,requireAuthorInfo:!0,captcha:!0,permissions:{commenting:!0,editing:!1,deleting:!1}},socialButtons:{show:!1,buttons:{facebook:{show:!1,html:'<iframe src="//www.facebook.com/plugins/like.php?href={{encodedUrl}}&amp;send=false&amp;layout=button_count&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;width=110" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px; width: 110px;" allowTransparency="true"></iframe>'},gplus:{show:!1,html:'<div class="g-plusone" data-size="medium" data-href="{{url}}"></div><script type="text/javascript">gapi.plusone.go();<\/script>'},twitter:{show:!1,html:'<a href="//twitter.com/share" class="twitter-share-button" data-url="{{url}}" data-text="{{escapedTitle}}">Tweet</a><script type="text/javascript">twttr.widgets.load();<\/script>'},inshare:{show:!1,html:'<script type="IN/Share" data-counter="right" data-url="{{url}}"><\/script><script type="text/javascript">IN.parse();<\/script>'},pinterest:{show:!1,html:'<a href="//pinterest.com/pin/create/button/?url={{encodedUrl}}&media={{encodedMediaUrl}}&description={{encodedTitle}}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>'}}}},events:{onBeforeClose:function(){}},googleReCaptchaSiteKey:""},ce=function(e){return"string"==typeof le.localized[e]?le.localized[e]:e},de=[],pe={activeItem:0,resizeInProgress:!1,resizeRace:!1,interfaceHidden:!1,baseWrapper:{height:0,width:0},thumbnails:{rendered:!1,initialized:!1,thumbActivatedChange:!1,allThumbnailsLoaded:!1,thumbnail:{height:0,width:0},wrapper:{height:0,effectiveHeight:0},overview:{width:0}},interfaceActions:{wrapper:{height:0}},itemDetails:{rendered:!1,wrapper:{verticalOffset:0,width:0,effectiveWidth:0},comments:{author:{avatarContainer:null}},maps:{google:null}},itemDisplay:{wrapper:{verticalOffset:0,horizontalOffset:0,height:0,width:0},touch:{newTouch:!1,startX:0,startY:0}},preloadedImages:{},commentsCache:{},reCaptchaId:e},me=function(t,a){a?(pe.preloadedImages[t].state="success",pe.preloadedImages[t].width=this.naturalWidth===e?this.width:this.naturalWidth,pe.preloadedImages[t].height=this.naturalHeight===e?this.height:this.naturalHeight):pe.preloadedImages[t].state="error",clearTimeout(pe.preloadedImages[t].timeout)},ue=function(e){for(var t=pe.preloadedImages[e].callbacks;t.length>0;)t.splice(0,1)[0]();pe.preloadedImages[e].callbacks=[]};return terminated=!1,re.preloadImage=function(a,i){var s=t("<img />"),n=s[0],o=!1,r="number"==typeof i?i:0;if(0==r){if(pe.preloadedImages[a]!==e)return void("loading"==pe.preloadedImages[a].state?pe.preloadedImages[a].callbacks.push(i):i());pe.preloadedImages[a]={state:"loading",callbacks:[i]}}if(pe.preloadedImages[a].timeout=setTimeout(function(){!terminated&&r<10&&re.preloadImage(a,r+1)},4e3*(r+1)),s.bind("load.socialMediaBox error.socialMediaBox",function(e){o||"loading"!=pe.preloadedImages[a].state||(me.apply(n,[a,"load"==e.type]),ue(a))}),n.src=a,n.complete&&n.naturalWidth!==e)return o=!0,me.apply(n,[a,0!==n.naturalWidth&&0!==n.naturalHeight]),void ue(a)},re.resize=function(){var e,t,a,i,s,n;pe.resizeInProgress?pe.resizeRace=!0:(pe.resizeInProgress=!0,pe.baseWrapper.height=o.height(),pe.baseWrapper.width=o.width(),re.thubnails.resize(),re.itemDetails.resize(),re.itemDisplay.resize(),re.interfaceActions.resize(),de.length>1&&(e=Math.floor((pe.itemDisplay.wrapper.height+pe.itemDisplay.wrapper.verticalOffset-se.height())/2),t=pe.itemDisplay.wrapper.width+pe.itemDisplay.wrapper.horizontalOffset-ne.outerWidth(!0),le.itemDetails.rightSide?(a={top:e,left:0,right:"auto"},i={top:e,left:t,right:"auto"}):(a={top:e,left:"auto",right:t},i={top:e,left:"auto",right:0}),se.css(a),ne.css(i)),n=pe.itemDisplay.wrapper.width+pe.itemDisplay.wrapper.horizontalOffset-oe.outerWidth(!0),s=le.itemDetails.rightSide?{left:n,right:"auto"}:{left:"auto",right:n},oe.css(s),pe.resizeInProgress=!1,pe.resizeRace&&(pe.resizeRace=!1,re.resize()))},re.showItem=function(e,t){e<0?e=de.length-1:e>=de.length&&(e=0),!0!==t&&pe.activeItem==e||(pe.activeItem=e,re.itemDisplay.showItem(),re.itemDetails.showItem(),re.thubnails.showItem())},re.callbackObject=function(){return{activeItem:pe.activeItem,displayItems:de}},re.close=function(){"function"==typeof le.events.onBeforeClose&&!1===le.events.onBeforeClose(re.callbackObject())||(terminated=!0,t(document).off(".socialMediaBox"),t(window).off(".socialMediaBox"),o.fadeOut(200,function(){o.remove(),a.removeClass("socialMediaBoxActive")}))},re.thubnails={},re.thubnails.init=function(){var a;!le.thumbnails.show||de.length<2||(pe.thumbnails.rendered=!0,r=t('<div class="thumbnailsMainWrapper"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"></div></div></div>'),l=t("> div.viewport",r),c=t("> div.overview",l),t.each(de,function(a,i){var s=t('<div><div class="'+i.type+'">'+("video"==i.type||"audio"==i.type?'<div class="playItem"></div>':"")+"</div></div>").appendTo(c);i.thumbnail!==e&&i.thumbnail.src!==e?re.preloadImage(i.thumbnail.src,function(){var e,t,a,n,o=le.thumbnails.height,r=le.thumbnails.width,l=r/o;"success"==pe.preloadedImages[i.thumbnail.src].state&&(t=pe.preloadedImages[i.thumbnail.src].height,a=pe.preloadedImages[i.thumbnail.src].width,(t>o||a>r)&&((n=a/t)<l?(a=Math.round(o/t*a),t=o):n>l?(t=Math.round(r/a*t),a=r):(a=r,t=o)),e=t>o?0:Math.floor((o-t)/2),s.css("top",e).fadeIn(300).addClass("visible").find("> div").prepend('<img src="'+i.thumbnail.src+'" alt="" style="height: '+t+"px; width: "+a+'px;" />'),pe.thumbnails.initialized&&re.thubnails.resize())}):s.fadeIn(300).addClass("visible").find("> div").prepend('<div class="noThumb"></div>')}),a=t("> div",c).eq(0),r.appendTo(o),t(">",a).css({width:le.thumbnails.width,height:le.thumbnails.height}),pe.thumbnails.thumbnail.height=a.outerHeight(!0),pe.thumbnails.thumbnail.width=a.outerWidth(!0),t(">",a).css({width:"",height:""}),c.height(pe.thumbnails.thumbnail.height),l.height(pe.thumbnails.thumbnail.height),pe.thumbnails.wrapper.height=pe.thumbnails.wrapper.effectiveHeight=r.outerHeight(!0),r.eds_tinyscrollbar({axis:"x"}),c.on("click","> div",function(){pe.thumbnails.thumbActivatedChange=!0,re.showItem(t(this).index())}),pe.thumbnails.initialized=!0)},re.thubnails.resize=function(){var e,a,i,s=0,n=pe.thumbnails.thumbnail.width;!le.thumbnails.show||de.length<2||(pe.thumbnails.thumbActivatedChange?pe.thumbnails.thumbActivatedChange=!1:(pe.thumbnails.allThumbnailsLoaded||(i=t("> div.visible",c),de.length==i.length&&(pe.thumbnails.allThumbnailsLoaded=!0),pe.thumbnails.overview.width=0,i.each(function(){pe.thumbnails.overview.width+=t(this).outerWidth(!0)}),c.width(pe.thumbnails.overview.width)),e=r.width(),(a=pe.thumbnails.overview.width)>e?(c.css({left:0}),(s=n*pe.activeItem+Math.floor(n/2))<=Math.floor(e/2)?s=0:a-s<=Math.ceil(e/2)?s="bottom":s-=Math.floor(e/2),r.data("plugin_eds_tinyscrollbar").update(s)):(r.data("plugin_eds_tinyscrollbar").update(),c.css({left:Math.floor((e-a)/2)}))))},re.thubnails.showItem=function(){!le.thumbnails.show||de.length<2||(t("> div",c).removeClass("active").eq(pe.activeItem).addClass("active"),re.thubnails.resize())},re.interfaceActions={},re.interfaceActions.init=function(){var e;d=t('<div class="interfaceActionsWrapper"></div>'),(pe.thumbnails.rendered||pe.itemDetails.rendered)&&(p=t('<div class="action toggleInterface"><span>'+ce("Hide interface")+"</span></div>").appendTo(d).on("click",function(){var t,a;pe.interfaceHidden?(pe.interfaceHidden=!1,e.text(ce("Hide interface")),p.removeClass("hidden")):(pe.interfaceHidden=!0,e.text(ce("Show interface")),p.addClass("hidden")),pe.thumbnails.rendered&&(t=pe.interfaceHidden?-pe.thumbnails.wrapper.height:0,r.stop(!0).animate({bottom:t},{duration:200,step:function(e){pe.thumbnails.wrapper.effectiveHeight=Math.round(pe.thumbnails.wrapper.height+e),re.resize()}})),pe.itemDetails.rendered&&(a=le.itemDetails.rightSide?pe.interfaceHidden?{right:-pe.itemDetails.wrapper.width}:{right:0}:pe.interfaceHidden?{left:-pe.itemDetails.wrapper.width}:{left:0},m.stop(!0).animate(a,{duration:200,step:function(e){pe.itemDetails.wrapper.effectiveWidth=Math.round(pe.itemDetails.wrapper.width+e),re.resize()}}))}),e=t("> span",p)),o.append(d),pe.interfaceActions.wrapper.height=d.outerHeight(!0)},re.interfaceActions.resize=function(){d.css({bottom:pe.thumbnails.wrapper.effectiveHeight})},re.itemDetails={comments:{}},re.itemDetails.init=function(){var a='<div class="commentsWrapper">\t\t\t\t\t<h3>'+ce("Comments")+'</h3>\t\t\t\t\t<div class="loading"></div>\t\t\t\t\t<p class="message"></p>\t\t\t\t\t<div class="commentsList"></div>\t\t\t\t\t<div class="addCommentContainer">\t\t\t\t\t\t<div class="commentingMessage"></div>\t\t\t\t\t\t<div class="authorInfo name"><div class="text"><span class="label">'+ce("Name")+'</span><input type="text" value="" /></div></div>\t\t\t\t\t\t<div class="authorInfo email"><div class="text"><span class="label">'+ce("Email")+'</span><input type="text" value="" /></div></div>\t\t\t\t\t\t<div class="textarea"><textarea></textarea></div>\t\t\t\t\t\t<div class="captchaContainer"><div class="captcha"></div></div>\t\t\t\t\t\t<button class="add"><span>'+ce("Add comment")+"</span></button>\t\t\t\t\t</div>\t\t\t\t</div>",n='<div class="authorWrapper">\t\t\t\t\t<div class="avatarWrapper">\t\t\t\t\t\t<div class="avatarContainer"></div>\t\t\t\t\t</div>\t\t\t\t\t<div class="actions">\t\t\t\t\t\t<button class="follow"><span>'+ce("follow")+'</span></button>\t\t\t\t\t\t<button class="friend"><span>'+ce("add as friend")+'</span></button>\t\t\t\t\t\t<button class="friend rejectRequest"><span>'+ce("reject friend request")+'</span></button>\t\t\t\t\t</div>\t\t\t\t\t<p class="postedBy">'+ce("posted by")+'</p>\t\t\t\t\t<p class="name"></p>\t\t\t\t\t<p class="date"></p>\t\t\t\t</div>',r='<div class="likeWrapper">\t\t\t\t\t<div class="likeContainer">\t\t\t\t\t\t<button><span>'+ce("like")+'</span></button>\t\t\t\t\t\t<p></p>\t\t\t\t\t</div>\t\t\t\t\t<ul class="alsoLiked"></ul>\t\t\t\t</div>',l='<div class="buttonsWrapper">\t\t\t\t\t<a href="#" class="email"><span>'+ce("Send link")+'</span></a>\t\t\t\t\t<a href="#" target="_blank" class="download"><span>'+ce("Download")+"</span></a>\t\t\t\t</div>",c='<div class="metaWrapper"><h3><span>'+ce("Details")+'</span></h3><div class="content"></div></div>';le.itemDetails.show&&(m=t('<div class="itemDetailsWrapper '+(le.itemDetails.rightSide?"right":"left")+'"><div class="viewport"><div class="overview"><h2></h2><div class="description"></div>'+n+r+'<div class="socialButtonsWrapper"></div><div class="ratingWrapper">\t\t\t\t\t<div class="starContainer">\t\t\t\t\t\t<div></div>\t\t\t\t\t</div>\t\t\t\t\t<p class="score"></p>\t\t\t\t\t<p class="message"></p>\t\t\t\t</div><ul class="tagContainer"></ul>'+l+a+c+'</div></div><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div></div>'),u=t("> .viewport",m),h=t("> .overview",u),v=t("> h2",h),f=t("> div.description",h),g=t("> .authorWrapper",h),y=t("> .avatarWrapper",g),b=t("> .avatarContainer",y),w=t("> .name",g),k=t("> .date",g),C=t("> .actions",g),I=t("> .follow",C),D=t("> .friend",C).eq(0),x=t("> .friend",C).eq(1),T=t("> .likeWrapper",h),j=t("> .likeContainer",T),_=t("> button",j),A=t("> p",j),M=t("> .alsoLiked",T),q=t("> .socialButtonsWrapper",h),z=t("> .ratingWrapper",h),W=t("p.score",z),B=t("p.message",z),S=t("> div.starContainer",z),O=t("> div",S),H=t("> .tagContainer",h),R=t("> .buttonsWrapper",h),P=t("> .download",R),E=t("> .email",R),L=t("> div.commentsWrapper",h),$=t("> p.message",L),U=t("> div.commentsList",L),N=t("> div.loading",L),J=t("> div.addCommentContainer",L),Y=t("> button.add",J),X=t("> div > textarea",J),G=t("> .commentingMessage",J),F=t("> .authorInfo",J),K=t("> .text",F),Z=t("> div.captchaContainer",J),Q=t("> .metaWrapper",h),V=t("> h3",Q),ee=t("> .content",Q),o.append(m),pe.itemDetails.wrapper.verticalOffset=m.outerHeight(!0)-m.height(),pe.itemDetails.wrapper.width=pe.itemDetails.wrapper.effectiveWidth=m.outerWidth(!0),q.css("display",le.itemDetails.socialButtons.show?"block":"none"),K.click(function(){var e=t(this);return t("> input",e).focus(),!1}),t("> input",K).focus(function(){var e=t(this).siblings("span");""==this.value&&e.stop(!0).fadeTo(200,0,function(){e.css("display","none")})}).blur(function(){""==this.value&&t(this).siblings("span").stop(!0).css("display","").fadeTo(200,1)}),Y.on("click",function(){var a,i,n,o=X.val(),r=pe.activeItem,l=de[r],c="",d={},p={},u=[],h="",v=s(),f={action:"add_comment",journalType:v.type,journalTarget:v.target};if(!J.hasClass("sending")){if(le.itemDetails.comments.notifySocialGroup&&(f.notifySocialGroup=!0,f.journalModuleId=0),le.itemDetails.comments.requireAuthorInfo&&(a=t("> div > input",F.filter(".name")).val(),i=t("> div > input",F.filter(".email")).val(),""===a&&u.push(ce("a name")),""!==i&&/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(i)||u.push(ce("a valid email address"))),""==o&&u.push(ce("a comment")),le.itemDetails.comments.requireAuthorInfo&&le.itemDetails.comments.captcha&&""===(n=grecaptcha.getResponse(pe.reCaptchaId))&&u.push(ce("the captcha")),0!==u.length)return h="<p>"+ce("Please specify")+" ",t.each(u,function(e,t){e>0&&(e+1==u.length?h+=" "+ce("and")+" ":h+=", "),h+=t}),h+="</p>",G.css("display","block").removeClass("positive").html(h).addClass("negative"),void m.data("plugin_eds_tinyscrollbar").update("relative");X[0].disabled=!0,J.addClass("sending"),G.css("display","block").removeClass("negative positive").html("<p>"+ce("Sending...")+"</p>"),f.comment=o,le.itemDetails.comments.requireAuthorInfo&&(f.name=a,f.email=i,le.itemDetails.comments.captcha&&(f.captcha=n)),t.ajax({data:f,dataType:"json",type:"POST",url:l.comments.backend,timeout:15e3,cache:!1,error:function(){c=ce("The comment can't currently be saved. Please try again later.")},success:function(t){if(t.status!=e)switch(t.status){case"success":d.author=t.author.id,d.content=t.comment,d.raw=o,d.id=t.id,d.dateHtml=t.dateHtml,pe.commentsCache[l.comments.backend].comments.push(d),p=pe.commentsCache[l.comments.backend].authors[d.author]==e?pe.commentsCache[l.comments.backend].authors[d.author]={avatar:t.author.avatar,name:t.author.name,url:t.author.url}:pe.commentsCache[l.comments.backend].authors[d.author];break;case"error":c=t.message;break;case"captcha_error":c=t.message}else c=ce("The comment can't currently be saved. Please try again later.")},complete:function(){r==pe.activeItem&&(""==c?(U.css("display","block"),$.css("display","none"),re.itemDetails.comments.renderCommentBox(d,p),re.itemDetails.comments.setAvatarContainerDimensions(),re.itemDetails.comments.loadAvatars(d.author,p),X.val(""),G.css("display","none")):G.css("display","block").addClass("negative").html("<p>"+c+"</p>"),J.removeClass("sending"),X[0].disabled=!1,le.itemDetails.comments.requireAuthorInfo&&le.itemDetails.comments.captcha&&grecaptcha.reset(pe.reCaptchaId),m.data("plugin_eds_tinyscrollbar").update("relative"))}}),m.data("plugin_eds_tinyscrollbar").update("relative")}}),U.on("click",".actionsBoxTrigger li.edit",function(){var e,a=t(this).parents().eq(2),i=t("> .content",a),s=!1,n=de[pe.activeItem];return s="object"==typeof n.comments&&"object"==typeof n.comments.permissions&&"boolean"==typeof n.comments.permissions.editing?n.comments.permissions.editing:le.itemDetails.comments.permissions.editing,!(a.data("editing")||!s||(clearTimeout(a.data("saveMsgTimeout")),a.data("editing",!0),t("> .editor",a).remove(),i.css("display","none"),e=t('<div class="editor"><div class="textarea"><textarea style="height: '+i.height()+'px;"></textarea></div><div class="actions"><p></p><span class="save">'+ce("Save")+'</span><span class="cancel">'+ce("Cancel")+"</span></div></div>").appendTo(a),t(".textarea > textarea",e).val(a.data("comment").raw).focus(),m.data("plugin_eds_tinyscrollbar").update("relative"),1))}).on("click",".editor > .actions > span",function(){var a,i,s,n,o=t(this),r=o.parent(),l=o.parents().eq(2),c=l.data("comment"),d="",p=pe.activeItem,u=de[p],h={};if(l.data("saving"))return!1;if(o.hasClass("save")){if(s=t("> .editor > .textarea > textarea",l),""==(n=s.val()))return i=t("> p",r).text(ce("Please specify a comment")).addClass("negative").removeClass("positive").css("display","block"),void m.data("plugin_eds_tinyscrollbar").update("relative");l.data("saving",!0),s[0].disabled=!0,i=t("> p",r).text(ce("Saving...")).removeClass("negative positive").css("display","block"),a=t("> span",r).css("display","none"),t.ajax({data:{action:"edit_comment",id:c.id,comment:n},dataType:"json",type:"POST",url:u.comments.backend,timeout:15e3,cache:!1,error:function(){d=ce("Your changes can't currently be saved.")},success:function(a){if(a.status!=e)switch(a.status){case"success":h=t.extend(!0,{},c,{raw:n,content:a.comment,dateHtml:a.dateHtml}),t.each(pe.commentsCache[u.comments.backend].comments,function(e,t){if(t.id==c.id)return pe.commentsCache[u.comments.backend].comments[e]=h,!1});break;case"error":d=a.message}else d=ce("Your changes can't currently be saved.")},complete:function(){p==pe.activeItem&&(d?(s[0].disabled=!1,a.css("display",""),i.addClass("negative").text(d)):(i.addClass("positive").text(ce("Your changes were saved")),t("> .editor > .textarea",l).remove(),t("> .content",l).css("display","block").html(h.content),t("> .meta > .commentDate",l).html(h.dateHtml),l.data({editing:!1,comment:h,saveMsgTimeout:setTimeout(function(){terminated||p!=pe.activeItem||t("> .editor",l).remove(),m.data("plugin_eds_tinyscrollbar").update("relative")},3e3)})),l.data("saving",!1),m.data("plugin_eds_tinyscrollbar").update("relative"))}})}else l.data("editing",!1),t("> .editor",l).remove(),t("> .content",l).css("display","block");return m.data("plugin_eds_tinyscrollbar").update("relative"),!1}).on("click",".actionsBoxTrigger li.delete",function(){var e=t(this).parents().eq(2);return e.addClass("hideActions"),t("> .deleteConfirmation",e).css("display","block"),m.data("plugin_eds_tinyscrollbar").update("relative"),!1}).on("click",".deleteConfirmation span",function(){var a=t(this),i=a.parents().eq(2),s=(i.index(),i.data("comment")),n=t("> .deleteConfirmation",i),o=t("> .message",n),r="",l=pe.activeItem,c=de[l];return a.hasClass("delete")?(t("> p",n).css("display","none"),o.text(ce("Deleting...")).css("display","block"),t.ajax({data:{action:"delete_comment",id:s.id},dataType:"json",type:"GET",url:c.comments.backend,timeout:15e3,cache:!1,error:function(){r=ce("The comment can't currently be deleted.")},success:function(a){if(a.status!=e)switch(a.status){case"success":t.each(pe.commentsCache[c.comments.backend].comments,function(e,t){if(t.id==s.id)return pe.commentsCache[c.comments.backend].comments.splice(e,1),!1});break;case"error":r=a.message}else r=ce("Your changes can't currently be saved.")},complete:function(){l==pe.activeItem&&(r?(o.addClass("negative").text(r),i.removeClass("hideActions")):(i.remove(),0==t(">",U).length&&(U.css("display","none"),$.addClass("noComments").text(ce("No comments yet")).css("display","block"))),m.data("plugin_eds_tinyscrollbar").update("relative"))}})):(i.removeClass("hideActions"),n.css("display","none"),o.css("display","none")),m.data("plugin_eds_tinyscrollbar").update("relative"),!1}),S.on("mousemove",function(t){var a,i,s=de[pe.activeItem],n=S.offset();s.rating.rated||s.rating.backend==e||(a=S.width()/5,i=Math.ceil((t.clientX-n.left)/a),S.data("stars",i),O.css("width",a*i+"px"))}).on("mouseleave",function(){var t=de[pe.activeItem],a=t.rating.score;t.rating.backend!=e&&(!1!==t.rating.rated&&(a=t.rating.rated),O.css("width",a/5*100+"%"))}).on("click",function(){var a=pe.activeItem,i=de[a],s=!1,n=ce("Rating is currently not possible.");!1===i.rating.rated&&i.rating.backend!=e&&(de[a].rating.rated=S.data("stars"),S.addClass("rated"),O.css("width",i.rating.rated/5*100+"%"),t.ajax({data:{action:"rate",rating:i.rating.rated},dataType:"json",type:"POST",url:i.rating.backend,timeout:15e3,cache:!1,error:function(){s=n},success:function(t){if(t.status!=e)switch(t.status){case"success":de[a].rating.score=t.score;break;case"error":s=t.message}else s=n},complete:function(){s&&(de[a].rating.rated=!1),a==pe.activeItem&&(s?(S.removeClass("rated"),O.css("width",de[a].rating.score/5*100+"%"),B.addClass("negative").css("display","block").text(s)):W.removeClass("noRatings").text(de[a].rating.score),m.data("plugin_eds_tinyscrollbar").update("relative"))}}))}),I.on("click",function(){var a=pe.activeItem,s=de[a],n=!1,o=!s.author.following;!0!==I.data("disabled")&&(I.data("disabled",!0).addClass("requesting"),t.ajax({data:{action:"follow",follow:o},dataType:"json",type:"POST",url:s.author.backend,timeout:1e4,cache:!1,error:function(){n=!0},success:function(t){if(t.status!=e)switch(t.status){case"success":for(i in de)"object"==typeof de[i].author&&void 0!==de[i].author.id&&de[i].author.id==s.author.id&&(de[i].author.following=o);break;case"error":n=!0}else n=!0},complete:function(){a==pe.activeItem&&(I.data("disabled",!1).removeClass("requesting"),n||(o?I.addClass("unfollow").find("> span").text(ce("unfollow")):I.removeClass("unfollow").find("> span").text(ce("follow"))),m.data("plugin_eds_tinyscrollbar").update("relative"))}}),m.data("plugin_eds_tinyscrollbar").update("relative"))}),D.on("click",function(){var a,s=pe.activeItem,n=de[s],o=!1;!0!==D.data("disabled")&&(D.data("disabled",!0).addClass("requesting"),"requested_by_author"==n.author.friends?(x.addClass("requesting"),a=!0):a=!0!==n.author.friends&&"requested_by_user"!=n.author.friends,t.ajax({data:{action:"friend",friends:a},dataType:"json",type:"POST",url:n.author.backend,timeout:1e4,cache:!1,error:function(){o=!0},success:function(t){if(t.status!=e)switch(t.status){case"success":a=t.friends;for(i in de)"object"==typeof de[i].author&&void 0!==de[i].author.id&&de[i].author.id==n.author.id&&(de[i].author.friends=a);break;case"error":o=!0}else o=!0},complete:function(){s==pe.activeItem&&(D.data("disabled",!1).removeClass("requesting"),x.removeClass("requesting"),o||(x.css("display","none"),D.removeClass("unfriend cancelRequest acceptRequest"),!0===a?D.addClass("unfriend").find("> span").text(ce("unfriend")):"requested_by_user"==a?D.addClass("cancelRequest").find("> span").text(ce("cancel friend request")):D.find("> span").text(ce("add as friend"))),m.data("plugin_eds_tinyscrollbar").update("relative"))}}),m.data("plugin_eds_tinyscrollbar").update("relative"))}),x.on("click",function(){var a=pe.activeItem,s=de[a],n=!1;"requested_by_author"==s.author.friends&&!0!==D.data("disabled")&&(D.data("disabled",!0).addClass("requesting"),x.addClass("requesting"),t.ajax({data:{action:"friend",friends:!1},dataType:"json",type:"POST",url:s.author.backend,timeout:1e4,cache:!1,error:function(){n=!0},success:function(t){if(t.status!=e)switch(t.status){case"success":for(i in de)"object"==typeof de[i].author&&void 0!==de[i].author.id&&de[i].author.id==s.author.id&&(de[i].author.friends=!1);break;case"error":n=!0}else n=!0},complete:function(){a==pe.activeItem&&(D.data("disabled",!1).removeClass("requesting unfriend cancelRequest acceptRequest"),x.removeClass("requesting"),n||(x.css("display","none"),D.find("> span").text(ce("add as friend"))),m.data("plugin_eds_tinyscrollbar").update("relative"))}}),m.data("plugin_eds_tinyscrollbar").update("relative"))}),_.on("click",function(){var a=pe.activeItem,i=de[a],s=!1,n=!i.likes.liked;!0!==_.data("disabled")&&(_.data("disabled",!0).addClass("requesting"),t.ajax({data:{action:"like",liked:n},dataType:"json",type:"POST",url:i.likes.backend,timeout:1e4,cache:!1,error:function(){s=!0},success:function(t){if(t.status!=e)switch(t.status){case"success":de[a].likes.liked=n,de[a].likes.message=t.message;break;case"error":s=!0}else s=!0},complete:function(e){var i;if(a==pe.activeItem){if(_.data("disabled",!1).removeClass("requesting"),s){try{i=t.parseJSON(e.responseText).message}catch(e){i=ce("An error occurred while "+(n?"saving your like":"removing your like"))}A.addClass("negative").text(i)}else A.removeClass("negative").text(de[a].likes.message),n?_.addClass("unlike").find("> span").text(ce("unlike")):_.removeClass("unlike").find("> span").text(ce("like"));m.data("plugin_eds_tinyscrollbar").update("relative")}}}),m.data("plugin_eds_tinyscrollbar").update("relative"))}),V.on("click",function(){var e=de[pe.activeItem],t="block";ee.is(":visible")&&(t="none"),ee.css("display",t),"block"==t?(V.addClass("close"),"object"==typeof e.meta.map&&"google"==e.meta.map.type&&(google.maps.event.trigger(pe.itemDetails.maps.google,"resize"),pe.itemDetails.maps.google.setCenter(new google.maps.LatLng(e.meta.map.settings.lat,e.meta.map.settings.lng)))):V.removeClass("close"),m.data("plugin_eds_tinyscrollbar").update("relative")}),pe.itemDetails.rendered=!0,m.eds_tinyscrollbar({axis:"y"}))},re.itemDetails.placeAvatar=function(t){var a,i,s,n,o=0,r=0,l=null,c=null,d=pe.preloadedImages[t.src];if(t.fadeIn==e&&(t.fadeIn=!1),d===e||"loading"==d.state)return t.fadeIn=!0,void re.preloadImage(t.src,function(){re.itemDetails.placeAvatar(t)});"object"==typeof t.containerDimensions?(a=t.containerDimensions.height,i=t.containerDimensions.width):(a=t.$container.height(),i=t.$container.width()),"success"==d.state&&(l=d.height+4,c=d.width+4,(l>a||c>i)&&((n=c/l)<(s=i/a)?(c=Math.round(a/l*c),l=a):n>s?(l=Math.round(i/c*l),c=i):(c=i,l=a)),r=l==a?0:Math.floor((a-l)/2),o=c==i?0:Math.floor((i-c)/2),l-=4,c-=4),t.$container.append('<img src="'+t.src+'" alt="" style="'+(t.fadeIn?"display: none; ":"")+(null!=c?"width: "+c+"px; ":"")+(null!=l?"height: "+l+"px; ":"")+"top: "+r+"px; left: "+o+'px;" />'),t.fadeIn&&t.$container.find(">").fadeIn(200)},re.itemDetails.comments.renderCommentBox=function(e,a){var i,s,n,o=de[pe.activeItem],r=!1,l=!1;r="object"==typeof o.comments&&"object"==typeof o.comments.permissions&&"boolean"==typeof o.comments.permissions.editing?o.comments.permissions.editing:le.itemDetails.comments.permissions.editing,l="object"==typeof o.comments&&"object"==typeof o.comments.permissions&&"boolean"==typeof o.comments.permissions.deleting?o.comments.permissions.deleting:le.itemDetails.comments.permissions.deleting,i=(r&&!0!==o.journalEntry?'<li class="edit"><span>'+ce("Edit")+"</span></li>":"")+(l?'<li class="delete"><span>'+ce("Delete")+"</span></li>":""),n="string"==typeof a.url&&""!=a.url?'<a href="'+a.url+'">'+a.name+"</a>":a.name,s=t('<div class="author-'+e.author+("string"==typeof a.avatar&&""!=a.avatar?" hasAvatar":"")+'"><div class="deleteConfirmation"><p class="message"></p><p>'+ce("Do you really want to delete this comment?")+'</p><p><span class="delete">'+ce("Yes")+'</span><span class="cancel">'+ce("No")+'</span></p></div><div class="meta"><div class="authorAvatarWrapper"><div class="authorAvatarContainer"></div></div><h4>'+n+'</h4><p class="commentDate">'+e.dateHtml+'</p></div><div class="content">'+e.content+"</div>"+(""==i?"":'<div class="actionsBoxTrigger"><ul>'+i+"</ul></div>")+"</div>").data("comment",e),U.append(s)},re.itemDetails.comments.loadAvatars=function(a,i){var s,n=t("> .author-"+a+" > .meta > .authorAvatarWrapper",U).filter(":hidden");0!=n.lenght&&i.avatar!==e&&""!=i.avatar&&(n.css("display","block"),"string"==typeof i.url&&""!=i.url?(t(">",n).append(t('<a href="#" />').attr("href",i.url)),s=t("> >",n)):s=t(">",n),re.itemDetails.placeAvatar({src:i.avatar,$container:s,containerDimensions:pe.itemDetails.comments.author.avatarContainer}))},re.itemDetails.comments.setAvatarContainerDimensions=function(){null==pe.itemDetails.comments.author.avatarContainer&&($authorAvatarWrapper=t(".authorAvatarWrapper",U).eq(0).css("display","block"),pe.itemDetails.comments.author.avatarContainer={width:$authorAvatarWrapper.width(),height:$authorAvatarWrapper.height()},$authorAvatarWrapper.css("display","none"))},re.itemDetails.comments.display=function(e){var a=de[pe.activeItem];N.css("display","none"),e.comments.length>0?($.css("display","none"),U.empty(),t.each(e.comments,function(t,a){re.itemDetails.comments.renderCommentBox(a,e.authors[a.author])}),U.css("display","block"),re.itemDetails.comments.setAvatarContainerDimensions(),t.each(e.authors,re.itemDetails.comments.loadAvatars)):(U.empty().css("display","none"),$.addClass("noComments").text(ce("No comments yet")).css("display","block")),("object"==typeof a.comments&&"object"==typeof a.comments.permissions&&"boolean"==typeof a.comments.permissions.commenting?a.comments.permissions.commenting:le.itemDetails.comments.permissions.commenting)?(le.itemDetails.comments.requireAuthorInfo?(F.css("display","block"),le.itemDetails.comments.captcha&&(Z.css("display","block"),pe.reCaptchaId?grecaptcha.reset(pe.reCaptchaId):pe.reCaptchaId=grecaptcha.render(t("> .captcha",Z)[0],{sitekey:le.googleReCaptchaSiteKey,size:"compact"}))):(F.css("display","none"),Z.css("display","none")),J.removeClass("sending").css("display","block"),X[0].disabled=!1,G.css("display","none"),X.val("")):J.css("display","none")},re.itemDetails.showItem=function(){var a,i,s,n=pe.activeItem,o=de[n],r="",l=!1,c="",d="",p="",u="",h="";if(le.itemDetails.show){if(o.title==e||""==o.title?(v.css("display","none"),f.removeClass("withTitle")):(v.text(o.title).css("display","block"),f.addClass("withTitle")),o.description==e||""==o.description?f.css("display","none"):f.html(o.description).css("display","block"),le.itemDetails.socialButtons.show&&"object"==typeof o.social&&""!=o.social.url?(d="string"!=typeof o.social.media?"":o.social.media,t.each(le.itemDetails.socialButtons.buttons,function(e,t){if(t.show){if("pinterest"==e&&""==d)return;if("twitter"==e&&("undefined"==typeof twttr||void 0===twttr.widgets))return;if("inshare"==e&&("undefined"==typeof IN||"function"!=typeof IN.parse))return;c+="<div>"+t.html+"</div>"}}),""==c?q.css("display","none").empty():("string"==typeof o.title&&""!=o.title?(h=o.title.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/'/g,"&#39;").replace(/</g,"&lt;").replace(/>/g,"&gt;"),c=c.replace(/{{encodedTitle}}/g,encodeURIComponent(o.title))):c=c.replace(/{{encodedTitle}}/g,""),c=c.replace(/{{url}}/g,o.social.url).replace(/{{escapedTitle}}/g,h).replace(/{{encodedUrl}}/g,encodeURIComponent(o.social.url)),d&&(c=c.replace(/{{encodedMediaUrl}}/g,encodeURIComponent(d))),q.css("display","block").html(c),d&&le.itemDetails.socialButtons.buttons.pinterest.show&&t.ajax({url:"//assets.pinterest.com/js/pinit.js",dataType:"script",cache:!1}))):q.css("display","none").empty(),"object"==typeof o.rating?(S.removeClass("rated"),o.rating.score>0?(W.removeClass("noRatings").text(o.rating.score),!1===o.rating.rated?a=o.rating.score:(a=o.rating.rated,S.addClass("rated")),O.css("width",a/5*100+"%")):(W.addClass("noRatings").text(ce("No ratings")),O.css("width","")),B.css("display","none").removeClass("negative"),z.css("display","block"),o.rating.backend==e?z.addClass("cantRate"):z.removeClass("cantRate")):z.css("display","none"),"object"!=typeof o.comments||o.comments.backend==e||""==o.comments.backend?L.css("display","none"):(L.css("display","block"),U.css("display","none"),$.removeClass("noComments negative").css("display","none"),J.css("display","none"),pe.commentsCache[o.comments.backend]==e?(N.css("display","block"),t.ajax({data:{action:"list_comments"},dataType:"json",type:"GET",url:o.comments.backend,timeout:15e3,cache:!1,error:function(){n==pe.activeItem&&$.addClass("negative").removeClass("noComments").text(ce("Comments are currently unavalible")).css("display","block")},success:function(e){pe.commentsCache[o.comments.backend]=e,n==pe.activeItem&&(re.itemDetails.comments.display(e),m.data("plugin_eds_tinyscrollbar").update())}})):re.itemDetails.comments.display(pe.commentsCache[o.comments.backend])),"object"==typeof o.author?(g.css("display","block"),u="string"==typeof o.author.url&&""!=o.author.url?o.author.url:"","string"==typeof o.author.avatar&&""!=o.author.avatar?(y.css("display","block"),b.empty(),s=""==u?b:t('<a href="#" />').appendTo(b).attr({href:u}),re.itemDetails.placeAvatar({src:o.author.avatar,$container:s})):y.css("display","none"),w.empty(),""==u?w.text(o.author.name):w.append(t("<a />").attr({href:u}).text(o.author.name)),k.html(o.author.dateHtml),o.author.isUser!=e&&o.author.isUser?C.css("display","none"):(C.css("display","block"),o.author.following==e?I.css("display","none"):(I.data("disabled",!1).css("display","block"),o.author.following?I.addClass("unfollow").find("> span").text(ce("unfollow")):I.removeClass("unfollow").find("> span").text(ce("follow"))),x.css("display","none").removeClass("requesting"),o.author.friends==e?D.css("display","none"):(D.removeClass("requesting unfriend cancelRequest acceptRequest").data("disabled",!1).css("display","block"),!0===o.author.friends?D.addClass("unfriend").find("> span").text(ce("unfriend")):"requested_by_user"==o.author.friends?D.addClass("cancelRequest").find("> span").text(ce("cancel friend request")):"requested_by_author"==o.author.friends?(D.addClass("acceptRequest").find("> span").text(ce("accept friend request")),x.css("display","block")):D.find("> span").text(ce("add as friend"))))):g.css("display","none"),"object"==typeof o.likes?(T.css("display","block"),"string"==typeof o.likes.backend&&""!=o.likes.backend?(_.css("display","").data("disabled",!1),o.likes.liked?_.addClass("unlike").find("> span").text(ce("unlike")):_.removeClass("unlike").find("> span").text(ce("like"))):_.css("display","none"),"string"!=typeof o.likes.message||""==o.likes.message?A.css("display","none"):A.removeClass("negative").css("display","block").text(o.likes.message),"object"!=typeof o.likes.alsoLiked||0==o.likes.alsoLiked.length?M.css("display","none"):(M.css("display","block").empty(),t.each(o.likes.alsoLiked,function(e,a){var i=t("<li><div></div></li>").appendTo(M).find("> div");"string"==typeof a.url&&""!=a.url&&(i=i.html('<a href="'+a.url+'"></a>').find("> a")),i.attr("title",a.name),re.itemDetails.placeAvatar({src:a.avatar,$container:i})}))):T.css("display","none"),"object"==typeof o.tags?(t.each(o.tags,function(e,t){r+='<li data-id="'+e+'"><span>'+t+"</span></li>"}),""==r?H.css("display","none"):H.css("display","block").html(r)):H.css("display","none"),"string"!=typeof o.download||""==o.download?P.css("display","none"):(l=!0,P.attr("href",o.download).css("display","")),"object"==typeof o.email?(l=!0,E.attr("href","mailto:?to=&subject="+encodeURIComponent(o.email.subject)+"&body="+encodeURIComponent(o.email.body)).css("display","")):E.css("display","none"),R.css("display",l?"block":"none"),"object"==typeof o.meta){if(Q.css("display","block"),"object"==typeof o.meta.exif&&(p='<div class="exif"><h4><span>'+ce("Exif")+"</span></h4><table><tbody>",t.each(o.meta.exif,function(e,t){p+='<tr><td class="cell1">'+e+'</td><td class="cell2">'+t+"</td></tr>"}),ee.html(p+"</tbody></table></div>")),"object"==typeof o.meta.map)switch(ee.append('<div class="map">'+(o.meta.map.title==e?"":"<h4><span>"+o.meta.map.title+"</span></h4>")+"<div></div></div>"),pe.itemDetails.maps.google=null,o.meta.map.type){case"google":"object"==typeof google&&"object"==typeof google.maps&&(i=new google.maps.LatLng(o.meta.map.settings.lat,o.meta.map.settings.lng),pe.itemDetails.maps.google=new google.maps.Map(t("> div.map > div",ee)[0],{center:i,zoom:o.meta.map.settings.zoom,mapTypeId:google.maps.MapTypeId[o.meta.map.settings.type],scrollwheel:!1}),new google.maps.Marker({position:i,map:pe.itemDetails.maps.google}))}ee.css({display:"none"})}else Q.css("display","none");m.data("plugin_eds_tinyscrollbar").update()}},re.itemDetails.resize=function(){le.itemDetails.show&&(m.height(pe.baseWrapper.height-pe.itemDetails.wrapper.verticalOffset-pe.thumbnails.wrapper.effectiveHeight-pe.interfaceActions.wrapper.height),m.data("plugin_eds_tinyscrollbar").update("relative"))},re.itemDisplay={},re.itemDisplay.init=function(){te=t('<div class="itemDisplayWrapper '+(le.itemDetails.rightSide?"left":"right")+'"></div>'),o.append(te),pe.itemDisplay.wrapper.verticalOffset=te.outerHeight(!0)-te.height(),pe.itemDisplay.wrapper.horizontalOffset=te.outerWidth(!0)-te.width(),ae=t('<div class="itemDisplayContainer"></div>').appendTo(te),ie=t('<div class="loadIndicator"></div>').appendTo(te)},re.itemDisplay.resize=function(){var e,a,i,s,n,o,r,l,c,d=de[pe.activeItem];switch(pe.itemDisplay.wrapper.height=pe.baseWrapper.height-pe.itemDisplay.wrapper.verticalOffset-pe.thumbnails.wrapper.effectiveHeight-pe.interfaceActions.wrapper.height,pe.itemDisplay.wrapper.width=pe.baseWrapper.width-pe.itemDisplay.wrapper.horizontalOffset-pe.itemDetails.wrapper.effectiveWidth,te.height(pe.itemDisplay.wrapper.height).width(pe.itemDisplay.wrapper.width),n=t("> .item.active",ae),d.type){case"image":if(0==n.length)return;o={width:pe.preloadedImages[d.src].width,height:pe.preloadedImages[d.src].height};break;case"video":o={width:d.video.width,height:d.video.height};break;case"audio":o={width:450,height:n.height()}}l={width:ae.width(),height:ae.height()},"video"==d.type||"image"==d.type&&(o.width>l.width||o.height>l.height)||"audio"==d.type&&o.width>l.width?(c=l.width/l.height,r=o.width/o.height,e=l.width,a="audio"==d.type?o.height:l.height,r<c?e=Math.round(l.height/o.height*o.width):r>c&&"audio"!=d.type&&(a=Math.round(l.width/o.width*o.height))):(e=o.width,a=o.height),s=Math.floor((l.width-e)/2),i=Math.floor((l.height-a)/2),n.css({width:e,height:a,marginTop:i,marginLeft:s})},re.itemDisplay.showItem=function(){var a,i,s,o=pe.activeItem,r=de[o],l=function(){a=ae.find(">").fadeOut(200,function(){a.remove()}).removeClass("active"),t('<img class="item active" src="'+r.src+'" alt="" style="display: none;" />').appendTo(ae).fadeIn(200),re.itemDisplay.resize(),ie.stop(!0).fadeOut(500)},c="";switch(r.type){case"image":pe.preloadedImages[r.src]!==e&&"success"==pe.preloadedImages[r.src].state?l():(ie.css({display:"none",left:0}).stop(!0).fadeIn(500,function(){ae.find(">").remove()}),re.preloadImage(r.src,function(){o==pe.activeItem&&l()}));break;case"video":switch(a=ae.find(">").removeClass("active").fadeOut(200,function(){a.remove()}),r.video.provider){case"youtube":i='<iframe class="item active" style="display: none;" src="//www.youtube.com/embed/'+r.video.id+'?wmode=opaque" frameborder="0" allowfullscreen></iframe>';break;case"vimeo":i='<iframe class="item active" style="display: none;" src="//player.vimeo.com/video/'+r.video.id+'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';break;case"wistia":i='<iframe class="wistia_embed item active" name="wistia_embed" style="display: none;" src="//fast.wistia.net/embed/iframe/'+r.video.id+'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';break;case"flowplayer":i='<div class="item active" style="display: block; opacity: 0;"></div>'}s=t(i).appendTo(ae),"flowplayer"==r.video.provider?(n(r.video.src,".mp4")?c="video/mp4":n(r.video.src,".webm")?c="video/webm":n(r.video.src,".ogg")?c="video/ogg":n(r.video.src,".flv")&&(c="video/flash"),s.animate({opacity:1},200).flowplayer({swf:le.flowplayerSwf,tooltip:!1,embed:!1,key:le.flowplayer.key,logo:le.flowplayer.logo,clip:{sources:[{type:c,src:r.video.src}]}})):s.fadeIn(200),ie.stop(!0).fadeOut(500),re.itemDisplay.resize();break;case"audio":a=ae.find(">").removeClass("active").fadeOut(200,function(){a.remove()}),s=t('<div class="item active" style="display: block; opacity: 0;"><audio src="'+r.audio.src+'" /></div>').appendTo(ae).animate({opacity:1},200),audiojs.create(t("> audio",s)[0]),ie.stop(!0).fadeOut(500),re.itemDisplay.resize()}},arguments.length>0&&t.extend(!0,le,arguments[0]),this.each(function(){var e=t(this).data("socialMediaBox");e&&(e instanceof Array?t.each(e,function(){de.push(this)}):de.push(e))}),0==de.length?this:(a=t("body").addClass("socialMediaBoxActive"),o=t('<div id="socialMediaBox" class="'+le.baseClass+'" style="visibility: hidden;"></div>').appendTo(a),re.thubnails.init(),re.itemDetails.init(),re.itemDisplay.init(),re.interfaceActions.init(),de.length>1&&(se=t('<div class="navigation previous '+(le.itemDetails.rightSide?"left":"right")+'"></div>').appendTo(o),ne=t('<div class="navigation next '+(le.itemDetails.rightSide?"left":"right")+'"></div>').appendTo(o)),oe=t('<div class="close"><span></span></div>'),o.append(oe),re.resize(),re.showItem(le.openAt,!0),o.css({display:"none",visibility:""}).fadeIn(200).on("click","> div.navigation",function(){t(this).hasClass("previous")?re.showItem(pe.activeItem-1):re.showItem(pe.activeItem+1)}),oe.on("click",function(){re.close()}),t(document).on("keyup.socialMediaBox",function(e){var a=t(document.activeElement);if(0!=a.filter("textarea").parents(".commentsWrapper").length||a.filter("input").parents(".commentsWrapper").length)return!1;switch(e.keyCode){case 37:re.showItem(pe.activeItem-1);break;case 39:re.showItem(pe.activeItem+1);break;case 27:re.close()}return!1}),ae.on("touchstart",function(e){"function"==typeof e.stopPropagation&&(e.stopPropagation(),e.preventDefault()),e.originalEvent.touches&&e.originalEvent.touches.length?e=e.originalEvent.touches[0]:e.originalEvent.changedTouches&&e.originalEvent.changedTouches.length&&(e=e.originalEvent.changedTouches[0]),pe.itemDisplay.touch.newTouch=!0,pe.itemDisplay.touch.startX=e.pageX,pe.itemDisplay.touch.startY=e.pageY}).on("touchmove",function(e){var t;"function"==typeof e.stopPropagation&&(e.stopPropagation(),e.preventDefault()),pe.itemDisplay.touch.newTouch&&(e.originalEvent.touches&&e.originalEvent.touches.length?e=e.originalEvent.touches[0]:e.originalEvent.changedTouches&&e.originalEvent.changedTouches.length&&(e=e.originalEvent.changedTouches[0]),t=pe.itemDisplay.touch.startX-e.pageX,Math.abs(t)<50||(pe.itemDisplay.touch.newTouch=!1,t>0?re.showItem(pe.activeItem+1):re.showItem(pe.activeItem-1)))}).on("touchend touchcancel",function(e){"function"==typeof e.stopPropagation&&(e.stopPropagation(),e.preventDefault()),pe.itemDisplay.touch.newTouch=!1}),t(window).on("resize.socialMediaBox",function(){re.resize()}),this)},t.fn.socialMediaBox4Journal=function(e){var i;if(!a)return a=!0,i=function(){var a,i,n,o,r,l,c,d=t(this),p=d.parents(".journalrow")[0].id,m="",u=0,h=t('<div id="socialMediaBox4JournalOverlay"'+("object"==typeof e.smbConfig&&e.smbConfig.baseClass?' class="'+e.smbConfig.baseClass+'"':"")+"><div></div><p></p></div>"),v=t("> p",h),f=t("> div",h),g=t("body"),y="",b=function(){t(document).off(".socialMediaBox4Journal"),h.fadeTo(400,0,function(){h.remove()}),g.removeClass("socialMediaBoxActive"),v.css("display","none")};g.append(h).addClass("socialMediaBoxActive"),h.fadeTo(400,1).on("click","> p > .close",function(){return b(),!1}),t.each(d.parents("#journalItems").eq(0).find(">").has(".journalitem > .jphoto"),function(t,a){a.id==p&&(e.smbConfig.openAt=t),m+=a.id.substring(a.id.indexOf("-")+1)+","}),m=m.substring(0,m.length-1),o=d.parents(".DnnModule-Journal").eq(0),c=0,u=0==o.length?0:"string"!=typeof(l=o.attr("class"))||""==l?0:($.each(l.split(/\s+/),function(e,t){if("object"==typeof(r=t.match(/\d+$/))&&null!=r)return c=parseInt(r[0]),!1}),c),a=s(),n=t.ajax({data:{action:"journal_entries",journalIds:m,journalModuleId:u,journalType:a.type,journalTarget:a.target},dataType:"json",type:"POST",url:e.entriesUrl,timeout:15e3,cache:!1,error:function(){y=e.errors.generalError},success:function(t){"success"==t.status?0==(i=t.entries).length&&(y=e.errors.noJournalItems):y=t.message},complete:function(){if(""!=y)return f.fadeTo(200,0,function(){f.css("display","none")}),void v.html(y+'<span class="close">X</span>').css({display:"block",opacity:0}).fadeTo(200,1);b(),t("<div />").data("socialMediaBox",i).socialMediaBox(e.smbConfig)}}),t(document).on("keyup.socialMediaBox4Journal",function(e){if(27==e.keyCode)return n.abort(),b(),!1})},t(".DnnModule-Journal").on("click",".journalitem > .jphoto a",function(){return i.call(this),!1}).on("click",".journalitem > .jphoto > img",i).on("mouseenter",".journalitem > .jphoto > img",function(){t(this).css("cursor","pointer")}),this})}();
+;(function(undefined) {
+var smb4JSetup = false,
+
+getJournalInfo = function () {
+	var targetIdMatch,
+		targetId = 0,
+		journalType = 'summary';
+
+	targetIdMatch = location.href.match(/\/userid\/\d+\//i);
+	if (targetIdMatch != null) {
+		targetId = targetIdMatch[0].match(/\d+/)[0];
+		journalType = 'profile';
+	} else {
+		targetIdMatch = location.href.match(/\/groupid\/\d+\//i);
+		if (targetIdMatch != null) {
+			targetId = targetIdMatch[0].match(/\d+/)[0];
+			journalType = 'group';
+		}
+	}
+
+	return {type: journalType, target: targetId};
+},
+
+getJournalModuleId = function ($journalContainer) {
+	var matchModulId,
+		moduleId = 0,
+		containerClass;
+
+	if ($journalContainer.length == 0)
+		return 0;
+
+	containerClass = $journalContainer.attr('class');
+
+	if (typeof containerClass != 'string' || containerClass == '')
+		return 0;
+
+	$.each(containerClass.split(/\s+/), function (i, s) {
+		matchModulId = s.match(/\d+$/);
+		if (typeof matchModulId == 'object' && matchModulId != null) {
+			moduleId = parseInt(matchModulId[0]);
+			return false;
+		}
+	});
+
+	return moduleId;
+},
+
+stringEndsWith = function (s, e) {
+	return s.indexOf(e, s.length - e.length) !== -1;
+},
+
+lightboxInit = function($) {
+	$.fn.socialMediaBox = function () {
+		var lightbox = {},
+
+			config = {
+				openAt: 0,
+				baseClass: '',
+				localized: {},
+				flowplayerSwf: '',
+				flowplayer: {
+					key: '',
+					logo: ''
+				},
+				thumbnails: {
+					show: true,
+					width: 100,
+					height: 100
+				},
+				itemDetails: {
+					show: true,
+					rightSide: true,
+					comments: {
+						notifySocialGroup: false,
+						requireAuthorInfo: true,
+						captcha: true,
+						permissions: {
+							commenting: true,
+							editing: false,
+							deleting: false
+						}
+					},
+					socialButtons: {
+						show: false,
+						buttons: {
+							facebook: {
+								show: false,
+								html: '<iframe src="//www.facebook.com/plugins/like.php?href={{encodedUrl}}&amp;send=false&amp;layout=button_count&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;width=110" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px; width: 110px;" allowTransparency="true"></iframe>'
+							},
+							gplus: {
+								show: false,
+								html: '<div class="g-plusone" data-size="medium" data-href="{{url}}"></div><script type="text/javascript">gapi.plusone.go();</script>'
+							},
+							twitter: {
+								show: false,
+								html: '<a href="//twitter.com/share" class="twitter-share-button" data-url="{{url}}" data-text="{{escapedTitle}}">Tweet</a><script type="text/javascript">twttr.widgets.load();</script>'
+							},
+							inshare: {
+								show: false,
+								html: '<script type="IN/Share" data-counter="right" data-url="{{url}}"></script><script type="text/javascript">IN.parse();</script>'
+							},
+							pinterest: {
+								show: false,
+								html: '<a href="//pinterest.com/pin/create/button/?url={{encodedUrl}}&media={{encodedMediaUrl}}&description={{encodedTitle}}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>'
+							}
+						}
+					}
+				},
+				events: {
+					onBeforeClose: function () {}
+				},
+				googleReCaptchaSiteKey: ''
+			},
+
+			_ = function (s) {
+				return typeof config.localized[s] == 'string' ? config.localized[s] : s;
+			},
+
+			$body,
+			$baseWrapper,
+
+			$thumbnailsMainWrapper,
+			$thumbnailsViewport,
+			$thumbnailsOverview,
+
+			$interfaceActionsWrapper,
+			$toggleInterface,
+
+			$itemDetailsWrapper,
+			$itemDetailsViewport,
+			$itemDetailsOverview,
+			$itemDetailsTitle,
+			$itemDetailsDescription,
+
+			$itemDetailsAuthorWrapper,
+			$itemDetailsAuthorAvatarWrapper,
+			$itemDetailsAuthorAvatarContainer,
+			$itemDetailsAuthorName,
+			$itemDetailsAuthorDate,
+			$itemDetailsAuthorActions,
+			$itemDetailsAuthorActionFollow,
+			$itemDetailsAuthorActionFriend,
+			$itemDetailsAuthorActionRejectFriend,
+
+			$itemDetailsLikeWrapper,
+			$itemDetailsLikeContainer,
+			$itemDetailsLikeButton,
+			$itemDetailsLikeMessage,
+			$itemDetailsLikeAlsoLiked,
+
+			$socialButtonsWrapper,
+
+			$itemDetailsRatingWrapper,
+			$itemDetailsRatingScore,
+			$itemDetailsRatingMessage,
+			$itemDetailsRatingStarContainer,
+			$itemDetailsRatingStars,
+
+			$itemDetailsTagContainer,
+
+			$itemDetailsButtonsWrapper,
+			$itemDetailsDownloadButton,
+			$itemDetailsEmailButton,
+
+			$itemDetailsCommentsWrapper,
+			$itemDetailsCommentsMessage,
+			$itemDetailsCommentsList,
+			$itemDetailsCommentsLoading,
+			$itemDetailsAddCommentContainer,
+			$itemDetailsAddCommentTrigger,
+			$itemDetailsAddCommentContent,
+			$itemDetailsAddCommentMessage,
+			$itemDetailsAddCommentAuthorInfoWrapper,
+			$itemDetailsAddCommentAuthorInfoText,
+			$itemDetailsAddCommentCaptchaContainer,
+
+			$itemDetailsMetaWrapper,
+			$itemDetailsMetaTitle,
+			$itemDetailsMetaContent,
+
+			$itemDisplayWrapper,
+			$itemDisplayContainer,
+			$itemDisplayLoadIndicator,
+
+			$navigationPrevious,
+			$navigationNext,
+
+			$closeButton,
+
+			displayItems = [],
+
+			rendering = {
+				activeItem: 0,
+				resizeInProgress: false,
+				resizeRace: false,
+				interfaceHidden: false,
+				baseWrapper: {
+					height: 0,
+					width: 0
+				},
+				thumbnails: {
+					rendered: false,
+					initialized: false,
+					thumbActivatedChange: false,
+					allThumbnailsLoaded: false,
+					thumbnail: {
+						height: 0,
+						width: 0
+					},
+					wrapper: {
+						height: 0,
+						effectiveHeight: 0
+					},
+					overview: {
+						width: 0
+					}
+				},
+				interfaceActions: {
+					wrapper: {
+						height: 0
+					}
+				},
+				itemDetails: {
+					rendered: false,
+					wrapper: {
+						verticalOffset: 0,
+						width: 0,
+						effectiveWidth: 0
+					},
+					comments: {
+						author: {
+							avatarContainer: null
+						}
+					},
+					maps: {
+						google: null
+					}
+				},
+				itemDisplay: {
+					wrapper: {
+						verticalOffset: 0,
+						horizontalOffset: 0,
+						height: 0,
+						width: 0
+					},
+					touch: {
+						newTouch: false,
+						startX: 0,
+						startY: 0
+					}
+				},
+				preloadedImages: {},
+				commentsCache: {},
+				reCaptchaId: undefined
+			},
+
+			preloadingDone = function (src, successful) {
+				if (successful) {
+					rendering.preloadedImages[src].state = 'success';
+					rendering.preloadedImages[src].width = this.naturalWidth === undefined ? this.width : this.naturalWidth;
+					rendering.preloadedImages[src].height = this.naturalHeight === undefined ? this.height : this.naturalHeight;
+				} else
+					rendering.preloadedImages[src].state = 'error';
+
+				clearTimeout(rendering.preloadedImages[src].timeout);
+			},
+
+			runPreloadCallbacks = function (src) {
+				var callbacks = rendering.preloadedImages[src].callbacks;
+
+				while (callbacks.length > 0)
+					callbacks.splice(0, 1)[0]();
+
+				rendering.preloadedImages[src].callbacks = [];
+			}
+
+			terminated = false;
+
+
+		lightbox.preloadImage = function (src, callback) {
+			var $image = $('<img />'),
+				img = $image[0],
+				cancelLoad = false,
+				retries = typeof callback == 'number' ? callback : 0;
+
+			if (retries == 0) {
+				if (rendering.preloadedImages[src] !== undefined) {
+					if (rendering.preloadedImages[src].state == 'loading')
+						rendering.preloadedImages[src].callbacks.push(callback);
+					else
+						callback();
+
+					return;
+				}
+
+				rendering.preloadedImages[src] = {
+					state: 'loading',
+					callbacks: [callback]
+				};
+			}
+
+			rendering.preloadedImages[src].timeout = setTimeout(function () {
+				if (!terminated && retries < 10)
+					lightbox.preloadImage(src, retries + 1);
+			}, 4000 * (retries + 1));
+
+			$image.bind('load.socialMediaBox error.socialMediaBox', function (e) {
+				if (cancelLoad || rendering.preloadedImages[src].state != 'loading')
+					return;
+
+				preloadingDone.apply(img, [src, e.type == 'load']);
+				runPreloadCallbacks(src);
+			});
+
+			img.src = src;
+
+			if (img.complete && img.naturalWidth !== undefined) {
+				cancelLoad = true;
+				preloadingDone.apply(img, [src, img.naturalWidth !== 0 && img.naturalHeight !== 0]);
+				runPreloadCallbacks(src);
+				return;
+			}
+		};
+
+
+		lightbox.resize = function () {
+			var navigationTop,
+				navigationOffset,
+				navigationPreviousCss,
+				navigationNextCss,
+				closeCss,
+				closeOffset;
+
+			if (rendering.resizeInProgress) {
+				rendering.resizeRace = true;
+				return;
+			}
+
+			rendering.resizeInProgress = true;
+
+			rendering.baseWrapper.height = $baseWrapper.height();
+			rendering.baseWrapper.width = $baseWrapper.width();
+
+			lightbox.thubnails.resize();
+			lightbox.itemDetails.resize();
+			lightbox.itemDisplay.resize();
+			lightbox.interfaceActions.resize();
+
+			if (displayItems.length > 1) {
+				navigationTop = Math.floor((rendering.itemDisplay.wrapper.height + rendering.itemDisplay.wrapper.verticalOffset - $navigationPrevious.height()) / 2);
+				navigationOffset = rendering.itemDisplay.wrapper.width + rendering.itemDisplay.wrapper.horizontalOffset - $navigationNext.outerWidth(true);
+
+				if (config.itemDetails.rightSide) {
+					navigationPreviousCss = {
+						top: navigationTop,
+						left: 0,
+						right: 'auto'
+					};
+
+					navigationNextCss = {
+						top: navigationTop,
+						left: navigationOffset,
+						right: 'auto'
+					};
+				} else {
+					navigationPreviousCss = {
+						top: navigationTop,
+						left: 'auto',
+						right: navigationOffset
+					};
+
+					navigationNextCss = {
+						top: navigationTop,
+						left: 'auto',
+						right: 0
+					};
+				}
+
+				$navigationPrevious.css(navigationPreviousCss);
+
+				$navigationNext.css(navigationNextCss);
+			}
+
+			closeOffset = rendering.itemDisplay.wrapper.width + rendering.itemDisplay.wrapper.horizontalOffset - $closeButton.outerWidth(true);
+
+			if (config.itemDetails.rightSide) {
+				closeCss = {
+					left: closeOffset,
+					right: 'auto'
+				};
+			} else {
+				closeCss = {
+					left: 'auto',
+					right: closeOffset
+				};
+			}
+
+			$closeButton.css(closeCss);
+
+			rendering.resizeInProgress = false;
+
+			if (rendering.resizeRace) {
+				rendering.resizeRace = false;
+				lightbox.resize();
+			}
+		};
+
+
+		lightbox.showItem = function (i, firstRun) {
+			if (i < 0)
+				i = displayItems.length - 1;
+			else if (i >= displayItems.length)
+				i = 0;
+
+			if (firstRun !== true && rendering.activeItem == i)
+				return;
+
+			rendering.activeItem = i;
+
+			lightbox.itemDisplay.showItem();
+			lightbox.itemDetails.showItem();
+			lightbox.thubnails.showItem();
+		};
+
+
+		lightbox.callbackObject = function () {
+			return {
+				activeItem: rendering.activeItem,
+				displayItems: displayItems
+			};
+		};
+
+		lightbox.close = function () {
+			if (typeof config.events.onBeforeClose == 'function' && config.events.onBeforeClose(lightbox.callbackObject()) === false)
+				return;
+
+			terminated = true;
+
+			$(document).off('.socialMediaBox');
+			$(window).off('.socialMediaBox');
+
+			$baseWrapper.fadeOut(200, function () {
+				$baseWrapper.remove();
+
+				$body.removeClass('socialMediaBoxActive');
+			});
+		};
+
+
+		lightbox.thubnails = {};
+		lightbox.thubnails.init = function () {
+			var $firstThumb;
+
+			if (!config.thumbnails.show || displayItems.length < 2)
+				return;
+
+			rendering.thumbnails.rendered = true;
+
+			$thumbnailsMainWrapper = $('<div class="thumbnailsMainWrapper">' +
+					'<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>' +
+					'<div class="viewport"><div class="overview"></div></div>' +
+				'</div>');
+
+			$thumbnailsViewport = $('> div.viewport', $thumbnailsMainWrapper)
+			$thumbnailsOverview = $('> div.overview', $thumbnailsViewport);
+
+			$.each(displayItems, function (i, item) {
+				var $wrapper = $('<div><div class="' + item.type + '">' + (item.type == 'video' || item.type == 'audio' ? '<div class="playItem"></div>' : '') + '</div></div>').appendTo($thumbnailsOverview);
+
+				if (item.thumbnail !== undefined && item.thumbnail.src !== undefined) {
+					lightbox.preloadImage(item.thumbnail.src, function () {
+						var top,
+							cth = config.thumbnails.height,
+							ctw = config.thumbnails.width,
+							ith,
+							itw,
+							containerRatio = ctw / cth,
+							itemRatio;
+
+						if (rendering.preloadedImages[item.thumbnail.src].state == 'success') {
+							ith = rendering.preloadedImages[item.thumbnail.src].height;
+							itw = rendering.preloadedImages[item.thumbnail.src].width;
+
+							if (ith > cth || itw > ctw) {
+								itemRatio = itw / ith;
+
+								if (itemRatio < containerRatio) {
+									itw = Math.round(cth / ith * itw);
+									ith = cth;
+								} else if (itemRatio > containerRatio) {
+									ith = Math.round(ctw / itw * ith);
+									itw = ctw;
+								} else {
+									itw = ctw;
+									ith = cth;
+								}
+							}
+
+							top = ith > cth ? 0 : Math.floor((cth - ith) / 2);
+
+							$wrapper
+								.css('top', top)
+								.fadeIn(300)
+								.addClass('visible')
+								.find('> div')
+									.prepend('<img src="' + item.thumbnail.src + '" alt="" style="height: ' + ith + 'px; width: ' + itw + 'px;" />');
+
+							if (rendering.thumbnails.initialized)
+								lightbox.thubnails.resize();
+						}
+					});
+				} else
+					$wrapper
+						.fadeIn(300)
+						.addClass('visible')
+						.find('> div')
+							.prepend('<div class="noThumb"></div>');
+			});
+
+			$firstThumb = $('> div', $thumbnailsOverview).eq(0);
+
+			$thumbnailsMainWrapper.appendTo($baseWrapper);
+
+			$('>', $firstThumb).css({
+				width: config.thumbnails.width,
+				height: config.thumbnails.height
+			});
+
+			rendering.thumbnails.thumbnail.height = $firstThumb.outerHeight(true);
+			rendering.thumbnails.thumbnail.width = $firstThumb.outerWidth(true);
+
+			$('>', $firstThumb).css({
+				width: '',
+				height: ''
+			});
+
+			$thumbnailsOverview.height(rendering.thumbnails.thumbnail.height);
+			$thumbnailsViewport.height(rendering.thumbnails.thumbnail.height);
+
+			rendering.thumbnails.wrapper.height = rendering.thumbnails.wrapper.effectiveHeight = $thumbnailsMainWrapper.outerHeight(true);
+
+			$thumbnailsMainWrapper.eds_tinyscrollbar({axis: 'x'});
+
+			$thumbnailsOverview.on('click', '> div', function () {
+				rendering.thumbnails.thumbActivatedChange = true;
+				lightbox.showItem($(this).index());
+			});
+
+			rendering.thumbnails.initialized = true;
+		};
+		lightbox.thubnails.resize = function () {
+			var scrollValue = 0,
+				mww,
+				ow,
+				tw = rendering.thumbnails.thumbnail.width,
+				loadedThumbnails;
+
+			if (!config.thumbnails.show || displayItems.length < 2)
+				return;
+
+			if (rendering.thumbnails.thumbActivatedChange) {
+				rendering.thumbnails.thumbActivatedChange = false;
+				return;
+			}
+
+			if (!rendering.thumbnails.allThumbnailsLoaded) {
+				loadedThumbnails = $('> div.visible', $thumbnailsOverview);
+
+				if (displayItems.length == loadedThumbnails.length)
+					rendering.thumbnails.allThumbnailsLoaded = true;
+
+				rendering.thumbnails.overview.width = 0;
+				loadedThumbnails.each(function () {
+					rendering.thumbnails.overview.width += $(this).outerWidth(true);
+				});
+				$thumbnailsOverview.width(rendering.thumbnails.overview.width);
+			}
+
+			mww = $thumbnailsMainWrapper.width();
+			ow = rendering.thumbnails.overview.width;
+
+			if (ow > mww) {
+				$thumbnailsOverview.css({left: 0});
+				scrollValue = tw * rendering.activeItem + Math.floor(tw / 2);
+
+				if (scrollValue <= Math.floor(mww / 2))
+					scrollValue = 0;
+				else if (ow - scrollValue <= Math.ceil(mww / 2))
+					scrollValue = 'bottom';
+				else
+					scrollValue = scrollValue - Math.floor(mww / 2);
+
+				$thumbnailsMainWrapper.data('plugin_eds_tinyscrollbar').update(scrollValue);
+			} else {
+				$thumbnailsMainWrapper.data('plugin_eds_tinyscrollbar').update();
+				$thumbnailsOverview.css({left: Math.floor((mww - ow) / 2)});
+			}
+		};
+		lightbox.thubnails.showItem = function () {
+			if (!config.thumbnails.show || displayItems.length < 2)
+				return;
+
+			$('> div', $thumbnailsOverview)
+				.removeClass('active')
+				.eq(rendering.activeItem)
+					.addClass('active');
+
+			lightbox.thubnails.resize();
+		};
+
+
+		lightbox.interfaceActions = {};
+		lightbox.interfaceActions.init = function () {
+			var $toggleInterfaceSpan;
+
+			$interfaceActionsWrapper = $('<div class="interfaceActionsWrapper"></div>');
+
+			if (rendering.thumbnails.rendered || rendering.itemDetails.rendered) {
+				$toggleInterface = $('<div class="action toggleInterface"><span>' + _('Hide interface') + '</span></div>')
+					.appendTo($interfaceActionsWrapper)
+					.on('click', function () {
+						var thumbnailsBottomVal,
+							itemDetailsCss;
+
+						if (rendering.interfaceHidden) {
+							rendering.interfaceHidden = false;
+							$toggleInterfaceSpan.text(_('Hide interface'));
+							$toggleInterface.removeClass('hidden');
+						} else {
+							rendering.interfaceHidden = true;
+							$toggleInterfaceSpan.text(_('Show interface'));
+							$toggleInterface.addClass('hidden');
+						}
+
+						if (rendering.thumbnails.rendered) {
+							if (rendering.interfaceHidden)
+								thumbnailsBottomVal = - rendering.thumbnails.wrapper.height;
+							else
+								thumbnailsBottomVal = 0;
+
+							$thumbnailsMainWrapper
+								.stop(true)
+								.animate({
+									bottom: thumbnailsBottomVal
+								}, {
+									duration: 200,
+									step: function (now) {
+										rendering.thumbnails.wrapper.effectiveHeight = Math.round(rendering.thumbnails.wrapper.height + now);
+										lightbox.resize();
+									}
+								});
+						}
+
+						if (rendering.itemDetails.rendered) {
+							if (config.itemDetails.rightSide)
+								if (rendering.interfaceHidden)
+									itemDetailsCss = {
+										right: - rendering.itemDetails.wrapper.width
+									};
+								else
+									itemDetailsCss = {
+										right: 0
+									};
+							else
+								if (rendering.interfaceHidden)
+									itemDetailsCss = {
+										left: - rendering.itemDetails.wrapper.width
+									};
+								else
+									itemDetailsCss = {
+										left: 0
+									};
+
+							$itemDetailsWrapper
+								.stop(true)
+								.animate(itemDetailsCss, {
+									duration: 200,
+									step: function (now) {
+										rendering.itemDetails.wrapper.effectiveWidth = Math.round(rendering.itemDetails.wrapper.width + now);
+										lightbox.resize();
+									}
+								});
+						}
+					});
+
+				$toggleInterfaceSpan = $('> span', $toggleInterface);
+			}
+
+			$baseWrapper.append($interfaceActionsWrapper);
+
+			rendering.interfaceActions.wrapper.height = $interfaceActionsWrapper.outerHeight(true);
+		};
+		lightbox.interfaceActions.resize = function () {
+			$interfaceActionsWrapper.css({
+				bottom: rendering.thumbnails.wrapper.effectiveHeight
+			});
+		};
+
+
+		lightbox.itemDetails = {
+			comments: {}
+		};
+		lightbox.itemDetails.init = function () {
+			var titleDescriptionHtml = '<h2></h2><div class="description"></div>',
+				ratingHtml = '<div class="ratingWrapper">\
+					<div class="starContainer">\
+						<div></div>\
+					</div>\
+					<p class="score"></p>\
+					<p class="message"></p>\
+				</div>',
+				commentsHtml = '<div class="commentsWrapper">\
+					<h3>' + _('Comments') + '</h3>\
+					<div class="loading"></div>\
+					<p class="message"></p>\
+					<div class="commentsList"></div>\
+					<div class="addCommentContainer">\
+						<div class="commentingMessage"></div>\
+						<div class="authorInfo name"><div class="text"><span class="label">' + _('Name') + '</span><input type="text" value="" /></div></div>\
+						<div class="authorInfo email"><div class="text"><span class="label">' + _('Email') + '</span><input type="text" value="" /></div></div>\
+						<div class="textarea"><textarea></textarea></div>\
+						<div class="captchaContainer"><div class="captcha"></div></div>\
+						<button class="add"><span>' + _('Add comment') + '</span></button>\
+					</div>\
+				</div>',
+				authorHtml = '<div class="authorWrapper">\
+					<div class="avatarWrapper">\
+						<div class="avatarContainer"></div>\
+					</div>\
+					<div class="actions">\
+						<button class="follow"><span>' + _('follow') + '</span></button>\
+						<button class="friend"><span>' + _('add as friend') + '</span></button>\
+						<button class="friend rejectRequest"><span>' + _('reject friend request') + '</span></button>\
+					</div>\
+					<p class="postedBy">' + _('posted by') + '</p>\
+					<p class="name"></p>\
+					<p class="date"></p>\
+				</div>',
+				likeHtml = '<div class="likeWrapper">\
+					<div class="likeContainer">\
+						<button><span>' + _('like') + '</span></button>\
+						<p></p>\
+					</div>\
+					<ul class="alsoLiked"></ul>\
+				</div>',
+				tagHtml = '<ul class="tagContainer"></ul>',
+				buttonsHtml = '<div class="buttonsWrapper">\
+					<a href="#" class="email"><span>' + _('Send link') + '</span></a>\
+					<a href="#" target="_blank" class="download"><span>' + _('Download') + '</span></a>\
+				</div>',
+				socialButtonsHtml = '<div class="socialButtonsWrapper"></div>',
+				metaHtml = '<div class="metaWrapper"><h3><span>' + _('Details') + '</span></h3><div class="content"></div></div>';
+
+			if (!config.itemDetails.show)
+				return;
+
+			$itemDetailsWrapper = $('<div class="itemDetailsWrapper ' + (config.itemDetails.rightSide ? 'right' : 'left') + '"><div class="viewport"><div class="overview">' + titleDescriptionHtml + authorHtml + likeHtml + socialButtonsHtml + ratingHtml + tagHtml + buttonsHtml + commentsHtml + metaHtml + '</div></div><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div></div>');
+			$itemDetailsViewport = $('> .viewport', $itemDetailsWrapper);
+			$itemDetailsOverview = $('> .overview', $itemDetailsViewport);
+			$itemDetailsTitle = $('> h2', $itemDetailsOverview);
+			$itemDetailsDescription = $('> div.description', $itemDetailsOverview);
+
+			$itemDetailsAuthorWrapper = $('> .authorWrapper', $itemDetailsOverview);
+			$itemDetailsAuthorAvatarWrapper = $('> .avatarWrapper', $itemDetailsAuthorWrapper);
+			$itemDetailsAuthorAvatarContainer = $('> .avatarContainer', $itemDetailsAuthorAvatarWrapper);
+			$itemDetailsAuthorName = $('> .name', $itemDetailsAuthorWrapper);
+			$itemDetailsAuthorDate = $('> .date', $itemDetailsAuthorWrapper);
+			$itemDetailsAuthorActions = $('> .actions', $itemDetailsAuthorWrapper);
+			$itemDetailsAuthorActionFollow = $('> .follow', $itemDetailsAuthorActions);
+			$itemDetailsAuthorActionFriend = $('> .friend', $itemDetailsAuthorActions).eq(0);
+			$itemDetailsAuthorActionRejectFriend = $('> .friend', $itemDetailsAuthorActions).eq(1);
+
+			$itemDetailsLikeWrapper = $('> .likeWrapper', $itemDetailsOverview);
+			$itemDetailsLikeContainer = $('> .likeContainer', $itemDetailsLikeWrapper);
+			$itemDetailsLikeButton = $('> button', $itemDetailsLikeContainer);
+			$itemDetailsLikeMessage = $('> p', $itemDetailsLikeContainer);
+			$itemDetailsLikeAlsoLiked = $('> .alsoLiked', $itemDetailsLikeWrapper);
+
+			$socialButtonsWrapper = $('> .socialButtonsWrapper', $itemDetailsOverview);
+
+			$itemDetailsRatingWrapper = $('> .ratingWrapper', $itemDetailsOverview);
+			$itemDetailsRatingScore = $('p.score', $itemDetailsRatingWrapper);
+			$itemDetailsRatingMessage = $('p.message', $itemDetailsRatingWrapper);
+			$itemDetailsRatingStarContainer = $('> div.starContainer', $itemDetailsRatingWrapper);
+			$itemDetailsRatingStars = $('> div', $itemDetailsRatingStarContainer);
+
+			$itemDetailsTagContainer = $('> .tagContainer', $itemDetailsOverview);
+
+			$itemDetailsButtonsWrapper = $('> .buttonsWrapper', $itemDetailsOverview);
+			$itemDetailsDownloadButton = $('> .download', $itemDetailsButtonsWrapper);
+			$itemDetailsEmailButton = $('> .email', $itemDetailsButtonsWrapper);
+
+			$itemDetailsCommentsWrapper = $('> div.commentsWrapper', $itemDetailsOverview);
+			$itemDetailsCommentsMessage = $('> p.message', $itemDetailsCommentsWrapper);
+			$itemDetailsCommentsList = $('> div.commentsList', $itemDetailsCommentsWrapper);
+			$itemDetailsCommentsLoading = $('> div.loading', $itemDetailsCommentsWrapper);
+			$itemDetailsAddCommentContainer = $('> div.addCommentContainer', $itemDetailsCommentsWrapper);
+			$itemDetailsAddCommentTrigger = $('> button.add', $itemDetailsAddCommentContainer);
+			$itemDetailsAddCommentContent = $('> div > textarea', $itemDetailsAddCommentContainer);
+			$itemDetailsAddCommentMessage = $('> .commentingMessage', $itemDetailsAddCommentContainer);
+
+			$itemDetailsAddCommentAuthorInfoWrapper = $('> .authorInfo', $itemDetailsAddCommentContainer);
+			$itemDetailsAddCommentAuthorInfoText = $('> .text', $itemDetailsAddCommentAuthorInfoWrapper);
+			$itemDetailsAddCommentCaptchaContainer = $('> div.captchaContainer', $itemDetailsAddCommentContainer);
+
+			$itemDetailsMetaWrapper = $('> .metaWrapper', $itemDetailsOverview);
+			$itemDetailsMetaTitle = $('> h3', $itemDetailsMetaWrapper);
+			$itemDetailsMetaContent = $('> .content', $itemDetailsMetaWrapper);
+
+			$baseWrapper.append($itemDetailsWrapper);
+
+			rendering.itemDetails.wrapper.verticalOffset = $itemDetailsWrapper.outerHeight(true) - $itemDetailsWrapper.height();
+			rendering.itemDetails.wrapper.width = rendering.itemDetails.wrapper.effectiveWidth = $itemDetailsWrapper.outerWidth(true);
+
+			$socialButtonsWrapper.css('display', (config.itemDetails.socialButtons.show ? 'block' : 'none'));
+
+			$itemDetailsAddCommentAuthorInfoText.click(function () {
+				var $clicked = $(this),
+					$input = $('> input', $clicked);
+
+				$input.focus();
+
+				return false;
+			});
+
+			$('> input', $itemDetailsAddCommentAuthorInfoText)
+				.focus(function () {
+					var $span = $(this).siblings('span');
+
+					if (this.value != '')
+						return;
+
+					$span
+						.stop(true)
+						.fadeTo(200, 0, function () {
+							$span.css('display', 'none');
+						});
+				})
+				.blur(function () {
+					if (this.value != '')
+						return;
+
+					$(this).siblings('span')
+						.stop(true)
+						.css('display', '')
+						.fadeTo(200, 1);
+				});
+
+			$itemDetailsAddCommentTrigger.on('click', function () {
+				var srcContent = $itemDetailsAddCommentContent.val(),
+					currentItem = rendering.activeItem,
+					item = displayItems[currentItem],
+					commentingError = '',
+					responsComment = {},
+					responseAuthor = {},
+					authorName,
+					authorEmail,
+					captcha,
+					contentErrorMsgs = [],
+					contentErrorHtml = '',
+					emailVerification = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+					journalInfo = getJournalInfo(),
+					requestObject = {
+						action: 'add_comment',
+						journalType: journalInfo.type,
+						journalTarget: journalInfo.target
+					};
+
+				if ($itemDetailsAddCommentContainer.hasClass('sending'))
+					return;
+
+				if (config.itemDetails.comments.notifySocialGroup) {
+					requestObject.notifySocialGroup = true;
+					requestObject.journalModuleId = 0;
+				}
+
+				if (config.itemDetails.comments.requireAuthorInfo) {
+					authorName = $('> div > input', $itemDetailsAddCommentAuthorInfoWrapper.filter('.name')).val();
+					authorEmail = $('> div > input', $itemDetailsAddCommentAuthorInfoWrapper.filter('.email')).val();
+
+					if (authorName === '')
+						contentErrorMsgs.push(_('a name'));
+
+					if (authorEmail === '' || !emailVerification.test(authorEmail))
+						contentErrorMsgs.push(_('a valid email address'));
+				}
+
+				if (srcContent == '')
+					contentErrorMsgs.push(_('a comment'));
+
+				if (config.itemDetails.comments.requireAuthorInfo && config.itemDetails.comments.captcha) {
+					captcha = grecaptcha.getResponse(rendering.reCaptchaId);
+
+					if (captcha === '')
+						contentErrorMsgs.push(_('the captcha'));
+				}
+
+				if (contentErrorMsgs.length !== 0) {
+					contentErrorHtml = '<p>' + _('Please specify') + ' ';
+
+					$.each(contentErrorMsgs, function (i, el) {
+						if (i > 0)
+							if (i + 1 == contentErrorMsgs.length)
+								contentErrorHtml += ' ' + _('and') + ' ';
+							else
+								contentErrorHtml += ', ';
+
+						contentErrorHtml += el;
+					});
+
+					contentErrorHtml += '</p>';
+
+					$itemDetailsAddCommentMessage
+						.css('display', 'block')
+						.removeClass('positive')
+						.html(contentErrorHtml)
+						.addClass('negative');
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+
+					return;
+				}
+
+				$itemDetailsAddCommentContent[0].disabled = true;
+				$itemDetailsAddCommentContainer.addClass('sending');
+
+				$itemDetailsAddCommentMessage
+					.css('display', 'block')
+					.removeClass('negative positive')
+					.html('<p>' + _('Sending...') + '</p>');
+
+				requestObject.comment = srcContent;
+
+				if (config.itemDetails.comments.requireAuthorInfo) {
+					requestObject.name = authorName;
+					requestObject.email = authorEmail;
+
+					if (config.itemDetails.comments.captcha) {
+						requestObject.captcha = captcha;
+					}
+				}
+
+				$.ajax({
+					data: requestObject,
+					dataType: 'json',
+					type: 'POST',
+					url: item.comments.backend,
+					timeout: 15000,
+					cache: false,
+					error: function () {
+						commentingError = _('The comment can\'t currently be saved. Please try again later.');
+					},
+					success: function (response) {
+						if (response.status == undefined) {
+							commentingError = _('The comment can\'t currently be saved. Please try again later.');
+
+							return;
+						}
+
+						switch (response.status) {
+						case 'success':
+							responsComment.author = response.author.id;
+							responsComment.content = response.comment;
+							responsComment.raw = srcContent;
+							responsComment.id = response.id;
+							responsComment.dateHtml = response.dateHtml;
+
+							rendering.commentsCache[item.comments.backend].comments.push(responsComment);
+
+							if (rendering.commentsCache[item.comments.backend].authors[responsComment.author] == undefined)
+								responseAuthor = rendering.commentsCache[item.comments.backend].authors[responsComment.author] = {
+									avatar: response.author.avatar,
+									name: response.author.name,
+									url: response.author.url
+								};
+							else
+								responseAuthor = rendering.commentsCache[item.comments.backend].authors[responsComment.author];
+							break;
+
+						case 'error':
+							commentingError = response.message;
+							break;
+
+						case 'captcha_error':
+							commentingError = response.message;
+						}
+					},
+					complete: function () {
+						if (currentItem == rendering.activeItem) {
+							if (commentingError == '') {
+								$itemDetailsCommentsList.css('display', 'block');
+								$itemDetailsCommentsMessage.css('display', 'none');
+
+								lightbox.itemDetails.comments.renderCommentBox(responsComment, responseAuthor);
+								lightbox.itemDetails.comments.setAvatarContainerDimensions();
+								lightbox.itemDetails.comments.loadAvatars(responsComment.author, responseAuthor);
+
+								$itemDetailsAddCommentContent.val('');
+
+								$itemDetailsAddCommentMessage.css('display', 'none');
+							} else
+								$itemDetailsAddCommentMessage
+									.css('display', 'block')
+									.addClass('negative')
+									.html('<p>' + commentingError + '</p>');
+
+							$itemDetailsAddCommentContainer.removeClass('sending');
+							$itemDetailsAddCommentContent[0].disabled = false;
+
+							if (config.itemDetails.comments.requireAuthorInfo && config.itemDetails.comments.captcha)
+								grecaptcha.reset(rendering.reCaptchaId);
+
+							$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+						}
+					}
+				});
+
+				$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+			});
+
+			$itemDetailsCommentsList
+				.on('click', '.actionsBoxTrigger li.edit', function () {
+					var $this = $(this),
+						$commentWrapper = $this.parents().eq(2),
+						$content = $('> .content', $commentWrapper),
+						$editWrapper,
+						userCanEdit = false,
+						item = displayItems[rendering.activeItem];
+
+					if (typeof item.comments == 'object' && typeof item.comments.permissions == 'object' && typeof item.comments.permissions.editing == 'boolean')
+						userCanEdit = item.comments.permissions.editing;
+					else
+						userCanEdit = config.itemDetails.comments.permissions.editing;
+
+					if ($commentWrapper.data('editing') || !userCanEdit)
+						return false;
+
+					clearTimeout($commentWrapper.data('saveMsgTimeout'));
+
+					$commentWrapper.data('editing', true);
+
+					$('> .editor', $commentWrapper).remove();
+
+					$content.css('display', 'none');
+					$editWrapper = $('<div class="editor"><div class="textarea"><textarea style="height: ' + $content.height() + 'px;"></textarea></div><div class="actions"><p></p><span class="save">' + _('Save') + '</span><span class="cancel">' + _('Cancel') + '</span></div></div>').appendTo($commentWrapper);
+
+					$('.textarea > textarea', $editWrapper)
+						.val($commentWrapper.data('comment').raw)
+						.focus();
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+
+					return false;
+				})
+				.on('click', '.editor > .actions > span', function () {
+					var $this = $(this),
+						$actionsContainer = $this.parent(),
+						$actions,
+						$message,
+						$commentWrapper = $this.parents().eq(2),
+						wrapperData = $commentWrapper.data('comment'),
+						$textarea,
+						srcContent,
+						commentingError = '',
+						currentItem = rendering.activeItem,
+						item = displayItems[currentItem],
+						responsComment = {};
+
+					if ($commentWrapper.data('saving'))
+						return false;
+
+					if ($this.hasClass('save')) {
+						$textarea = $('> .editor > .textarea > textarea', $commentWrapper);
+						srcContent = $textarea.val();
+
+						if (srcContent == '') {
+							$message = $('> p', $actionsContainer)
+								.text(_('Please specify a comment'))
+								.addClass('negative')
+								.removeClass('positive')
+								.css('display', 'block');
+
+							$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+
+							return;
+						}
+
+						$commentWrapper.data('saving', true);
+
+						$textarea[0].disabled = true;
+
+						$message = $('> p', $actionsContainer)
+							.text(_('Saving...'))
+							.removeClass('negative positive')
+							.css('display', 'block');
+
+						$actions = $('> span', $actionsContainer).css('display', 'none');
+
+						$.ajax({
+							data: {
+								action: 'edit_comment',
+								id: wrapperData.id,
+								comment: srcContent
+							},
+							dataType: 'json',
+							type: 'POST',
+							url: item.comments.backend,
+							timeout: 15000,
+							cache: false,
+							error: function () {
+								commentingError = _('Your changes can\'t currently be saved.');
+							},
+							success: function (response) {
+								if (response.status == undefined) {
+									commentingError = _('Your changes can\'t currently be saved.');
+
+									return;
+								}
+
+								switch (response.status) {
+								case 'success':
+									responsComment = $.extend(true, {}, wrapperData, {
+											raw: srcContent,
+											content: response.comment,
+											dateHtml: response.dateHtml
+										});
+
+									$.each(rendering.commentsCache[item.comments.backend].comments, function (i, comment) {
+										if (comment.id == wrapperData.id) {
+											rendering.commentsCache[item.comments.backend].comments[i] = responsComment;
+											return false;
+										}
+									});
+									break;
+
+								case 'error':
+									commentingError = response.message;
+								}
+							},
+							complete: function () {
+								if (currentItem == rendering.activeItem) {
+									if (commentingError) {
+										$textarea[0].disabled = false;
+										$actions.css('display', '');
+
+										$message
+											.addClass('negative')
+											.text(commentingError);
+									} else {
+										$message
+											.addClass('positive')
+											.text(_('Your changes were saved'));
+
+										$('> .editor > .textarea', $commentWrapper).remove();
+										$('> .content', $commentWrapper)
+											.css('display', 'block')
+											.html(responsComment.content);
+
+										$('> .meta > .commentDate', $commentWrapper).html(responsComment.dateHtml);
+
+										$commentWrapper.data({
+											editing: false,
+											comment: responsComment,
+											saveMsgTimeout: setTimeout(function () {
+													if (!terminated && currentItem == rendering.activeItem)
+														$('> .editor', $commentWrapper).remove();
+
+													$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+												}, 3000)
+										});
+									}
+
+									$commentWrapper.data('saving', false);
+									$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+								}
+							}
+						});
+					} else {
+						$commentWrapper.data('editing', false);
+						$('> .editor', $commentWrapper).remove();
+						$('> .content', $commentWrapper).css('display', 'block');
+					}
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+
+					return false;
+				})
+				.on('click', '.actionsBoxTrigger li.delete', function () {
+					var $this = $(this),
+						$commentWrapper = $this.parents().eq(2);
+
+					$commentWrapper.addClass('hideActions');
+					$('> .deleteConfirmation', $commentWrapper).css('display', 'block');
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+
+					return false;
+				})
+				.on('click', '.deleteConfirmation span', function () {
+					var $this = $(this),
+						$commentWrapper = $this.parents().eq(2),
+						commentIndex = $commentWrapper.index(),
+						wrapperData = $commentWrapper.data('comment'),
+						$deleteConfirmation = $('> .deleteConfirmation', $commentWrapper),
+						$message = $('> .message', $deleteConfirmation),
+						errorMessage = '',
+						currentItem = rendering.activeItem,
+						item = displayItems[currentItem];
+
+					if ($this.hasClass('delete')) {
+						$('> p', $deleteConfirmation).css('display', 'none');
+
+						$message.text(_('Deleting...')).css('display', 'block');
+
+						$.ajax({
+							data: {
+								action: 'delete_comment',
+								id: wrapperData.id
+							},
+							dataType: 'json',
+							type: 'GET',
+							url: item.comments.backend,
+							timeout: 15000,
+							cache: false,
+							error: function () {
+								errorMessage = _('The comment can\'t currently be deleted.');
+							},
+							success: function (response) {
+								if (response.status == undefined) {
+									errorMessage = _('Your changes can\'t currently be saved.');
+
+									return;
+								}
+
+								switch (response.status) {
+								case 'success':
+									$.each(rendering.commentsCache[item.comments.backend].comments, function (i, comment) {
+										if (comment.id == wrapperData.id) {
+											rendering.commentsCache[item.comments.backend].comments.splice(i, 1);
+											return false;
+										}
+									});
+									break;
+
+								case 'error':
+									errorMessage = response.message;
+								}
+							},
+							complete: function () {
+								if (currentItem == rendering.activeItem) {
+									if (errorMessage) {
+										$message
+											.addClass('negative')
+											.text(errorMessage);
+										$commentWrapper.removeClass('hideActions');
+									} else {
+										$commentWrapper.remove();
+										if ($('>', $itemDetailsCommentsList).length == 0) {
+											$itemDetailsCommentsList.css('display', 'none');
+											$itemDetailsCommentsMessage
+												.addClass('noComments')
+												.text(_('No comments yet'))
+												.css('display', 'block');
+										}
+									}
+
+									$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+								}
+							}
+						});
+					} else {
+						$commentWrapper.removeClass('hideActions');
+						$deleteConfirmation.css('display', 'none');
+						$message.css('display', 'none');
+					}
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+
+					return false;
+				});
+
+			$itemDetailsRatingStarContainer
+				.on('mousemove', function (e) {
+					var item = displayItems[rendering.activeItem],
+						offset = $itemDetailsRatingStarContainer.offset(),
+						oneStarWidth,
+						starCount;
+
+					if (item.rating.rated || item.rating.backend == undefined)
+						return;
+
+					oneStarWidth = $itemDetailsRatingStarContainer.width() / 5;
+					starCount = Math.ceil((e.clientX - offset.left) / oneStarWidth);
+
+					$itemDetailsRatingStarContainer.data('stars', starCount);
+
+					$itemDetailsRatingStars.css('width', (oneStarWidth * starCount) + 'px');
+				})
+				.on('mouseleave', function () {
+					var item = displayItems[rendering.activeItem],
+						ratingDisplayScore = item.rating.score;
+
+					if (item.rating.backend == undefined)
+						return;
+
+					if (item.rating.rated !== false)
+						ratingDisplayScore = item.rating.rated;
+
+					$itemDetailsRatingStars.css('width', (ratingDisplayScore / 5 * 100) + '%');
+				})
+				.on('click', function () {
+					var currentItem = rendering.activeItem,
+						item = displayItems[currentItem],
+						errorMessage = false,
+						standardError = _('Rating is currently not possible.');
+
+					if (item.rating.rated !== false || item.rating.backend == undefined)
+						return;
+
+					displayItems[currentItem].rating.rated = $itemDetailsRatingStarContainer.data('stars');
+
+					$itemDetailsRatingStarContainer.addClass('rated');
+					$itemDetailsRatingStars.css('width', (item.rating.rated / 5 * 100) + '%');
+
+					$.ajax({
+						data: {
+							action: 'rate',
+							rating: item.rating.rated
+						},
+						dataType: 'json',
+						type: 'POST',
+						url: item.rating.backend,
+						timeout: 15000,
+						cache: false,
+						error: function () {
+							errorMessage = standardError;
+						},
+						success: function (response) {
+							if (response.status == undefined) {
+								errorMessage = standardError;
+
+								return;
+							}
+
+							switch (response.status) {
+							case 'success':
+								displayItems[currentItem].rating.score = response.score;
+								break;
+
+							case 'error':
+								errorMessage = response.message;
+							}
+						},
+						complete: function () {
+							if (errorMessage)
+								displayItems[currentItem].rating.rated = false;
+
+							if (currentItem == rendering.activeItem) {
+								if (errorMessage) {
+									$itemDetailsRatingStarContainer.removeClass('rated');
+									$itemDetailsRatingStars.css('width', (displayItems[currentItem].rating.score / 5 * 100) + '%');
+
+									$itemDetailsRatingMessage
+										.addClass('negative')
+										.css('display', 'block')
+										.text(errorMessage);
+								} else {
+									$itemDetailsRatingScore
+										.removeClass('noRatings')
+										.text(displayItems[currentItem].rating.score);
+								}
+
+								$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+							}
+						}
+					});
+				});
+
+			$itemDetailsAuthorActionFollow
+				.on('click', function () {
+					var currentItem = rendering.activeItem,
+						item = displayItems[currentItem],
+						error = false,
+						newStatus = !item.author.following;
+
+					if ($itemDetailsAuthorActionFollow.data('disabled') === true)
+						return;
+
+					$itemDetailsAuthorActionFollow
+						.data('disabled', true)
+						.addClass('requesting');
+
+					$.ajax({
+						data: {
+							action: 'follow',
+							follow: newStatus
+						},
+						dataType: 'json',
+						type: 'POST',
+						url: item.author.backend,
+						timeout: 10000,
+						cache: false,
+						error: function () {
+							error = true;
+						},
+						success: function (response) {
+							if (response.status == undefined) {
+								error = true;
+								return;
+							}
+
+							switch (response.status) {
+							case 'success':
+								for (i in displayItems) {
+									if (typeof displayItems[i].author != 'object' || typeof displayItems[i].author.id == 'undefined')
+										continue;
+
+									if (displayItems[i].author.id == item.author.id)
+										displayItems[i].author.following = newStatus;
+								}
+								break;
+
+							case 'error':
+								error = true;
+							}
+						},
+						complete: function () {
+							if (currentItem == rendering.activeItem) {
+								$itemDetailsAuthorActionFollow
+									.data('disabled', false)
+									.removeClass('requesting');
+
+								if (!error)
+									if (newStatus)
+										$itemDetailsAuthorActionFollow
+											.addClass('unfollow')
+											.find('> span')
+												.text(_('unfollow'));
+									else
+										$itemDetailsAuthorActionFollow
+											.removeClass('unfollow')
+											.find('> span')
+												.text(_('follow'));
+
+								$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+							}
+						}
+					});
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+				});
+
+			$itemDetailsAuthorActionFriend
+				.on('click', function () {
+					var currentItem = rendering.activeItem,
+						item = displayItems[currentItem],
+						error = false,
+						newStatus;
+
+					if ($itemDetailsAuthorActionFriend.data('disabled') === true)
+						return;
+
+					$itemDetailsAuthorActionFriend
+						.data('disabled', true)
+						.addClass('requesting');
+
+					if (item.author.friends == 'requested_by_author') {
+						$itemDetailsAuthorActionRejectFriend.addClass('requesting');
+						newStatus = true;
+					} else {
+						newStatus = item.author.friends === true || item.author.friends == 'requested_by_user' ? false : true;
+					}
+
+					$.ajax({
+						data: {
+							action: 'friend',
+							friends: newStatus
+						},
+						dataType: 'json',
+						type: 'POST',
+						url: item.author.backend,
+						timeout: 10000,
+						cache: false,
+						error: function () {
+							error = true;
+						},
+						success: function (response) {
+							if (response.status == undefined) {
+								error = true;
+								return;
+							}
+
+							switch (response.status) {
+							case 'success':
+								newStatus = response.friends;
+
+								for (i in displayItems) {
+									if (typeof displayItems[i].author != 'object' || typeof displayItems[i].author.id == 'undefined')
+										continue;
+
+									if (displayItems[i].author.id == item.author.id)
+										displayItems[i].author.friends = newStatus;
+								}
+								break;
+
+							case 'error':
+								error = true;
+							}
+						},
+						complete: function () {
+							if (currentItem == rendering.activeItem) {
+								$itemDetailsAuthorActionFriend
+									.data('disabled', false)
+									.removeClass('requesting');
+
+								$itemDetailsAuthorActionRejectFriend.removeClass('requesting');
+
+								if (!error) {
+									$itemDetailsAuthorActionRejectFriend.css('display', 'none');
+									$itemDetailsAuthorActionFriend.removeClass('unfriend cancelRequest acceptRequest');
+
+									if (newStatus === true)
+										$itemDetailsAuthorActionFriend
+											.addClass('unfriend')
+											.find('> span')
+												.text(_('unfriend'));
+									else if (newStatus == 'requested_by_user')
+										$itemDetailsAuthorActionFriend
+											.addClass('cancelRequest')
+											.find('> span')
+												.text(_('cancel friend request'));
+									else
+										$itemDetailsAuthorActionFriend
+											.find('> span')
+												.text(_('add as friend'));
+								}
+
+								$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+							}
+						}
+					});
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+				});
+
+			$itemDetailsAuthorActionRejectFriend
+				.on('click', function () {
+					var currentItem = rendering.activeItem,
+						item = displayItems[currentItem],
+						error = false;
+
+					if (item.author.friends != 'requested_by_author' || $itemDetailsAuthorActionFriend.data('disabled') === true)
+						return;
+
+					$itemDetailsAuthorActionFriend
+						.data('disabled', true)
+						.addClass('requesting');
+
+					$itemDetailsAuthorActionRejectFriend.addClass('requesting');
+
+					$.ajax({
+						data: {
+							action: 'friend',
+							friends: false
+						},
+						dataType: 'json',
+						type: 'POST',
+						url: item.author.backend,
+						timeout: 10000,
+						cache: false,
+						error: function () {
+							error = true;
+						},
+						success: function (response) {
+							if (response.status == undefined) {
+								error = true;
+								return;
+							}
+
+							switch (response.status) {
+							case 'success':
+								for (i in displayItems) {
+									if (typeof displayItems[i].author != 'object' || typeof displayItems[i].author.id == 'undefined')
+										continue;
+
+									if (displayItems[i].author.id == item.author.id)
+										displayItems[i].author.friends = false;
+								}
+								break;
+
+							case 'error':
+								error = true;
+							}
+						},
+						complete: function () {
+							if (currentItem == rendering.activeItem) {
+								$itemDetailsAuthorActionFriend
+									.data('disabled', false)
+									.removeClass('requesting unfriend cancelRequest acceptRequest');
+
+								$itemDetailsAuthorActionRejectFriend.removeClass('requesting');
+
+								if (!error) {
+									$itemDetailsAuthorActionRejectFriend.css('display', 'none');
+
+									$itemDetailsAuthorActionFriend
+										.find('> span')
+											.text(_('add as friend'));
+								}
+
+								$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+							}
+						}
+					});
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+				});
+
+			$itemDetailsLikeButton
+				.on('click', function () {
+					var currentItem = rendering.activeItem,
+						item = displayItems[currentItem],
+						error = false,
+						newStatus = !item.likes.liked;
+
+					if ($itemDetailsLikeButton.data('disabled') === true)
+						return;
+
+					$itemDetailsLikeButton
+						.data('disabled', true)
+						.addClass('requesting');
+
+					$.ajax({
+						data: {
+							action: 'like',
+							liked: newStatus
+						},
+						dataType: 'json',
+						type: 'POST',
+						url: item.likes.backend,
+						timeout: 10000,
+						cache: false,
+						error: function () {
+							error = true;
+						},
+						success: function (response) {
+							if (response.status == undefined) {
+								error = true;
+								return;
+							}
+
+							switch (response.status) {
+							case 'success':
+								displayItems[currentItem].likes.liked = newStatus;
+								displayItems[currentItem].likes.message = response.message;
+								break;
+
+							case 'error':
+								error = true;
+							}
+						},
+						complete: function (xhr) {
+							var errorMessage;
+
+							if (currentItem == rendering.activeItem) {
+								$itemDetailsLikeButton
+									.data('disabled', false)
+									.removeClass('requesting');
+
+								if (error) {
+									try {
+										errorMessage = $.parseJSON(xhr.responseText).message;
+									} catch (e) {
+										errorMessage = _('An error occurred while ' + (newStatus ? 'saving your like' : 'removing your like'));
+									}
+
+									$itemDetailsLikeMessage
+										.addClass('negative')
+										.text(errorMessage);
+								} else {
+									$itemDetailsLikeMessage
+										.removeClass('negative')
+										.text(displayItems[currentItem].likes.message);
+
+									if (newStatus)
+										$itemDetailsLikeButton
+											.addClass('unlike')
+											.find('> span')
+												.text(_('unlike'));
+									else
+										$itemDetailsLikeButton
+											.removeClass('unlike')
+											.find('> span')
+												.text(_('like'));
+								}
+
+								$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+							}
+						}
+					});
+
+					$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+				});
+
+			$itemDetailsMetaTitle.on('click', function () {
+				var item = displayItems[rendering.activeItem],
+					display = 'block';
+
+				if ($itemDetailsMetaContent.is(':visible'))
+					display = 'none';
+
+				$itemDetailsMetaContent.css('display', display);
+
+				if (display == 'block') {
+					$itemDetailsMetaTitle.addClass('close');
+
+					if (typeof item.meta.map == 'object' && item.meta.map.type == 'google') {
+						google.maps.event.trigger(rendering.itemDetails.maps.google, 'resize');
+						rendering.itemDetails.maps.google.setCenter(new google.maps.LatLng(item.meta.map.settings.lat, item.meta.map.settings.lng));
+					}
+				} else
+					$itemDetailsMetaTitle.removeClass('close');
+
+				$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+			});
+
+			rendering.itemDetails.rendered = true;
+
+			$itemDetailsWrapper.eds_tinyscrollbar({axis: 'y'});
+		};
+		lightbox.itemDetails.placeAvatar = function (args) {
+			var left = 0,
+				top = 0,
+				ch,
+				cw,
+				ih = null,
+				iw = null,
+				containerRatio,
+				avatarRatio,
+				preloadInfo = rendering.preloadedImages[args.src];
+
+			if (args.fadeIn == undefined)
+				args.fadeIn = false;
+
+			if (preloadInfo === undefined || preloadInfo.state == 'loading') {
+				args.fadeIn = true;
+				lightbox.preloadImage(args.src, function () {
+					lightbox.itemDetails.placeAvatar(args);
+				});
+
+				return;
+			}
+
+			if (typeof args.containerDimensions == 'object') {
+				ch = args.containerDimensions.height;
+				cw = args.containerDimensions.width;
+			} else {
+				ch = args.$container.height();
+				cw = args.$container.width();
+			}
+
+			if (preloadInfo.state == 'success') {
+				ih = preloadInfo.height + 4;
+				iw = preloadInfo.width + 4;
+
+				if (ih > ch || iw > cw) {
+					avatarRatio = iw / ih;
+					containerRatio = cw / ch;
+
+					if (avatarRatio < containerRatio) {
+						iw = Math.round(ch / ih * iw);
+						ih = ch;
+					} else if (avatarRatio > containerRatio) {
+						ih = Math.round(cw / iw * ih);
+						iw = cw;
+					} else {
+						iw = cw;
+						ih = ch;
+					}
+				}
+
+				top = ih == ch ? 0 : Math.floor((ch - ih) / 2);
+				left = iw == cw ? 0 : Math.floor((cw - iw) / 2);
+
+				ih -= 4;
+				iw -= 4;
+			}
+
+			args.$container.append('<img src="' + args.src + '" alt="" style="' + (args.fadeIn ? 'display: none; ' : '') + (iw != null ? 'width: ' + iw + 'px; ' : '') + (ih != null ? 'height: ' + ih + 'px; ' : '') + 'top: ' + top + 'px; left: ' + left + 'px;" />');
+
+			if (args.fadeIn)
+				args.$container
+					.find('>')
+						.fadeIn(200);
+		};
+		lightbox.itemDetails.comments.renderCommentBox = function (comment, author) {
+			var actionsHtml,
+				$commentBox,
+				item = displayItems[rendering.activeItem],
+				userCanEdit = false,
+				userCanDelete = false,
+				authorName;
+
+			if (typeof item.comments == 'object' && typeof item.comments.permissions == 'object' && typeof item.comments.permissions.editing == 'boolean')
+				userCanEdit = item.comments.permissions.editing;
+			else
+				userCanEdit = config.itemDetails.comments.permissions.editing;
+
+			if (typeof item.comments == 'object' && typeof item.comments.permissions == 'object' && typeof item.comments.permissions.deleting == 'boolean')
+				userCanDelete = item.comments.permissions.deleting;
+			else
+				userCanDelete = config.itemDetails.comments.permissions.deleting;
+
+			actionsHtml = (userCanEdit && item.journalEntry !== true ? '<li class="edit"><span>' + _('Edit') + '</span></li>' : '') +
+				(userCanDelete ? '<li class="delete"><span>' + _('Delete') + '</span></li>' : '');
+
+			if (typeof author.url == 'string' && author.url != '')
+				authorName = '<a href="' + author.url + '">' + author.name + '</a>';
+			else
+				authorName = author.name;
+
+			$commentBox = $('<div class="author-' + comment.author + (typeof author.avatar == 'string' && author.avatar != '' ? ' hasAvatar' : '') + '"><div class="deleteConfirmation"><p class="message"></p><p>' + _('Do you really want to delete this comment?') + '</p><p><span class="delete">' + _('Yes') + '</span><span class="cancel">' + _('No') + '</span></p></div><div class="meta"><div class="authorAvatarWrapper"><div class="authorAvatarContainer"></div></div><h4>' + authorName + '</h4><p class="commentDate">' + comment.dateHtml + '</p></div><div class="content">' + comment.content + '</div>' + (actionsHtml == '' ? '' : '<div class="actionsBoxTrigger"><ul>' + actionsHtml + '</ul></div>') + '</div>').data('comment', comment);
+
+			$itemDetailsCommentsList.append($commentBox);
+		};
+		lightbox.itemDetails.comments.loadAvatars = function (authorId, author) {
+			var $authorAvatarWrapper = $('> .author-' + authorId + ' > .meta > .authorAvatarWrapper', $itemDetailsCommentsList).filter(':hidden'),
+				$avatarContainer;
+
+			if ($authorAvatarWrapper.lenght == 0)
+				return;
+
+			if (author.avatar !== undefined && author.avatar != '') {
+				$authorAvatarWrapper.css('display', 'block');
+
+				if (typeof author.url == 'string' && author.url != '') {
+					$('>', $authorAvatarWrapper).append($('<a href="#" />').attr('href', author.url));
+					$avatarContainer = $('> >', $authorAvatarWrapper);
+				} else
+					$avatarContainer = $('>', $authorAvatarWrapper);
+
+				lightbox.itemDetails.placeAvatar({
+					src: author.avatar,
+					$container: $avatarContainer,
+					containerDimensions: rendering.itemDetails.comments.author.avatarContainer
+				});
+			}
+		};
+		lightbox.itemDetails.comments.setAvatarContainerDimensions = function () {
+			if (rendering.itemDetails.comments.author.avatarContainer == null) {
+				$authorAvatarWrapper = $('.authorAvatarWrapper', $itemDetailsCommentsList)
+					.eq(0)
+						.css('display', 'block');
+
+				rendering.itemDetails.comments.author.avatarContainer = {
+					width: $authorAvatarWrapper.width(),
+					height: $authorAvatarWrapper.height()
+				};
+
+				$authorAvatarWrapper.css('display', 'none');
+			}
+		};
+		lightbox.itemDetails.comments.display = function (infoObj) {
+			var $authorAvatarWrapper,
+				item = displayItems[rendering.activeItem],
+				userCanComment = false;
+
+			$itemDetailsCommentsLoading.css('display', 'none');
+
+			if (infoObj.comments.length > 0) {
+				$itemDetailsCommentsMessage.css('display', 'none');
+				$itemDetailsCommentsList.empty();
+
+				$.each(infoObj.comments, function (i, comment) {
+					lightbox.itemDetails.comments.renderCommentBox(comment, infoObj.authors[comment.author]);
+				});
+
+				$itemDetailsCommentsList.css('display', 'block');
+
+				lightbox.itemDetails.comments.setAvatarContainerDimensions();
+
+				$.each(infoObj.authors, lightbox.itemDetails.comments.loadAvatars);
+			} else {
+				$itemDetailsCommentsList
+					.empty()
+					.css('display', 'none');
+				$itemDetailsCommentsMessage
+					.addClass('noComments')
+					.text(_('No comments yet'))
+					.css('display', 'block');
+			}
+
+			if (typeof item.comments == 'object' && typeof item.comments.permissions == 'object' && typeof item.comments.permissions.commenting == 'boolean')
+				userCanComment = item.comments.permissions.commenting;
+			else
+				userCanComment = config.itemDetails.comments.permissions.commenting;
+
+			if (userCanComment) {
+				if (config.itemDetails.comments.requireAuthorInfo) {
+					$itemDetailsAddCommentAuthorInfoWrapper.css('display', 'block');
+
+					if (config.itemDetails.comments.captcha) {
+						$itemDetailsAddCommentCaptchaContainer.css('display', 'block');
+
+						if (rendering.reCaptchaId)
+							grecaptcha.reset(rendering.reCaptchaId);
+						else
+							rendering.reCaptchaId = grecaptcha.render(
+								$('> .captcha', $itemDetailsAddCommentCaptchaContainer)[0],
+								{
+									sitekey: config.googleReCaptchaSiteKey,
+									size: 'compact'
+								}
+							);
+					}
+				} else {
+					$itemDetailsAddCommentAuthorInfoWrapper.css('display', 'none');
+					$itemDetailsAddCommentCaptchaContainer.css('display', 'none');
+				}
+
+				$itemDetailsAddCommentContainer
+					.removeClass('sending')
+					.css('display', 'block');
+				$itemDetailsAddCommentContent[0].disabled = false;
+				$itemDetailsAddCommentMessage.css('display', 'none');
+				$itemDetailsAddCommentContent.val('');
+			} else
+				$itemDetailsAddCommentContainer.css('display', 'none');
+		};
+
+		lightbox.itemDetails.showItem = function () {
+			var currentItem = rendering.activeItem,
+				item = displayItems[currentItem],
+				ratingDisplayScore,
+				tagsHtml = '',
+				showButtonsWrapper = false,
+				socialButtonsHtml = '',
+				mediaUrl = '',
+				exifHtml = '',
+				mapPosition,
+				authorProfileUrl = '',
+				$authorAvatarContainer,
+				socialButtonsTitle = '';
+
+			if (!config.itemDetails.show)
+				return;
+
+			if (item.title == undefined || item.title == '') {
+				$itemDetailsTitle.css('display', 'none');
+				$itemDetailsDescription.removeClass('withTitle');
+			} else {
+				$itemDetailsTitle
+					.text(item.title)
+					.css('display', 'block');
+				$itemDetailsDescription.addClass('withTitle');
+			}
+
+			if (item.description == undefined || item.description == '')
+				$itemDetailsDescription.css('display', 'none');
+			else
+				$itemDetailsDescription
+					.html(item.description)
+					.css('display', 'block');
+
+			if (config.itemDetails.socialButtons.show && typeof item.social == 'object' && item.social.url != '') {
+				mediaUrl = typeof item.social.media != 'string' ? '' : item.social.media;
+
+				$.each(config.itemDetails.socialButtons.buttons, function (i, button) {
+					if (button.show) {
+						if (i == 'pinterest' && mediaUrl == '')
+							return;
+
+						if (i == 'twitter' && (typeof twttr == 'undefined' || typeof twttr.widgets == 'undefined'))
+							return;
+
+						if (i == 'inshare' && (typeof IN == 'undefined' || typeof IN.parse != 'function'))
+							return;
+
+						socialButtonsHtml += '<div>' + button.html + '</div>';
+					}
+				});
+
+				if (socialButtonsHtml == '')
+					$socialButtonsWrapper
+						.css('display', 'none')
+						.empty();
+				else {
+					if (typeof item.title == 'string' && item.title != '') {
+						socialButtonsTitle = item.title
+							.replace(/&/g, '&amp;')
+							.replace(/"/g, '&quot;')
+							.replace(/'/g, '&#39;')
+							.replace(/</g, '&lt;')
+							.replace(/>/g, '&gt;');
+
+						socialButtonsHtml = socialButtonsHtml.replace(/{{encodedTitle}}/g, encodeURIComponent(item.title));
+					} else {
+						socialButtonsHtml = socialButtonsHtml.replace(/{{encodedTitle}}/g, '');
+					}
+
+					socialButtonsHtml = socialButtonsHtml
+						.replace(/{{url}}/g, item.social.url)
+						.replace(/{{escapedTitle}}/g, socialButtonsTitle)
+						.replace(/{{encodedUrl}}/g, encodeURIComponent(item.social.url));
+
+					if (mediaUrl)
+						socialButtonsHtml = socialButtonsHtml.replace(/{{encodedMediaUrl}}/g, encodeURIComponent(mediaUrl))
+
+					$socialButtonsWrapper
+						.css('display', 'block')
+						.html(socialButtonsHtml);
+
+					if (mediaUrl && config.itemDetails.socialButtons.buttons['pinterest'].show)
+						$.ajax({url: '//assets.pinterest.com/js/pinit.js', dataType: 'script', cache: false});
+				}
+			} else
+				$socialButtonsWrapper
+					.css('display', 'none')
+					.empty();
+
+			if (typeof item.rating == 'object') {
+				$itemDetailsRatingStarContainer.removeClass('rated');
+
+				if (item.rating.score > 0) {
+					$itemDetailsRatingScore
+						.removeClass('noRatings')
+						.text(item.rating.score);
+
+					if (item.rating.rated === false)
+						ratingDisplayScore = item.rating.score;
+					else {
+						ratingDisplayScore = item.rating.rated;
+						$itemDetailsRatingStarContainer.addClass('rated');
+					}
+
+					$itemDetailsRatingStars.css('width', (ratingDisplayScore / 5 * 100) + '%');
+				} else {
+					$itemDetailsRatingScore
+						.addClass('noRatings')
+						.text(_('No ratings'));
+
+					$itemDetailsRatingStars.css('width', '');
+				}
+
+				$itemDetailsRatingMessage
+					.css('display', 'none')
+					.removeClass('negative');
+
+				$itemDetailsRatingWrapper.css('display', 'block');
+
+				if (item.rating.backend == undefined)
+					$itemDetailsRatingWrapper.addClass('cantRate');
+				else
+					$itemDetailsRatingWrapper.removeClass('cantRate');
+			} else
+				$itemDetailsRatingWrapper.css('display', 'none');
+
+			if (typeof item.comments != 'object' || item.comments.backend == undefined || item.comments.backend == '')
+				$itemDetailsCommentsWrapper.css('display', 'none');
+			else {
+				$itemDetailsCommentsWrapper.css('display', 'block');
+
+				$itemDetailsCommentsList.css('display', 'none');
+				$itemDetailsCommentsMessage
+					.removeClass('noComments negative')
+					.css('display', 'none');
+				$itemDetailsAddCommentContainer.css('display', 'none');
+
+				if (rendering.commentsCache[item.comments.backend] == undefined) {
+					$itemDetailsCommentsLoading.css('display', 'block');
+
+					$.ajax({
+						data: {
+							action: 'list_comments'
+						},
+						dataType: 'json',
+						type: 'GET',
+						url: item.comments.backend,
+						timeout: 15000,
+						cache: false,
+						error: function () {
+							if (currentItem == rendering.activeItem)
+								$itemDetailsCommentsMessage
+									.addClass('negative')
+									.removeClass('noComments')
+									.text(_('Comments are currently unavalible'))
+									.css('display', 'block');
+						},
+						success: function (response) {
+							rendering.commentsCache[item.comments.backend] = response;
+
+							if (currentItem != rendering.activeItem)
+								return;
+
+							lightbox.itemDetails.comments.display(response);
+
+							$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update();
+						}
+					});
+				} else
+					lightbox.itemDetails.comments.display(rendering.commentsCache[item.comments.backend]);
+			}
+
+			if (typeof item.author == 'object') {
+				$itemDetailsAuthorWrapper.css('display', 'block');
+
+				authorProfileUrl = typeof item.author.url == 'string' && item.author.url != '' ? item.author.url : '';
+
+				if (typeof item.author.avatar == 'string' && item.author.avatar != '') {
+					$itemDetailsAuthorAvatarWrapper.css('display', 'block');
+
+					$itemDetailsAuthorAvatarContainer.empty();
+
+					if (authorProfileUrl == '')
+						$authorAvatarContainer = $itemDetailsAuthorAvatarContainer;
+					else {
+						$authorAvatarContainer = $('<a href="#" />')
+							.appendTo($itemDetailsAuthorAvatarContainer)
+							.attr({
+								href: authorProfileUrl
+							});
+					}
+
+					lightbox.itemDetails.placeAvatar({
+						src: item.author.avatar,
+						$container: $authorAvatarContainer
+					});
+				} else
+					$itemDetailsAuthorAvatarWrapper.css('display', 'none');
+
+				$itemDetailsAuthorName.empty();
+
+				if (authorProfileUrl == '')
+					$itemDetailsAuthorName.text(item.author.name);
+				else
+					$itemDetailsAuthorName.append($('<a />').attr({href: authorProfileUrl}).text(item.author.name));
+
+				$itemDetailsAuthorDate.html(item.author.dateHtml);
+
+				if (item.author.isUser != undefined && item.author.isUser)
+					$itemDetailsAuthorActions.css('display', 'none');
+				else {
+					$itemDetailsAuthorActions.css('display', 'block');
+
+					if (item.author.following == undefined)
+						$itemDetailsAuthorActionFollow.css('display', 'none');
+					else {
+						$itemDetailsAuthorActionFollow
+							.data('disabled', false)
+							.css('display', 'block');
+
+						if (item.author.following)
+							$itemDetailsAuthorActionFollow
+								.addClass('unfollow')
+								.find('> span')
+									.text(_('unfollow'));
+						else
+							$itemDetailsAuthorActionFollow
+								.removeClass('unfollow')
+								.find('> span')
+									.text(_('follow'));
+					}
+
+					$itemDetailsAuthorActionRejectFriend
+						.css('display', 'none')
+						.removeClass('requesting');
+
+					if (item.author.friends == undefined)
+						$itemDetailsAuthorActionFriend.css('display', 'none');
+					else {
+						$itemDetailsAuthorActionFriend
+							.removeClass('requesting unfriend cancelRequest acceptRequest')
+							.data('disabled', false)
+							.css('display', 'block');
+
+						if (item.author.friends === true)
+							$itemDetailsAuthorActionFriend
+								.addClass('unfriend')
+								.find('> span')
+									.text(_('unfriend'));
+						else if (item.author.friends == 'requested_by_user')
+							$itemDetailsAuthorActionFriend
+								.addClass('cancelRequest')
+								.find('> span')
+									.text(_('cancel friend request'));
+						else if (item.author.friends == 'requested_by_author') {
+							$itemDetailsAuthorActionFriend
+								.addClass('acceptRequest')
+								.find('> span')
+									.text(_('accept friend request'));
+
+							$itemDetailsAuthorActionRejectFriend.css('display', 'block');
+						} else
+							$itemDetailsAuthorActionFriend
+								.find('> span')
+									.text(_('add as friend'));
+					}
+				}
+			} else
+				$itemDetailsAuthorWrapper.css('display', 'none');
+
+			if (typeof item.likes == 'object') {
+				$itemDetailsLikeWrapper.css('display', 'block');
+
+				if (typeof item.likes.backend == 'string' && item.likes.backend != '') {
+					$itemDetailsLikeButton
+						.css('display', '')
+						.data('disabled', false);
+
+					if (item.likes.liked)
+						$itemDetailsLikeButton
+							.addClass('unlike')
+							.find('> span')
+								.text(_('unlike'));
+					else
+						$itemDetailsLikeButton
+							.removeClass('unlike')
+							.find('> span')
+								.text(_('like'));
+				} else
+					$itemDetailsLikeButton.css('display', 'none');
+
+				if (typeof item.likes.message != 'string' || item.likes.message == '')
+					$itemDetailsLikeMessage.css('display', 'none');
+				else
+					$itemDetailsLikeMessage
+						.removeClass('negative')
+						.css('display', 'block')
+						.text(item.likes.message);
+
+				if (typeof item.likes.alsoLiked != 'object' || item.likes.alsoLiked.length == 0)
+					$itemDetailsLikeAlsoLiked.css('display', 'none');
+				else {
+					$itemDetailsLikeAlsoLiked
+						.css('display', 'block')
+						.empty();
+
+					$.each(item.likes.alsoLiked, function (i, user) {
+						var $li = $('<li><div></div></li>').appendTo($itemDetailsLikeAlsoLiked),
+							$imgContainer = $li.find('> div');
+
+						if (typeof user.url == 'string' && user.url != '')
+							$imgContainer = $imgContainer.html('<a href="' + user.url + '"></a>').find('> a');
+
+						$imgContainer.attr('title', user.name);
+
+						lightbox.itemDetails.placeAvatar({
+							src: user.avatar,
+							$container: $imgContainer
+						});
+					});
+				}
+			} else
+				$itemDetailsLikeWrapper.css('display', 'none');
+
+			if (typeof item.tags == 'object') {
+				$.each(item.tags, function (id, tag) {
+					tagsHtml += '<li data-id="' + id + '"><span>' + tag + '</span></li>';
+				});
+
+				if (tagsHtml == '')
+					$itemDetailsTagContainer.css('display', 'none');
+				else
+					$itemDetailsTagContainer
+						.css('display', 'block')
+						.html(tagsHtml);
+			} else
+				$itemDetailsTagContainer.css('display', 'none');
+
+			if (typeof item.download != 'string' || item.download == '')
+				$itemDetailsDownloadButton.css('display', 'none');
+			else {
+				showButtonsWrapper = true;
+
+				$itemDetailsDownloadButton
+					.attr('href', item.download)
+					.css('display', '');
+			}
+
+			if (typeof item.email == 'object') {
+				showButtonsWrapper = true;
+
+				$itemDetailsEmailButton
+					.attr('href', 'mailto:?to=&subject=' + encodeURIComponent(item.email.subject) + '&body=' + encodeURIComponent(item.email.body))
+					.css('display', '');
+			} else
+				$itemDetailsEmailButton.css('display', 'none');
+
+			$itemDetailsButtonsWrapper.css('display', (showButtonsWrapper ? 'block' : 'none'));
+
+			if (typeof item.meta == 'object') {
+				$itemDetailsMetaWrapper.css('display', 'block');
+
+				if (typeof item.meta.exif == 'object') {
+					exifHtml = '<div class="exif"><h4><span>' + _('Exif') + '</span></h4><table><tbody>';
+
+					$.each(item.meta.exif, function (k, v) {
+						exifHtml += '<tr><td class="cell1">' + k + '</td><td class="cell2">' + v + '</td></tr>';
+					});
+
+					$itemDetailsMetaContent.html(exifHtml + '</tbody></table></div>');
+				}
+
+				if (typeof item.meta.map == 'object') {
+					$itemDetailsMetaContent.append('<div class="map">' + (item.meta.map.title == undefined ? '' : '<h4><span>' + item.meta.map.title + '</span></h4>') + '<div></div></div>');
+
+					rendering.itemDetails.maps.google = null;
+
+					switch (item.meta.map.type) {
+					case 'google':
+						if (typeof google === 'object' && typeof google.maps === 'object') {
+							mapPosition = new google.maps.LatLng(item.meta.map.settings.lat, item.meta.map.settings.lng);
+
+							rendering.itemDetails.maps.google = new google.maps.Map($('> div.map > div', $itemDetailsMetaContent)[0], {
+								center: mapPosition,
+								zoom: item.meta.map.settings.zoom,
+								mapTypeId: google.maps.MapTypeId[item.meta.map.settings.type],
+								scrollwheel: false
+							});
+
+							new google.maps.Marker({
+								position: mapPosition,
+								map: rendering.itemDetails.maps.google
+							});
+						}
+						break;
+
+					default:
+					}
+				}
+
+				$itemDetailsMetaContent.css({
+					display: 'none'
+				});
+			} else
+				$itemDetailsMetaWrapper.css('display', 'none');
+
+			$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update();
+		};
+		lightbox.itemDetails.resize = function () {
+			if (!config.itemDetails.show)
+				return;
+
+			$itemDetailsWrapper.height(rendering.baseWrapper.height - rendering.itemDetails.wrapper.verticalOffset - rendering.thumbnails.wrapper.effectiveHeight - rendering.interfaceActions.wrapper.height);
+
+			$itemDetailsWrapper.data('plugin_eds_tinyscrollbar').update('relative');
+		};
+
+
+		lightbox.itemDisplay = {};
+		lightbox.itemDisplay.init = function () {
+			$itemDisplayWrapper = $('<div class="itemDisplayWrapper ' + (config.itemDetails.rightSide ? 'left' : 'right') + '"></div>');
+
+			$baseWrapper.append($itemDisplayWrapper);
+
+			rendering.itemDisplay.wrapper.verticalOffset = $itemDisplayWrapper.outerHeight(true) - $itemDisplayWrapper.height();
+			rendering.itemDisplay.wrapper.horizontalOffset = $itemDisplayWrapper.outerWidth(true) - $itemDisplayWrapper.width();
+
+			$itemDisplayContainer = $('<div class="itemDisplayContainer"></div>').appendTo($itemDisplayWrapper);
+			$itemDisplayLoadIndicator = $('<div class="loadIndicator"></div>').appendTo($itemDisplayWrapper);
+		};
+		lightbox.itemDisplay.resize = function () {
+			var currentItem = displayItems[rendering.activeItem],
+				displayWidth,
+				displayHeight,
+				displayTop,
+				displayLeft,
+				$item,
+				itemD,
+				itemRatio,
+				containerD,
+				containerRatio;
+
+			rendering.itemDisplay.wrapper.height = rendering.baseWrapper.height - rendering.itemDisplay.wrapper.verticalOffset - rendering.thumbnails.wrapper.effectiveHeight - rendering.interfaceActions.wrapper.height;
+			rendering.itemDisplay.wrapper.width = rendering.baseWrapper.width - rendering.itemDisplay.wrapper.horizontalOffset - rendering.itemDetails.wrapper.effectiveWidth;
+
+			$itemDisplayWrapper
+				.height(rendering.itemDisplay.wrapper.height)
+				.width(rendering.itemDisplay.wrapper.width);
+
+			$item = $('> .item.active', $itemDisplayContainer);
+
+			switch (currentItem.type) {
+			case 'image':
+				if ($item.length == 0)
+					return;
+
+				itemD = {
+					width: rendering.preloadedImages[currentItem.src].width,
+					height: rendering.preloadedImages[currentItem.src].height
+				}
+				break;
+
+			case 'video':
+				itemD = {
+					width: currentItem.video.width,
+					height: currentItem.video.height
+				}
+				break;
+
+			case 'audio':
+				itemD = {
+					width: 450,
+					height: $item.height()
+				}
+				break;
+
+			default:
+			}
+
+			containerD = {
+				width: $itemDisplayContainer.width(),
+				height: $itemDisplayContainer.height()
+			}
+
+			if (
+				currentItem.type == 'video'
+				|| (currentItem.type == 'image' && (itemD.width > containerD.width || itemD.height > containerD.height))
+				|| (currentItem.type == 'audio' && itemD.width > containerD.width)
+			) {
+				containerRatio = containerD.width / containerD.height;
+				itemRatio = itemD.width / itemD.height;
+
+				displayWidth = containerD.width;
+
+				if (currentItem.type == 'audio')
+					displayHeight = itemD.height;
+				else
+					displayHeight = containerD.height;
+
+				if (itemRatio < containerRatio) {
+					displayWidth = Math.round(containerD.height / itemD.height * itemD.width);
+				} else if (itemRatio > containerRatio && currentItem.type != 'audio') {
+					displayHeight = Math.round(containerD.width / itemD.width * itemD.height);
+				}
+			} else {
+				displayWidth = itemD.width;
+				displayHeight = itemD.height;
+			}
+
+			displayLeft = Math.floor((containerD.width - displayWidth) / 2);
+			displayTop = Math.floor((containerD.height - displayHeight) / 2);
+
+			$item.css({
+				width: displayWidth,
+				height: displayHeight,
+				marginTop: displayTop,
+				marginLeft: displayLeft
+			});
+		};
+		lightbox.itemDisplay.showItem = function () {
+			var currentItem = rendering.activeItem,
+				item = displayItems[currentItem],
+				$previousItems,
+				embedHtml,
+				$embedContainer,
+
+				displayImage = function () {
+					$previousItems = $itemDisplayContainer.find('>')
+						.fadeOut(200, function () {
+							$previousItems.remove();
+						})
+						.removeClass('active');
+
+					$('<img class="item active" src="' + item.src + '" alt="" style="display: none;" />')
+						.appendTo($itemDisplayContainer)
+						.fadeIn(200);
+
+					lightbox.itemDisplay.resize();
+
+					$itemDisplayLoadIndicator
+						.stop(true)
+						.fadeOut(500);
+				},
+
+				videoType = '';
+
+			switch (item.type) {
+			case 'image':
+				if (rendering.preloadedImages[item.src] !== undefined && rendering.preloadedImages[item.src].state == 'success') {
+					displayImage();
+				} else {
+					$itemDisplayLoadIndicator
+						.css({
+							display: 'none',
+							left: 0
+						})
+						.stop(true)
+						.fadeIn(500, function () {
+							$itemDisplayContainer.find('>').remove();
+						});
+
+					lightbox.preloadImage(item.src, function () {
+						if (currentItem != rendering.activeItem)
+							return;
+
+						displayImage();
+					});
+				}
+				break;
+
+			case 'video':
+				$previousItems = $itemDisplayContainer.find('>')
+					.removeClass('active')
+					.fadeOut(200, function () {
+						$previousItems.remove();
+					});
+
+				switch (item.video.provider) {
+				case 'youtube':
+					embedHtml = '<iframe class="item active" style="display: none;" src="//www.youtube.com/embed/' + item.video.id + '?wmode=opaque" frameborder="0" allowfullscreen></iframe>';
+					break;
+
+				case 'vimeo':
+					embedHtml = '<iframe class="item active" style="display: none;" src="//player.vimeo.com/video/' + item.video.id + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+					break;
+
+				case 'wistia':
+					embedHtml = '<iframe class="wistia_embed item active" name="wistia_embed" style="display: none;" src="//fast.wistia.net/embed/iframe/' + item.video.id + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+					break;
+
+				case 'flowplayer':
+					embedHtml = '<div class="item active" style="display: block; opacity: 0;"></div>';
+					break;
+
+				default:
+				}
+
+				$embedContainer = $(embedHtml).appendTo($itemDisplayContainer);
+
+				if (item.video.provider == 'flowplayer') {
+					if (stringEndsWith(item.video.src, '.mp4')) {
+						videoType = 'video/mp4';
+					} else if (stringEndsWith(item.video.src, '.webm')) {
+						videoType = 'video/webm';
+					} else if (stringEndsWith(item.video.src, '.ogg')) {
+						videoType = 'video/ogg';
+					} else if (stringEndsWith(item.video.src, '.flv')) {
+						videoType = 'video/flash';
+					}
+
+					$embedContainer
+						.animate({opacity: 1}, 200)
+						.flowplayer({
+							swf: config.flowplayerSwf,
+							tooltip: false,
+							embed: false,
+							key: config.flowplayer.key,
+							logo: config.flowplayer.logo,
+							clip: {
+								sources: [
+									{
+										type: videoType,
+										src: item.video.src
+									}
+								]
+							}
+						});
+				} else
+					$embedContainer.fadeIn(200);
+
+				$itemDisplayLoadIndicator
+					.stop(true)
+					.fadeOut(500);
+
+				lightbox.itemDisplay.resize();
+				break;
+
+			case 'audio':
+				$previousItems = $itemDisplayContainer.find('>')
+					.removeClass('active')
+					.fadeOut(200, function () {
+						$previousItems.remove();
+					});
+
+				$embedContainer = $('<div class="item active" style="display: block; opacity: 0;"><audio src="' + item.audio.src + '" /></div>')
+					.appendTo($itemDisplayContainer)
+					.animate({opacity: 1}, 200);
+
+				audiojs.create($('> audio', $embedContainer)[0]);
+
+				$itemDisplayLoadIndicator
+					.stop(true)
+					.fadeOut(500);
+
+				lightbox.itemDisplay.resize();
+				break;
+
+			default:
+			}
+		};
+
+
+		if (arguments.length > 0)
+			$.extend(true, config, arguments[0]);
+
+		this.each(function () {
+			var data = $(this).data('socialMediaBox');
+
+			if (data)
+				if (data instanceof Array)
+					$.each(data, function () {
+						displayItems.push(this);
+					});
+				else
+					displayItems.push(data);
+		});
+
+		if (displayItems.length == 0)
+			return this;
+
+		$body = $('body').addClass('socialMediaBoxActive');
+
+		$baseWrapper = $('<div id="socialMediaBox" class="' + config.baseClass + '" style="visibility: hidden;"></div>').appendTo($body);
+
+		lightbox.thubnails.init();
+		lightbox.itemDetails.init();
+		lightbox.itemDisplay.init();
+		lightbox.interfaceActions.init();
+
+		if (displayItems.length > 1) {
+			$navigationPrevious = $('<div class="navigation previous ' + (config.itemDetails.rightSide ? 'left' : 'right') + '"></div>').appendTo($baseWrapper);
+			$navigationNext = $('<div class="navigation next ' + (config.itemDetails.rightSide ? 'left' : 'right') + '"></div>').appendTo($baseWrapper);
+		}
+
+		$closeButton = $('<div class="close"><span></span></div>');
+
+		$baseWrapper.append($closeButton);
+
+		lightbox.resize();
+
+		lightbox.showItem(config.openAt, true);
+
+		$baseWrapper
+			.css({
+				display: 'none',
+				visibility: ''
+			})
+			.fadeIn(200)
+			.on('click', '> div.navigation', function () {
+				if ($(this).hasClass('previous'))
+					lightbox.showItem(rendering.activeItem - 1);
+				else
+					lightbox.showItem(rendering.activeItem + 1);
+			});
+
+		$closeButton
+			.on('click', function () {
+				lightbox.close();
+			})
+
+		$(document).on('keyup.socialMediaBox', function(e) {
+			var $activeElement = $(document.activeElement);
+
+			if ($activeElement.filter('textarea').parents('.commentsWrapper').length != 0 || $activeElement.filter('input').parents('.commentsWrapper').length)
+				return false;
+
+			switch (e.keyCode) {
+			case 37:
+				lightbox.showItem(rendering.activeItem - 1);
+				break;
+
+			case 39:
+				lightbox.showItem(rendering.activeItem + 1);
+				break;
+
+			case 27:
+				lightbox.close();
+				break;
+
+			default:
+			}
+
+			return false;
+		});
+
+		$itemDisplayContainer
+			.on('touchstart', function (e) {
+				if (typeof e.stopPropagation == 'function') {
+					e.stopPropagation();
+					e.preventDefault();
+				}
+
+				if (e.originalEvent.touches && e.originalEvent.touches.length)
+					e = e.originalEvent.touches[0];
+				else if (e.originalEvent.changedTouches && e.originalEvent.changedTouches.length)
+					e = e.originalEvent.changedTouches[0];
+
+				rendering.itemDisplay.touch.newTouch = true;
+				rendering.itemDisplay.touch.startX = e.pageX;
+				rendering.itemDisplay.touch.startY = e.pageY;
+			})
+			.on('touchmove', function (e) {
+				var shift;
+
+				if (typeof e.stopPropagation == 'function') {
+					e.stopPropagation();
+					e.preventDefault();
+				}
+
+				if (!rendering.itemDisplay.touch.newTouch)
+					return;
+
+				if (e.originalEvent.touches && e.originalEvent.touches.length)
+					e = e.originalEvent.touches[0];
+				else if (e.originalEvent.changedTouches && e.originalEvent.changedTouches.length)
+					e = e.originalEvent.changedTouches[0];
+
+				shift = rendering.itemDisplay.touch.startX - e.pageX;
+
+				if (Math.abs(shift) < 50)
+					return
+
+				rendering.itemDisplay.touch.newTouch = false;
+
+				if (shift > 0)
+					lightbox.showItem(rendering.activeItem + 1);
+				else
+					lightbox.showItem(rendering.activeItem - 1);
+			})
+			.on('touchend touchcancel', function (e) {
+				if (typeof e.stopPropagation == 'function') {
+					e.stopPropagation();
+					e.preventDefault();
+				}
+
+				rendering.itemDisplay.touch.newTouch = false;
+			});
+
+		$(window).on('resize.socialMediaBox', function () {
+			lightbox.resize();
+		});
+
+
+		return this;
+	};
+
+
+	$.fn.socialMediaBox4Journal = function (init) {
+		var initSMB;
+
+		if (smb4JSetup)
+			return;
+
+		smb4JSetup = true;
+
+		initSMB = function () {
+			var $clicked = $(this),
+				clickedEntryId = $clicked.parents('.journalrow')[0].id,
+				journalIds = '',
+				moduleId = 0,
+				journalInfo,
+				$overlayBg = $('<div id="socialMediaBox4JournalOverlay"' + (typeof init.smbConfig == 'object' && init.smbConfig.baseClass ? ' class="' + init.smbConfig.baseClass + '"' : '') + '><div></div><p></p></div>'),
+				$message = $('> p', $overlayBg),
+				$loader = $('> div', $overlayBg),
+				$body = $('body'),
+
+				errorMessage = '',
+				entries,
+
+				close = function () {
+					$(document).off('.socialMediaBox4Journal');
+					$overlayBg.fadeTo(400, 0, function () {
+						$overlayBg.remove();
+					});
+					$body.removeClass('socialMediaBoxActive');
+					$message.css('display', 'none');
+				},
+
+				xhrRequest;
+
+			$body
+				.append($overlayBg)
+				.addClass('socialMediaBoxActive');
+
+			$overlayBg
+				.fadeTo(400, 1)
+				.on('click', '> p > .close', function () {
+					close();
+
+					return false;
+				});
+
+			$.each($clicked.parents('#journalItems').eq(0).find('>').has('.journalitem > .jphoto'), function (i, entry) {
+				if(entry.id == clickedEntryId)
+					init.smbConfig.openAt = i;
+
+				journalIds += entry.id.substring(entry.id.indexOf('-') + 1) + ',';
+			});
+			journalIds = journalIds.substring(0, journalIds.length - 1);
+
+			moduleId = getJournalModuleId($clicked.parents('.DnnModule-Journal').eq(0));
+
+			journalInfo = getJournalInfo();
+
+			xhrRequest = $.ajax({
+				data: {
+					action: 'journal_entries',
+					journalIds: journalIds,
+					journalModuleId: moduleId,
+					journalType: journalInfo.type,
+					journalTarget: journalInfo.target
+				},
+				dataType: 'json',
+				type: 'POST',
+				url: init.entriesUrl,
+				timeout: 15000,
+				cache: false,
+				error: function () {
+					errorMessage = init.errors.generalError;
+				},
+				success: function (response) {
+					if (response.status == 'success'){
+						entries = response.entries;
+						if (entries.length == 0)
+							errorMessage = init.errors.noJournalItems;
+					} else
+						errorMessage = response.message;
+				},
+				complete: function () {
+					if (errorMessage != '') {
+						$loader.fadeTo(200, 0, function () {
+							$loader.css('display', 'none');
+						});
+
+						$message
+							.html(errorMessage + '<span class="close">X</span>')
+							.css({
+								display: 'block',
+								opacity: 0
+							})
+							.fadeTo(200, 1);
+
+						return;
+					}
+
+					close();
+
+					$('<div />')
+						.data('socialMediaBox', entries)
+						.socialMediaBox(init.smbConfig);
+				}
+			});
+
+			$(document).on('keyup.socialMediaBox4Journal', function(e) {
+				if (e.keyCode == 27) {
+					xhrRequest.abort();
+					close();
+
+					return false;
+				}
+			});
+		};
+
+		$('.DnnModule-Journal')
+			.on('click', '.journalitem > .jphoto a', function () {
+				initSMB.call(this);
+				return false;
+			})
+			.on('click', '.journalitem > .jphoto > img', initSMB)
+			.on('mouseenter', '.journalitem > .jphoto > img', function () {
+				var $this = $(this);
+
+				$this.css('cursor', 'pointer');
+			});
+
+		return this;
+	};
+};
+
+	if (typeof eds3_5_jq !== 'undefined')
+		lightboxInit(eds3_5_jq);
+
+})();

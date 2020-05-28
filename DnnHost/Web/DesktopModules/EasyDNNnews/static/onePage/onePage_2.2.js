@@ -205,7 +205,7 @@
 		});
 		return this;
 	};
-})(eds2_2, window);
+})(eds3_5_jq, window);
 
 /*
 	The MIT License (MIT)
@@ -379,4 +379,4 @@
 		// Default jquery plugin behaviour
 		return this;
 	};
-})(eds2_2);
+})(eds3_5_jq);

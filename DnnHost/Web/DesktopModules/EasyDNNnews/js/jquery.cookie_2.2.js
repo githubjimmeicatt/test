@@ -74,7 +74,7 @@ var eds_cookie = function ($) {
 if (typeof jQuery !== 'undefined')
 	eds_cookie(jQuery);
 
-if (typeof eds2_2 !== 'undefined')
-	eds_cookie(eds2_2);
+	if (typeof eds3_5_jq !== 'undefined')
+		eds_cookie(eds3_5_jq);
 
 })(document);

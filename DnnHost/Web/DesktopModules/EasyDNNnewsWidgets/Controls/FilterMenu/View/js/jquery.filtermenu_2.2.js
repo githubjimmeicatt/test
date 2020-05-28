@@ -1,4 +1,4 @@
-eds2_2(document).ready(function ($) {
+eds3_5_jq(document).ready(function ($) {
 	var $category_menue_items = $('.edn_filter_menu li');
 
 	$category_menue_items.click(function (e) {

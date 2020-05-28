@@ -1,9 +1,7 @@
 ﻿; if (typeof window.dnn === "undefined" || window.dnn === null) { window.dnn = {}; }; //var dnn = dnn || {};
 
-// DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2018
-// by DotNetNuke Corporation
-// All Rights Reserved
+// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 (function ($, window, document, undefined) {
     "use strict";
@@ -728,7 +726,11 @@
 
         getChildren: function (parentId, sortOrder, searchText, onGetChildrenCallback) {
             var onGetChildrenHandler = $.proxy(this._onGetChildren, this, onGetChildrenCallback);
-            this._callGet({ parentId: parentId, sortOrder: sortOrder, searchText: searchText, includeAllTypes: true }, onGetChildrenHandler, this.options.getNodeDescendantsMethod);
+            var callGetParams = { parentId: parentId, sortOrder: sortOrder, searchText: searchText, includeAllTypes: true };
+            if (this.options.includeDisabled) {
+                callGetParams.includeDisabled = this.options.includeDisabled;
+            }
+            this._callGet(callGetParams, onGetChildrenHandler, this.options.getNodeDescendantsMethod);
         },
 
         _onGetChildren: function(onGetChildrenCallback, data, textStatus, jqXhr) {
@@ -738,7 +740,11 @@
 
         search: function(searchText, sortOrder, onSearchCallback) {
             var onSearchHandler = $.proxy(this._onGetTree, this, onSearchCallback);
-            this._callGet({ searchText: searchText, sortOrder: sortOrder, includeAllTypes: true }, onSearchHandler, this.options.searchTreeMethod);
+            var callGetParams = { searchText: searchText, sortOrder: sortOrder, includeAllTypes: true };
+            if (this.options.includeDisabled) {
+                callGetParams.includeDisabled = this.options.includeDisabled;
+            }
+            this._callGet(callGetParams, onSearchHandler, this.options.searchTreeMethod);
         },
 
         getTree: function (sortOrder, onGetFirstLevelItemsCallback) {

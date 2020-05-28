@@ -19,7 +19,7 @@
 						</ProgressTemplate>
 					</asp:UpdateProgress>
 					<asp:Panel ID="pnlTagsGridView" runat="server" Visible="true" CssClass="sectionBox noPadding">
-						<asp:GridView ID="gvTags" runat="server" EnableModelValidation="True" AutoGenerateColumns="False" DataSourceID="odsTags" CssClass="strippedTable fullWidthTable noBorder tablePadding5 textCenter" DataKeyNames="TagID" OnRowCommand="gvTags_RowCommand" AllowPaging="True" OnPageIndexChanging="gvTags_PageIndexChanging">
+						<asp:GridView ID="gvTags" runat="server" EnableModelValidation="True" AutoGenerateColumns="False" DataSourceID="odsTags" CssClass="strippedTable fullWidthTable noBorder tablePadding5 textCenter" DataKeyNames="TagID" OnRowCommand="gvTags_RowCommand" AllowPaging="True" OnPageIndexChanging="gvTags_PageIndexChanging" OnRowUpdating="gvTags_RowUpdating">
 							<Columns>
 								<asp:TemplateField ShowHeader="False">
 									<EditItemTemplate>
@@ -40,6 +40,8 @@
 								<asp:TemplateField HeaderText="Tag" SortExpression="Name">
 									<EditItemTemplate>
 										<asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("Name") %>'></asp:TextBox>
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbMergeTag" runat="server" Checked='False' />
+										<asp:Label ID="lblTagRenameHelp" resourcekey="lblTagRenameHelp" runat="server" Text='Merge tag with another tag.'></asp:Label>
 									</EditItemTemplate>
 									<ItemTemplate>
 										<asp:Label ID="Label1" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
@@ -60,6 +62,7 @@
 							<HeaderStyle CssClass="tableHeader" />
 							<PagerStyle CssClass="contentPagination" />
 						</asp:GridView>
+						<asp:Label ID="lblMainEditMessage" runat="server" EnableViewState="false" />
 						<div class="edNews_numberOfRows">
 							<div>
 								<asp:Label ID="lblFooterSelectNumberOfRows" runat="server" AssociatedControlID="ddlFooterNumberOfRows" resourcekey="lblFooterSelectNumberOfRowsResource1" Text="Number of rows:"></asp:Label>
@@ -132,7 +135,7 @@
 		</asp:UpdatePanel>
 	</div>
 </div>
-<asp:ObjectDataSource ID="odsTags" runat="server" SelectMethod="GetAllNewTags" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" UpdateMethod="UpdateNewTagName" DeleteMethod="DeleteNewTag" EnablePaging="True" SelectCountMethod="GetAllNewTagsTotalTags">
+<asp:ObjectDataSource ID="odsTags" runat="server" SelectMethod="GetAllNewTags" TypeName="EasyDNNSolutions.Modules.EasyDNNNews.DataAccess" UpdateMethod="UpdateNewTagName" DeleteMethod="DeleteNewTag" EnablePaging="True" SelectCountMethod="GetAllNewTagsTotalTags" OnUpdated="odsTags_Updated">
 	<DeleteParameters>
 		<asp:Parameter Name="TagID" Type="Int32" />
 	</DeleteParameters>
@@ -146,5 +149,7 @@
 		<asp:Parameter Name="Name" Type="String" />
 		<asp:Parameter Name="CountNumber" Type="Int32" />
 		<asp:Parameter Name="Localized" Type="String" />
+		<asp:Parameter Name="PortalID" Type="Int32" />
+		<asp:Parameter Name="meregeTags" Type="Boolean" />
 	</UpdateParameters>
 </asp:ObjectDataSource>
