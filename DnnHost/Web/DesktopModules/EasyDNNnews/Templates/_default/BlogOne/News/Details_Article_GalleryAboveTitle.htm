@@ -42,7 +42,11 @@
 		<div class="in_article_image no_left_margin left" [EasyDNNnews:Image:Visibility] style="max-width:100%;">
 			[EasyDNNnews:IfMediaType:Image]
 			<div class="image_wrapper no_text" style="max-width:100%;">
-				<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]" style="max-width:100%;"/>
+				<picture>
+					<source media="(max-width: 480px)" srcset="[EasyDNNnews:Image:Width:400:Height:400:Resize:Proportional]">
+					<source media="(max-width: 640px)" srcset="[EasyDNNnews:Image:Width:600:Height:600:Resize:Proportional]">
+					<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]" style="max-width:100%;" />
+				</picture>
 				[EasyDNNnews:IfExists:GalleryBackLink]
 				<a href="[EasyDNNnews:GalleryBackLink]" class="edn_galleryLink"><span>[EasyDNNnewsLocalizedText:ViewInGallery]</span></a>
 				[EasyDNNnews:EndIf:GalleryBackLink]

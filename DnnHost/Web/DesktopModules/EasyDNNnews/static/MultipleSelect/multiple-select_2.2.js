@@ -497,8 +497,9 @@
 			}
 
 			// set selects to select
-			this.$el.val(this.getSelects()).trigger('change');
-
+			if (!isInit) {
+				this.$el.val(this.getSelects()).trigger('change');
+			}
 			// add selected class to selected li
 			this.$drop.find('li').removeClass('selected');
 			this.$drop.find('input:checked').each(function () {
@@ -779,4 +780,4 @@
 			return false;
 		}
 	};
-})(eds2_2);
+})(eds3_5_jq);

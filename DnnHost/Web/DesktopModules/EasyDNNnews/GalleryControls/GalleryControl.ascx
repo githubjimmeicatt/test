@@ -62,6 +62,7 @@
 	</style>
 	<asp:UpdatePanel ID="upTableGallery" runat="server" UpdateMode="Conditional" OnUnload="UpdatePanel_Unload">
 		<ContentTemplate>
+			<asp:HiddenField ID="hfWebpSupported" runat="server" Value="False" />
 			<div id="<%=MainThemeIdentifier%>" class="easydnngallery top">
 				<div class="EDGbackground">
 					<div class="EDGcontentbgrd">

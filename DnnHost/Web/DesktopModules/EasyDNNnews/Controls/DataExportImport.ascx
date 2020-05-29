@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	/* <![CDATA[ */
 
-	eds2_2(function ($) {
+	eds3_5_jq(function ($) {
 		InitComponents($);
 	});
 
@@ -96,7 +96,7 @@
 	function pageLoad(sender, args) {
 		if (args.get_isPartialLoad()) {
 			importClicked = false;
-			eds2_2(function ($) {
+			eds3_5_jq(function ($) {
 				InitComponents($);
 			});
 

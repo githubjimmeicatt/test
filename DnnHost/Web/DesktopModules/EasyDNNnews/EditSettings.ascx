@@ -185,8 +185,8 @@
 			}
 		});
 
-		eds2_2('#<%=tbxPublishDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
-		eds2_2('#<%=tbxExpireDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
+		eds3_5_jq('#<%=tbxPublishDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
+		eds3_5_jq('#<%=tbxExpireDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
 
 		var $permissions_show_all_items = $('.permissions_show_all_items > input'),
 			$permissions_show_manual_item_selection = $('.permissions_show_manual_item_selection > input'),
@@ -576,7 +576,7 @@
 
 		TemplateEditLink_Init();
 
-		InitAutoCompleateSearch(eds2_2, '<%=tbUserNameToAdd.ClientID%>', '<%=hfUserIdToAdd.ClientID%>', 'SearchUsers.ashx', { portalid: '<%=PortalId%>', moduleId: '<%=ModuleId%>', tabId: '<%=TabId%>' });
+		InitAutoCompleateSearch(eds3_5_jq, '<%=tbUserNameToAdd.ClientID%>', '<%=hfUserIdToAdd.ClientID%>', 'SearchUsers.ashx', { portalid: '<%=PortalId%>', moduleId: '<%=ModuleId%>', tabId: '<%=TabId%>' });
 
 		$('#<%=phDinamicTreeView.ID%>advanced_tree_view_categor_selector').EDS_TreeViewSelector({
 			state_checkbox: $('#<%=cbAutoAddCatChilds.ClientID %>')
@@ -720,7 +720,7 @@
 					$('#<%=cbFeaturedArticles.ClientID %>')[0].checked = false;
 			});
 
-			eds2_2('.edNews_tooltip').eds_tooltipster();
+			eds3_5_jq('.edNews_tooltip').eds_tooltipster();
 
 			FilterByContent_Init();
 
@@ -749,12 +749,12 @@
 				$('#<%=phGroupsAndAuthorsTreeView.ID%>advanced_tree_view_categor_selector').css('display', (this.checked ? 'none' : ''));
 			});
 
-			InitAutoCompleateSearch(eds2_2, '<%=tbUserNameToAdd.ClientID%>', '<%=hfUserIdToAdd.ClientID%>', 'SearchUsers.ashx', { portalid: '<%=PortalId%>', moduleId: '<%=ModuleId%>', tabId: '<%=TabId%>' });
+			InitAutoCompleateSearch(eds3_5_jq, '<%=tbUserNameToAdd.ClientID%>', '<%=hfUserIdToAdd.ClientID%>', 'SearchUsers.ashx', { portalid: '<%=PortalId%>', moduleId: '<%=ModuleId%>', tabId: '<%=TabId%>' });
 
 			TemplateEditLink_Init();
 
-			eds2_2('#<%=tbxPublishDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
-			eds2_2('#<%=tbxExpireDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
+			eds3_5_jq('#<%=tbxPublishDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
+			eds3_5_jq('#<%=tbxExpireDate.ClientID%>').datepick({ dateFormat:"<%=dateFormat%>" });
 
 			$('#<%=upArticleTags.ClientID %>')
 				.delegate('#<%=dlListOfExistingTags.ClientID %> a.tag_link', 'click', function () {
@@ -1599,6 +1599,34 @@
 									<div class="switchCheckbox">
 										<asp:CheckBox CssClass="normalCheckBox" ID="cbReplaceDNNSharpMyTokens" Text="Replace standard DNN tokens" runat="server" />
 									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="tdLabel">
+									<label for="<%=cbEnableWebpImages.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblAddWebpImage.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblAddWebpImage.Text") %></label>
+								</td>
+								<td>
+									<div class="switchCheckbox edNews__toggleNextTableRow">
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbEnableWebpImages" Checked="false" Text="Enable webp images:" runat="server" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="tdLabel">
+									<label for="<%=tbWebpImageQuality.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblWebpImageQuality.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblWebpImageQuality.Text") %></label>
+								</td>
+								<td>
+									<asp:TextBox ID="tbWebpImageQuality" runat="server" CssClass="smallCentered" Text="95" />
+									<asp:RequiredFieldValidator ID="rfvWebpImageQuality" runat="server" ControlToValidate="tbWebpImageQuality" ErrorMessage="This filed is required." ValidationGroup="vgSettings" resourcekey="rfvWebpImageQuality.ErrorMessage" Display="Dynamic" />
+									<asp:RangeValidator ID="rvWebpImageQuality"
+										ControlToValidate="tbWebpImageQuality"
+										MinimumValue="0"
+										MaximumValue="100"
+										Type="Integer"
+										Text="The value must be integer and greater or equal than 0"
+										runat="server"
+										ValidationGroup="vgSettings"
+										resourcekey="rfvWebpImageQuality.ErrorMessage" Display="Dynamic" />
 								</td>
 							</tr>
 						</table>
@@ -2867,6 +2895,19 @@
 											<asp:TextBox ID="tbxTextEditorArticleMaxChar" runat="server" CssClass="smallCentered" Text="0" />
 										</td>
 									</tr>
+									<tr>
+										<td class="tdLabel">
+											<label for="<%=rblDirectPublishDefaultState.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblDirectPublishDefaultState.Help", true) %>" data-tooltip-position="top-right"><%=_("lblDirectPublishDefaultState.Text") %></label>
+										</td>
+										<td>
+											<div class="edNews_inputGroup">
+												<asp:RadioButtonList ID="rblDirectPublishDefaultState" runat="server" AutoPostBack="true" CssClass="inlineList styledRadio smallRadio" RepeatLayout="UnorderedList">
+													<asp:ListItem class="normalRadioButton" Value="0" resourcekey="liPublish" Text="Publish" Selected="True" />
+													<asp:ListItem class="normalRadioButton" Value="1" resourcekey="liDraft" Text="Draft" />
+												</asp:RadioButtonList>
+											</div>
+										</td>
+									</tr>
 								</table>
 							</ContentTemplate>
 						</asp:UpdatePanel>
@@ -3481,7 +3522,7 @@
 								<td>
 									<asp:TextBox ID="tbRSSNumberOfArticles" runat="server" CssClass="smallCentered" Text="20" />
 									<asp:RequiredFieldValidator ID="rfvRSSNumberOfArticles" runat="server" ControlToValidate="tbRSSNumberOfArticles" Display="Dynamic" ErrorMessage="This filed is required." resourcekey="tbRSSNumberOfArticles.ErrorMessage" ValidationGroup="vgSettings" />
-									<asp:RangeValidator ID="rvRSSNumberOfArticles" runat="server" ControlToValidate="tbRSSNumberOfArticles" Display="Dynamic" ErrorMessage="Enter value between 1-100." MaximumValue="100" MinimumValue="1" resourcekey="rvRSSNumberOfArticles.ErrorMessage" SetFocusOnError="True" Type="Integer" ValidationGroup="vgSettings" />
+									<asp:RangeValidator ID="rvRSSNumberOfArticles" runat="server" ControlToValidate="tbRSSNumberOfArticles" Display="Dynamic" ErrorMessage="Enter value between 1-500." MaximumValue="500" MinimumValue="1" resourcekey="rvRSSNumberOfArticles.ErrorMessage" SetFocusOnError="True" Type="Integer" ValidationGroup="vgSettings" />
 								</td>
 							</tr>
 							<tr>

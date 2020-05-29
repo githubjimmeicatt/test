@@ -167,7 +167,7 @@
             }
 
             if (self.options.localeCode)
-                $extend(postData, { localeCode: self.options.localeCode });
+                $.extend(postData, { localeCode: self.options.localeCode });
 
 			$.ajax({
 				type: 'GET',
@@ -422,4 +422,4 @@
 		});
 	};
 
-})(eds2_2, window);
+})(eds3_5_jq, window);

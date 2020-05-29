@@ -128,7 +128,7 @@
 			return false;
 		});
 
-		InitAutoCompleateSearch(eds2_2, '<%=tbUserNameToAdd.ClientID%>', '<%=hfUserIdToAdd.ClientID%>', 'SearchUsers.ashx', { portalid: '<%=PortalId%>', moduleId: '<%=ModuleId%>', tabId: '<%=TabId%>' });
+		InitAutoCompleateSearch(eds3_5_jq, '<%=tbUserNameToAdd.ClientID%>', '<%=hfUserIdToAdd.ClientID%>', 'SearchUsers.ashx', { portalid: '<%=PortalId%>', moduleId: '<%=ModuleId%>', tabId: '<%=TabId%>' });
 
 	});
 
@@ -148,7 +148,11 @@
 				<asp:LinkButton ID="btnClose" runat="server" Text="Close" UseSubmitBehavior="False" resourcekey="btnClose.Text" />
 			</li>
 		</ul>
-		<asp:Literal ID="literalFlashMessage" runat="server" EnableViewState="false" />
+		<div class="flashMessage" runat="server" id="divFlashMessage" visible="false">
+			<p>
+				<asp:Label ID="lblEmailSettingsInfo" runat="server" EnableViewState="false" />
+			</p>
+		</div>
 	</div>
 </div>
 <div id="EDNadmin" class="edNews_adminWrapper mainContentWrapper topPadded bottomPadded">
@@ -167,6 +171,7 @@
 							<label for="<%=rblNotificationProvider.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblNotificationProvider.Help", true) %>" data-tooltip-position="top-right"><%=_("lblNotificationProvider.Text") %></label>
 						</td>
 						<td>
+							<label runat="server" id="lblSettingHelpNotification" visible="false"><%=_("lblSettingHelpNotification.Text") %></label>
 							<div class="edNews_inputGroup displayInline">
 								<asp:RadioButtonList runat="server" ID="rblNotificationProvider" RepeatDirection="Horizontal" CssClass="inlineList styledRadio smallRadio">
 									<asp:ListItem Value="DnnApi" Text="DNN API" resourcekey="liDnnApi" Selected="True" />
@@ -688,7 +693,7 @@
 								<div class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbxDefaultFromName" runat="server" Width="450px"></asp:TextBox>
 								</div>
-<%--								<asp:RequiredFieldValidator ID="rfvDefaultFromName" CssClass="smallInfo error" resourcekey="rfvDefaultFromName.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromName" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>--%>
+								<%--								<asp:RequiredFieldValidator ID="rfvDefaultFromName" CssClass="smallInfo error" resourcekey="rfvDefaultFromName.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromName" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>--%>
 							</td>
 						</tr>
 						<tr>
@@ -699,7 +704,7 @@
 								<div class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbxDefaultFromMail" runat="server" Width="450px"></asp:TextBox>
 								</div>
-<%--								<asp:RequiredFieldValidator ID="rfvDefaultFromMail" CssClass="smallInfo error" resourcekey="rfvDefaultFromMail.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromMail" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>--%>
+								<%--								<asp:RequiredFieldValidator ID="rfvDefaultFromMail" CssClass="smallInfo error" resourcekey="rfvDefaultFromMail.ErrorMessage" runat="server" ErrorMessage="Required!" ControlToValidate="tbxDefaultFromMail" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>--%>
 							</td>
 						</tr>
 						<tr>
@@ -710,14 +715,11 @@
 								<div class="edNews_inputGroup inputWidth40">
 									<asp:TextBox ID="tbxDefaultReplyTo" runat="server" Width="450px"></asp:TextBox>
 								</div>
-<%--								<asp:RequiredFieldValidator ID="rfvDefaultReplyTo" CssClass="smallInfo error" runat="server" resourcekey="required.ErrorMessage" ErrorMessage="Required!" ControlToValidate="tbxDefaultReplyTo" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>--%>
+								<%--								<asp:RequiredFieldValidator ID="rfvDefaultReplyTo" CssClass="smallInfo error" runat="server" resourcekey="required.ErrorMessage" ErrorMessage="Required!" ControlToValidate="tbxDefaultReplyTo" Display="Dynamic" ValidationGroup="vgEmailSettings" SetFocusOnError="True"></asp:RequiredFieldValidator>--%>
 							</td>
 						</tr>
 					</table>
 				</asp:Panel>
-
-				<asp:Label ID="lblEmailSettingsInfo" runat="server" EnableViewState="false" />
-
 			</asp:Panel>
 		</div>
 	</div>

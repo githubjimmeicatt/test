@@ -15,6 +15,6 @@ var eds_mousewheel = function(a){function d(b){var c=b||window.event,d=[].slice.
 if (typeof jQuery !== 'undefined')
 	eds_mousewheel(jQuery);
 
-if (typeof eds2_2 !== 'undefined')
-	eds_mousewheel(eds2_2);
+	if (typeof eds3_5_jq !== 'undefined')
+		eds_mousewheel(eds3_5_jq);
 })();

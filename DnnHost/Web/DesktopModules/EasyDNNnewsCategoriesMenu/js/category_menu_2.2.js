@@ -30,8 +30,8 @@ var eds_category_menu = function ($) {
 	});
 };
 
-if (typeof eds2_2 !== 'undefined')
-	eds2_2(eds_category_menu);
+	if (typeof eds3_5_jq !== 'undefined')
+		eds3_5_jq(eds_category_menu);
 else if (typeof jQuery !== 'undefined')
 	jQuery(eds_category_menu);
 }();

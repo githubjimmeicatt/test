@@ -1,6 +1,6 @@
 {
   "name": "NewsMagazine",
-  "version": 2,
+  "version": 3,
   "assetsClientPath": "assets/",
   "customFontFamilies": [
     {
@@ -14,6 +14,16 @@
   ],
   "styleDefinitions": {
     "properties": {
+      "globalColors": {
+        "type": "globalColors",
+        "name": "Global Colors",
+        "states": [
+          {
+            "id": "default",
+            "name": "Color 1"
+          }
+        ]
+      },
       "headings": {
         "type": "text",
         "name": "Headings",
@@ -1204,7 +1214,7 @@
           {
             "id": "default",
             "selectors": [
-              " .edn_simpleArticle6Bullet:before"
+              " .edn_simpleArticle6Bullet::before"
             ],
             "name": "Normal",
             "forbidden": [
@@ -1570,7 +1580,7 @@
           {
             "id": "default",
             "selectors": [
-              " .edn_article.edn_articleInBox > figure > figcaption h2.edn_articleTitle:after"
+              " .edn_article.edn_articleInBox > figure > figcaption h2.edn_articleTitle::after"
             ],
             "name": "Normal",
             "forbidden": [
@@ -2277,7 +2287,7 @@
           {
             "id": "default",
             "selectors": [
-              " .edn_category_menu_wrapper li .expand_collapse:before"
+              " .edn_category_menu_wrapper li .expand_collapse::before"
             ],
             "name": "Normal",
             "forbidden": [
@@ -2291,7 +2301,7 @@
           {
             "id": "hover",
             "selectors": [
-              " .edn_category_menu_wrapper li .expand_collapse:hover:before"
+              " .edn_category_menu_wrapper li .expand_collapse:hover::before"
             ],
             "name": "Hover",
             "forbidden": [
@@ -3036,7 +3046,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_calendarExport:after"
+                      " .edn_calendarExport::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -3050,7 +3060,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_calendarExport:hover:after"
+                      " .edn_calendarExport:hover::after"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -3153,7 +3163,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_eventDetails .edn_eventLocation:before"
+                      " .edn_eventDetails .edn_eventLocation::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -4107,7 +4117,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  ".eds_news_Ozone.eds_subCollection_news .edn_article.edn_eventsSimple > section:after"
+                  ".eds_news_Ozone.eds_subCollection_news .edn_article.edn_eventsSimple > section::after"
                 ],
                 "name": "Border 1",
                 "forbidden": [
@@ -4119,7 +4129,7 @@
               {
                 "id": "border2",
                 "selectors": [
-                  ".eds_news_Ozone.eds_subCollection_news .edn_article.edn_eventsSimple > section:before"
+                  ".eds_news_Ozone.eds_subCollection_news .edn_article.edn_eventsSimple > section::before"
                 ],
                 "name": "Border 2"
               }
@@ -4133,7 +4143,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title:after"
+                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title::after"
                 ],
                 "name": "Border 1",
                 "forbidden": [
@@ -4145,7 +4155,7 @@
               {
                 "id": "border2",
                 "selectors": [
-                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title:before"
+                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title::before"
                 ],
                 "name": "Border 2"
               }
@@ -4512,8 +4522,8 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_article.edn_eventsSimple > section > div > time:before",
-                  " .edn_article.edn_eventsSimple > section > div .edn_eventBoxLocation:before"
+                  " .edn_article.edn_eventsSimple > section > div > time::before",
+                  " .edn_article.edn_eventsSimple > section > div .edn_eventBoxLocation::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -4527,8 +4537,8 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .edn_article.edn_eventsSimple > section:hover > div > time:before",
-                  " .edn_article.edn_eventsSimple > section:hover > div .edn_eventBoxLocation:before"
+                  " .edn_article.edn_eventsSimple > section:hover > div > time::before",
+                  " .edn_article.edn_eventsSimple > section:hover > div .edn_eventBoxLocation::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -4544,8 +4554,8 @@
               {
                 "id": "active",
                 "selectors": [
-                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title > div > time:before",
-                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title > div .edn_eventBoxLocation:before"
+                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title > div > time::before",
+                  " .edn_articleAccordion.edn_eventsSimple.edsAccordion_section.edsAccordion_active .edsAccordion_title > div .edn_eventBoxLocation::before"
                 ],
                 "name": "Active (Accordion)",
                 "forbidden": [
@@ -4814,7 +4824,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_article.edn_simpleArticle2 .edn_mediaContainer:after"
+                  " .edn_article.edn_simpleArticle2 .edn_mediaContainer::after"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -4837,7 +4847,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_mediaContainer.edn_withTime > a:after"
+                  " .edn_mediaContainer.edn_withTime > a::after"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -5093,9 +5103,9 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_metaDetails .edn_numberComments:before",
-                  " .edn_metaDetails .edn_numberOfVievs:before",
-                  " .edn_article.edn_articleDetails .edn_metaDetails > a:before"
+                  " .edn_metaDetails .edn_numberComments::before",
+                  " .edn_metaDetails .edn_numberOfVievs::before",
+                  " .edn_article.edn_articleDetails .edn_metaDetails > a::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -5119,8 +5129,8 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_article.edn_simpleArticle6 .edn_metaDetails .edn_numberComments:before",
-                  " .edn_article.edn_simpleArticle6 .edn_metaDetails > time:before"
+                  " .edn_article.edn_simpleArticle6 .edn_metaDetails .edn_numberComments::before",
+                  " .edn_article.edn_simpleArticle6 .edn_metaDetails > time::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -5618,7 +5628,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_listEventDetails > span:before"
+                  " .edn_listEventDetails > span::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -5725,8 +5735,8 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_article.edn_articleInBox > figure .edn_metaDetails .edn_numberOfVievs:before",
-                  " .edn_article.edn_articleInBox > figure .edn_metaDetails .edn_numberComments:before"
+                  " .edn_article.edn_articleInBox > figure .edn_metaDetails .edn_numberOfVievs::before",
+                  " .edn_article.edn_articleInBox > figure .edn_metaDetails .edn_numberComments::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -5973,7 +5983,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -5984,7 +5994,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage::after"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -6002,7 +6012,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal"
                   }
@@ -6016,14 +6026,14 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal"
                   },
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage::after"
                     ],
                     "name": "Hover"
                   }
@@ -6037,7 +6047,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a .edn_fixedNavImage::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -6051,7 +6061,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage:after"
+                      " .edn_fixedPrevNextArticleNavigation > a:hover .edn_fixedNavImage::after"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -6625,7 +6635,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_articleAccordion .edsAccordion_section .edsAccordion_title:after"
+                  " .edn_articleAccordion .edsAccordion_section .edsAccordion_title::after"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -6639,7 +6649,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .edn_articleAccordion .edsAccordion_section .edsAccordion_title:hover:after"
+                  " .edn_articleAccordion .edsAccordion_section .edsAccordion_title:hover::after"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -6874,7 +6884,7 @@
                 "id": "default",
                 "selectors": [
                   " .edn_article.edn_timeline .edn_timeLineContent",
-                  " .edn_article.edn_timeline .edn_timeLineContent:before"
+                  " .edn_article.edn_timeline .edn_timeLineContent::before"
                 ],
                 "name": "Normal"
               },
@@ -6882,7 +6892,7 @@
                 "id": "even",
                 "selectors": [
                   " .edn_article.edn_timeline:nth-child(even) .edn_timeLineContent",
-                  " .edn_article.edn_timeline:nth-child(even) .edn_timeLineContent:before"
+                  " .edn_article.edn_timeline:nth-child(even) .edn_timeLineContent::before"
                 ],
                 "name": "Even"
               }
@@ -6897,7 +6907,7 @@
                 "id": "default",
                 "selectors": [
                   " .edn_article.edn_timeline .edn_timeLineContent",
-                  " .edn_article.edn_timeline .edn_timeLineContent:before"
+                  " .edn_article.edn_timeline .edn_timeLineContent::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -6909,7 +6919,7 @@
                 "id": "even",
                 "selectors": [
                   " .edn_article.edn_timeline:nth-child(even) .edn_timeLineContent",
-                  " .edn_article.edn_timeline:nth-child(even) .edn_timeLineContent:before"
+                  " .edn_article.edn_timeline:nth-child(even) .edn_timeLineContent::before"
                 ],
                 "name": "Even",
                 "forbidden": [
@@ -7045,7 +7055,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .edn_article.edn_timeline .edn_timeLineContent > header .edn_calendarExport:after"
+                          " .edn_article.edn_timeline .edn_timeLineContent > header .edn_calendarExport::after"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -7059,7 +7069,7 @@
                       {
                         "id": "hover",
                         "selectors": [
-                          " .edn_article.edn_timeline .edn_timeLineContent > header .edn_calendarExport:hover:after"
+                          " .edn_article.edn_timeline .edn_timeLineContent > header .edn_calendarExport:hover::after"
                         ],
                         "name": "Hover",
                         "forbidden": [
@@ -7101,7 +7111,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .edn_article.edn_timeline .edn_timeLineContent > header > time:before"
+                          " .edn_article.edn_timeline .edn_timeLineContent > header > time::before"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -7225,7 +7235,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .in_article_image .image_wrapper > a:hover:before"
+                      " .in_article_image .image_wrapper > a:hover::before"
                     ],
                     "name": "Normal"
                   }
@@ -7239,7 +7249,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .in_article_image .image_wrapper > a:hover:before"
+                      " .in_article_image .image_wrapper > a:hover::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -7587,7 +7597,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_aditionalBox.edn_articleDocuments h2 span:after"
+                      " .edn_aditionalBox.edn_articleDocuments h2 span::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -7611,7 +7621,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_aditionalBox.edn_articleDocuments ul li:before"
+                      " .edn_aditionalBox.edn_articleDocuments ul li::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -7833,7 +7843,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_aditionalBox.edn_articleLinks h2 span:after"
+                      " .edn_aditionalBox.edn_articleLinks h2 span::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -7857,7 +7867,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_aditionalBox.edn_articleLinks ul li:before"
+                      " .edn_aditionalBox.edn_articleLinks ul li::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -8035,7 +8045,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_aditionalBox.edn_relatedArticles h2 span:after"
+                      " .edn_aditionalBox.edn_relatedArticles h2 span::after"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -8059,7 +8069,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_aditionalBox.edn_relatedArticles ul li:before"
+                      " .edn_aditionalBox.edn_relatedArticles ul li::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -8253,7 +8263,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_authorGroupDetails > h4 .button:before"
+                  " .edn_authorGroupDetails > h4 .button::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -8268,7 +8278,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .edn_authorGroupDetails > h4 .button:hover:before"
+                  " .edn_authorGroupDetails > h4 .button:hover::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -8440,8 +8450,8 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_authorGroupDetails .button.contact:before",
-                      " .edn_authorGroupDetails .button.full_bio:before"
+                      " .edn_authorGroupDetails .button.contact::before",
+                      " .edn_authorGroupDetails .button.full_bio::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -8455,8 +8465,8 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_authorGroupDetails .button.contact:hover:before",
-                      " .edn_authorGroupDetails .button.full_bio:hover:before"
+                      " .edn_authorGroupDetails .button.contact:hover::before",
+                      " .edn_authorGroupDetails .button.full_bio:hover::before"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -8555,7 +8565,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_authorGroupDetails .button.social:before"
+                      " .edn_authorGroupDetails .button.social::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -8569,7 +8579,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_authorGroupDetails .button.social:hover:before"
+                      " .edn_authorGroupDetails .button.social:hover::before"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -8695,7 +8705,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edn_authorGroupDetails.edn_groupDetails > h4 .button:before"
+                      " .edn_authorGroupDetails.edn_groupDetails > h4 .button::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -8710,7 +8720,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edn_authorGroupDetails.edn_groupDetails > h4 .button:hover:before"
+                      " .edn_authorGroupDetails.edn_groupDetails > h4 .button:hover::before"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -8873,7 +8883,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .edn_authorGroupDetails.edn_groupDetails .button.contact:before"
+                          " .edn_authorGroupDetails.edn_groupDetails .button.contact::before"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -8887,7 +8897,7 @@
                       {
                         "id": "hover",
                         "selectors": [
-                          " .edn_authorGroupDetails.edn_groupDetails .button.contact:hover:before"
+                          " .edn_authorGroupDetails.edn_groupDetails .button.contact:hover::before"
                         ],
                         "name": "Hover",
                         "forbidden": [
@@ -8986,7 +8996,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .edn_authorGroupDetails.edn_groupDetails .button.social:before"
+                          " .edn_authorGroupDetails.edn_groupDetails .button.social::before"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -9000,7 +9010,7 @@
                       {
                         "id": "hover",
                         "selectors": [
-                          " .edn_authorGroupDetails.edn_groupDetails .button.social:hover:before"
+                          " .edn_authorGroupDetails.edn_groupDetails .button.social:hover::before"
                         ],
                         "name": "Hover",
                         "forbidden": [
@@ -10261,7 +10271,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .ednMoreArticlesTriggerWrapper .trigger .loadingOverlay:before"
+                          " .ednMoreArticlesTriggerWrapper .trigger .loadingOverlay::before"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -10282,7 +10292,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .ednMoreArticlesTriggerWrapper .trigger .loadingOverlay:before"
+                          " .ednMoreArticlesTriggerWrapper .trigger .loadingOverlay::before"
                         ],
                         "name": "Normal"
                       }
@@ -10365,7 +10375,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .edn_articlesRssWrapper a span:before"
+                  " .edn_articlesRssWrapper a span::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -10377,7 +10387,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .edn_articlesRssWrapper a:hover span:before"
+                  " .edn_articlesRssWrapper a:hover span::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -10864,7 +10874,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .search_input .do_search:before"
+                  " .search_input .do_search::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -10878,7 +10888,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .search_input .do_search:hover:before"
+                  " .search_input .do_search:hover::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -11035,7 +11045,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .search_input.button_outside .do_search:before"
+                  " .search_input.button_outside .do_search::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -11049,7 +11059,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .search_input.button_outside .do_search:hover:before"
+                  " .search_input.button_outside .do_search:hover::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -11281,7 +11291,7 @@
                   "id": "default",
                     "selectors": [
                        " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span",
-                       " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span:after",
+                       " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span::after",
                        " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice",
                        " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice > div",
                        " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop"
@@ -11336,8 +11346,8 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span:after ",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice > div:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_DropDownList > span::after ",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-choice > div::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -11759,7 +11769,7 @@
                           {
                             "id": "default",
                             "selectors": [
-                              " .edncf_AdvancedSearch .edncf_container .edncf_RangeSliderInput .irs .irs-slider:before"
+                              " .edncf_AdvancedSearch .edncf_container .edncf_RangeSliderInput .irs .irs-slider::before"
                             ],
                             "name": "Normal",
                             "forbidden": [
@@ -11777,7 +11787,7 @@
                           {
                             "id": "default",
                             "selectors": [
-                              " .edncf_AdvancedSearch .edncf_container .edncf_RangeSliderInput .irs .irs-slider:before"
+                              " .edncf_AdvancedSearch .edncf_container .edncf_RangeSliderInput .irs .irs-slider::before"
                             ],
                             "name": "Normal",
                             "forbidden": [
@@ -11794,7 +11804,7 @@
                           {
                             "id": "default",
                             "selectors": [
-                              " .edncf_AdvancedSearch .edncf_container .edncf_RangeSliderInput .irs .irs-slider:before"
+                              " .edncf_AdvancedSearch .edncf_container .edncf_RangeSliderInput .irs .irs-slider::before"
                             ],
                             "name": "Normal"
                           }
@@ -11817,8 +11827,8 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -11830,8 +11840,8 @@
                   {
                     "id": "checked",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span::before"
                     ],
                     "name": "Checked",
                     "forbidden": [
@@ -11850,16 +11860,16 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span::before"
                     ],
                     "name": "Normal"
                   },
                   {
                     "id": "checked",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span::before"
                     ],
                     "name": "Checked",
                     "forbidden": [
@@ -11877,8 +11887,8 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -11895,16 +11905,16 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span::before"
                     ],
                     "name": "Normal"
                   },
                   {
                     "id": "checked",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li.selected label > span::before"
                     ],
                     "name": "Checked"
                   }
@@ -11918,8 +11928,8 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label:before",
-                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_CheckBox input[type=\"checkbox\"]:checked + label::before",
+                      " .edncf_AdvancedSearch .edncf_container .edncf_Multiselect .edncf_MultiselectGroup .ms-drop ul > li label > span::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -11947,7 +11957,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -11959,7 +11969,7 @@
                   {
                     "id": "checked",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label::before"
                     ],
                     "name": "Checked",
                     "forbidden": [
@@ -11978,14 +11988,14 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label::before"
                     ],
                     "name": "Normal"
                   },
                   {
                     "id": "checked",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label::before"
                     ],
                     "name": "Checked",
                     "forbidden": [
@@ -12003,7 +12013,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -12020,14 +12030,14 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton label::before"
                     ],
                     "name": "Normal"
                   },
                   {
                     "id": "checked",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label::before"
                     ],
                     "name": "Checked"
                   }
@@ -12041,7 +12051,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_RadioButton input[type=\"radio\"]:checked + label::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -12393,7 +12403,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit:hover:before"
+                      " .edncf_AdvancedSearch .edncf_container .edncf_submitContainer > a.edncf_submit:hover::before"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -17982,7 +17992,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .archive_list ul > li .expand_collapse:before"
+                  " .archive_list ul > li .expand_collapse::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -17996,7 +18006,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .archive_list ul li > div:hover .expand_collapse:before"
+                  " .archive_list ul li > div:hover .expand_collapse::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -18151,7 +18161,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .archive_list.events .edn_module_title > a.export:before"
+                  " .archive_list.events .edn_module_title > a.export::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -18165,7 +18175,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .archive_list.events .edn_module_title > a.export:hover:before"
+                  " .archive_list.events .edn_module_title > a.export:hover::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -18188,7 +18198,7 @@
               {
                 "id": "default",
                 "selectors": [
-                  " .archive_list.events .edn_module_title > a.rss:before"
+                  " .archive_list.events .edn_module_title > a.rss::before"
                 ],
                 "name": "Normal",
                 "forbidden": [
@@ -18202,7 +18212,7 @@
               {
                 "id": "hover",
                 "selectors": [
-                  " .archive_list.events .edn_module_title > a.rss:hover:before"
+                  " .archive_list.events .edn_module_title > a.rss:hover::before"
                 ],
                 "name": "Hover",
                 "forbidden": [
@@ -18716,7 +18726,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      "!.qtip.edn_calendarbox__-ThemeName-_._-StyleTypeAndId-_ .qtip-content .wrapper > .article > p.location:before"
+                      "!.qtip.edn_calendarbox__-ThemeName-_._-StyleTypeAndId-_ .qtip-content .wrapper > .article > p.location::before"
                     ],
                     "forbidden": [
                       "fontFamily",
@@ -18864,7 +18874,7 @@
                   {
                     "id": "default",
                     "selectors": [
-                      " .eds_GravityGallery_NewsMagazine a.edsgg_galleryBackLink:before"
+                      " .eds_GravityGallery_NewsMagazine a.edsgg_galleryBackLink::before"
                     ],
                     "name": "Normal",
                     "forbidden": [
@@ -18878,7 +18888,7 @@
                   {
                     "id": "hover",
                     "selectors": [
-                      " .eds_GravityGallery_NewsMagazine a.edsgg_galleryBackLink:hover:before"
+                      " .eds_GravityGallery_NewsMagazine a.edsgg_galleryBackLink:hover::before"
                     ],
                     "name": "Hover",
                     "forbidden": [
@@ -19082,7 +19092,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .eds_GravityGallery_NewsMagazine .edsgg__loadMediaWrapper .edsgg__loadMediaTrigger .edsgg__loadMediaTriggerOverlay:before"
+                          " .eds_GravityGallery_NewsMagazine .edsgg__loadMediaWrapper .edsgg__loadMediaTrigger .edsgg__loadMediaTriggerOverlay::before"
                         ],
                         "name": "Normal",
                         "forbidden": [
@@ -19103,7 +19113,7 @@
                       {
                         "id": "default",
                         "selectors": [
-                          " .eds_GravityGallery_NewsMagazine .edsgg__loadMediaWrapper .edsgg__loadMediaTrigger .edsgg__loadMediaTriggerOverlay:before"
+                          " .eds_GravityGallery_NewsMagazine .edsgg__loadMediaWrapper .edsgg__loadMediaTrigger .edsgg__loadMediaTriggerOverlay::before"
                         ],
                         "name": "Normal"
                       }

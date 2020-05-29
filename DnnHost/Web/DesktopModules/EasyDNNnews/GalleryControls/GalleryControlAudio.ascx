@@ -5,7 +5,7 @@
 	}
 </style>
 <script type="text/javascript">
-	eds2_2(document).ready(function ($) {
+	eds3_5_jq(document).ready(function ($) {
 		audiojs.events.ready(function () {
 			var as = audiojs.createAll(null, $('#<%=dlAudioGallery.ClientID%> audio'));
 		});

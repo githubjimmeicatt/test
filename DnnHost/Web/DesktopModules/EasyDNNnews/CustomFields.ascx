@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	// <![CDATA[
 
-	eds2_2(function ($) {
+	eds3_5_jq(function ($) {
 		<%=IncludeJavaScript%>
 
 		var treeView = document.getElementById('<%= tvAuthorAndGroupSelection.ClientID %>');
@@ -74,7 +74,7 @@
 		if (args.get_isPartialLoad()) {
 			<%=IncludeJavaScript%>
 
-			eds2_2('.edNews_tooltip').eds_tooltipster();
+			eds3_5_jq('.edNews_tooltip').eds_tooltipster();
 
 			var treeView = document.getElementById('<%= tvAuthorAndGroupSelection.ClientID %>');
 			if (treeView != null) {

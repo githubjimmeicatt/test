@@ -295,7 +295,9 @@
             <asp:Label runat="server" id="SwitchListView">ListView</asp:Label>&nbsp;
             <asp:Label runat="server" id="SwitchIconsView">IconsView</asp:Label>&nbsp;|
             <asp:LinkButton runat="server" id="SortAscending" OnClick="SortAscendingClick">Sort Ascending</asp:LinkButton>&nbsp;
-            <asp:LinkButton runat="server" id="SortDescending" OnClick="SortDescendingClick">Sort Descending</asp:LinkButton>
+            <asp:LinkButton runat="server" id="SortDescending" OnClick="SortDescendingClick">Sort Descending</asp:LinkButton>&nbsp;
+            <asp:LinkButton runat="server" id="SortByDateAscending" OnClick="SortByDateAscendingClick">Sort By Date Ascending</asp:LinkButton>&nbsp;
+            <asp:LinkButton runat="server" ID="SortByDateDescending" OnClick="SortByDateDescendingClick">Sort By Date Descending</asp:LinkButton>
             <br />
             <asp:HiddenField runat="server" ID="ListViewState"/>
             <div id="FilesBox">
@@ -375,24 +377,33 @@
     </form>
     <script type="text/javascript">
         $(function() {
-            var overrideFile = $('#<%= this.OverrideFile.ClientID %>').is(':checked');
-            var maxFileSize = <%= this.MaxUploadSize %>;
-            var fileUploaderURL = "FileUploader.ashx?portalid=<%= HttpContext.Current.Request.QueryString["PortalID"] %>";
-
-            $('#fileupload').fileupload({
-                url: fileUploaderURL,
-                acceptFileTypes: new RegExp('(\.|\/)(' + '<%= this.AcceptFileTypes %>' + ')', 'i'),
-                maxFileSize: maxFileSize,
-                done: function() {
-                    __doPostBack('cmdUploadNow', '');
-                },
-                formData: {
-                    storageFolderID: '<%= CurrentFolderId %>',
-                    portalID: '<%= HttpContext.Current.Request.QueryString["PortalID"] %>',
-                    overrideFiles: overrideFile
-                },
-                dropZone: $('#dropzone')
+            $(document).on('change', '#<%= this.OverrideFile.ClientID %>', function () {                                 
+                setupFileUpload(this.checked);                
             });
+
+            function setupFileUpload(overrideFile) {
+                var overrideFile = overrideFile;
+                var maxFileSize = <%= this.MaxUploadSize %>;
+                var fileUploaderURL = "FileUploader.ashx?portalid=<%= HttpContext.Current.Request.QueryString["PortalID"] %>";
+
+                $('#fileupload').fileupload({
+                    url: fileUploaderURL,
+                    acceptFileTypes: new RegExp('(\.|\/)(' + '<%= this.AcceptFileTypes %>' + ')', 'i'),
+                    maxFileSize: maxFileSize,
+                    done: function () {
+                        __doPostBack('cmdUploadNow', '');
+                    },
+                    formData: {
+                        storageFolderID: '<%= CurrentFolderId %>',
+                        portalID: '<%= HttpContext.Current.Request.QueryString["PortalID"] %>',
+                        overrideFiles: overrideFile
+                    },
+                    dropZone: $('#dropzone')
+                });
+            }
+
+            setupFileUpload($('#<%= this.OverrideFile.ClientID %>').is(':checked'));
+
             $(document).bind('dragover', function (e) {
                 var dropZone = $('#dropzone'),
                     timeout = window.dropZoneTimeout;

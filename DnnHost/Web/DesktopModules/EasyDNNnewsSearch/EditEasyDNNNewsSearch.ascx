@@ -8,7 +8,6 @@
 
 		$('.edNews__toggleNextTableRow').on('change', 'input[type="checkbox"]', function () {
 			var $this = $(this);
-			console.log('pkre�emo change', $this);
 			
 			if (!this.checked) {
 				$this.closest('tr').next('tr').hide();
@@ -398,6 +397,26 @@
 				<tr runat="server" id="rowCategoryCFGroupItems" style="display: none;">
 					<td colspan="2">
 						<asp:PlaceHolder ID="phCategoryCFGroupItems" runat="server" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tdLabel width40">
+						<label for="<%=cbCFUseORBetweenElements.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblcbCFUseORBetweenElements.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblcbCFUseORBetweenElements.Text") %></label>
+					</td>
+					<td>
+						<div class="switchCheckbox">
+							<asp:CheckBox CssClass="normalCheckBox" ID="cbCFUseORBetweenElements" runat="server" Checked="false" Text="Use OR operation" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdLabel width40">
+						<label for="<%=cbShowCFUseORBetweenElements.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblcbShowCFUseORBetweenElements.HelpText", true) %>" data-tooltip-position="top-right"><%=_("lblcbShowCFUseORBetweenElements.Text") %></label>
+					</td>
+					<td>
+						<div class="switchCheckbox">
+							<asp:CheckBox CssClass="normalCheckBox" ID="cbShowCFUseORBetweenElements" runat="server" Checked="false" Text="Show OR operation" />
+						</div>
 					</td>
 				</tr>
 				<tr>

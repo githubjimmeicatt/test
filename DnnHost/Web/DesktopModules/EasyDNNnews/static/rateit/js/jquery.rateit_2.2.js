@@ -233,8 +233,8 @@
 
 	//some default values.
 	$.fn.rateit.defaults = { min: 0, max: 5, step: 0.5, starwidth: 16, starheight: 16, readonly: false, resetable: true };
-	eds2_2(document).ready(function ($) {
+	eds3_5_jq(document).ready(function ($) {
 		//invoke it on all div.rateit elements. This could be removed if not wanted.
 		$('div.rateit').rateit();
 	});
-})(eds2_2);
+})(eds3_5_jq);

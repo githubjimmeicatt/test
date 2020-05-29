@@ -16,7 +16,7 @@
 
         $routeProvider
             .when('/', {
-                templateUrl: ModuleInfo.TemplatesUrl + 'index.html?' + ver,
+                templateUrl: ModuleInfo.TemplatesUrl + 'index.html?' + ModuleInfo.Version,
                 controller: 'indexCtrl',
                 controllerAs: 'ctrl',
                 access: {
@@ -24,7 +24,7 @@
                 }
             })
             .when('/Preview', {
-                templateUrl: ModuleInfo.TemplatesUrl + 'preview.html?' + ver,
+                templateUrl: ModuleInfo.TemplatesUrl + 'preview.html?' + ModuleInfo.Version,
                 controller: 'previewCtrl',
                 controllerAs: 'ctrl',
                 access: {
@@ -32,7 +32,7 @@
                 }
             })
             .when('/Unauthorized', {
-                templateUrl: ModuleInfo.BaseTemplatesUrl + 'unauthorized.html?' + ver,
+                templateUrl: ModuleInfo.BaseTemplatesUrl + 'unauthorized.html?' + ModuleInfo.Version,
                 controller: 'UnauthorizedCtrl',
                 controllerAs: 'ctrl',
                 access: {

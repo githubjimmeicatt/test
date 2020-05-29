@@ -41,7 +41,11 @@
 		[EasyDNNnews:EndIf:Event]
 		[EasyDNNnews:IfMediaType:Image]
 		<div class="EDN_image-container">
-			<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]"/>
+			<picture>
+				<source media="(max-width: 480px)" srcset="[EasyDNNnews:Image:Width:400:Height:400:Resize:Proportional]">
+				<source media="(max-width: 640px)" srcset="[EasyDNNnews:Image:Width:600:Height:600:Resize:Proportional]">
+				<img alt="[EasyDNNnews:Title]" src="[EasyDNNnews:Image]" />
+			</picture>
 			[EasyDNNnews:IfExists:GalleryBackLink]
 			<a href="[EasyDNNnews:GalleryBackLink]" class="edn_galleryLink"><span>[EasyDNNnewsLocalizedText:ViewInGallery]</span></a>
 			[EasyDNNnews:EndIf:GalleryBackLink]

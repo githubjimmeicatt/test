@@ -31,17 +31,17 @@
                 <li id="t12" data-ng-show="ctrl.showTab(12)"><a href="#t12Content" data-ng-click="ctrl.onTabSelected('t12')">Y-Axis Labels Options</a></li>
                 <li id="t13" data-ng-show="ctrl.showTab(13)"><a href="#t13Content" data-ng-click="ctrl.onTabSelected('t13')">Y-Axis Range Color</a></li>
                 <li id="t29" data-ng-show="ctrl.showTab(29)"><a href="#t29Content" data-ng-click="ctrl.onTabSelected('t29')">Y-Axis Lines</a></li>
-                <li id="t30" data-ng-show="ctrl.showTab(30)"><a href="#t30Content" data-ng-click="ctrl.onTabSelected('t30')">Default Colors</a></li>
-                <li id="t15" data-ng-show="ctrl.showTab(15)"><a href="#t15Content" data-ng-click="ctrl.onTabSelected('t15')">Series Colors</a></li>
+                <li id="t31" data-ng-show="ctrl.showTab(31)"><a href="#t31Content" data-ng-click="ctrl.onTabSelected('t31')">Series Chart</a></li>
                 <li id="t16" data-ng-show="ctrl.showTab(16)"><a href="#t16Content" data-ng-click="ctrl.onTabSelected('t16')">3D Options</a></li>
-                <li id="t19" data-ng-show="ctrl.showTab(19)"><a href="#t19Content" data-ng-click="ctrl.onTabSelected('t19')">Language options</a></li>
-                <li id="t20" data-ng-show="ctrl.showTab(20)"><a href="#t20Content" data-ng-click="ctrl.onTabSelected('t20')">Export Options</a></li>
+                <li id="t30" data-ng-show="ctrl.showTab(30)"><a href="#t30Content" data-ng-click="ctrl.onTabSelected('t30')">Default Colors</a></li>
                 <li id="t27" data-ng-show="ctrl.showTab(27)"><a href="#t27Content" data-ng-click="ctrl.onTabSelected('t27')">Drive Charts</a></li>
-                <li id="t21" data-ng-show="ctrl.showTab(21)"><a href="#t21Content" data-ng-click="ctrl.onTabSelected('t21')">Drive Data Table</a></li>
+                <li id="t21" data-ng-show="ctrl.showTab(21)"><a href="#t21Content" data-ng-click="ctrl.onTabSelected('t21')">Drive Data Tables</a></li>
                 <li id="t23" data-ng-show="ctrl.showTab(23)"><a href="#t23Content" data-ng-click="ctrl.onTabSelected('t23')">Padding Options</a></li>
                 <li id="t24" data-ng-show="ctrl.showTab(24)"><a href="#t24Content" data-ng-click="ctrl.onTabSelected('t24')">Box Options</a></li>
                 <li id="t25" data-ng-show="ctrl.showTab(25)"><a href="#t25Content" data-ng-click="ctrl.onTabSelected('t25')">Node Options</a></li>
                 <li id="t26" data-ng-show="ctrl.showTab(26)"><a href="#t26Content" data-ng-click="ctrl.onTabSelected('t26')">Node Path Options</a></li>
+                <li id="t19" data-ng-show="ctrl.showTab(19)"><a href="#t19Content" data-ng-click="ctrl.onTabSelected('t19')">Language options</a></li>
+                <li id="t20" data-ng-show="ctrl.showTab(20)"><a href="#t20Content" data-ng-click="ctrl.onTabSelected('t20')">Export Options</a></li>
                 <li id="t22" data-ng-show="ctrl.selectedChart.Id>0"><a href="#t22Content" data-ng-click="ctrl.onTabSelected('t22')">Module Preview</a></li>
             </ul>
             <div class="tabName">{{ctrl.TabName}}</div>
@@ -146,12 +146,12 @@
                                     <table>
                                         <tbody>
                                             <tr data-ng-repeat="l in ctrl.ChartSettings.Labels track by $index">
-                                                <td><a href="" ng-click="ctrl.removeLabel($index)"><i class="glyphicon glyphicon-remove"></i></a></td>
+                                                <td><a href="" ng-click="ctrl.removeLabel($index)"><i class="wi-icon wi-icon-remove"></i></a></td>
                                                 <td><input type="text" class="form-control" data-ng-model="ctrl.ChartSettings.Labels[$index].name" required /></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a href="" ng-click="ctrl.newLabel()" ng-hide="labelsForm.$invalid"><i class="glyphicon glyphicon-plus"></i> New</a>
+                                    <a href="" ng-click="ctrl.newLabel()" ng-hide="labelsForm.$invalid"><i class="wi-icon wi-icon-plus"></i> New</a>
                                 </div>
                             </td>
                             <td style="width:16.67%;vertical-align:top">
@@ -160,12 +160,12 @@
                                     <table>
                                         <tbody>
                                             <tr data-ng-repeat="s in ctrl.ChartSettings.Series track by $index">
-                                                <td><a href="" ng-click="ctrl.removeSeries($index)"><i class="glyphicon glyphicon-remove"></i></a></td>
+                                                <td><a href="" ng-click="ctrl.removeSeries($index)"><i class="wi-icon wi-icon-remove"></i></a></td>
                                                 <td><input type="text" class="form-control" data-ng-model="ctrl.ChartSettings.Series[$index]" required /></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a href="" ng-click="ctrl.newSeries()" ng-hide="seriesForm.$invalid"><i class="glyphicon glyphicon-plus"></i> New</a>
+                                    <a href="" ng-click="ctrl.newSeries()" ng-hide="seriesForm.$invalid"><i class="wi-icon wi-icon-plus"></i> New</a>
                                 </div>
                             </td>
                             <td style="width:67.67%;border-left: solid 3px #eee;padding-left: 5px;vertical-align:top">
@@ -209,7 +209,7 @@
                                         </thead>
                                         <tbody>
                                             <tr data-ng-repeat="l in ctrl.SelectedLabel.drillDownData">
-                                                <td><a href="" ng-click="ctrl.removeLabelDrillDownItem($index)"><i class="glyphicon glyphicon-remove"></i></a></td>
+                                                <td><a href="" ng-click="ctrl.removeLabelDrillDownItem($index)"><i class="wi-icon wi-icon-remove"></i></a></td>
                                                 <td>
                                                     <select ng-model="l.series" ng-options="ctrl.ChartSettings.Series.indexOf(l) as l for l in ctrl.ChartSettings.Series" required><option value="">Select Item</option></select>
                                                 </td>
@@ -219,7 +219,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="4"><a href="" ng-click="ctrl.newDrillDownItem()" ng-if="ctrl.SelectedLabel!=null"><i class="glyphicon glyphicon-plus"></i> New</a></td>
+                                                <td colspan="4"><a href="" ng-click="ctrl.newDrillDownItem()" ng-if="ctrl.SelectedLabel!=null"><i class="wi-icon wi-icon-plus"></i> New</a></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -307,7 +307,7 @@
                                         <input name="xAxesColorColumn" type="text" ng-model="ctrl.ChartSettings.DataSourceInfo.xAxesColorColumn" />
                                     </div>
                                     <div class="form-group" data-ng-if="ctrl.ChartSettings.DataSourceInfo.QueryType==2">
-                                        <label for="yAxesAdditionalColumns" title="Multiple columns coma-seperated">Extra y-Axes Columns:</label><br />
+                                        <label for="yAxesAdditionalColumns" title="Multiple columns coma-seperated">Extra y-axis Columns:</label><br />
                                         <input name="yAxesAdditionalColumns" type="text" ng-model="ctrl.ChartSettings.DataSourceInfo.yAxesAdditionalColumns" />
                                     </div>
                                 </div>
@@ -477,48 +477,53 @@
                         </tr>
                     </tbody>
                 </table>
-                <table data-ng-if="ctrl.ChartSettings.DataSource==2 && ctrl.ChartSettings.Options.chart.typeId==255" class="goal-dsTable">
-                    <thead>
-                        <tr>
-                            <th width="20px"></th>
-                            <th width="10px"></th>
-                            <th width="200px">Value (SQL)</th>
-                            <th width="10px"></th>
-                            <th width="150px">Label</th>
-                            <th width="200px">Connection</th>
-                            <th width="75px">Font Size</th>
-                            <th width="75px">Font Color</th>
-                            <th width="150px">Font Family</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="vertical-align:top">
-                            <td style="font-weight:bold">Actual Row</td>
-                            <td><span class="label label-warning" ng-show="setupForm.actualSelectStm.$error.required" title="This Field is Required">*</span></td>
-                            <td><textarea name="actualSelectStm" ng-model="ctrl.ChartSettings.DataSourceInfos[0].SelectStat" style="width:90%" required></textarea></td>
-                            <td><span class="label label-warning" ng-show="setupForm.actualValueLabel.$error.required" title="This Field is Required">*</span></td>
-                            <td><input name="actualValueLabel" type="text" ng-model="ctrl.ChartSettings.DataSourceInfos[0].Label" style="width:90%" required /></td>
-                            <td><textarea name="actual-connection" ng-model="ctrl.ChartSettings.DataSourceInfos[0].ConnectionString" style="width:90%"></textarea></td>
-                            <td><input name="actualFontSize" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[0].size" class="form-control2" style="width:90%" required /></td>
-                            <td><input name="actualFontColor" colorpicker="hex" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[0].color" class="form-control2" style="width:90%" required /></td>
-                            <td><input name="actualFontFamily" type="text" ng-model="ctrl.ChartSettings.GoalChart.fonts[0].family" style="width:90%" required /></td>
-                            <td></td>
-                        </tr>
-                        <tr style="vertical-align:top">
-                            <td style="font-weight:bold">Target Row</td>
-                            <td></td>
-                            <td><textarea name="target-selectStm" ng-model="ctrl.ChartSettings.DataSourceInfos[1].SelectStat" style="width:90%"></textarea></td>
-                            <td></td>
-                            <td><input name="target-valueLabel" type="text" ng-model="ctrl.ChartSettings.DataSourceInfos[1].Label" style="width:90%" /></td>
-                            <td><textarea name="target-connection" ng-model="ctrl.ChartSettings.DataSourceInfos[1].ConnectionString" style="width:90%"></textarea></td>
-                            <td><input name="targetFontSize" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[1].size" class="form-control2" style="width:90%" /></td>
-                            <td><input name="targetFontColor" colorpicker="hex" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[1].color" class="form-control2" style="width:90%" /></td>
-                            <td><input name="targetFontFamily" type="text" ng-model="ctrl.ChartSettings.GoalChart.fonts[1].family" style="width:90%" /></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div data-ng-if="ctrl.ChartSettings.DataSource==2 && ctrl.ChartSettings.Options.chart.typeId==255">
+                    <div class="form-group">
+                        <label>Read Connection String from web.config? <input type="checkbox" ng-model="ctrl.ChartSettings.DataSourceInfos[0].ConnectionStringName" /></label>
+                    </div>
+                    <table class="goal-dsTable">
+                        <thead>
+                            <tr>
+                                <th width="20px"></th>
+                                <th width="10px"></th>
+                                <th width="200px">Value (SQL)</th>
+                                <th width="10px"></th>
+                                <th width="150px">Label</th>
+                                <th width="200px">Connection String<span data-ng-if="ctrl.ChartSettings.DataSourceInfos[0].ConnectionStringName"> Name</span>:</th>
+                                <th width="75px">Font Size</th>
+                                <th width="75px">Font Color</th>
+                                <th width="150px">Font Family</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="vertical-align:top">
+                                <td style="font-weight:bold">Actual Row</td>
+                                <td><span class="label label-warning" ng-show="setupForm.actualSelectStm.$error.required" title="This Field is Required">*</span></td>
+                                <td><textarea name="actualSelectStm" ng-model="ctrl.ChartSettings.DataSourceInfos[0].SelectStat" style="width:90%" required></textarea></td>
+                                <td><span class="label label-warning" ng-show="setupForm.actualValueLabel.$error.required" title="This Field is Required">*</span></td>
+                                <td><input name="actualValueLabel" type="text" ng-model="ctrl.ChartSettings.DataSourceInfos[0].Label" style="width:90%" required /></td>
+                                <td><textarea name="actual-connection" ng-model="ctrl.ChartSettings.DataSourceInfos[0].ConnectionString" style="width:90%"></textarea></td>
+                                <td><input name="actualFontSize" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[0].size" class="form-control2" style="width:90%" required /></td>
+                                <td><input name="actualFontColor" colorpicker="hex" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[0].color" class="form-control2" style="width:90%" required /></td>
+                                <td><input name="actualFontFamily" type="text" ng-model="ctrl.ChartSettings.GoalChart.fonts[0].family" style="width:90%" required /></td>
+                                <td></td>
+                            </tr>
+                            <tr style="vertical-align:top">
+                                <td style="font-weight:bold">Target Row</td>
+                                <td></td>
+                                <td><textarea name="target-selectStm" ng-model="ctrl.ChartSettings.DataSourceInfos[1].SelectStat" style="width:90%"></textarea></td>
+                                <td></td>
+                                <td><input name="target-valueLabel" type="text" ng-model="ctrl.ChartSettings.DataSourceInfos[1].Label" style="width:90%" /></td>
+                                <td><textarea name="target-connection" ng-model="ctrl.ChartSettings.DataSourceInfos[1].ConnectionString" style="width:90%"></textarea></td>
+                                <td><input name="targetFontSize" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[1].size" class="form-control2" style="width:90%" /></td>
+                                <td><input name="targetFontColor" colorpicker="hex" type="text" data-ng-model="ctrl.ChartSettings.GoalChart.fonts[1].color" class="form-control2" style="width:90%" /></td>
+                                <td><input name="targetFontFamily" type="text" ng-model="ctrl.ChartSettings.GoalChart.fonts[1].family" style="width:90%" /></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div id="t3Content" data-ng-show="ctrl.showTab(3)">
                 <table style="width:100%">
@@ -528,6 +533,10 @@
                                 <div class="form-group">
                                     <label for="seriesColorByPoint">Color Per Point:</label>
                                     <input type="checkbox" name="seriesColorByPoint" ng-model="ctrl.ChartSettings.Options.series[0].colorByPoint" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="allowPointSelect">Allow select points:</label>
+                                    <input type="checkbox" name="allowPointSelect" ng-model="ctrl.ChartSettings.Options.plotOptions.series.allowPointSelect" />
                                 </div>
                                 <div class="form-group" ng-if="ctrl.ChartSettings.Options.chart.typeId!=5 && ctrl.ChartSettings.Options.chart.typeId!=10 && ctrl.ChartSettings.Options.chart.typeId!=9">
                                     <label for="seriesStacking">Stacking:</label>
@@ -549,7 +558,6 @@
                                     <label for="seriesBorderWidth">Border Width: <span class="label label-warning" ng-show="setupForm.seriesBorderWidth.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.seriesBorderWidth.$error.required" title="This Field is Required">*</span></label>
                                     <input type="number" name="seriesBorderWidth" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.series.borderWidth" required />
                                 </div>
-
                                 <div class="form-group" ng-if="ctrl.ChartSettings.Options.chart.type=='pie'">
                                     <label for="pieStartAngle">Start Angle:<span class="label label-warning" ng-show="setupForm.pieStartAngle.$error.required" title="This Field is Required">*</span></label>
                                     <input type="number" name="pieStartAngle" ng-model="ctrl.ChartSettings.Options.plotOptions.pie.startAngle" required />
@@ -558,7 +566,6 @@
                                     <label for="pieEndAngle">End Angle:</label>
                                     <input type="number" name="pieEndAngle" ng-model="ctrl.ChartSettings.Options.plotOptions.pie.endAngle" />
                                 </div>
-
                                 <div class="form-group" title="The diameter of the pie relative to the plot area. Can be a percentage or pixel value." ng-if="ctrl.ChartSettings.Options.chart.type=='pie'">
                                     <label for="pieSize">Pie Size (%): <span class="label label-warning" ng-show="setupForm.pieSize.$error.required" title="This Field is Required">*</span><span class="label label-warning" ng-show="setupForm.pieInnerSize.$error.min" title="This Field Value is Invalid">*</span></label>
                                     <input type="number" name="pieSize" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.pie.size" style="width:50px" required />
@@ -566,15 +573,6 @@
                                 <div class="form-group" ng-if="ctrl.ChartSettings.Options.chart.type=='pie'">
                                     <label for="pieInnerSize">Pie Inner Size (%): <span class="label label-warning" ng-show="setupForm.pieInnerSize.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.pieInnerSize.$error.required" title="This Field is Required">*</span></label>
                                     <input type="number" name="pieInnerSize" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.pie.innerSize" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.chart.typeId!=255">
-                                    <label for="zoomType">Zoom:<img src="{{ctrl.viewMoreImageUrl}}" title="Zoom by dragging the mouse" data-ng-tooltip="" /></label>
-                                    <select name="zoomType" ng-model="ctrl.ChartSettings.Options.chart.zoomType">
-                                        <option value="">Disabled</option>
-                                        <option value="x">X</option>
-                                        <option value="y">Y</option>
-                                        <option value="xy">X & Y</option>
-                                    </select>
                                 </div>
                             </td>
                             <td style="width:33.33%">
@@ -612,6 +610,15 @@
                                     <div class="horizontal-group">
                                         <input type="number" name="chartMargin0" ng-model="ctrl.ChartSettings.Options.chart.margin[0]" style="width:40px" required /><input type="number" name="chartMargin1" ng-model="ctrl.ChartSettings.Options.chart.margin[1]" style="width:40px" required /><input type="number" name="chartMargin2" ng-model="ctrl.ChartSettings.Options.chart.margin[2]" style="width:40px" required /><input type="number" name="chartMargin3" ng-model="ctrl.ChartSettings.Options.chart.margin[3]" style="width:40px" required />
                                     </div>
+                                </div>
+                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.chart.typeId!=255">
+                                    <label for="zoomType">Zoom:<img src="{{ctrl.viewMoreImageUrl}}" title="Zoom by dragging the mouse" data-ng-tooltip="" /></label>
+                                    <select name="zoomType" ng-model="ctrl.ChartSettings.Options.chart.zoomType">
+                                        <option value="">Disabled</option>
+                                        <option value="x">X</option>
+                                        <option value="y">Y</option>
+                                        <option value="xy">X & Y</option>
+                                    </select>
                                 </div>
                             </td>
                         </tr>
@@ -742,68 +749,78 @@
                                     <label for="legendEnabled">Enabled:</label>
                                     <input type="checkbox" name="legendEnabled" ng-model="ctrl.ChartSettings.Options.legend.enabled" ng-change="ctrl.onLegendEnabledChanged()" />
                                 </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendTitle">Title:</label>
-                                    <input name="legendTitle" type="text" ng-model="ctrl.ChartSettings.Options.legend.title.text" />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendLabelFormat">Label Format: <span class="label label-warning" ng-show="setupForm.legendLabelFormat.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="text" name="legendLabelFormat" ng-model="ctrl.ChartSettings.Options.legend.labelFormat" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendLayout">Layout: <span class="label label-warning" ng-show="setupForm.legendLayout.$error.required" title="This Field is Required">*</span></label>
-                                    <select name="legendLayout" ng-model="ctrl.ChartSettings.Options.legend.layout" required>
-                                        <option value="horizontal">Horizontal</option>
-                                        <option value="vertical">Vertical</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendBgColor">Background Color:</label>
-                                    <input type="text" name="legendBgColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.legend.backgroundColor" />
-                                </div>
-                            </td>
-                            <td style="width:33.33%">
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendAlign">Align: <span class="label label-warning" ng-show="setupForm.legendAlign.$error.required" title="This Field is Required">*</span></label>
-                                    <select name="legendAlign" ng-model="ctrl.ChartSettings.Options.legend.align" required>
-                                        <option value="center">Center</option>
-                                        <option value="left">Left</option>
-                                        <option value="right">Right</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendVerticalAlign">Vertical Align: <span class="label label-warning" ng-show="setupForm.legendVerticalAlign.$error.required" title="This Field is Required">*</span></label>
-                                    <select name="legendVerticalAlign" ng-model="ctrl.ChartSettings.Options.legend.verticalAlign" required>
-                                        <option value="top">Top</option>
-                                        <option value="middle">Middle </option>
-                                        <option value="bottom">Bottom</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendBorderColor">Border Color:</label>
-                                    <input type="text" name="legendBorderColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.legend.borderColor" />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendBorderRadius">Border Radius: <span class="label label-warning" ng-show="setupForm.legendBorderRadius.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.legendBorderRadius.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="number" name="legendBorderRadius" min="0" ng-model="ctrl.ChartSettings.Options.legend.borderRadius" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendBorderWidth">Border Width: <span class="label label-warning" ng-show="setupForm.legendBorderWidth.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.legendBorderWidth.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="number" name="legendBorderWidth" min="0" ng-model="ctrl.ChartSettings.Options.legend.borderWidth" required />
+                                <div ng-if="ctrl.ChartSettings.Options.legend.enabled">
+                                    <div class="form-group">
+                                        <label for="legendTitle">Title:</label>
+                                        <input name="legendTitle" type="text" ng-model="ctrl.ChartSettings.Options.legend.title.text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendLabelFormat">Label Format: <span class="label label-warning" ng-show="setupForm.legendLabelFormat.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="text" name="legendLabelFormat" ng-model="ctrl.ChartSettings.Options.legend.labelFormat" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendLayout">Layout: <span class="label label-warning" ng-show="setupForm.legendLayout.$error.required" title="This Field is Required">*</span></label>
+                                        <select name="legendLayout" ng-model="ctrl.ChartSettings.Options.legend.layout" required>
+                                            <option value="horizontal">Horizontal</option>
+                                            <option value="vertical">Vertical</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendBgColor">Background Color:</label>
+                                        <input type="text" name="legendBgColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.legend.backgroundColor" />
+                                    </div>
                                 </div>
                             </td>
                             <td style="width:33.33%">
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendFloating">Floating:</label>
-                                    <input type="checkbox" name="legendFloating" ng-model="ctrl.ChartSettings.Options.legend.floating" />
+                                <div ng-if="ctrl.ChartSettings.Options.legend.enabled">
+                                    <div class="form-group">
+                                        <label for="legendAlign">Align: <span class="label label-warning" ng-show="setupForm.legendAlign.$error.required" title="This Field is Required">*</span></label>
+                                        <select name="legendAlign" ng-model="ctrl.ChartSettings.Options.legend.align" required>
+                                            <option value="center">Center</option>
+                                            <option value="left">Left</option>
+                                            <option value="right">Right</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendVerticalAlign">Vertical Align: <span class="label label-warning" ng-show="setupForm.legendVerticalAlign.$error.required" title="This Field is Required">*</span></label>
+                                        <select name="legendVerticalAlign" ng-model="ctrl.ChartSettings.Options.legend.verticalAlign" required>
+                                            <option value="top">Top</option>
+                                            <option value="middle">Middle </option>
+                                            <option value="bottom">Bottom</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendBorderColor">Border Color:</label>
+                                        <input type="text" name="legendBorderColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.legend.borderColor" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendBorderRadius">Border Radius: <span class="label label-warning" ng-show="setupForm.legendBorderRadius.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.legendBorderRadius.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="number" name="legendBorderRadius" min="0" ng-model="ctrl.ChartSettings.Options.legend.borderRadius" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendBorderWidth">Border Width: <span class="label label-warning" ng-show="setupForm.legendBorderWidth.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.legendBorderWidth.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="number" name="legendBorderWidth" min="0" ng-model="ctrl.ChartSettings.Options.legend.borderWidth" required />
+                                    </div>
                                 </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendXoffset">X-offset: <span class="label label-warning" ng-show="setupForm.legendXoffset.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="number" name="legendXoffset" ng-model="ctrl.ChartSettings.Options.legend.x" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.legend.enabled">
-                                    <label for="legendYoffset">Y-offset: <span class="label label-warning" ng-show="setupForm.legendYoffset.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="number" name="legendYoffset" ng-model="ctrl.ChartSettings.Options.legend.y" required />
+                            </td>
+                            <td style="width:33.33%">
+                                <div ng-if="ctrl.ChartSettings.Options.legend.enabled">
+                                    <div class="form-group">
+                                        <label for="legendFloating">Floating:</label>
+                                        <input type="checkbox" name="legendFloating" ng-model="ctrl.ChartSettings.Options.legend.floating" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendDisableClick">Disable Click:</label>
+                                        <input type="checkbox" name="legendDisableClick" ng-model="ctrl.ChartSettings.Options.legend.disableClick" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendXoffset">X-offset: <span class="label label-warning" ng-show="setupForm.legendXoffset.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="number" name="legendXoffset" ng-model="ctrl.ChartSettings.Options.legend.x" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="legendYoffset">Y-offset: <span class="label label-warning" ng-show="setupForm.legendYoffset.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="number" name="legendYoffset" ng-model="ctrl.ChartSettings.Options.legend.y" required />
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -1154,37 +1171,56 @@
                     </tbody>
                 </table>
             </div>
-            <div id="t15Content" data-ng-show="ctrl.showTab(15)">
+            <div id="t31Content" data-ng-show="ctrl.showTab(31)">
                 <table style="width:100%">
                     <tbody>
                         <tr style="vertical-align:top;">
                             <td style="width:33.33%">
                                 <div class="form-group">
-                                    <label for="seriesFillOpacity">Fill Opacity: <span class="label label-warning" ng-show="setupForm.seriesFillOpacity.$error.required" title="This Field Value is Required">*</span><span class="label label-warning" ng-show="setupForm.seriesFillOpacity.$error.min || setupForm.seriesFillOpacity.$error.max" title="This Field Value is Invalid">*</span></label>
+                                    <label for="seriesFillOpacity">Color Fill Opacity: <span class="label label-warning" ng-show="setupForm.seriesFillOpacity.$error.required" title="This Field Value is Required">*</span><span class="label label-warning" ng-show="setupForm.seriesFillOpacity.$error.min || setupForm.seriesFillOpacity.$error.max" title="This Field Value is Invalid">*</span></label>
                                     <input type="number" name="seriesFillOpacity" min="0" max="1" ng-model="ctrl.ChartSettings.Options.series[0].fillOpacity" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="seriesColor">Select to Edit:</label><br />
-                                    <select name="seriesColor" ng-model="ctrl.selectedSeriesColor" ng-options="col as col.name for col in ctrl.ChartSettings.Options.series[0].colors"></select>
-                                </div>
-                                <button type="button" class="btn btn-small" ng-click="ctrl.newSeriesColor()" data-ng-if="ctrl.selectedSeriesColor==undefined">Add new series color</button>
-                                <div data-ng-if="ctrl.selectedSeriesColor">
-                                    <div class="form-group">
-                                        <label for="sName">Name:*</label><br />
-                                        <input name="sName" type="text" ng-model="ctrl.selectedSeriesColor.name" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sColor">Color:*</label><br />
-                                        <input name="sColor" type="text" colorpicker="hex" style="display:initial" ng-model="ctrl.selectedSeriesColor.color" /><span style="width:20px;height:20px;margin-left:4px;display:inline-block;background-color:{{ctrl.selectedSeriesColor.color}}">&nbsp;</span>
-                                    </div>
-                                    <button type="button" class="btn btn-small" ng-click="ctrl.validSeriesColor() && ctrl.saveSeriesColor()" ng-disabled="!ctrl.validSeriesColor()">Save</button>
-                                    <button type="button" class="btn btn-small" ng-disabled="!(ctrl.selectedSeriesColor.id>0)" ng-click="ctrl.selectedSeriesColor.id>0 && ctrl.removeSeriesColor()">Remove</button>
-                                    <button type="button" class="btn btn-small" ng-click="ctrl.newSeriesColor()">New</button>
-                                    <button type="button" class="btn btn-small" ng-click="ctrl.cancelSeriesColor()">Cancel</button>
                                 </div>
                             </td>
                             <td style="width:33.33%"></td>
                             <td style="width:33.33%"></td>
+                        </tr>
+                        <tr style="vertical-align:top;">
+                            <td>
+                                <div class="form-group">
+                                    <label for="seriesType">Select to Edit:</label><br />
+                                    <select name="seriesType" ng-model="ctrl.selectedSeriesType" ng-options="type as type.name for type in ctrl.ChartSettings.Options.series[0].types"></select>
+                                </div>
+                                <button type="button" class="btn btn-small" ng-click="ctrl.newSeriesType()" data-ng-if="ctrl.selectedSeriesType==undefined">New</button>
+                                <div data-ng-if="ctrl.selectedSeriesType">
+                                    <div class="form-group">
+                                        <label for="sName">Name:*</label><br />
+                                        <input name="sName" type="text" ng-model="ctrl.selectedSeriesType.name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sType">Chart Type:</label><br />
+                                        <select name="sType" ng-model="ctrl.selectedSeriesType.type" ng-options="ctype.Type as ctype.Name for ctype in ctrl.SeriesChartTypes" data-ng-change="ctrl.onChartTypeChange()">
+                                            <option value="">Select Item</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-small" ng-click="ctrl.validSeriesType() && ctrl.saveSeriesType()" ng-disabled="!ctrl.validSeriesType()">Save</button>
+                                    <button type="button" class="btn btn-small" ng-disabled="!(ctrl.selectedSeriesType.id>0)" ng-click="ctrl.selectedSeriesType.id>0 && ctrl.removeSeriesType()">Remove</button>
+                                    <button type="button" class="btn btn-small" ng-click="ctrl.newSeriesType()">New</button>
+                                    <button type="button" class="btn btn-small" ng-click="ctrl.cancelSeriesType()">Cancel</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div data-ng-if="ctrl.selectedSeriesType">
+                                    <div class="form-group color-form-group">
+                                        <label for="sColor">Color:</label><br />
+                                        <input name="sColor" type="text" colorpicker="hex" ng-model="ctrl.selectedSeriesType.color" /><span style="background-color:{{ctrl.selectedSeriesType.color}}" class="color-square">&nbsp;</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zIndex">Z-index:</label><br />
+                                        <input name="zIndex" type="number" min="0" ng-model="ctrl.selectedSeriesType.zIndex" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1243,41 +1279,51 @@
                                     <label for="seriesDataLabelsEnabled">Enabled:</label>
                                     <input type="checkbox" name="seriesDataLabelsEnabled" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled" />
                                 </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsFormat">Format: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsFormat.$error.min" title="This Field Value is Invalid">*</span></label>
-                                    <input type="text" name="seriesDataLabelsFormat" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.format" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsColor">Color:</label>
-                                    <input type="text" name="seriesDataLabelsColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.color" />
-                                </div>
-                            </td>
-                            <td style="width:33.33%">
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsBorderColor">Border Color:</label>
-                                    <input type="text" name="seriesDataLabelsBorderColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.borderColor" />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsBorderRadius">Border Radius: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderRadius.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderRadius.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="number" name="seriesDataLabelsBorderRadius" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.borderRadius" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsBorderWidth">Border Width: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderWidth.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderWidth.$error.required" title="This Field is Required">*</span></label>
-                                    <input type="number" name="seriesDataLabelsBorderWidth" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.borderWidth" required />
+                                <div ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsFormat">Format: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsFormat.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="text" name="seriesDataLabelsFormat" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.format" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsColor">Color:</label>
+                                        <input type="text" name="seriesDataLabelsColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.color" />
+                                    </div>
+                                    <div class="form-group" ng-if="ctrl.ChartSettings.Options.chart.type=='pie'">
+                                        <label for="seriesDataLabelLocation">Location: <span class="label label-warning" ng-show="setupForm.seriesDataLabelLocation.$error.required" title="This Field is Required">*</span></label><br />
+                                        <input name="seriesDataLabelLocation" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.distance" type="number" required />
+                                    </div>
                                 </div>
                             </td>
                             <td style="width:33.33%">
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsRotation">Rotation: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsRotation.$error.required" title="This Field Value is Invalid">*</span></label>
-                                    <input type="number" name="seriesDataLabelsRotation" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.rotation" required />
+                                <div ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsBorderColor">Border Color:</label>
+                                        <input type="text" name="seriesDataLabelsBorderColor" colorpicker="hex" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.borderColor" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsBorderRadius">Border Radius: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderRadius.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderRadius.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="number" name="seriesDataLabelsBorderRadius" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.borderRadius" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsBorderWidth">Border Width: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderWidth.$error.min" title="This Field Value is Invalid">*</span><span class="label label-warning" ng-show="setupForm.seriesDataLabelsBorderWidth.$error.required" title="This Field is Required">*</span></label>
+                                        <input type="number" name="seriesDataLabelsBorderWidth" min="0" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.borderWidth" required />
+                                    </div>
                                 </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsX">X offset: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsX.$error.required" title="This Field Value is Invalid">*</span></label>
-                                    <input type="number" name="seriesDataLabelsX" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.x" required />
-                                </div>
-                                <div class="form-group" ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
-                                    <label for="seriesDataLabelsY">Y offset: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsY.$error.required" title="This Field Value is Invalid">*</span></label>
-                                    <input type="number" name="seriesDataLabelsY" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.y" required />
+                            </td>
+                            <td style="width:33.33%">
+                                <div ng-if="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.enabled">
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsRotation">Rotation: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsRotation.$error.required" title="This Field Value is Invalid">*</span></label>
+                                        <input type="number" name="seriesDataLabelsRotation" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.rotation" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsX">X offset: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsX.$error.required" title="This Field Value is Invalid">*</span></label>
+                                        <input type="number" name="seriesDataLabelsX" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.x" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seriesDataLabelsY">Y offset: <span class="label label-warning" ng-show="setupForm.seriesDataLabelsY.$error.required" title="This Field Value is Invalid">*</span></label>
+                                        <input type="number" name="seriesDataLabelsY" ng-model="ctrl.ChartSettings.Options.plotOptions.series.dataLabels.y" required />
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -1590,7 +1636,7 @@
                                     <label for="xAxisLines">Lines:</label><br />
                                     <select name="xAxisLines" ng-model="ctrl.selectedXAxisLine" ng-options="l as l.Name for l in ctrl.ChartSettings.Options.xAxis._plotLines"></select>
                                 </div>
-                                <button type="button" class="btn" ng-click="ctrl.newXAxisLine()" data-ng-if="ctrl.selectedXAxisLine==undefined">Add new line</button>
+                                <button type="button" class="btn btn-small" ng-click="ctrl.newXAxisLine()" data-ng-if="ctrl.selectedXAxisLine==undefined">Add new line</button>
                                 <div data-ng-if="ctrl.selectedXAxisLine">
                                     <button type="button" class="btn" ng-click="ctrl.editXAxisLine()">Edit</button>
                                     <button type="button" class="btn" ng-disabled="!(ctrl.selectedXAxisLine.id>0)" ng-click="ctrl.selectedXAxisLine.id>0 && ctrl.removeXAxisLine()">Remove</button>
@@ -1612,7 +1658,7 @@
                                     <label for="yAxisLines">Lines:</label><br />
                                     <select name="yAxisLines" ng-model="ctrl.selectedYAxisLine" ng-options="l as l.Name for l in ctrl.ChartSettings.Options.yAxis._plotLines"></select>
                                 </div>
-                                <button type="button" class="btn" ng-click="ctrl.newYAxisLine()" data-ng-if="ctrl.selectedYAxisLine==undefined">Add new line</button>
+                                <button type="button" class="btn btn-small" ng-click="ctrl.newYAxisLine()" data-ng-if="ctrl.selectedYAxisLine==undefined">Add new line</button>
                                 <div data-ng-if="ctrl.selectedYAxisLine">
                                     <button type="button" class="btn" ng-click="ctrl.editYAxisLine()">Edit</button>
                                     <button type="button" class="btn" ng-disabled="!(ctrl.selectedYAxisLine.id>0)" ng-click="ctrl.selectedYAxisLine.id>0 && ctrl.removeYAxisLine()">Remove</button>
@@ -1630,15 +1676,15 @@
                     <tbody>
                         <tr style="vertical-align:top;">
                             <td style="width:33.33%">
-                                <div class="form-group" data-ng-repeat="m in ctrl.ChartSettings.Options.colors track by $index" data-ng-if="$index<5">
+                                <div class="form-group color-form-group" data-ng-repeat="m in ctrl.ChartSettings.Options.colors track by $index" data-ng-if="$index<5">
                                     <label for="defaultColor{{$index}}">Color #{{$index+1}}: <span class="label label-warning" ng-show="setupForm['defaultColor{{$index}}'].$error.required" title="This Field is Required">*</span></label><br />
-                                    <input type="text" name="defaultColor{{$index}}" data-ng-model="ctrl.ChartSettings.Options.colors[$index]" colorpicker="hex" required />
+                                    <input type="text" name="defaultColor{{$index}}" data-ng-model="ctrl.ChartSettings.Options.colors[$index]" colorpicker="hex" required /><span style="background-color:{{ctrl.ChartSettings.Options.colors[$index]}}" class="color-square">&nbsp;</span>
                                 </div>
                             </td>
                             <td style="width:33.33%">
-                                <div class="form-group" data-ng-repeat="m in ctrl.ChartSettings.Options.colors track by $index" data-ng-if="$index>=5">
+                                <div class="form-group color-form-group" data-ng-repeat="m in ctrl.ChartSettings.Options.colors track by $index" data-ng-if="$index>=5">
                                     <label for="defaultColor{{$index}}">Color #{{$index+1}}: <span class="label label-warning" ng-show="setupForm['defaultColor{{$index}}'].$error.required" title="This Field is Required">*</span></label><br />
-                                    <input type="text" name="defaultColor{{$index}}" data-ng-model="ctrl.ChartSettings.Options.colors[$index]" colorpicker="hex" required />
+                                    <input type="text" name="defaultColor{{$index}}" data-ng-model="ctrl.ChartSettings.Options.colors[$index]" colorpicker="hex" required /><span style="background-color:{{ctrl.ChartSettings.Options.colors[$index]}}" class="color-square">&nbsp;</span>
                                 </div>
                             </td>
                             <td style="width:33.33%"></td>

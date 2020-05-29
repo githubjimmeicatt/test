@@ -235,6 +235,7 @@
 									<div class="text_input_set">
 										<div>
 											<label for="<%=tbArticleURL.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblArticleURL.HelpText", true) %>" data-tooltip-position="top-left"><%=_("lblArticleURL.Text") %></label>
+											<label for="<%=tbArticleURL.ClientID %>" id="edsNews__UrlCharCount" class="edNews_tooltip" data-tooltip-content="<%=_("CharacterCount.HelpText", true) %>" data-tooltip-position="top-left"></label>
 										</div>
 										<asp:TextBox ID="tbArticleURL" runat="server" CssClass="text narrow left" />
 										<a id="EDN_btnReGenerateURL" class="reset_url_btn main_action_button grey" href="#"><span><%=ResetarticleURL%></span></a>
@@ -242,15 +243,18 @@
 									<div class="text_input_set">
 										<div>
 											<label for="<%=tbTitleTag.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblTitleTag.Help", true) %>" data-tooltip-position="top-left"><%=_("lblTitleTag.Text") %></label>
+											<label for="<%=tbTitleTag.ClientID %>" id="edsNews__titleTagCount" class="edNews_tooltip" data-tooltip-content="<%=_("CharacterCount.HelpText", true) %>" data-tooltip-position="top-left"></label>
 										</div>
 										<asp:TextBox ID="tbTitleTag" runat="server" CssClass="text left" />
 									</div>
 									<div class="text_input_set">
 										<label for="<%=tbMetaDescription.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblMetaDescription.HelpText", true) %>" data-tooltip-position="top-left"><%=_("lblMetaDescription.Text") %></label>
+										<label for="<%=tbMetaDescription.ClientID %>" id="edsNews__metaDescriptionCount" class="edNews_tooltip" data-tooltip-content="<%=_("CharacterCount.HelpText", true) %>" data-tooltip-position="top-left"></label>
 										<asp:TextBox ID="tbMetaDescription" runat="server" TextMode="MultiLine" />
 									</div>
 									<div class="text_input_set">
 										<label for="<%=tbMetaKeywords.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblMetaKeywords.HelpText", true) %>" data-tooltip-position="top-left"><%=_("lblMetaKeywords.Text") %></label>
+										<label for="<%=tbMetaKeywords.ClientID %>" id="edsNews__metaKeywordsCount" class="edNews_tooltip" data-tooltip-content="<%=_("CharacterCount.HelpText", true) %>" data-tooltip-position="top-left"></label>
 										<asp:TextBox ID="tbMetaKeywords" runat="server" TextMode="MultiLine" />
 									</div>
 								</div>
@@ -1087,7 +1091,7 @@
 																<span class="action fileSelection">
 																	<asp:Label ID="lblArticleFineUploaderSelectFiles" runat="server" resourcekey="fineUploaderSelectFiles" Text="Select images" />
 																	<span class="dnnInputFileWrapper">
-																		<input type="file" value="" multiple="multiple" /></span> </span><span class="action upload">
+																		<input id="eds__articleGalleryImageUpload" type="file" value="" multiple="multiple" /></span> </span><span class="action upload">
 																			<asp:Label ID="lblArticleFineUploaderStartUpload" runat="server" resourcekey="fineUploaderStartUpload" Text="Start upload" />
 																		</span>
 															</div>
@@ -1098,7 +1102,7 @@
 															</div>
 														</div>
 														<div class="uploadDetails">
-															<ol class="fileUploadList">
+															<ol class="fileUploadList" id="eds__articleGalleryFileUploadList">
 															</ol>
 														</div>
 													</div>
@@ -1262,7 +1266,7 @@
 																<td class="action">
 																	<asp:LinkButton ID="lbSetArticleImageArtGallery" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="SetArticleImage" CssClass="action_btn article_img" resourcekey="lbSetArticleImageArtGalleryResource1">Set as main article image</asp:LinkButton>
 																	<asp:LinkButton ID="lbEditImage" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn edit" resourcekey="LinkButton3Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
-																	<asp:LinkButton ID="lbDeleteImage" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn delete" OnClientClick="return confirm('Are you sure you want to delete this image?');" resourcekey="LinkButton4Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
+																	<asp:LinkButton ID="lbDeleteImage" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn delete" OnClientClick="return AlertConfirm('image');" resourcekey="LinkButton4Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
 																	<asp:LinkButton ID="lbLocalizeimage" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="LocalizeImage" CssClass="image_localization" resourcekey="lbLocalizeimageResource1" Visible='<%# LocalizationEnabled && !IS_ARTICLE_REVISION%>'>Localize content</asp:LinkButton>
 																</td>
 																<td class="image">
@@ -1385,7 +1389,7 @@
 						<div class="rounded3dBox" runat="server" id="divAddDocuments" style="margin-top: 0">
 							<asp:Panel ID="pnlAddDocument" runat="server">
 								<div class="edNews_inputGroup textCenter" style="margin-bottom: 10px">
-									<asp:RadioButtonList ID="rblDocumentUploadType" CssClass="styledRadio inlineList" runat="server" RepeatLayout="UnorderedList" onclick="toogleDocumentUploadPanels()">
+									<asp:RadioButtonList ID="rblDocumentUploadType" CssClass="styledRadio inlineList" runat="server" RepeatLayout="UnorderedList" OnSelectedIndexChanged="rblDocumentUploadType_SelectedIndexChanged" AutoPostBack="True">
 										<asp:ListItem Value="0" class="normalRadioButton" resourcekey="liUpload" Selected="True">Upload</asp:ListItem>
 										<asp:ListItem Value="1" class="normalRadioButton" resourcekey="liServer">Add from server</asp:ListItem>
 									</asp:RadioButtonList>
@@ -1424,7 +1428,7 @@
 										<asp:LinkButton ID="btnDocUpload" runat="server" OnClick="btnDocUpload_Click" ValidationGroup="vgArticleDocs" resourcekey="btnDocUploadResource1" CssClass="action upload rounded_button gradient icon orange_plus"><span>Upload</span></asp:LinkButton>
 									</div>
 								</asp:Panel>
-								<asp:Panel ID="pnlAddDocumentsFromServer" class="EDS_simpleFineUploader" runat="server" Style="display: none;">
+								<asp:Panel ID="pnlAddDocumentsFromServer" class="EDS_simpleFineUploader" runat="server" Visible="false">
 									<div class="edNews_inputGroup labelBlock inputWidth40 uploadControls textCenter">
 										<Portal:URL ID="urlAddDocumentsFromServer" runat="server" ShowNewWindow="false" ShowUsers="false" ShowFiles="true" ShowLog="false" ShowSecure="false" ShowTabs="false" ShowTrack="false" ShowUpLoad="false" ShowUrls="false" ShowDatabase="false" UrlType="F" />
 										<asp:Label ID="lblAddDocumentsFromServerMessage" runat="server" EnableViewState="False" Visible="False" />
@@ -3110,7 +3114,7 @@
 							<asp:RegularExpressionValidator ID="revExpireTime" runat="server" ControlToValidate="tbExpireTime" ErrorMessage="hh:mm" ValidationExpression="([0-1]?[0-9]|2[0-3]):([0-5][0-9])" ValidationGroup="vgEditArticle" resourcekey="revPublishTIme0Resource1" />
 						</td>
 					</tr>
-					<tr>
+					<tr runat="server" id="rowTimeZone">
 						<td colspan="2">
 							<p class="smallInfo info">
 								<%=Timezone%>
@@ -3294,7 +3298,7 @@
 						<div class="topPadded bottomPadded">
 							<div class="edNews_inputGroup noWidthLabel textCenter">
 								<label runat="server" id="lblApprove">
-									<label for="<%=cbApproveArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content='<%=_("Approve.HelpText")%>' data-tooltip-position="top-right"><%=_("Approve")%></label>
+									<label for="<%=cbApproveArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content='<%=ApproveHelpText%>' data-tooltip-position="top-right"><%=ApproveText%></label>
 								</label>
 								<label runat="server" id="lblApproveDirectPublish">
 									<label for="<%=cbApproveArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content='<%=_("Publish.HelpText")%>' data-tooltip-position="top-right" visible="False"><%=_("Publish")%></label>
@@ -3304,7 +3308,7 @@
 								</div>
 							</div>
 							<div id="divRejectArticle" runat="server" visible="false" class="edNews_inputGroup noWidthLabel textCenter">
-								<label for="<%=cbRejectArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("Reject.HelpText")%>" data-tooltip-position="top-right"><%=_("Reject")%></label>
+								<label for="<%=cbRejectArticle.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=RejectHelpText%>" data-tooltip-position="top-right"><%=RejectText%></label>
 								<div class="eds__rejectArticle switchCheckbox">
 									<asp:CheckBox CssClass="normalCheckBox" ID="cbRejectArticle" runat="server" Text="Reject article" />
 								</div>
@@ -3444,11 +3448,14 @@
 				<asp:Parameter Name="GalleryID" Type="Int32" />
 				<asp:Parameter Name="ByUserID" Type="Boolean" />
 				<asp:Parameter Name="UserID" Type="Int32" />
+				<asp:Parameter Name="RevisionId" Type="Int32" />
+				<asp:Parameter Name="orderByDesc" Type="Boolean" />
 			</SelectParameters>
 			<UpdateParameters>
 				<asp:Parameter Name="PictureID" Type="Int32" />
 				<asp:Parameter Name="Title" Type="String" />
 				<asp:Parameter Name="Description" Type="String" />
+				<asp:Parameter Name="RevisionId" Type="Int32" />
 			</UpdateParameters>
 		</asp:ObjectDataSource>
 	</asp:Panel>
@@ -3525,25 +3532,34 @@
 				return false;
 		}
 
+		if (validationGroup === 'vgEditArticle') {
+			var imgVal = $('#eds__articleGalleryImageUpload').val();
+			if (imgVal != undefined && imgVal && imgVal.length > 4 && $('li', '#eds__articleGalleryFileUploadList').length > 0) {
+				$('#<%=lblMainEditMessage.ClientID%>').html('<%=ImagesNotUploaded%>');
+				$('#<%=lblMainEditMessage.ClientID%>').addClass("infoMessages error");
+				return false;
+			}
+		}
+
 		if (validationGroup === 'vgAddRecurringEvent') {
-			var costByRestriction = eds2_2('#eds__RecurringCostByDateRestriction');
+			var costByRestriction = eds3_5_jq('#eds__RecurringCostByDateRestriction');
 			if (costByRestriction.length !== 0) {
-				if (!eds2_2('#eds__RecurringCostByDateRestriction').eds2_2_DateRestrictionPayment_Edit_1_0_0.Validate('eds__RecurringCostByDateRestriction')) {
+				if (!eds3_5_jq('#eds__RecurringCostByDateRestriction').eds_jq_DateRestrictionPayment_Edit_1_0_0.Validate('eds__RecurringCostByDateRestriction')) {
 					return false;
 				}
 			}
 		}
 		else {
-			var costByRestriction = eds2_2('#eds__CostByDateRestriction');
+			var costByRestriction = eds3_5_jq('#eds__CostByDateRestriction');
 			if (costByRestriction.length !== 0) {
-				if (!eds2_2('#eds__CostByDateRestriction').eds2_2_DateRestrictionPayment_Edit_1_0_0.Validate('eds__CostByDateRestriction'))
+				if (!eds3_5_jq('#eds__CostByDateRestriction').eds_jq_DateRestrictionPayment_Edit_1_0_0.Validate('eds__CostByDateRestriction'))
 					return false;
 			}
 		}
 		if (!isEdsSaveButtonClicked) {
 			isEdsSaveButtonClicked = true;
 			<%--if ('<%=IS_ARTICLE_REVISION%>' == 'True')
-				eds2_2("#<%=pnlCustomFieldsSelect.ClientID%> :input").attr("disabled", false);--%>
+				eds3_5_jq("#<%=pnlCustomFieldsSelect.ClientID%> :input").attr("disabled", false);--%>
 			return true;
 		}
 		return false;
@@ -3583,7 +3599,7 @@
 	}
 
 	function InitCFDateTimePickers(id) {
-		eds2_2(id).datepick({ dateFormat: "<%=dateFormat%>" });
+		eds3_5_jq(id).datepick({ dateFormat: "<%=dateFormat.ToLowerInvariant()%>" });
 	}
 
 	function FillEventAttendeesDiscountHf() {
@@ -3915,7 +3931,7 @@
 	<%=initDocumentUploadRblSelection%>
 
 	function CostByDateRestriction_Init() {
-		eds2_2('#eds__CostByDateRestriction').eds2_2_DateRestrictionPayment_Edit_1_0_0({
+		eds3_5_jq('#eds__CostByDateRestriction').eds_jq_DateRestrictionPayment_Edit_1_0_0({
 			hfStateId: '#<%=hfDateCostMatrix.ClientID%>',
 			hfStateViewSpecificId: '#<%=hfDateCostMatrixViewSpecific.ClientID%>',
 			tbValidateDecimalId: '#<%=tbValidateDecimal.ClientID%>',
@@ -3923,9 +3939,9 @@
 			<%=MatrixDateTimePickerSettings%>
 		});
 
-		var costByRestriction = eds2_2('#eds__RecurringCostByDateRestriction');
+		var costByRestriction = eds3_5_jq('#eds__RecurringCostByDateRestriction');
 		if (costByRestriction.length !== 0) {
-			eds2_2('#eds__RecurringCostByDateRestriction').eds2_2_DateRestrictionPayment_Edit_1_0_0({
+			eds3_5_jq('#eds__RecurringCostByDateRestriction').eds_jq_DateRestrictionPayment_Edit_1_0_0({
 				hfStateId: '#<%=hfRecurringDateCostMatrix.ClientID%>',
 				hfStateViewSpecificId: '#<%=hfRecurringDateCostMatrixViewSpecific.ClientID%>',
 				tbValidateDecimalId: '#<%=tbRecurringValidateDecimal.ClientID%>',
@@ -4083,8 +4099,56 @@
 		}
 	}
 
-	eds2_2(function ($) {
+	var selectizeOptions = {
+		persist: false,
+		createOnBlur: false,
+		valueField: 'Name',
+		labelField: 'Name',
+		searchField: 'Name',
+		maxItems:<%=MaxTags%>,
+		addTagText: '<%=AddTag%>',
+		hideSelected: true,
+		closeAfterSelect: true,
+		create: true,
+		load: function (query, callback) {
+			$.ajax({
+				url: '<%=ControlPath%>ashx/SearchTags.ashx?portalid=<%=PortalId%>&TabId=<%=TabId%>&ModuleId=<%=ModuleId%>&UserId=<%=UserId%>&action=searchtags',
+				data: { query: query },
+				dataType: "json",
+				type: 'GET',
+				error: function () {
+					callback();
+				},
+				success: function (res) {
+					callback(res);
+				}
+			})
+		}
+	};
+	eds3_5_jq(function ($) {
 		$(document).ready(function () {
+
+			$('#<%=tbTags.ClientID%>').selectize(selectizeOptions);
+
+			$('#<%=tbArticleURL.ClientID%>').keyup(function () {
+				$('#edsNews__UrlCharCount').text('(' + $(this).val().length + ')');
+			});
+			$('#<%=tbArticleURL.ClientID%>').trigger("keyup");
+
+			$('#<%=tbTitleTag.ClientID%>').keyup(function () {
+				$('#edsNews__titleTagCount').text('(' + $(this).val().length + ')');
+			});
+			$('#<%=tbTitleTag.ClientID%>').trigger("keyup");
+
+			$('#<%=tbMetaDescription.ClientID%>').keyup(function () {
+				$('#edsNews__metaDescriptionCount').text('(' + $(this).val().length + ')');
+			});
+			$('#<%=tbMetaDescription.ClientID%>').trigger("keyup");
+
+			$('#<%=tbMetaKeywords.ClientID%>').keyup(function () {
+				$('#edsNews__metaKeywordsCount').text('(' + $(this).val().length + ')');
+			});
+			$('#<%=tbMetaKeywords.ClientID%>').trigger("keyup");
 
 			ApproveClicked($("#<%=cbApproveArticle.ClientID%>"), true);
 			if ($("#<%=cbRejectArticle.ClientID%>").length)
@@ -4099,7 +4163,7 @@
 			})
 
 			if ('<%=articleLockNeeded%>' == 'True') {
-				eds2_2('a', '.edNews_adminNavigationMenu').click(function () {
+				eds3_5_jq('a', '.edNews_adminNavigationMenu').click(function () {
 					cleararticleCacheLock();
 					return true;
 				});
@@ -4342,13 +4406,10 @@
 		if (typeof toogleDocumentPanels == 'function')
 			toogleDocumentPanels();
 
-		if (typeof toogleDocumentUploadPanels == 'function')
-			toogleDocumentUploadPanels();
-
 		if (typeof toogleRecurringEventDocumentPanels == 'function')
 			toogleRecurringEventDocumentPanels();
 
-		$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat%>" });
+		$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat.ToLowerInvariant()%>" });
 
 		$('#<%=tbEventStartTime.ClientID%>,#<%=tbEventEndTime.ClientID%>,#<%=tbxRecurringEventStartTime.ClientID%>,#<%=tbxRecurringEventEndTime.ClientID%>,#<%=tbPublishTime.ClientID%>,#<%=tbExpireTime.ClientID%>').timePicker({
 			startTime: "00:00",
@@ -4451,13 +4512,13 @@
 		);
 
 		if (document.getElementById('<%=hfResize.ClientID%>') != null)
-			eds2_2('.galleryFineUploader').edsFineUploader_1_3(galleryFineUploaderSettings());
+			eds3_5_jq('.galleryFineUploader').edsFineUploader_1_3(galleryFineUploaderSettings());
 
-		var $documentsFineUploader = eds2_2('#<%=divAddDocumentFineUploader.ClientID %>');
+		var $documentsFineUploader = eds3_5_jq('#<%=divAddDocumentFineUploader.ClientID %>');
 		if ($documentsFineUploader.length > 0)
 			$documentsFineUploader.edsFineUploader_1_3(documentsFineUploaderSettings());
 
-		var $recurringDocumentsFineUploader = eds2_2('#<%=divRecurringEventAddDocumentFineUploader.ClientID %>');
+		var $recurringDocumentsFineUploader = eds3_5_jq('#<%=divRecurringEventAddDocumentFineUploader.ClientID %>');
 		if ($recurringDocumentsFineUploader.length > 0)
 			$recurringDocumentsFineUploader.edsFineUploader_1_3(recurringDocumentsFineUploaderSettings());
 	});
@@ -4468,28 +4529,28 @@
 	<%=includeDocumentLanguageJS%>
 
 	function AddRowToEventDiscountTable(TableName) {
-		eds2_2('#' + TableName).append('<tr valign="top"><td><input type="text" class="eds_table_cell_input" name="eds_RowName" value="" placeholder="Number of" /> </td><td> <input type="text" class="eds_table_cell_input" name="eds_RowValue" value="" placeholder="Discount" /> </td><td><select name="eds_valueType" class="eds_table_cell_select"><option value="0">Unit</option><option value="1">Percent</option></select></td><td><img src="<%=_ControlPath%>images/move2red.png" height="16" width="16"></td><td> <a href="javascript:void(0);" class="eds_removeRow">Remove</a></td></tr>');
+		eds3_5_jq('#' + TableName).append('<tr valign="top"><td><input type="text" class="eds_table_cell_input" name="eds_RowName" value="" placeholder="Number of" /> </td><td> <input type="text" class="eds_table_cell_input" name="eds_RowValue" value="" placeholder="Discount" /> </td><td><select name="eds_valueType" class="eds_table_cell_select"><option value="0">Unit</option><option value="1">Percent</option></select></td><td><img src="<%=_ControlPath%>images/move2red.png" height="16" width="16"></td><td> <a href="javascript:void(0);" class="eds_removeRow">Remove</a></td></tr>');
 	}
 	function AddRowToEventCostTable(TableName) {
-		eds2_2('#' + TableName).append('<tr valign="top"><td><input type="text" class="eds_table_cell_input" name="eds_CostRowName" value="" placeholder="Name" /> </td><td><input type="hidden" class="eds_table_cell_input" name="eds_costid" value="" />  <input type="text" class="eds_table_cell_input" name="eds_CostRowValue" value="" placeholder="Cost" /> </td><td><img src="<%=_ControlPath%>images/move2red.png" height="16" width="16"></td><td> <a href="javascript:void(0);" class="eds_removeRow">Remove</a></td></tr>');
+		eds3_5_jq('#' + TableName).append('<tr valign="top"><td><input type="text" class="eds_table_cell_input" name="eds_CostRowName" value="" placeholder="Name" /> </td><td><input type="hidden" class="eds_table_cell_input" name="eds_costid" value="" />  <input type="text" class="eds_table_cell_input" name="eds_CostRowValue" value="" placeholder="Cost" /> </td><td><img src="<%=_ControlPath%>images/move2red.png" height="16" width="16"></td><td> <a href="javascript:void(0);" class="eds_removeRow">Remove</a></td></tr>');
 	}
 
 	function pageLoad(sender, args) {
 		if (args.get_isPartialLoad()) {
 			(function ($) {
-
+				$('#<%=tbTags.ClientID%>').selectize(selectizeOptions);
 				CostByDateRestriction_Init();
 
 				$("#eds_add_attendees_discount").click(function () {
 					AddRowToEventDiscountTable('<%=tblAttendeesDiscount.ClientID%>');
 				});
 
-				eds2_2('#<%=tblAttendeesDiscount.ClientID%>').on('click', '.eds_removeRow', function () {
+				eds3_5_jq('#<%=tblAttendeesDiscount.ClientID%>').on('click', '.eds_removeRow', function () {
 					$(this).parent().parent().remove();
 					FillEventAttendeesDiscountHf();
 				});
 
-				eds2_2('#<%=tblAttendeesDiscount.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
+				eds3_5_jq('#<%=tblAttendeesDiscount.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
 					if ($(this).parent().parent().next('tr').length == 0)
 						AddRowToEventDiscountTable('<%=tblAttendeesDiscount.ClientID%>');
 
@@ -4509,12 +4570,12 @@
 					AddRowToEventCostTable('<%=tblCostPerAttendee.ClientID%>');
 				});
 
-				eds2_2('#<%=tblCostPerAttendee.ClientID%>').on('click', '.eds_removeRow', function () {
+				eds3_5_jq('#<%=tblCostPerAttendee.ClientID%>').on('click', '.eds_removeRow', function () {
 					$(this).parent().parent().remove();
 					FillEventAttendeesCostHf();
 				});
 
-				eds2_2('#<%=tblCostPerAttendee.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
+				eds3_5_jq('#<%=tblCostPerAttendee.ClientID%>').on('keyup', '.eds_table_cell_input', function () {
 					if ($(this).parent().parent().next('tr').length == 0)
 						AddRowToEventCostTable('<%=tblCostPerAttendee.ClientID%>');
 
@@ -4530,7 +4591,7 @@
 					});
 				});
 
-				$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat%>" });
+				$('#<%=tbPublishDate.ClientID%>,#<%=tbExpireDate.ClientID%>,#<%=tbEventStartDate.ClientID%>,#<%=tbEventEndDate.ClientID%>,#<%=tbxRecurringEndByDate.ClientID%>,#<%=tbxRecurringEventStartDate.ClientID%>,#<%=tbxRecurringEventEndDate.ClientID%>').datepick({ dateFormat: "<%=dateFormat.ToLowerInvariant()%>" });
 
 				$('#<%=tbEventStartTime.ClientID%>,#<%=tbEventEndTime.ClientID%>,#<%=tbxRecurringEventStartTime.ClientID%>,#<%=tbxRecurringEventEndTime.ClientID%>,#<%=tbPublishTime.ClientID%>,#<%=tbExpireTime.ClientID%>').timePicker({
 					startTime: "00:00",
@@ -4563,11 +4624,11 @@
 				}
 
 				if (document.getElementById('<%=hfResize.ClientID%>') != null)
-					eds2_2('.galleryFineUploader').edsFineUploader_1_3(galleryFineUploaderSettings());
+					eds3_5_jq('.galleryFineUploader').edsFineUploader_1_3(galleryFineUploaderSettings());
 
-				eds2_2('.edNews_tooltip').eds_tooltipster();
+				eds3_5_jq('.edNews_tooltip').eds_tooltipster();
 
-			})(eds2_2);
+			})(eds3_5_jq);
 		}
 	}
 	// ]]>

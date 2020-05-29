@@ -127,7 +127,7 @@ html, body {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
-.edNews_topBarWrapper:after {
+.edNews_topBarWrapper::after {
   content: "";
   display: block;
   width: 100%;
@@ -251,7 +251,7 @@ html, body {
   background: #E1E1E1;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
 }
-.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li > a:after {
+.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li > a::after {
   position: absolute;
   display: inline-block;
   font-family: "FontAwesome";
@@ -288,7 +288,7 @@ html, body {
 .edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_save > a {
   background: #41c981;
 }
-.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_save > a:after {
+.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_save > a::after {
   content: "";
   color: #18894d;
 }
@@ -302,7 +302,7 @@ html, body {
   background: #f6b96a;
   padding: 18px 17px 0;
 }
-.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_saveAndClose > a:after {
+.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_saveAndClose > a::after {
   display: none;
 }
 .edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_saveAndClose > a::before {
@@ -314,7 +314,7 @@ html, body {
 .edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_back > a {
   background: #7dc7d2;
 }
-.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_back > a:after {
+.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_back > a::after {
   content: "";
   color: #559faa;
 }
@@ -327,7 +327,7 @@ html, body {
 .edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_close > a {
   background: #e07171;
 }
-.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_close > a:after {
+.edNews_topBarWrapper > .edNews_wrapper > ul.edNews_topActions > li.edNews_close > a::after {
   content: "";
   color: #ab2d2d;
 }
@@ -362,6 +362,10 @@ html, body {
 }
 .edNews_topBarWrapper > .edNews_wrapper > .flashMessage p.negative {
   background: #CB1919;
+}
+.edNews_topBarWrapper > .edNews_wrapper > .flashMessage.error p {
+  background-color: rgba(224, 113, 113, 0.85);
+  border-color: #e07171;
 }
 
 .edNews_adminWrapper *,
@@ -1310,7 +1314,7 @@ html, body {
   min-height: 30px;
   border-radius: 50% 0 0 50%;
 }
-.edNews_adminWrapper .styledRadio input[type='radio'] + label::before, .edNews_adminWrapper .styledRadio input[type='radio'] + label:after {
+.edNews_adminWrapper .styledRadio input[type='radio'] + label::before, .edNews_adminWrapper .styledRadio input[type='radio'] + label::after {
   position: absolute;
   display: block;
   border: 5px solid #fff;
@@ -1330,7 +1334,7 @@ html, body {
   width: 20px;
   height: 20px;
 }
-.edNews_adminWrapper .styledRadio input[type='radio'] + label:after {
+.edNews_adminWrapper .styledRadio input[type='radio'] + label::after {
   border: 2px solid #919191;
   background: transparent;
   width: 24px;
@@ -1341,13 +1345,13 @@ html, body {
 .edNews_adminWrapper .styledRadio input[type='radio'] + label:hover::before {
   background: #60cb20 !important;
 }
-.edNews_adminWrapper .styledRadio input[type='radio'] + label:hover:after {
+.edNews_adminWrapper .styledRadio input[type='radio'] + label:hover::after {
   border-color: #60cb20 !important;
 }
 .edNews_adminWrapper .styledRadio input[type='radio']:checked + label::before {
   background: #189fd3;
 }
-.edNews_adminWrapper .styledRadio input[type='radio']:checked + label:after {
+.edNews_adminWrapper .styledRadio input[type='radio']:checked + label::after {
   border-color: #189fd3;
 }
 .edNews_adminWrapper .styledRadio.smallRadio input[type='radio'] + label {
@@ -1360,7 +1364,7 @@ html, body {
   top: 2px;
   left: 2px;
 }
-.edNews_adminWrapper .styledRadio.smallRadio input[type='radio'] + label:after {
+.edNews_adminWrapper .styledRadio.smallRadio input[type='radio'] + label::after {
   width: 18px;
   height: 18px;
 }
@@ -1420,7 +1424,7 @@ html, body {
   font-size: 0;
   line-height: 0;
 }
-.edNews_adminWrapper .toggleCheckbox label:after {
+.edNews_adminWrapper .toggleCheckbox label::after {
   display: block;
   width: 25px;
   height: 20px;
@@ -1450,7 +1454,7 @@ html, body {
 .edNews_adminWrapper .toggleCheckbox input[type="checkbox"]:checked + label:hover {
   background: #42d040;
 }
-.edNews_adminWrapper .toggleCheckbox input[type="checkbox"]:checked + label:after {
+.edNews_adminWrapper .toggleCheckbox input[type="checkbox"]:checked + label::after {
   left: 20px;
 }
 .edNews_adminWrapper .switchCheckbox {
@@ -1618,10 +1622,10 @@ html, body {
 .edNews_adminWrapper .button.edNews_tooltip {
   position: relative;
 }
-.edNews_adminWrapper label.edNews_tooltip:after,
-.edNews_adminWrapper .edNews_inputGroup.edNews_tooltip:after,
-.edNews_adminWrapper button.edNews_tooltip:after,
-.edNews_adminWrapper .button.edNews_tooltip:after {
+.edNews_adminWrapper label.edNews_tooltip::after,
+.edNews_adminWrapper .edNews_inputGroup.edNews_tooltip::after,
+.edNews_adminWrapper button.edNews_tooltip::after,
+.edNews_adminWrapper .button.edNews_tooltip::after {
   position: absolute;
   top: -4px;
   left: auto;
@@ -1635,24 +1639,24 @@ html, body {
   color: #555;
   transition: color ease-in-out 0.4s;
 }
-.edNews_adminWrapper label.edNews_tooltip:hover:after,
-.edNews_adminWrapper .edNews_inputGroup.edNews_tooltip:hover:after,
-.edNews_adminWrapper button.edNews_tooltip:hover:after,
-.edNews_adminWrapper .button.edNews_tooltip:hover:after {
+.edNews_adminWrapper label.edNews_tooltip:hover::after,
+.edNews_adminWrapper .edNews_inputGroup.edNews_tooltip:hover::after,
+.edNews_adminWrapper button.edNews_tooltip:hover::after,
+.edNews_adminWrapper .button.edNews_tooltip:hover::after {
   color: #fff;
 }
 .edNews_adminWrapper label.edNews_tooltip {
   margin-right: 20px !important;
 }
-.edNews_adminWrapper label.edNews_tooltip:after {
+.edNews_adminWrapper label.edNews_tooltip::after {
   top: 0;
   right: -17px;
 }
-.edNews_adminWrapper label.edNews_tooltip.highlighted:after {
+.edNews_adminWrapper label.edNews_tooltip.highlighted::after {
   top: 1px;
 }
-.edNews_adminWrapper label.edNews_tooltip:hover:after,
-.edNews_adminWrapper .edNews_inputGroup.edNews_tooltip:hover:after {
+.edNews_adminWrapper label.edNews_tooltip:hover::after,
+.edNews_adminWrapper .edNews_inputGroup.edNews_tooltip:hover::after {
   color: #189fd3;
 }
 .edNews_adminWrapper .fullWidthTable {

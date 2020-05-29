@@ -5692,7 +5692,7 @@ qq.UploadDropZone = function(o){
         return this;
     };
 
-}(eds2_2));
+}(eds3_5_jq));
 
 /*globals jQuery, qq*/
 (function($) {
@@ -5838,6 +5838,6 @@ qq.UploadDropZone = function(o){
         return this;
     };
 
-}(eds2_2));
+}(eds3_5_jq));
 
 /*! 2014-01-23 */

@@ -332,4 +332,4 @@
 				$this.data(instanceKey, init($this, args[0]));
 		});
 	}
-})(eds2_2);
+})(eds3_5_jq);

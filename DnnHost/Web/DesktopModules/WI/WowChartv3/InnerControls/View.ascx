@@ -40,21 +40,24 @@
     <canvas data-ng-if="ctrl.emptyData==false && ctrl.settings.Options.chart.typeId==255" data-ng-style="ctrl.settings.Options.style" data-chart-settings="ctrl.settings" data-ng-goal-chart=""></canvas>
 </div>
 <script type="text/javascript">
-    var ver = '<%= this.Version %>';
-    angular.element(document).ready(function () {
-        fetchPermissions('WowChartv3.ngApp-<%= ModuleId %>', WowChartv3_InitViewApp, {
-            PortalAliasId: <%= PortalAlias.PortalAliasID %>, 
-            ModuleId: <%= ModuleId %>, 
-            TabId: <%= TabId %>,
-            BusyMsg: 'Preparing Chart',
-            TemplatesUrl: '<%= ResolveUrl("../apps/view/templates/") %>',
-            BaseTemplatesUrl: '<%= ResolveUrl("../apps/templates/") %>',
-            ServiceUrl: '<%= ResolveUrl("../Services/Main.asmx") %>',
-            ExportingJsUrl: '<%= ResolveUrl("../Scripts/exporting.js") %>',
-            OfflineExportingJsUrl: '<%= ResolveUrl("../Scripts/offline-exporting.js") %>',
-            ExportCSVJsUrl: '<%= ResolveUrl("../Scripts/export-csv.js") %>',
-            Highcharts3dJsUrl: '<%= ResolveUrl("../Scripts/highcharts-3d.js") %>',
-            HighchartsWordcloudModuleUrl:'<%= ResolveUrl("../Scripts/hc-modules/wordcloud.js") %>'
-        }).then(bootstrapApplication);
-    });
+    if (window["angular"]) {
+        angular.element(document).ready(function () {
+            fetchPermissions('WowChartv3.ngApp-<%= ModuleId %>', WowChartv3_InitViewApp, {
+                PortalAliasId: <%= PortalAlias.PortalAliasID %>,
+                ModuleId: <%= ModuleId %>,
+                TabId: <%= TabId %>,
+                BusyMsg: 'Preparing Chart',
+                TemplatesUrl: '<%= ResolveUrl("../apps/view/templates/") %>',
+                BaseTemplatesUrl: '<%= ResolveUrl("../apps/templates/") %>',
+                ServiceUrl: '<%= ResolveUrl("../Services/Main.asmx") %>',
+                ExportingJsUrl: '<%= ResolveUrl("../Scripts/exporting.js") %>',
+                OfflineExportingJsUrl: '<%= ResolveUrl("../Scripts/offline-exporting.js") %>',
+                ExportCSVJsUrl: '<%= ResolveUrl("../Scripts/export-csv.js") %>',
+                Highcharts3dJsUrl: '<%= ResolveUrl("../Scripts/highcharts-3d.js") %>',
+                HighchartsWordcloudModuleUrl: '<%= ResolveUrl("../Scripts/hc-modules/wordcloud.js") %>',
+                HighchartsParetoModuleUrl: '<%= ResolveUrl("../Scripts/hc-modules/pareto.js") %>',
+                Version: '<%= this.Version %>'
+            }).then(bootstrapApplication);
+        });
+    }
 </script>

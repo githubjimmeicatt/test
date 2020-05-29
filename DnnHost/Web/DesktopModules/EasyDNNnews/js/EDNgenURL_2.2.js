@@ -30,7 +30,7 @@
 
 		if (typeof target_selector == 'string')
 			$target = $(target_selector);
-		else if (target_selector instanceof eds2_2)
+		else if (target_selector instanceof eds3_5_jq)
 			$target = target_selector;
 		else
 			return false;
@@ -39,4 +39,4 @@
 			.keyup(run_filter)
 			.change(run_filter);
 	};
-} (eds2_2));
+}(eds3_5_jq));
