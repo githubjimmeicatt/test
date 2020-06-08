@@ -15,8 +15,8 @@ namespace Sphdhv.Saml.Metadata.Console
         {
             string certificateSubject;
             MetadataConfiguration metadataConfiguration;
-            CreateProductionConfig(out certificateSubject, out metadataConfiguration);
-            //CreateAcceptConfig(out certificateSubject, out metadataConfiguration);
+           // CreateProductionConfig(out certificateSubject, out metadataConfiguration);
+            CreateAcceptConfig(out certificateSubject, out metadataConfiguration);
             GenerateMetadataFile(certificateSubject, metadataConfiguration);
 
         }
