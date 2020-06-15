@@ -10,12 +10,13 @@ function verifyAngularLibVersion() {
             angular.version.minor < 6) {
             alert("Another angular library ver. " + angular.version.full + " is loaded and module might not working propertly. Go to the module settings, under 'WI Wow Chart - V3 Settings' tab, select the 'Dont Load Angular Lib' & 'Dont Load Angular Route Lib' options then Save the settings. Please contact support@wow-extensions.com if does not help.");
         }
-    } catch { }
+    } catch (err) { 
+    }
 }
 function verifyAngularLibExists() {
     try {
         var v = angular.version;
-    } catch {
+    } catch (err) {
         alert("Angular library is not loaded and module might not working propertly. Go to the module settings, under 'WI Wow Chart - V3 Settings' tab, unselect the 'Dont Load Angular Lib' & 'Dont Load Angular Route Lib' options then Save the settings. Please contact support@wow-extensions.com if does not help.");
     }
 }
