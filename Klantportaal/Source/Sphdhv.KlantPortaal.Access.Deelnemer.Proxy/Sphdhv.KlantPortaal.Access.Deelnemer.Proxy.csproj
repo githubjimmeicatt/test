@@ -15,6 +15,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <AdditionalFileItemNames>$(AdditionalFileItemNames);Content</AdditionalFileItemNames>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -116,10 +117,14 @@
       <Project>{3a51724b-36c3-4670-b482-183887e8abe3}</Project>
       <Name>Sphdhv.KlantPortaal.Access.Deelnemer.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.Klantportaal.Data.Deelnemer\Sphdhv.Klantportaal.Data.Deelnemer.csproj">
+    <ProjectReference Include="..\Sphdhv.Klantportaal.Data.Deelnemer\Sphdhv.KlantPortaal.Data.Deelnemer.csproj">
       <Project>{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}</Project>
-      <Name>Sphdhv.Klantportaal.Data.Deelnemer</Name>
+      <Name>Sphdhv.KlantPortaal.Data.Deelnemer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SecurityCodeScan.3.5.3.0\analyzers\dotnet\SecurityCodeScan.dll" />
+    <Analyzer Include="..\..\packages\SecurityCodeScan.3.5.3.0\analyzers\dotnet\YamlDotNet.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

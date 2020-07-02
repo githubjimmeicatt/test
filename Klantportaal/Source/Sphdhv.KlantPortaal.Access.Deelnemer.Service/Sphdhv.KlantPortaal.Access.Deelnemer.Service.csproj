@@ -18,6 +18,7 @@
     <SccProvider>SAK</SccProvider>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AdditionalFileItemNames>$(AdditionalFileItemNames);Content</AdditionalFileItemNames>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -170,10 +171,14 @@
       <Project>{3D4888B2-356F-45BB-A314-01851818C170}</Project>
       <Name>Sphdhv.KlantPortaal.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.Klantportaal.Data.Deelnemer\Sphdhv.Klantportaal.Data.Deelnemer.csproj">
+    <ProjectReference Include="..\Sphdhv.Klantportaal.Data.Deelnemer\Sphdhv.KlantPortaal.Data.Deelnemer.csproj">
       <Project>{a727e5c0-ffd0-4a12-a0c6-7acd2d1b44da}</Project>
-      <Name>Sphdhv.Klantportaal.Data.Deelnemer</Name>
+      <Name>Sphdhv.KlantPortaal.Data.Deelnemer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SecurityCodeScan.3.5.3.0\analyzers\dotnet\SecurityCodeScan.dll" />
+    <Analyzer Include="..\..\packages\SecurityCodeScan.3.5.3.0\analyzers\dotnet\YamlDotNet.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
