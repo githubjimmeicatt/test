@@ -51,8 +51,11 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
                 return View(form);
 
             }
-
-            return Redirect(authMethod.Url);
+            if (Url.IsLocalUrl(authMethod.Url))
+            {
+                Redirect(authMethod.Url);
+            }
+            return new RedirectResult("noLocalUrl");
         }
 
         // ReSharper disable once InconsistentNaming - Naming taken from format used by DIGID API

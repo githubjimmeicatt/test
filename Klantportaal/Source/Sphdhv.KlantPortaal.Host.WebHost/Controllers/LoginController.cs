@@ -45,8 +45,11 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             var encodedToken = Server.UrlEncode(loginResult.Token.ToString());
 
             var redirectUrl = $"{Settings.Default.KlantPortaalBaseUrl}{ Settings.Default.VerifyTokenPath}?SAMLart={encodedToken}&RelayState={loginModel.DossierNr}|acceptImpersonate"; //serialized object in relaystate stoppen?
-            return new RedirectResult(redirectUrl);
-
+            if (Url.IsLocalUrl(redirectUrl))
+            {
+                return new RedirectResult(redirectUrl);
+            }
+            return new RedirectResult(errorUrl + "noLocalUrl");
         }
 
 
@@ -89,8 +92,10 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             {
                 resultParams = "?passwordResetResult=" + string.Join(", ", result.Errors) + "&token=" + token + "&userid=" + userid;
             }
+#pragma warning disable SCS0027 // Open redirect: possibly unvalidated input in {1} argument passed to '{0}' //False Positive
             return new RedirectResult($"{Settings.Default.DnnMijnOmgevingUrl}{Settings.Default.DnnInloggenAlsPage}{resultParams}");
-            
+#pragma warning restore SCS0027 // Open redirect: possibly unvalidated input in {1} argument passed to '{0}' //False Positive
+
 
         }
 
