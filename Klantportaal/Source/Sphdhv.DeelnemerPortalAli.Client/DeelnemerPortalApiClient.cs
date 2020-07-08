@@ -121,7 +121,6 @@ namespace Sphdhv.DeelnemerPortalApi.Client
 
         private static async Task<T> GetRequestAsync<T>(Uri url, X509Certificate cert, IContextFactory context)
         {
-            var logger = new Icatt.Log4Net.Log4NetLogger<ApplicationArea, LogMessage>(context);
             using (var handler = new WebRequestHandler())
             {
                 handler.ClientCertificates.Add(cert);

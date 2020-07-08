@@ -1,4 +1,4 @@
-﻿using Icatt.Logging;
+﻿
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Interface;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
@@ -70,8 +70,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 
 
             var proxy = container.ProxyFactory.CreateProxy<Manager.Authentication.Interface.IAuthenticationManager>(context);
-            var logger = container.ProxyFactory.CreateProxy<ILogger<ApplicationArea, LogMessage>>(null);
-            logger.Log(ApplicationArea.Any, LoggingLevel.Error, LogMessage.Any, "{0}", "test");
 
             var response = await proxy.ExchangeTokenAsync(SAMLart, RelayState);
 

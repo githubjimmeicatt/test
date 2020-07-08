@@ -37,14 +37,12 @@ using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Proxy;
 using Icatt.Infrastructure;
 using Icatt.Web.Infrastructure;
-using Icatt.Logging;
 using System.IO;
 using System.Xml;
 using System.Runtime.Serialization;
 using Sphdhv.KlantPortaal.Engine.Notification.Interface;
 using Icatt.Auditing.Manager.AuditTrailWriter.Interface;
 using Icatt.Auditing.Manager.AuditTrailWriter.Proxy;
-using Icatt.Logging.DataAccess;
 using Icatt.Auditing.Access.AuditTrail.Interface;
 using Icatt.Auditing.Access.AuditTrail.Proxy;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Interface;
@@ -56,6 +54,8 @@ using System.Security.Cryptography.X509Certificates;
 using Sphdhv.KlantPortaal.Host.WebHost.Properties;
 using Icatt.SecureToken.Manager.TokenProvider.Interface;
 using Icatt.SecureToken.Manager.TokenProvider.Proxy;
+using Serilog;
+using Icatt.Logging.DataAccess;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 {
@@ -247,14 +247,14 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 
             else if (type == typeof(IDeelnemerPortalApi))
             {
-                if (Properties.Settings.Default.StubDhvDeelnemerWebApi)
+                if (Settings.Default.StubDhvDeelnemerWebApi)
                 {
                     //Stub deelnemer portal Api (As a Singleton -- read only access)
                     var stub = EnsureStub();
                     return stub as IService;
                     //Einde stub
                 }
-                else if (Properties.Settings.Default.StubDhvDocumentWebApi)
+                else if (Settings.Default.StubDhvDocumentWebApi)
                 {
                     //Stub deelnemer portal Api (As a Singleton -- read only access)
                     var stub = EnsureDocumentStub(context);
@@ -265,7 +265,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                 proxy = new DeelnemerPortalApiProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
                 LogExceptions(proxy, true);
 
-                if (Properties.Settings.Default.LogDeelnemerPortalApiCommunication)
+                if (Settings.Default.LogDeelnemerPortalApiCommunication)
                 {
                     LogResponse(proxy);
                 }
@@ -296,19 +296,12 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                 return new HttpContextFactory() as IService;
             }
 
-            if (type == typeof(Icatt.Logging.ILogger<ApplicationArea, LogMessage>))
-            {
-                var contextFactory = FactoryContainer.ProxyFactory.CreateProxy<IContextFactory>(context);
-                return new Icatt.Log4Net.Log4NetLogger<ApplicationArea, LogMessage>(contextFactory) as IService;
-            }
-
-            if (type == typeof(Icatt.Logging.DataAccess.ILoggingRepository))
+            if (type == typeof(ILoggingRepository))
             {
                 var x = new LoggingRepositoryFactory("AuditDatabase");
-               var loggingRepo = x.Create();
-                return loggingRepo as IService;               
+                var loggingRepo = x.Create();
+                return loggingRepo as IService;
             }
-
             if (type == typeof(IKeyVault))
             {
                 var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
@@ -514,7 +507,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             var area = ResolveArea<IService>();
 
         
-                proxy.OnPostInvoke += (s, e) => { Log(s, e, area, message); };
+                proxy.OnPostInvoke += (s, e) => { LogInfo(s, e, area, message); };
 
             
         }
@@ -544,59 +537,17 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 
         private void LogExceptionWithDataOnError<IService>(object sender, ProxyBase<IService, KlantPortaalContext>.ErrorEventArgs e, ApplicationArea area, LogMessage message) where IService : class
         {
-            LogExceptionOnError(sender, e, area);
-
-            var logger = CreateProxy<ILogger<ApplicationArea, LogMessage>>(null);
-
-            var c = 0;
-            var input = $"{{Input:{e.Input.Aggregate("", (s, obj) => s + "p" + ++c + $": '{Serialize(obj)}'")}}}";
-
-            logger.Log(area, LoggingLevel.Error, message, input);
-
+            Log.Error("Error in ApplicationArea {@ApplicationArea}", area, e.Input);
         }
 
-        private void Log<IService>(object sender, ProxyBase<IService, KlantPortaalContext>.PostInvokeArgs e, ApplicationArea area, LogMessage message) where IService : class
+        private void LogInfo<IService>(object sender, ProxyBase<IService, KlantPortaalContext>.PostInvokeArgs e, ApplicationArea area, LogMessage message) where IService : class
         {
-
-            try
-            {
-                var logger = CreateProxy<ILogger<ApplicationArea, LogMessage>>(null);
-
-                var c = 0;
-                var input = $"{{Input:{e.Input.Aggregate("", (s, obj) => s + "p" + ++c + $": '{Serialize(obj)}'")},output:{Serialize(e.Result)}}}";
-                logger.Log(area, LoggingLevel.Error, message, "{0}",input);
-            }
-            catch { }
-
-        }
-
-
-        private static string Serialize(object data)
-        {
-            try
-            {
-                using (var s = new StringWriter())
-                {
-                    using (var x = XmlWriter.Create(s))
-                    {
-                        var ser = new DataContractSerializer(data.GetType());
-                        ser.WriteObject(x, data);
-                    }
-                    return s.ToString();
-                }
-            }
-            catch
-            {
-                return data.GetType().FullName;
-            }
+            Log.Information(area.ToString(), e.Input);
         }
 
         private void LogExceptionOnError<IService>(object sender, ProxyBase<IService, KlantPortaalContext>.ErrorEventArgs e, ApplicationArea area) where IService : class
         {
-
-            var logger = CreateProxy<ILogger<ApplicationArea, LogMessage>>(null);
-            logger.LogException(area, e.Exception);
-     
+            Log.Error(e.Exception, "Error in ApplicationArea {@ApplicationArea}", area);
         }
 
     }
