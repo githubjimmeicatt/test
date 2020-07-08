@@ -247,14 +247,14 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 
             else if (type == typeof(IDeelnemerPortalApi))
             {
-                if (Properties.Settings.Default.StubDhvDeelnemerWebApi)
+                if (Settings.Default.StubDhvDeelnemerWebApi)
                 {
                     //Stub deelnemer portal Api (As a Singleton -- read only access)
                     var stub = EnsureStub();
                     return stub as IService;
                     //Einde stub
                 }
-                else if (Properties.Settings.Default.StubDhvDocumentWebApi)
+                else if (Settings.Default.StubDhvDocumentWebApi)
                 {
                     //Stub deelnemer portal Api (As a Singleton -- read only access)
                     var stub = EnsureDocumentStub(context);
@@ -265,7 +265,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                 proxy = new DeelnemerPortalApiProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
                 LogExceptions(proxy, true);
 
-                if (Properties.Settings.Default.LogDeelnemerPortalApiCommunication)
+                if (Settings.Default.LogDeelnemerPortalApiCommunication)
                 {
                     LogResponse(proxy);
                 }
@@ -295,13 +295,8 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             {
                 return new HttpContextFactory() as IService;
             }
-            //if (type == typeof(Icatt.Logging.ILogger<ApplicationArea, LogMessage>))
-            //{
-            //    var contextFactory = FactoryContainer.ProxyFactory.CreateProxy<IContextFactory>(context);
-            //    return new Icatt.Log4Net.Log4NetLogger<ApplicationArea, LogMessage>(contextFactory) as IService;
-            //}
 
-            if (type == typeof(Icatt.Logging.DataAccess.ILoggingRepository))
+            if (type == typeof(ILoggingRepository))
             {
                 var x = new LoggingRepositoryFactory("AuditDatabase");
                 var loggingRepo = x.Create();
