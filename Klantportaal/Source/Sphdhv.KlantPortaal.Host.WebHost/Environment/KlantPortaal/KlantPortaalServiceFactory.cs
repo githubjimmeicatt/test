@@ -5,8 +5,6 @@ using Icatt.Digid.Access.Client;
 using Icatt.Digid.Access.Contract;
 using Icatt.Digid.Access.Interface;
 using Icatt.Infrastructure;
-using Icatt.Log4Net;
-using Icatt.Logging;
 using Icatt.ServiceModel;
 using Sphdhv.KlantPortaal.Access.Pensioen.Interface;
 using Sphdhv.KlantPortaal.Common;
@@ -83,10 +81,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             if (type == typeof(IPensioenAccess))
             {
                 return new Access.Pensioen.Service.PensioenAccess<TContext>(context, FactoryContainer) as IService;
-            }
-            if (type == typeof(ILoggerFactory))
-            {
-                return new Log4NetLoggerFactory() as IService;
             }
             if (type == typeof(IContextFactory))
             {

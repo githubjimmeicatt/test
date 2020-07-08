@@ -61,11 +61,6 @@ namespace Sphdhv.Security.Environment
                 return new HttpContextFactory() as IContract;
             }
 
-            if (type == typeof(Icatt.Logging.ILogger<ApplicationArea, LogMessage>))
-            {
-                var contextFactory = FactoryContainer.ProxyFactory.CreateProxy<IContextFactory>(context);
-                return new Icatt.Log4Net.Log4NetLogger<ApplicationArea, LogMessage>(contextFactory) as IContract;
-            }
             #endregion
 
             throw new InvalidOperationException($"Proxy requested for unknown interface: '{type.FullName}'");
