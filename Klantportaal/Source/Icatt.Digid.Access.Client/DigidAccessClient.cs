@@ -47,7 +47,7 @@ namespace Icatt.Digid.Access.Client
             var issuer = _settings.CertificateIssuer;
 
             // Get certificate
-            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubject, time);
+            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
 
             //Create XML
             var artefactResolutionEngine = new ArtifactResolutionRequestBuilder();
@@ -175,10 +175,10 @@ namespace Icatt.Digid.Access.Client
 
             var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
 
-            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubject,time);
+            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName,time);
 
             if (clientCert == null)
-                throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with subject containing {_settings.CertificateSubject}.");
+                throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with subject containing {_settings.CertificateSubjectDistinguishedName}.");
 
             var authnRequestEngine = new AuthenticationRequestBuilder();
 
@@ -231,7 +231,7 @@ namespace Icatt.Digid.Access.Client
 
        
 
-        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string certSubjectName, ITimeMachine time)
+        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string subjectDistinguishedName, ITimeMachine time)
         {
 
             X509Certificate2 cert;
@@ -240,7 +240,7 @@ namespace Icatt.Digid.Access.Client
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
 
-                var find = store.Certificates.Find(X509FindType.FindBySubjectName, certSubjectName, true);
+                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
 
                 var certEnum = find.OfType<X509Certificate2>();
 

@@ -12,7 +12,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,9 +26,9 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("mijn.accept.pensioenfondshaskoningdhv.nl")]
-        public string DigidClientCertificateSubject {
+        public string DigidClientCertificateSubjectDistinguishedName {
             get {
-                return ((string)(this["DigidClientCertificateSubject"]));
+                return ((string)(this["DigidClientCertificateSubjectDistinguishedName"]));
             }
         }
         
@@ -206,7 +206,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("FDA96F574A9451D704D0EFAAA025A8352B2618B0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("67a674bd68a281d117648e1db4a19fcafae61972")]
         public string KeyVaultCertificateThumbprint {
             get {
                 return ((string)(this["KeyVaultCertificateThumbprint"]));
