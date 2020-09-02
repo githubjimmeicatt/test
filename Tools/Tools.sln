@@ -9,7 +9,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditLogReEncryptor", "ReEn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantportaalReEncryptor", "KlantportaalReEncryptor\KlantportaalReEncryptor.csproj", "{5F9A61DA-F892-4C9B-B5C4-9092ABD84697}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sphdhv.KlantPortaal.Data.Deelnemer", "..\Klantportaal\Source\Sphdhv.Klantportaal.Data.Deelnemer\Sphdhv.KlantPortaal.Data.Deelnemer.csproj", "{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sphdhv.Saml.Metadata.Console", "DigidMetadata\Sphdhv.Saml.Metadata.Console\Sphdhv.Saml.Metadata.Console.csproj", "{83BD7C06-888E-476D-9B50-FB31964A1D6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icatt.Security.Saml2", "DigidMetadata\Sphdhv.Saml\Icatt.Security.Saml2.csproj", "{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icatt.Security.Saml2Test", "DigidMetadata\Icatt.Security.Saml2Test\Icatt.Security.Saml2Test.csproj", "{B1521CA7-D61E-4687-A5D1-C7A33D927A64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{AB6C6821-C86C-404F-80E0-F5354890D33B}"
+	ProjectSection(SolutionItems) = preProject
+		External\Icatt.Data.Entity.dll = External\Icatt.Data.Entity.dll
+		External\Sphdhv.KlantPortaal.Data.Deelnemer.dll = External\Sphdhv.KlantPortaal.Data.Deelnemer.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +53,29 @@ Global
 		{5F9A61DA-F892-4C9B-B5C4-9092ABD84697}.Production|Any CPU.Build.0 = Release|Any CPU
 		{5F9A61DA-F892-4C9B-B5C4-9092ABD84697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F9A61DA-F892-4C9B-B5C4-9092ABD84697}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Accept|Any CPU.ActiveCfg = Accept|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Accept|Any CPU.Build.0 = Accept|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Production|Any CPU.ActiveCfg = Production|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Production|Any CPU.Build.0 = Production|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A727E5C0-FFD0-4A12-A0C6-7ACD2D1B44DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Accept|Any CPU.ActiveCfg = Accept|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Accept|Any CPU.Build.0 = Accept|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Production|Any CPU.ActiveCfg = Production|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Production|Any CPU.Build.0 = Production|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83BD7C06-888E-476D-9B50-FB31964A1D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Accept|Any CPU.ActiveCfg = Accept|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Accept|Any CPU.Build.0 = Accept|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Production|Any CPU.ActiveCfg = Production|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Production|Any CPU.Build.0 = Production|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4DF0C79-0C3D-42D1-8775-92A9ADF34E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Accept|Any CPU.ActiveCfg = Accept|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Accept|Any CPU.Build.0 = Accept|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Production|Any CPU.ActiveCfg = Production|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Production|Any CPU.Build.0 = Production|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1521CA7-D61E-4687-A5D1-C7A33D927A64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
