@@ -114,7 +114,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                         AssertionConsumerServiceEndPointIndex = (KlantportaalDigidAssertionEndpoint)Properties.Settings.Default.AssertionConsumerServiceIndex,
                         RequestAuthenticationEndpoint = Properties.Settings.Default.DigidRequestAuthenticationEndpoint,
                         CertificateIssuer = Properties.Settings.Default.DigidMedataIssuer,
-                        CertificateSubjectDistinguishedName = Properties.Settings.Default.DigidClientCertificateSubjectDistinguishedName,
+                        CertificateThumbprint = Properties.Settings.Default.DigidClientCertificateThumbprint,
                         ResolveArtifactEndpoint = Properties.Settings.Default.DigidResolveArtifactEndpoint,
                     };
 

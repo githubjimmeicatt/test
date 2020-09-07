@@ -25,15 +25,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mijn.accept.pensioenfondshaskoningdhv.nl")]
-        public string DigidClientCertificateSubjectDistinguishedName {
-            get {
-                return ((string)(this["DigidClientCertificateSubjectDistinguishedName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://mijn.accept.pensioenfondshaskoningdhv.nl/metadata.xml")]
         public string DigidMedataIssuer {
             get {
@@ -210,6 +201,15 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         public string KeyVaultCertificateThumbprint {
             get {
                 return ((string)(this["KeyVaultCertificateThumbprint"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("db6ebc6098355941e2b741fe54b647a32cca4c63")]
+        public string DigidClientCertificateThumbprint {
+            get {
+                return ((string)(this["DigidClientCertificateThumbprint"]));
             }
         }
     }

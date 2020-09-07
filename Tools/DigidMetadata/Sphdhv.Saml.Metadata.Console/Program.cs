@@ -13,15 +13,15 @@ namespace Sphdhv.Saml.Metadata.Console
         [STAThread]
         static void Main(string[] args)
         {
-            string certificateSubject;
+            string certificateThumbprint;
             MetadataConfiguration metadataConfiguration;
            // CreateProductionConfig(out certificateSubject, out metadataConfiguration);
-            CreateAcceptConfig(out certificateSubject, out metadataConfiguration);
-            GenerateMetadataFile(certificateSubject, metadataConfiguration);
+            CreateAcceptConfig(out certificateThumbprint, out metadataConfiguration);
+            GenerateMetadataFile(certificateThumbprint, metadataConfiguration);
 
         }
 
-        private static void CreateAcceptConfig(out string certificateSubject, out MetadataConfiguration metadataConfiguration)
+        private static void CreateAcceptConfig(out string certificateThumbprint, out MetadataConfiguration metadataConfiguration)
         {
             // input values;
             var metadataEntityId = "https://mijn.accept.pensioenfondshaskoningdhv.nl/metadata.xml"; // AR: Lijkt een unieke maar wel constante identifier te moeten zijn
@@ -32,7 +32,7 @@ namespace Sphdhv.Saml.Metadata.Console
             var assertionConsumerServiceEndpointAcceptMijnDhv = "https://mijn.accept.pensioenfondshaskoningdhv.nl/DesktopModules/Sphdhv/KlantPortaal/api/digid/VerifyToken";
 
             var certificateKeyName = "SSO Key"; // AR: Vermoed dat deze niet verplicht is;
-            certificateSubject = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, SERIALNUMBER=00000003623067230000, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, S=Utrecht, C=NL";
+            certificateThumbprint = "db6ebc6098355941e2b741fe54b647a32cca4c63";
             var id = "_1234567";
 
             // configuration objects
@@ -73,12 +73,12 @@ namespace Sphdhv.Saml.Metadata.Console
             };
         }
 
-        private static void GenerateMetadataFile(string certificateSubject, MetadataConfiguration metadataConfiguration)
+        private static void GenerateMetadataFile(string thumbprint, MetadataConfiguration metadataConfiguration)
         {
 
             // Get certificate from store
             var certificateStoreAccess = new CertificateStoreAccess();
-            var certificate = certificateStoreAccess.FindBySubjectDistinguishedName(StoreName.My, StoreLocation.LocalMachine, certificateSubject);
+            var certificate = certificateStoreAccess.FindCertificateByThumbprint(StoreName.My, StoreLocation.LocalMachine, thumbprint);
 
             // Get metadata xml
             var manager = new MetadataEngine();

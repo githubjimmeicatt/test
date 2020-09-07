@@ -12,7 +12,7 @@ namespace Icatt.Digid.Access.Contract
         [DataMember]
         public String CertificateIssuer { get; set; }
         [DataMember]
-        public string CertificateSubjectDistinguishedName { get; set; }
+        public string CertificateThumbprint { get; set; }
 
         [DataMember]
         public string RequestAuthenticationEndpoint { get; set; }
