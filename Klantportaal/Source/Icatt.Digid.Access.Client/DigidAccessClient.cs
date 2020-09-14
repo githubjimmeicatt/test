@@ -250,14 +250,16 @@ namespace Icatt.Digid.Access.Client
                 var certEnum = find.OfType<X509Certificate2>();
 
 
-                if(certEnum == null || certEnum.Count()  == 0)
+                try { var cer = certEnum.FirstOrDefault().PrivateKey; } catch(System.Security.Cryptography.CryptographicException e)
                 {
+                   
                     var acceptCertId = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
 
                     find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, acceptCertId, true);
 
-                      certEnum = find.OfType<X509Certificate2>();
+                    certEnum = find.OfType<X509Certificate2>();
                 }
+                       
 
 
                 //Kies het langst geldige certificaat dat nu geldig is.
