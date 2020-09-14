@@ -178,7 +178,7 @@ namespace Icatt.Digid.Access.Client
             var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateThumbprint,time);
 
             if (clientCert == null)
-                throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with subject containing {_settings.CertificateThumbprint}.");
+                throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with Thumbprint {_settings.CertificateThumbprint}.");
 
             var authnRequestEngine = new AuthenticationRequestBuilder();
 
