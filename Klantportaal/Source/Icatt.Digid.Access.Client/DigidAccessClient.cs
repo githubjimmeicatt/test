@@ -16,6 +16,7 @@ using Icatt.ServiceModel;
 using Icatt.Time;
 using System.IO;
 using System.Xml;
+using System.Globalization;
 
 namespace Icatt.Digid.Access.Client
 {
@@ -241,11 +242,23 @@ namespace Icatt.Digid.Access.Client
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
 
                 //  var find = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, true);
-      
 
-                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
+                var certId = "CN=mijn.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
+
+                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, certId, true);
 
                 var certEnum = find.OfType<X509Certificate2>();
+
+
+                if(certEnum == null || certEnum.Count()  == 0)
+                {
+                    var acceptCertId = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
+
+                    find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, acceptCertId, true);
+
+                      certEnum = find.OfType<X509Certificate2>();
+                }
+
 
                 //Kies het langst geldige certificaat dat nu geldig is.
                 cert = certEnum
