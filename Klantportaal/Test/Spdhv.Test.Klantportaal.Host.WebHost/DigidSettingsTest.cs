@@ -19,7 +19,7 @@ namespace Spdhv.Test.Klantportaal.Host.WebHost
             {
                 RequestAuthenticationEndpoint = "authentpoint",
                 CertificateIssuer = "certissuer",
-                CertificateThumbprint = "certsubject",
+                CertificateSubjectDistinguishedName = "certsubject",
                 ResolveArtifactEndpoint = "artifactendpoint",
                 AssertionConsumerServiceEndPointIndex = (KlantportaalDigidAssertionEndpoint)((byte) 5)
             };

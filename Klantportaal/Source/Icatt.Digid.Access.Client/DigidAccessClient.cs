@@ -47,7 +47,7 @@ namespace Icatt.Digid.Access.Client
             var issuer = _settings.CertificateIssuer;
 
             // Get certificate
-            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateThumbprint, time);
+            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
 
             //Create XML
             var artefactResolutionEngine = new ArtifactResolutionRequestBuilder();
@@ -175,10 +175,10 @@ namespace Icatt.Digid.Access.Client
 
             var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
 
-            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateThumbprint,time);
+            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
 
             if (clientCert == null)
-                throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with subject containing {_settings.CertificateThumbprint}.");
+                throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with SubjectDistinguishedName {_settings.CertificateSubjectDistinguishedName}.");
 
             var authnRequestEngine = new AuthenticationRequestBuilder();
 
@@ -231,7 +231,7 @@ namespace Icatt.Digid.Access.Client
 
        
 
-        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string thumbprint, ITimeMachine time)
+        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string subjectDistinguishedName, ITimeMachine time)
         {
 
             X509Certificate2 cert;
@@ -240,15 +240,18 @@ namespace Icatt.Digid.Access.Client
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
 
-                var find = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, true);
+                //  var find = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, true);
+      
+
+                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
 
                 var certEnum = find.OfType<X509Certificate2>();
 
                 //Kies het langst geldige certificaat dat nu geldig is.
                 cert = certEnum
-                    .Where(c => c.NotBefore < time.UtcNow && c.NotAfter > time.UtcNow)
-                    .OrderByDescending(c => c.NotAfter)
-                    .FirstOrDefault();
+                //    .Where(c => c.NotBefore < time.UtcNow && c.NotAfter > time.UtcNow)
+                     .OrderByDescending(c => c.NotAfter)
+                     .FirstOrDefault();
 
                 store.Close();
 

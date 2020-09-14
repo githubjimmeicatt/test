@@ -15,8 +15,8 @@ namespace Sphdhv.Saml.Metadata.Console
         {
             string certificateThumbprint;
             MetadataConfiguration metadataConfiguration;
-           // CreateProductionConfig(out certificateSubject, out metadataConfiguration);
-            CreateAcceptConfig(out certificateThumbprint, out metadataConfiguration);
+            CreateProductionConfig(out certificateThumbprint, out metadataConfiguration);
+           // CreateAcceptConfig(out certificateThumbprint, out metadataConfiguration);
             GenerateMetadataFile(certificateThumbprint, metadataConfiguration);
 
         }
@@ -58,7 +58,7 @@ namespace Sphdhv.Saml.Metadata.Console
             var assertionConsumerServiceEndpointProdMijnDhvRoot = "https://mijn.pensioenfondshaskoningdhv.nl/DesktopModules/Sphdhv/KlantPortaal/api/digid/VerifyToken";
 
             var certificateKeyName = "SSO Key"; // AR: Vermoed dat deze niet verplicht is;
-            certificateSubject = "CN=mijn.pensioenfondshaskoningdhv.nl, SERIALNUMBER=00000003623067230000, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, S=Utrecht, C=NL";
+            certificateSubject = "d0b0f307eef13df6b4e91b4f140c8608d9654522";
             var id = "_1234567";
 
             // configuration objects

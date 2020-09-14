@@ -207,9 +207,9 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("db6ebc6098355941e2b741fe54b647a32cca4c63")]
-        public string DigidClientCertificateThumbprint {
+        public string DigidCertificateSubjectDistinguishedName {
             get {
-                return ((string)(this["DigidClientCertificateThumbprint"]));
+                return ((string)(this["DigidCertificateSubjectDistinguishedName"]));
             }
         }
     }
