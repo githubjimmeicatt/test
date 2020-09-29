@@ -241,6 +241,9 @@ namespace Icatt.Digid.Access.Client
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
 
+
+                //het tophalen van het certificaat op basis van de waarde van een release variabele werkt om een of andere reden niet meer! tech dept.
+                //daarom voorlopig de subjects hard in de code. 
                 //  var find = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, true);
 
                 var certId = "CN=mijn.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
@@ -249,7 +252,8 @@ namespace Icatt.Digid.Access.Client
 
                 var certEnum = find.OfType<X509Certificate2>();
 
-
+                //als je niet bij het prod certificaat kan zit je blijkbaar op accept of dev.
+                //het prod certificaat vind je wel op accept (want zelfde server als live), maar je hebt er geen recht op. dat wordt getest door deze try catch
                 try { var cer = certEnum.FirstOrDefault().PrivateKey; } catch(System.Security.Cryptography.CryptographicException e)
                 {
                    
