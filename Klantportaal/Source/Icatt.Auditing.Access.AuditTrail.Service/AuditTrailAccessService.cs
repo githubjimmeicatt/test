@@ -81,9 +81,9 @@ namespace Icatt.Auditing.Access.AuditTrail.Service
             if (encryptData)
             {
 
-                var secret = Settings.Default.KeyVaultAuditSecrect;
+                var secret = Settings.Default.AuditKeyVaultAuditSecret;
 
-                var keyVault = FactoryContainer.ProxyFactory.CreateProxy<IKeyVault>(Context);
+                var keyVault = new KeyVault(Settings.Default.AuditKeyVaultCertificateThumbprint, Settings.Default.AuditKeyVaultClientId, Settings.Default.AuditKeyVaultTenantId, Settings.Default.AuditKeyVaultUrl);
 
                 byte[] key = keyVault.GetSecret(secret);
                 var cipherName = "Aes256With16ByteIvPrefix";

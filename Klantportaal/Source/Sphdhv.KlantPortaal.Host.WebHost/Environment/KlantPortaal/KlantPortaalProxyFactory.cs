@@ -304,12 +304,12 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             }
             if (type == typeof(IKeyVault))
             {
-                var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
+                var applicationId = Settings.Default.KeyVaultApplicationId; //client/application id van de app registration
+                var tenantId = Settings.Default.KeyVaultTenantId; //tenant id van de app registration
                 var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
+                string url = Settings.Default.KeyVaultUrl;
 
-                var certificate = FindCertificateByThumbprint(certificateThumbprint, StoreName.My, StoreLocation.LocalMachine);
-
-                return new KeyVault(certificate, applicationId) as IService;
+                return new KeyVault(certificateThumbprint, applicationId, tenantId, url) as IService;
             }
             #endregion
 

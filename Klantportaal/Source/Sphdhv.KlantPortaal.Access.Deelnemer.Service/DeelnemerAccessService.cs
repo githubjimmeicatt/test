@@ -10,6 +10,9 @@ using Sphdhv.KlantPortaal.Data.Deelnemer.DbContext;
 using Sphdhv.KlantPortaal.Data.Deelnemer.Entities;
 using Icatt.Azure.Access;
 using System.Collections.Generic;
+using Azure.Identity;
+using System.Security.Cryptography.X509Certificates;
+using Azure.Security.KeyVault.Keys;
 
 namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
 {
@@ -192,6 +195,13 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
             {
                 return crypto.ComputeHash(System.Text.Encoding.UTF8.GetBytes(Context.Bsn));
             }
+        }
+
+        private KeyVaultKey GetSecretKey(string tenantId, string clientId, X509Certificate2 certificate)
+        {
+            var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
+            var keyClient = new KeyClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+            return keyClient.GetKey("").Value;
         }
 
 

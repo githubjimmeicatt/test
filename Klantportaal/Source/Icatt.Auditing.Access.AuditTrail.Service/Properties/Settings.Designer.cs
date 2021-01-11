@@ -12,7 +12,7 @@ namespace Icatt.Auditing.Access.AuditTrail.Service.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,27 +26,45 @@ namespace Icatt.Auditing.Access.AuditTrail.Service.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultApplicationId {
+        public string AuditKeyVaultClientId {
             get {
-                return ((string)(this["KeyVaultApplicationId"]));
+                return ((string)(this["AuditKeyVaultClientId"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultCertificateThumbprint {
+        public string AuditKeyVaultCertificateThumbprint {
             get {
-                return ((string)(this["KeyVaultCertificateThumbprint"]));
+                return ((string)(this["AuditKeyVaultCertificateThumbprint"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultAuditSecrect {
+        public string AuditKeyVaultAuditSecret {
             get {
-                return ((string)(this["KeyVaultAuditSecrect"]));
+                return ((string)(this["AuditKeyVaultAuditSecret"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AuditKeyVaultTenantId {
+            get {
+                return ((string)(this["AuditKeyVaultTenantId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AuditKeyVaultUrl {
+            get {
+                return ((string)(this["AuditKeyVaultUrl"]));
             }
         }
     }
