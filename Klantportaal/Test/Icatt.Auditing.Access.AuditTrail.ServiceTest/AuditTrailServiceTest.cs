@@ -14,7 +14,6 @@ using Icatt.Logging.DataAccess;
 using Icatt.Logging.Entities;
 using Icatt.Azure.Access;
 
-
 namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
 {
     [TestClass]
@@ -74,7 +73,7 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
             Assert.AreEqual(EventType.ToString(), logEntryCalls[0].Message);
 
             //het versleutelde bericht
-            Assert.AreEqual("TQUKcuweOADh+qE3tk4vLqTAsQFBZVEERAzt4xVmrnc=", Convert.ToBase64String(logEntryCalls[0].DetailsEncrypted));
+            Assert.AreEqual("oawInqQAdEpQQVAyP5GjnvDpttWSO0HAm6GV02/gTcE=", Convert.ToBase64String(logEntryCalls[0].DetailsEncrypted));
         }
 
 
