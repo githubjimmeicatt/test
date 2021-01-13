@@ -8,7 +8,6 @@ using Moq;
 
 using System.Text;
 using Icatt.Security.Engine.Cryptographer.Interface;
-using Icatt.Security.Engine.Cryptographer.Proxy;
 using Icatt.Auditing.Access.AuditTrail.Service;
 using Icatt.Security.Engine.Cryptographer.Service;
 using Icatt.Logging.DataAccess;
@@ -45,7 +44,7 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
                 } },
                 { typeof(IKeyVault), (ctx) => {
                     var keyVaultMock = new Mock<IKeyVault>();
-                    keyVaultMock.Setup(s => s.GetSecret(It.IsAny<string>()))
+                    keyVaultMock.Setup(s => s.GetSecret(It.IsAny<string>(),It.IsAny<string>()))
                         .Returns(testKey)
                         .Callback((string r) => {
                         AuditEntryCalls.Add(r);

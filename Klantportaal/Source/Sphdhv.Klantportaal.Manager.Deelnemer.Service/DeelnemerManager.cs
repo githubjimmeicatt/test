@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
-using Icatt.Security;
 using Icatt.ServiceModel;
 using Sphdhv.Klantportaal.Manager.Deelnemer.Interface;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Contract;

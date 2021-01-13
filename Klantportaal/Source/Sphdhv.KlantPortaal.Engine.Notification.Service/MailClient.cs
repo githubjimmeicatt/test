@@ -1,6 +1,5 @@
 ﻿using Icatt;
 using System;
-using System.Collections.Generic;
 using System.Net.Mail;
 
 namespace Sphdhv.KlantPortaal.Engine.Notification.Service

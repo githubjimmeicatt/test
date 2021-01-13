@@ -8,7 +8,6 @@ using Sphdhv.KlantPortaal.Access.TerminatedSession.Proxy;
 using Sphdhv.KlantPortaal.Common;
 using Icatt.ServiceModel;
 using System.Diagnostics;
-using Sphdhv.KlantPortaal.Host.WebHost.Environment;
 using Icatt.Infrastructure;
 using Icatt.Web.Infrastructure;
 

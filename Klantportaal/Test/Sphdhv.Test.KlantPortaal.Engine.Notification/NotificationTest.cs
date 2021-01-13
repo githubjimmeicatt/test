@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Specialized;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Icatt.ServiceModel;
 using Sphdhv.KlantPortaal.Engine.Notification.Contract;
 using System.Net.Mail;
-using System.Web;
 using Icatt;
-using Icatt.Security;
 using Moq;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 

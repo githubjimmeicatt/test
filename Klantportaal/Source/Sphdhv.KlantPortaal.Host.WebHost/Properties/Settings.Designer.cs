@@ -97,15 +97,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/logoff")]
-        public string DnnLogoffPage {
-            get {
-                return ((string)(this["DnnLogoffPage"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Authentication/VerifyToken")]
         public string VerifyTokenPath {
             get {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Icatt.OAuth.Contract;
 using Icatt.ServiceModel;
 using Sphdhv.KlantPortaal.Engine.Claims.Interface;

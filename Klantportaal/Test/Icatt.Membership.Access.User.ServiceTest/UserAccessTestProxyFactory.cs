@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
- 
-using Sphdhv.KlantPortaal.Common;
-using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
+﻿using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 
 namespace Icatt.Membership.Access.User.ServiceTest
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using AutoMapper;
-using Sphdhv.KlantPortaal.Engine.Claims.Contract;
-using Sphdhv.KlantPortaal.Manager.Authentication.Contract;
+﻿using AutoMapper;
 
 namespace Sphdhv.KlantPortaal.Manager.Authentication.Service.Mapping
 {

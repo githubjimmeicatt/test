@@ -1,5 +1,4 @@
-﻿using Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost

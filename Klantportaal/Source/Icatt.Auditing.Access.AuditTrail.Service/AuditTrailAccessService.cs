@@ -1,12 +1,6 @@
 ﻿using Icatt.ServiceModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Icatt.Auditing.Access.AuditTrail.Interface;
 using Icatt.Logging.DataAccess;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Diagnostics;
@@ -15,7 +9,6 @@ using Icatt.Security.Engine.Cryptographer.Interface;
 
 using Icatt.Auditing.Access.AuditTrail.Service.Properties;
 using Icatt.Azure.Access;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Icatt.Auditing.Access.AuditTrail.Service
 {

@@ -16,11 +16,10 @@ using Icatt.ServiceModel;
 using Icatt.Time;
 using System.IO;
 using System.Xml;
-using System.Globalization;
 
 namespace Icatt.Digid.Access.Client
 {
-    
+
 
     public class DigidAccessClient<TContext> : ServiceBase<TContext>, IDigidAccess where TContext : class
     {

@@ -1,12 +1,6 @@
 ﻿using Icatt.Membership.Access.User.Contract;
 using Icatt.Membership.Access.User.Contract.Contract;
-using Icatt.Membership.Data.UserStore.DbContext;
 using Icatt.ServiceModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Icatt.Membership.Access.User.Proxy
 {

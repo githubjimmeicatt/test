@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Security;
@@ -14,8 +11,6 @@ using Sphdhv.KlantPortaal.Host.WebHost.Security.CsrfProtection.WebApi;
 using Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Security.Authentication;
-using Icatt.ServiceModel;
 using System;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers

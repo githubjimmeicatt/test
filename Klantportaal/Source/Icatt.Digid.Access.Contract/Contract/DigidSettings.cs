@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Icatt.Digid.Access.Contract
 {

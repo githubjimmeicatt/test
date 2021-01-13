@@ -1,11 +1,8 @@
 ﻿
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Interface;
-using Sphdhv.KlantPortaal.Host.WebHost.Environment;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using Sphdhv.KlantPortaal.Host.WebHost.Models;
 using Sphdhv.KlantPortaal.Host.WebHost.Properties;
-using Sphdhv.KlantPortaal.Host.WebHost.Security.CsrfProtection;
-using Sphdhv.KlantPortaal.Host.WebHost.Services;
 using Sphdhv.KlantPortaal.Manager.Session.Contract.Interface;
 using Sphdhv.Security.Environment;
 using Sphdhv.Security.Manager.Authentication.Interface;

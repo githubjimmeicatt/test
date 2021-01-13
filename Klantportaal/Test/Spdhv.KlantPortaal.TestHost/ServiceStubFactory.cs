@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Icatt.ServiceModel;
-using Sphdhv.KlantPortaal.Common;
-using Sphdhv.KlantPortaal.Host.WebHost;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 
 namespace Sphdhv.Test.KlantPortaal.Host

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Icatt.Auditing.Manager.AuditTrailWriter.Interface
+﻿namespace Icatt.Auditing.Manager.AuditTrailWriter.Interface
 {
     public interface IAuditTrailWriter
     {

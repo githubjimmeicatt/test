@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Interface;
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Service;
 using Sphdhv.KlantPortaal.Data.TerminatedSession.DbContext;

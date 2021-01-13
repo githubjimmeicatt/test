@@ -7,7 +7,6 @@ using Moq;
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Interface;
 using Sphdhv.KlantPortaal.Common;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
-using Sphdhv.KlantPortaal.Manager.Session.Contract.Interface;
 using Sphdhv.KlantPortaal.Manager.Session.Service;
 using Sphdhv.KlantPortaal.Access.TerminatedSession.Service;
 using Sphdhv.KlantPortaal.Data.TerminatedSession.DbContext;

@@ -6,15 +6,8 @@ using Sphdhv.KlantPortaal.Data.Deelnemer.DbContext;
 using System.Linq;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Service;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
-using Sphdhv.KlantPortaal.Common;
-using Icatt.Security.Engine.Cryptographer.Interface;
 using Moq;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using Icatt.Digid.Access.Contract;
-using Icatt.Security.Engine.Cryptographer.Service;
-using Sphdhv.DeelnemerPortalApi.ProxyStub;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Contract;
 using Icatt.Azure.Access;
 
@@ -64,7 +57,7 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.ServiceTest
             {
                 { typeof(IKeyVault), (ctx) => {
                     var mock = new Mock<IKeyVault>();
-                    mock.Setup(s => s.GetSecret(It.IsAny<string>()))
+                    mock.Setup(s => s.GetSecret(It.IsAny<string>(),It.IsAny<string>()))
                     .Returns(
                         new byte[48]
                     );

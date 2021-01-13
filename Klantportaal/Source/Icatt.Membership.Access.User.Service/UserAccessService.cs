@@ -1,7 +1,6 @@
 ﻿using Icatt.Membership.Access.User.Contract;
 using Icatt.Membership.Access.User.Contract.Contract;
 using Icatt.Membership.Access.User.Contract.Interface;
-using Icatt.Membership.Data.UserStore.DbContext;
 using Icatt.ServiceModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -10,13 +9,11 @@ using Microsoft.Owin.Security.DataProtection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Icatt.Membership.Access.User.Service
-{    
+{
     public class UserAccessService<TContext> : ServiceBase<TContext>, IUserAccess where TContext : class, IMembershipAccessContext
     {
         private  string dataProtoctorPurpose = "PasswordReset";

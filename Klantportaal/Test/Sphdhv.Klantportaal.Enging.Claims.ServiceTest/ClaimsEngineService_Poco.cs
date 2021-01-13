@@ -16,7 +16,6 @@ using Sphdhv.KlantPortaal.Access.AuthToken.Interface;
 using Sphdhv.KlantPortaal.Access.AuthToken.Contract;
 using Icatt.OAuth.Contract;
 using Icatt.Auditing.Manager.AuditTrailWriter.Interface;
-using Sphdhv.KlantPortaal.Engine.Notification.Contract;
 
 namespace Sphdhv.KlantPortaal.Enging.Claims.ServiceTest
 {
