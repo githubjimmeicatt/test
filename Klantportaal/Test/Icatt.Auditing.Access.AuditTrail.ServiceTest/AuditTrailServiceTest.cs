@@ -22,7 +22,6 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
         [TestMethod]
         public void UT_WriteEntry()
         {
-            Assert.Inconclusive();
             object data = new AuditData() { Msg = "sgdfgdgf" };
             Enum EventType = TestEventTypes.Login;
 
