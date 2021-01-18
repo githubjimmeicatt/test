@@ -1,16 +1,12 @@
 ﻿using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
-using Sphdhv.KlantPortaal.Common;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.IO;
 using OfficeOpenXml;
 using Sphdhv.UserExportTool.Icatt.Export.Engine.Excel.EpplusService;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Contract;
 using System.Reflection;
 
 namespace Sphdhv.UserExportTool

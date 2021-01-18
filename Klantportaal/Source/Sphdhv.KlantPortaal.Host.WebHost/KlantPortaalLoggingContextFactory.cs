@@ -1,7 +1,6 @@
 ﻿using System;
 using Icatt.Infrastructure;
 using Sphdhv.KlantPortaal.Common;
-using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost
 {

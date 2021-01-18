@@ -1,12 +1,7 @@
 ﻿using Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract;
-using Sphdhv.KlantPortaal.Common;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using Sphdhv.KlantPortaal.Host.WebHost.Models;
 using Sphdhv.KlantPortaal.Host.WebHost.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 

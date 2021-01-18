@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Icatt.ServiceModel;
 using Sphdhv.DeelnemerPortalApi.Interface;
 using Sphdhv.KlantPortaal.Access.Pensioen.Contract;
 using Sphdhv.KlantPortaal.Common;
 using System.Collections.Generic;
-using Sphdhv.DeelnemerPortalApi.Contract;
 using ArbeidVariabel = Sphdhv.KlantPortaal.Access.Pensioen.Contract.ArbeidVariabel;
 using ArbeidVast = Sphdhv.KlantPortaal.Access.Pensioen.Contract.ArbeidVast;
 using Huidigepartner = Sphdhv.KlantPortaal.Access.Pensioen.Contract.Huidigepartner;

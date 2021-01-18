@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Icatt.ServiceModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sphdhv.DeelnemerPortalApi.Interface;
 using Sphdhv.DeelnemerPortalApi.Proxy;

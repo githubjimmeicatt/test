@@ -10,7 +10,6 @@ using Sphdhv.DeelnemerPortalApi.Proxy;
 using Sphdhv.KlantPortaal.Access.Pensioen.Interface;
 using Sphdhv.KlantPortaal.Engine.Pensioen.Interface;
 using Sphdhv.KlantPortaal.Manager.MijnPensioen.Interface;
-using Sphdhv.DeelnemerPortalApi.ProxyStub;
 using Sphdhv.KlantPortaal.Manager.Authentication.Proxy;
 using Sphdhv.KlantPortaal.Engine.Claims.Interface;
 using Sphdhv.KlantPortaal.Engine.Claims.Proxy;
@@ -31,15 +30,11 @@ using System.Collections.Generic;
 using Icatt.Security.Engine.Cryptographer.Interface;
 using Icatt.Security.Engine.Cryptographer.Proxy;
 using Sphdhv.Klantportaal.Manager.Deelnemer.Interface;
-using Sphdhv.Klantportaal.Manager.Deelnemer.Service;
 using Sphdhv.Klantportaal.Manager.Deelnemer.Proxy;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Proxy;
 using Icatt.Infrastructure;
 using Icatt.Web.Infrastructure;
-using System.IO;
-using System.Xml;
-using System.Runtime.Serialization;
 using Sphdhv.KlantPortaal.Engine.Notification.Interface;
 using Icatt.Auditing.Manager.AuditTrailWriter.Interface;
 using Icatt.Auditing.Manager.AuditTrailWriter.Proxy;
@@ -47,13 +42,9 @@ using Icatt.Auditing.Access.AuditTrail.Interface;
 using Icatt.Auditing.Access.AuditTrail.Proxy;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Interface;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Proxy;
-using System.Threading.Tasks;
-using Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract;
 using Icatt.Azure.Access;
 using System.Security.Cryptography.X509Certificates;
 using Sphdhv.KlantPortaal.Host.WebHost.Properties;
-using Icatt.SecureToken.Manager.TokenProvider.Interface;
-using Icatt.SecureToken.Manager.TokenProvider.Proxy;
 using Serilog;
 using Icatt.Logging.DataAccess;
 
@@ -304,12 +295,12 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             }
             if (type == typeof(IKeyVault))
             {
-                var applicationId = Settings.Default.KeyVaultApplicationId; //applicatie id van de app registration
+                var applicationId = Settings.Default.KeyVaultApplicationId; //client/application id van de app registration
+                var tenantId = Settings.Default.KeyVaultTenantId; //tenant id van de app registration
                 var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
+                string url = Settings.Default.KeyVaultUrl;
 
-                var certificate = FindCertificateByThumbprint(certificateThumbprint, StoreName.My, StoreLocation.LocalMachine);
-
-                return new KeyVault(certificate, applicationId) as IService;
+                return new KeyVault(certificateThumbprint, applicationId, tenantId, url) as IService;
             }
             #endregion
 

@@ -3,8 +3,6 @@ using Icatt.OAuth.Contract;
 using Sphdhv.KlantPortaal.Manager.Authentication.Interface;
 using System.ServiceModel;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
-using System.Linq;
-using Sphdhv.KlantPortaal.Host.WebHost.Security;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Services
 {

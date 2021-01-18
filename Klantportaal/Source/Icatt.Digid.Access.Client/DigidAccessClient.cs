@@ -16,11 +16,10 @@ using Icatt.ServiceModel;
 using Icatt.Time;
 using System.IO;
 using System.Xml;
-using System.Globalization;
 
 namespace Icatt.Digid.Access.Client
 {
-    
+
 
     public class DigidAccessClient<TContext> : ServiceBase<TContext>, IDigidAccess where TContext : class
     {
@@ -254,7 +253,7 @@ namespace Icatt.Digid.Access.Client
 
                 //als je niet bij het prod certificaat kan zit je blijkbaar op accept of dev.
                 //het prod certificaat vind je wel op accept (want zelfde server als live), maar je hebt er geen recht op. dat wordt getest door deze try catch
-                try { var cer = certEnum.FirstOrDefault().PrivateKey; } catch(System.Security.Cryptography.CryptographicException e)
+                if (certEnum?.FirstOrDefault()?.PrivateKey == null)
                 {
                    
                     var acceptCertId = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";

@@ -1,12 +1,6 @@
 ﻿using Icatt.ServiceModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Icatt.Auditing.Access.AuditTrail.Interface;
 using Icatt.Logging.DataAccess;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Diagnostics;
@@ -15,7 +9,6 @@ using Icatt.Security.Engine.Cryptographer.Interface;
 
 using Icatt.Auditing.Access.AuditTrail.Service.Properties;
 using Icatt.Azure.Access;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Icatt.Auditing.Access.AuditTrail.Service
 {
@@ -81,9 +74,9 @@ namespace Icatt.Auditing.Access.AuditTrail.Service
             if (encryptData)
             {
 
-                var secret = Settings.Default.KeyVaultAuditSecrect;
+                var secret = Settings.Default.AuditKeyVaultAuditSecret;
 
-                var keyVault = FactoryContainer.ProxyFactory.CreateProxy<IKeyVault>(Context);
+                var keyVault = new KeyVault(Settings.Default.AuditKeyVaultCertificateThumbprint, Settings.Default.AuditKeyVaultClientId, Settings.Default.AuditKeyVaultTenantId, Settings.Default.AuditKeyVaultUrl);
 
                 byte[] key = keyVault.GetSecret(secret);
                 var cipherName = "Aes256With16ByteIvPrefix";

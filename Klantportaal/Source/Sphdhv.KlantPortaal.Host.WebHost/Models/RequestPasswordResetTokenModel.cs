@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Sphdhv.KlantPortaal.Host.WebHost.Models
+﻿namespace Sphdhv.KlantPortaal.Host.WebHost.Models
 {
     public class RequestPasswordResetTokenModel
     {

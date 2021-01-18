@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Icatt.OAuth.Contract;
+﻿using Icatt.OAuth.Contract;
 
 namespace Sphdhv.KlantPortaal.Engine.Claims.Contract
 {

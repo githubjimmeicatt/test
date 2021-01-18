@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract
+﻿namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract
 {
     public class Questionnaire
     {

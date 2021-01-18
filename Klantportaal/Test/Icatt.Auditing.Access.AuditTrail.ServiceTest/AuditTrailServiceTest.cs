@@ -8,13 +8,11 @@ using Moq;
 
 using System.Text;
 using Icatt.Security.Engine.Cryptographer.Interface;
-using Icatt.Security.Engine.Cryptographer.Proxy;
 using Icatt.Auditing.Access.AuditTrail.Service;
 using Icatt.Security.Engine.Cryptographer.Service;
 using Icatt.Logging.DataAccess;
 using Icatt.Logging.Entities;
 using Icatt.Azure.Access;
-
 
 namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
 {
@@ -24,6 +22,7 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
         [TestMethod]
         public void UT_WriteEntry()
         {
+            // deze test gebruikt het audit certificaat om de keyvault key op te halen, dit certificaat is op dobs1 en dobs2 geinstalleerd
             object data = new AuditData() { Msg = "sgdfgdgf" };
             Enum EventType = TestEventTypes.Login;
 
@@ -45,7 +44,7 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
                 } },
                 { typeof(IKeyVault), (ctx) => {
                     var keyVaultMock = new Mock<IKeyVault>();
-                    keyVaultMock.Setup(s => s.GetSecret(It.IsAny<string>()))
+                    keyVaultMock.Setup(s => s.GetSecret(It.IsAny<string>(),It.IsAny<string>()))
                         .Returns(testKey)
                         .Callback((string r) => {
                         AuditEntryCalls.Add(r);
@@ -75,7 +74,7 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
             Assert.AreEqual(EventType.ToString(), logEntryCalls[0].Message);
 
             //het versleutelde bericht
-            Assert.AreEqual("TQUKcuweOADh+qE3tk4vLqTAsQFBZVEERAzt4xVmrnc=", Convert.ToBase64String(logEntryCalls[0].DetailsEncrypted));
+            Assert.AreEqual("oawInqQAdEpQQVAyP5GjnvDpttWSO0HAm6GV02/gTcE=", Convert.ToBase64String(logEntryCalls[0].DetailsEncrypted));
         }
 
 

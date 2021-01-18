@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Sphdhv.KlantPortaal.Host.WebHost.Environment
+﻿namespace Sphdhv.KlantPortaal.Host.WebHost.Environment
 {
     public enum ApplicationArea
     {

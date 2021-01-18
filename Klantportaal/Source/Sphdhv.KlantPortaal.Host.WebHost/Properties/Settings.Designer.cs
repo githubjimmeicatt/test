@@ -12,7 +12,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -79,16 +79,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/DesktopModules/Sphdhv/KlantPortaal/api/Authentication/Ver" +
-            "ifyToken")]
-        public string DnnVerifyTokenEndpoint {
-            get {
-                return ((string)(this["DnnVerifyTokenEndpoint"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/")]
         public string DnnMijnOmgevingUrl {
             get {
@@ -102,15 +92,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         public string DnnPasswordResetConfirmationPage {
             get {
                 return ((string)(this["DnnPasswordResetConfirmationPage"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/logoff")]
-        public string DnnLogoffPage {
-            get {
-                return ((string)(this["DnnLogoffPage"]));
             }
         }
         
@@ -170,15 +151,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sphdhv.KlantPortaal.AuditKey.DEV")]
-        public string SksAuditKey {
-            get {
-                return ((string)(this["SksAuditKey"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool LogDeelnemerPortalApiCommunication {
             get {
@@ -210,6 +182,24 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         public string DigidCertificateSubjectDistinguishedName {
             get {
                 return ((string)(this["DigidCertificateSubjectDistinguishedName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2d653730-33a8-4ee4-8be6-65b9addac6df")]
+        public string KeyVaultTenantId {
+            get {
+                return ((string)(this["KeyVaultTenantId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvdeelnemerdev.vault.azure.net/")]
+        public string KeyVaultUrl {
+            get {
+                return ((string)(this["KeyVaultUrl"]));
             }
         }
     }

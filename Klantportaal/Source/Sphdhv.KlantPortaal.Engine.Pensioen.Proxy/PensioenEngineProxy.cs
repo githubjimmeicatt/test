@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Icatt.ServiceModel;
-using Sphdhv.KlantPortaal.Common;
 using Sphdhv.KlantPortaal.Engine.Pensioen.Contract;
 using Sphdhv.KlantPortaal.Engine.Pensioen.Interface;
 

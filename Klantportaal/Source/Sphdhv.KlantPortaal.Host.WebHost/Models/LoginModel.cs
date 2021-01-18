@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Icatt.OAuth.Contract;
+﻿using Icatt.OAuth.Contract;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Models
 {

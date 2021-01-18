@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Sphdhv.KlantPortaal.WebApi.MijnPensioen.Models

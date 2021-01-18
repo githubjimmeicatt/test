@@ -12,8 +12,8 @@ namespace Icatt.Auditing.Access.AuditTrail.Service.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -25,28 +25,46 @@ namespace Icatt.Auditing.Access.AuditTrail.Service.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultApplicationId {
+        [global::System.Configuration.DefaultSettingValueAttribute("81732dd5-256c-4b50-afa6-54d01e74838f")]
+        public string AuditKeyVaultClientId {
             get {
-                return ((string)(this["KeyVaultApplicationId"]));
+                return ((string)(this["AuditKeyVaultClientId"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultCertificateThumbprint {
+        [global::System.Configuration.DefaultSettingValueAttribute("430e933f3a11ca44eda086849c4781240a916fb0")]
+        public string AuditKeyVaultCertificateThumbprint {
             get {
-                return ((string)(this["KeyVaultCertificateThumbprint"]));
+                return ((string)(this["AuditKeyVaultCertificateThumbprint"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultAuditSecrect {
+        [global::System.Configuration.DefaultSettingValueAttribute("SphdhvKlantPortaalAuditKeyDEV")]
+        public string AuditKeyVaultAuditSecret {
             get {
-                return ((string)(this["KeyVaultAuditSecrect"]));
+                return ((string)(this["AuditKeyVaultAuditSecret"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2d653730-33a8-4ee4-8be6-65b9addac6df")]
+        public string AuditKeyVaultTenantId {
+            get {
+                return ((string)(this["AuditKeyVaultTenantId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvauditdev.vault.azure.net/")]
+        public string AuditKeyVaultUrl {
+            get {
+                return ((string)(this["AuditKeyVaultUrl"]));
             }
         }
     }

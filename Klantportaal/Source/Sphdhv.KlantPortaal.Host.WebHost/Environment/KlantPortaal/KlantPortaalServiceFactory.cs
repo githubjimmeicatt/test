@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Web.SessionState;
 using Icatt.Digid.Access.Client;
 using Icatt.Digid.Access.Contract;
 using Icatt.Digid.Access.Interface;
@@ -42,9 +41,6 @@ using Icatt.Auditing.Manager.AuditTrailWriter.Interface;
 using Icatt.Auditing.Manager.AuditTrailWriter.Service;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Interface;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Service;
-using Icatt.Azure.Access;
-using System.Security.Cryptography.X509Certificates;
-using Sphdhv.KlantPortaal.Host.WebHost.Properties;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
 {

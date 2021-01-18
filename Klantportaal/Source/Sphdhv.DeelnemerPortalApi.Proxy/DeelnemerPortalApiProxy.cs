@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Icatt.ServiceModel;
 using Sphdhv.DeelnemerPortalApi.Contract;
 using Sphdhv.DeelnemerPortalApi.Interface;
-using System;
 
 namespace Sphdhv.DeelnemerPortalApi.Proxy
 {

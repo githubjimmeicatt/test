@@ -12,7 +12,7 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,27 +26,27 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SksKeyNameDeelnemerData {
+        public string KeyVaultSecretOldVersion {
             get {
-                return ((string)(this["SksKeyNameDeelnemerData"]));
+                return ((string)(this["KeyVaultSecretOldVersion"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultSecrectOld {
+        public string KeyVaultSecretNewVersion {
             get {
-                return ((string)(this["KeyVaultSecrectOld"]));
+                return ((string)(this["KeyVaultSecretNewVersion"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KeyVaultSecrectNew {
+        public string KeyVaultSecretName {
             get {
-                return ((string)(this["KeyVaultSecrectNew"]));
+                return ((string)(this["KeyVaultSecretName"]));
             }
         }
     }

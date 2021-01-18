@@ -7,9 +7,11 @@ using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
 using Sphdhv.KlantPortaal.Common;
 using Icatt.Security.Engine.Cryptographer.Interface;
 using Sphdhv.KlantPortaal.Data.Deelnemer.DbContext;
-using Sphdhv.KlantPortaal.Data.Deelnemer.Entities;
 using Icatt.Azure.Access;
 using System.Collections.Generic;
+using Azure.Identity;
+using System.Security.Cryptography.X509Certificates;
+using Azure.Security.KeyVault.Keys;
 
 namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
 {
@@ -131,22 +133,23 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
         private string DecryptWithKeyVault(byte[] value)
         {
             var keyVault = FactoryContainer.ProxyFactory.CreateProxy<IKeyVault>(Context);
-
-            string result = DecryptWithKey(keyVault, value, Properties.Settings.Default.KeyVaultSecrectNew);
+            string keyVaultName = Properties.Settings.Default.KeyVaultSecretName;
+            string keyVaultNameVersion = Properties.Settings.Default.KeyVaultSecretNewVersion;
+            string result = DecryptWithKey(keyVault, value, keyVaultName, keyVaultNameVersion);
 
             if (string.IsNullOrWhiteSpace(result))
             {
                 //misschien was dit nog met de vorige sleutel versleuteld. probeer nog eens met die sleutel
-                result = DecryptWithKey(keyVault, value, Properties.Settings.Default.KeyVaultSecrectOld);
-
+                keyVaultNameVersion = Properties.Settings.Default.KeyVaultSecretOldVersion;
+                result = DecryptWithKey(keyVault, value, keyVaultName, keyVaultNameVersion);
             }
 
             return result;
         }
 
-        private string DecryptWithKey(IKeyVault keyVault, byte[] value, string secret)
+        private string DecryptWithKey(IKeyVault keyVault, byte[] value, string secretName, string secretVersion)
         {
-            byte[] key = keyVault.GetSecret(secret);
+            byte[] key = keyVault.GetSecret(secretName, secretVersion);
 
             var cipherName = "Aes256With16ByteIvPrefix";
 
@@ -158,7 +161,7 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
         {
             var keyVault = FactoryContainer.ProxyFactory.CreateProxy<IKeyVault>(Context);
 
-            var secret = Properties.Settings.Default.KeyVaultSecrectNew;
+            var secret = Properties.Settings.Default.KeyVaultSecretName;
             byte[] key = keyVault.GetSecret(secret);
 
             var cipherName = "Aes256With16ByteIvPrefix";
@@ -192,6 +195,13 @@ namespace Sphdhv.KlantPortaal.Access.Deelnemer.Service
             {
                 return crypto.ComputeHash(System.Text.Encoding.UTF8.GetBytes(Context.Bsn));
             }
+        }
+
+        private KeyVaultKey GetSecretKey(string tenantId, string clientId, X509Certificate2 certificate)
+        {
+            var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
+            var keyClient = new KeyClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+            return keyClient.GetKey("").Value;
         }
 
 

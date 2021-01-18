@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Icatt.ServiceModel;
 using Sphdhv.KlantPortaal.Access.Deelnemer.Contract;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
-using Sphdhv.KlantPortaal.Data.Deelnemer.Entities;
 
 namespace Sphdhv.KlantPortaal.Access.Deelnemer.Proxy
 {

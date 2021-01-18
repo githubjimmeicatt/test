@@ -2,7 +2,6 @@
 using Icatt.ServiceModel;
 using Sphdhv.KlantPortaal.Manager.AspNetIdentity.Contract;
 using Sphdhv.KlantPortaal.Common;
-using Sphdhv.KlantPortaal.Access.AuthToken.Contract;
 using Icatt.OAuth.Contract;
 using Icatt.Identity.Manager.AspNetIdentity.Contract.Contract;
 
