@@ -22,6 +22,7 @@ namespace Icatt.Auditing.Access.AuditTrail.ServiceTest
         [TestMethod]
         public void UT_WriteEntry()
         {
+            // deze test gebruikt het audit certificaat om de keyvault key op te halen, dit certificaat is op dobs1 en dobs2 geinstalleerd
             object data = new AuditData() { Msg = "sgdfgdgf" };
             Enum EventType = TestEventTypes.Login;
 
