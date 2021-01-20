@@ -16,6 +16,7 @@ using Icatt.ServiceModel;
 using Icatt.Time;
 using System.IO;
 using System.Xml;
+using Serilog;
 
 namespace Icatt.Digid.Access.Client
 {
@@ -40,14 +41,11 @@ namespace Icatt.Digid.Access.Client
 
         public async Task<VerifyTokenResponse> VerifyTokenAsync(string samlArtefact)
         {
-
-            var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
-
             var id = Guid.NewGuid().ToString("N"); // "_1234567"
             var issuer = _settings.CertificateIssuer;
 
             // Get certificate
-            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
+            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName);
 
             //Create XML
             var artefactResolutionEngine = new ArtifactResolutionRequestBuilder();
@@ -173,9 +171,7 @@ namespace Icatt.Digid.Access.Client
 
             var id = Guid.NewGuid().ToString("N"); // "_1234567"
 
-            var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
-
-            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
+            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName);
 
             if (clientCert == null)
                 throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with SubjectDistinguishedName {_settings.CertificateSubjectDistinguishedName}.");
@@ -228,53 +224,22 @@ namespace Icatt.Digid.Access.Client
         
 
         #region private helpers
-
-       
-
-        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string subjectDistinguishedName, ITimeMachine time)
+        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string subjectDistinguishedName)
         {
-
             X509Certificate2 cert;
-
             using (var store = new X509Store(storeName, storeLocation))
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
-
-
-                //het tophalen van het certificaat op basis van de waarde van een release variabele werkt om een of andere reden niet meer! tech dept.
-                //daarom voorlopig de subjects hard in de code. 
-                //  var find = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, true);
-
-                var certId = "CN=mijn.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
-
-                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, certId, true);
-
+                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
                 var certEnum = find.OfType<X509Certificate2>();
-
-                //als je niet bij het prod certificaat kan zit je blijkbaar op accept of dev.
-                //het prod certificaat vind je wel op accept (want zelfde server als live), maar je hebt er geen recht op. dat wordt getest door deze try catch
-                if (certEnum?.FirstOrDefault()?.PrivateKey == null)
-                {
-                   
-                    var acceptCertId = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
-
-                    find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, acceptCertId, true);
-
-                    certEnum = find.OfType<X509Certificate2>();
-                }
-                       
-
 
                 //Kies het langst geldige certificaat dat nu geldig is.
                 cert = certEnum
                 //    .Where(c => c.NotBefore < time.UtcNow && c.NotAfter > time.UtcNow)
                      .OrderByDescending(c => c.NotAfter)
                      .FirstOrDefault();
-
                 store.Close();
-
             }
-
             return cert;
         }
 
