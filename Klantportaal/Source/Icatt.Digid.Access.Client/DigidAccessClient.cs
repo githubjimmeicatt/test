@@ -41,14 +41,11 @@ namespace Icatt.Digid.Access.Client
 
         public async Task<VerifyTokenResponse> VerifyTokenAsync(string samlArtefact)
         {
-
-            var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
-
             var id = Guid.NewGuid().ToString("N"); // "_1234567"
             var issuer = _settings.CertificateIssuer;
 
             // Get certificate
-            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
+            var clientCert = GetX509Certificate(StoreName.My,StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName);
 
             //Create XML
             var artefactResolutionEngine = new ArtifactResolutionRequestBuilder();
@@ -174,9 +171,7 @@ namespace Icatt.Digid.Access.Client
 
             var id = Guid.NewGuid().ToString("N"); // "_1234567"
 
-            var time = FactoryContainer.ProxyFactory.CreateProxy<ITimeMachine>(Context);
-
-            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName, time);
+            var clientCert = GetX509Certificate(StoreName.My, StoreLocation.LocalMachine, _settings.CertificateSubjectDistinguishedName);
 
             if (clientCert == null)
                 throw new Exception($"No certificate found in store {StoreName.My} at storelocation {StoreLocation.LocalMachine} with SubjectDistinguishedName {_settings.CertificateSubjectDistinguishedName}.");
@@ -229,38 +224,22 @@ namespace Icatt.Digid.Access.Client
         
 
         #region private helpers
-
-       
-
-        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string subjectDistinguishedName, ITimeMachine time)
+        private static X509Certificate2 GetX509Certificate(StoreName storeName, StoreLocation storeLocation, string subjectDistinguishedName)
         {
-
             X509Certificate2 cert;
-
             using (var store = new X509Store(storeName, storeLocation))
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
-                var certTest = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
                 var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
-                Log.Logger.Warning($"StoreName = {storeName} | StoreLocation = {storeLocation} | subjectDistinguishedName = {subjectDistinguishedName}");
-                Log.Logger.Warning($"certTest = {certTest} | ==: {certTest == subjectDistinguishedName}");
-                Log.Logger.Warning($"certTest = {certTest} | Equals: {certTest.Equals(subjectDistinguishedName)}");
-                Log.Logger.Warning($"number of certs found = {find.Count}");
-
                 var certEnum = find.OfType<X509Certificate2>();
-                Log.Logger.Warning($"number of X509cert2s found = {certEnum.Count()}");
 
                 //Kies het langst geldige certificaat dat nu geldig is.
                 cert = certEnum
                 //    .Where(c => c.NotBefore < time.UtcNow && c.NotAfter > time.UtcNow)
                      .OrderByDescending(c => c.NotAfter)
                      .FirstOrDefault();
-                Log.Logger.Warning($"longest valid certificate is = {cert.Subject}");
-
                 store.Close();
-
             }
-
             return cert;
         }
 
