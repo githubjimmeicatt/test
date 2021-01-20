@@ -240,9 +240,11 @@ namespace Icatt.Digid.Access.Client
             using (var store = new X509Store(storeName, storeLocation))
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
-
+                var certTest = "CN=mijn.accept.pensioenfondshaskoningdhv.nl, O=Stichting Pensioenfonds HaskoningDHV, L=Amersfoort, C=NL";
                 var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
-                Log.Logger.Warning($"subjectDistinguishedName = {subjectDistinguishedName}");
+                Log.Logger.Warning($"StoreName = {storeName} | StoreLocation = {storeLocation} | subjectDistinguishedName = {subjectDistinguishedName}");
+                Log.Logger.Warning($"certTest = {certTest} | ==: {certTest == subjectDistinguishedName}");
+                Log.Logger.Warning($"certTest = {certTest} | Equals: {certTest.Equals(subjectDistinguishedName)}");
                 Log.Logger.Warning($"number of certs found = {find.Count}");
 
                 var certEnum = find.OfType<X509Certificate2>();
