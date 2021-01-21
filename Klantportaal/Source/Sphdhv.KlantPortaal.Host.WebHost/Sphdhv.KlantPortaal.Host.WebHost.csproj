@@ -394,6 +394,7 @@
     <Content Include="StaticFiles\Client\View\mijnpensioen-tabcontrollerview.html" />
     <Content Include="StaticFiles\Client\View\mijnpensioen-contentview.html" />
     <Content Include="Global.asax" />
+    <Content Include="vue.config.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -606,6 +607,8 @@
     <Content Include="Web.Accept.config" />
     <Content Include="Web.Live.config" />
     <None Include="SecurityCodeScan.config.yml_" />
+    <Content Include="Views\Shared\_layout.cshtml" />
+    <Content Include="Views\HomePage\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -922,4 +925,13 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <SpaRoot>client-app\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
 </Project>
