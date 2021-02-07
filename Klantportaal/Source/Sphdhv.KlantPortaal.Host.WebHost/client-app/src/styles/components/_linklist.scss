@@ -1,0 +1,33 @@
+
+.link-list {
+    @extend .reset-list;
+    color: $clr-primary;
+    font-size: $font-medium;
+    margin: 0 0 $dist-large 0;
+
+    li:not(:last-of-type) {
+        margin-bottom: $dist-small;
+    }
+    
+    .SvgIcon svg {
+        fill: $clr-primary;
+        vertical-align: middle;
+        margin-right: $dist-small;
+        width: 14px;
+        height: 14px;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: $clr-primary-dark;
+
+            .SvgIcon svg {
+                fill: $clr-primary-dark;
+            }
+        }
+    }
+}

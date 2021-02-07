@@ -1,0 +1,72 @@
+// Masthead
+
+.Masthead {
+    color: $clr-front;
+
+    .SvgIcon svg {
+        fill: $clr-front;
+        vertical-align: middle;
+        margin-right: $dist-small;
+    }
+
+    a {
+        font-size: $font-small;
+        color: inherit;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: $clr-primary-light;
+
+            .SvgIcon svg {
+                fill: $clr-primary-light;
+            }
+        }
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+// Masthead top
+
+.Masthead--top {
+    background-color: $clr-primary-dark;
+
+    a {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        line-height: 48px;
+    }
+}
+
+// Masthead main
+
+.Masthead--main {
+    background-color: $clr-primary;
+
+    .logo-small,
+    .logo-large {
+        margin: $dist-large 0;
+        height: 54px;
+        width: auto;
+    }
+
+    .logo-small {
+        display: none;
+    }
+
+    @media(max-width: $media-tablet-portrait) {
+        .logo-large {
+            display: none;
+        }
+
+        .logo-small {
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+// Footer
+
+.Footer {
+    background-color: $clr-primary;
+    color: #FFF;
+    padding: $dist-largest 0;
+    font-size: $font-small;
+    
+    .SvgIcon {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        svg {
+            fill: $clr-front;
+            vertical-align: middle;
+            margin-right: $dist-small;
+        }
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: $clr-primary-light;
+
+            .SvgIcon svg {
+                fill: $clr-primary-light;
+            }
+        }
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        li {
+            list-style: inherit;
+            position: relative;
+            padding-left: $dist-large;
+        }
+    }
+
+    @media(max-width: $media-tablet-portrait) {
+        ul {
+            flex-direction: column;
+
+            li:not(:last-of-type) {
+                margin-bottom: $dist-medium;
+            }
+        }
+    }
+}
