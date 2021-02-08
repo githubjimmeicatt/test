@@ -6,33 +6,98 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: undefined
+    user: null,
+    pension: null,
+    documents: null,
+    loadingStatus: 0
   },
   getters: {
-    isLoggedIn: (state, getters) => {
-      const { user } = state;
-      return user ? true : false;
+    isLoading: (state) => {
+      return state.loadingStatus > 0;
+    },
+    isAuthenticated: (state) => {
+      return !!state.user;
     }
   },
   mutations: {
-    fetchAccount: (state) => {
-      const { user } = state;
-      if (user) return false;
-
-      // const csrfToken = Vue.$cookies.get('CSRF_COOKIE');
-      // if (!csrfToken) return false;
-
-      const url = `/api/MijnPensioen/Profiel`;
-      axios.get(url).then((resp) => {
-        console.log(resp);
-      });
-
-      return true;
+    setUnauthorized: (state, user) => {
+      state.user = null;
+      state.pension = null;
+      Vue.$cookies.set('KP_CSRF_CLIENT', '');
+    },
+    setUser: (state, user) => {
+      state.user = user;
+    },
+    setPension: (state, pension) => {
+      state.pension = pension;
+    },
+    setDocuments: (state, documents) => {
+      state.documents = documents;
+    },
+    incrementLoading: (state, change) => {
+      state.loadingStatus += change;
     }
   },
   actions: {
-    authorize ({commit}) {
-      commit('fetchAccount');
+    fetchPension: async ({commit}) => {
+      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      if (!csrfToken)
+        return false;
+        
+      commit('incrementLoading', 1);
+      const url = `/api/MijnPensioen/ActueelPensioen?csrf=${csrfToken}`;
+      return axios.get(url).then((resp) => {
+        commit('incrementLoading', -1);
+        const { data } = resp;
+        switch (data.StatusCode) {
+          case 401:
+            commit('setUnauthorized');
+            return false;
+          case 200:
+            commit('setPension', data.Response);
+            return data.Response;
+        }
+      });
+    },
+    fetchUser: async ({commit}) => {
+      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      if (!csrfToken)
+        return false;
+
+      commit('incrementLoading', 1);
+      const url = `/api/MijnPensioen/Profiel?csrf=${csrfToken}`;
+      return axios.get(url).then((resp) => {
+        commit('incrementLoading', -1);
+        const { data } = resp;
+        switch (data.StatusCode) {
+          case 401:
+            commit('setUnauthorized');
+            return false;
+          case 200: 
+            commit('setUser', data.Response);
+            return data.Response;
+        }
+      });
+    },
+    fetchDocuments: async ({commit}) => {
+      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      if (!csrfToken)
+        return false;
+
+      commit('incrementLoading', 1);
+      const url = `/api/Correspondentie/CorrespondentieOverzicht?csrf=${csrfToken}`;
+      return axios.get(url).then((resp) => {
+        commit('incrementLoading', -1);
+        const { data } = resp;
+        switch (data.StatusCode) {
+          case 401:
+            commit('setUnauthorized');
+            return false;
+          case 200: 
+            commit('setDocuments', data.Response);
+            return data.Response;
+        }
+      });
     }
   },
   modules: {

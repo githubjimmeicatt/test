@@ -1,5 +1,10 @@
 <template>
-  <div id="app">
+  <div
+    :class="{
+      'Spinner': true,
+      'Spinner--active': $store.state.loadingStatus > 0
+    }"
+    id="app">
     <Masthead/>
     <router-view/>
     <Footer/>
@@ -11,11 +16,7 @@ import Masthead from '@/components/Masthead'
 import Footer from '@/components/Footer'
 
 export default {
-  components: { Masthead, Footer },
-  mounted() {
-    const { $store } = this;
-    $store.dispatch('authorize');
-  }
+  components: { Masthead, Footer }
 }
 </script>
 

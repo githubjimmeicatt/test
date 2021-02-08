@@ -70,3 +70,52 @@
         }
     }
 }
+
+// Masthead bottom
+
+.Masthead--bottom {
+    background-color: $clr-special;
+    color: $clr-primary;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: block;
+
+        li {
+            list-style: inherit;
+            display: inline-block;
+
+            a {
+                display: block;
+                font-size: $font-medium;
+                text-align: center;
+                padding: $dist-medium $dist-large;
+                border-bottom: 3px solid transparent;
+                transition: border-color .2s;
+
+                &:hover,
+                &:focus {
+                    color: $clr-primary-dark;
+            
+                    .SvgIcon svg {
+                        fill: $clr-primary-dark;
+                    }
+                }
+
+                &.router-link-exact-active {
+                    border-bottom-color: $clr-primary;
+                }
+            }
+        }
+    }
+
+    .SvgIcon svg {
+        fill: $clr-primary;
+        display: block;
+        height: 42px;
+        width: 42px;
+        margin: 0 auto;
+    }
+}

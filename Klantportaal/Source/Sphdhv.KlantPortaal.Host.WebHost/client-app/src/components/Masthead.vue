@@ -14,13 +14,37 @@
                     <img alt="" class="logo-large" src="../assets/logo-large.svg"/>
                     <img alt="" class="logo-small" src="../assets/logo-small.svg"/>
                 </div>
-                <div v-if="$store.getters.isLoggedIn">
+                <div v-if="$store.getters.isAuthenticated">
                     <a href="/authentication/logoff">
                         <SvgIcon icon="exit"/>
                         Uitloggen
                     </a>
                 </div>
             </div>
+        </div>
+        <div v-if="$store.getters.isAuthenticated" class="Masthead--bottom">
+            <nav class="container">
+                <ul>
+                    <li>
+                        <router-link :to="{name: 'Profiel'}">
+                            <SvgIcon icon="user"/>
+                            Profiel
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'Pensioen'}">
+                            <SvgIcon icon="piggy-bank"/>
+                            Pensioen
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'Documenten'}">
+                            <SvgIcon icon="document"/>
+                            Documenten
+                        </router-link>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </header>
 </template>

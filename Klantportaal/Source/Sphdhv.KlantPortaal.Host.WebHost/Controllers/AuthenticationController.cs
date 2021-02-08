@@ -103,7 +103,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
                 Response.Cookies.Add(CreateAuthenticationCookie(bsnClaim?.Value, dossierClaim?.Value, csrfClaim?.Value, false));
                 Response.Cookies.Add(CreateCookie("CSRF_COOKIE", csrfClaim?.Value));
                 Response.Cookies.Add(CreateCookie("KP_CSRF_CLIENT", csrfClaim?.Value, false));
-                return new RedirectResult("/#start");
+                return new RedirectResult("/");
             }
         }
 
