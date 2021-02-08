@@ -1,5 +1,5 @@
 <template>
-    <span class="SvgIcon">
+    <span class="SvgIcon" v-html="svg">
     </span>
 </template>
 
@@ -11,6 +11,11 @@ export default {
         icon: {
             required: true,
             type: String
+        }
+    },
+    data: () => {
+        return {
+            svg: ''
         }
     },
     computed: {
@@ -30,7 +35,7 @@ export default {
             }
         }
         if (cache.has(src)) {
-            this.$el.innerHTML = await cache.get(src);
+            this.svg = await cache.get(src);
         }
     }
 }
