@@ -13,9 +13,6 @@
 </head>
 <body>
     <div>
-
-
-
         @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = @Model.Destination }))
         {
             foreach (var pair in Model.Parameters)
@@ -23,12 +20,7 @@
                 @Html.Hidden(pair.Name, pair.Value)
             }
         }
-
-
-        <script type="text/javascript">
-            document.forms[0].submit();
-        </script>
-
+        <script src="~/cdn/js/auth.js"></script>
     </div>
 </body>
 </html>
