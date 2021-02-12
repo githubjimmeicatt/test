@@ -9,7 +9,9 @@ export default new Vuex.Store({
     user: null,
     pension: null,
     documents: null,
-    loadingStatus: 0
+    loadingStatus: 0,
+    aanvullingVragen: null,
+    aanvullingenGecontroleerd: false
   },
   getters: {
     isLoading: (state) => {
@@ -36,7 +38,13 @@ export default new Vuex.Store({
     },
     incrementLoading: (state, change) => {
       state.loadingStatus += change;
-    }
+    },
+    setAanvullingVragen: (state, aanvullen) => {
+      state.aanvullingVragen = aanvullen
+    },
+    setAanvullingenGecontroleerd: (state) => {
+      state.aanvullingenGecontroleerd = true
+    },
   },
   actions: {
     fetchPension: async ({commit}) => {
@@ -98,7 +106,55 @@ export default new Vuex.Store({
             return data.Response;
         }
       });
-    }
+    },
+    fetchAanvullingVragen: async ({commit}) => {
+      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      if (!csrfToken)
+        return false;
+
+      commit('incrementLoading', 1);
+      const url = `/api/Deelnemer/VraagAanvulling?csrf=${csrfToken}`;
+      return axios.get(url).then((resp) => {
+        commit('incrementLoading', -1);
+        const { data } = resp;
+        switch (data.StatusCode) {
+          case 401:
+            commit('setUnauthorized');
+            return false;
+          case 200: 
+            commit('setAanvullingVragen', data.Response);
+            commit('setAanvullingenGecontroleerd');
+            return data.Response;
+        }
+      });
+    },
+    OpslaanAanvulling: async ({commit}, email) => {
+
+      console.log('OpslaanAanvulling 2a')
+
+      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      if (!csrfToken)
+        return false;
+
+      commit('incrementLoading', 1);
+      const url = `/api/Deelnemer/OpslaanAanvulling?email=${email}&csrf=${csrfToken}`;
+      return axios.get(url).then((resp) => {
+        commit('incrementLoading', -1);
+        const { data } = resp;
+        switch (data.StatusCode) {
+          case 401:
+            commit('setUnauthorized');
+            console.log('OpslaanAanvulling 2b')
+            return false;
+          case 200: 
+            commit('setAanvullingVragen', false);
+            commit('setAanvullingenGecontroleerd');
+            console.log('OpslaanAanvulling 2c')
+            return data.Response;
+        }
+      });
+    },
+    
   },
   modules: {
   }

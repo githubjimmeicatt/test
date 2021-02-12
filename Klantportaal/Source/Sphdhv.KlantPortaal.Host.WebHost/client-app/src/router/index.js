@@ -6,6 +6,7 @@ import Profiel from '../views/Profiel.vue';
 import Pensioen from '../views/Pensioen.vue';
 import Documenten from '../views/Documenten.vue';
 import Login from '../views/Login.vue';
+import Email from '../views/Email.vue';
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,14 @@ const routes = [
       requiresAuth: false
     }
   },
+  {
+    path: '/email',
+    name: 'Email',
+    component: Email,
+    meta: {
+      requiresAuth: true
+    }
+  },
 ]
 
 const router = new VueRouter({
@@ -53,15 +62,24 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   let isLoggedIn = !!$store.state.user;
   isLoggedIn = isLoggedIn || await $store.dispatch('fetchUser');
-
+  
   const { requiresAuth } = to?.meta || {};
-  if (requiresAuth === false && isLoggedIn) {
+
+  if(isLoggedIn && !$store.state.aanvullingenGecontroleerd  ){
+    await $store.dispatch('fetchAanvullingVragen')
+  }
+
+  if(isLoggedIn && requiresAuth &&  $store.state.aanvullingenGecontroleerd && $store.state.aanvullingVragen && to.name  !== "Email"){  
+    next({name: 'Email'})
+  } else if (requiresAuth === false && isLoggedIn) {
     next({path: '/'})
   } else if (requiresAuth === true && !isLoggedIn) {
     next({name: 'Login'})
   } else {
     next();
   }
+
+
 });
 
 export default router
