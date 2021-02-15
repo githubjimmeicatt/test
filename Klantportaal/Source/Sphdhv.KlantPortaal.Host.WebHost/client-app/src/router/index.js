@@ -7,6 +7,7 @@ import Pensioen from '../views/Pensioen.vue';
 import Documenten from '../views/Documenten.vue';
 import Login from '../views/Login.vue';
 import Email from '../views/Email.vue';
+import Emailverificatie from '../views/Emailverificatie.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,14 @@ const routes = [
     path: '/email',
     name: 'Email',
     component: Email,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/emailverificatie/:id',
+    name: 'Emailverificatie',
+    component: Emailverificatie,
     meta: {
       requiresAuth: true
     }

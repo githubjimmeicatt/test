@@ -47,11 +47,11 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    fetchPension: async ({commit}) => {
+    fetchPension: async ({ commit }) => {
       const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
-        
+
       commit('incrementLoading', 1);
       const url = `/api/MijnPensioen/ActueelPensioen?csrf=${csrfToken}`;
       return axios.get(url).then((resp) => {
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         }
       });
     },
-    fetchUser: async ({commit}) => {
+    fetchUser: async ({ commit }) => {
       const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
@@ -81,13 +81,13 @@ export default new Vuex.Store({
           case 401:
             commit('setUnauthorized');
             return false;
-          case 200: 
+          case 200:
             commit('setUser', data.Response);
             return data.Response;
         }
       });
     },
-    fetchDocuments: async ({commit}) => {
+    fetchDocuments: async ({ commit }) => {
       const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
@@ -101,13 +101,13 @@ export default new Vuex.Store({
           case 401:
             commit('setUnauthorized');
             return false;
-          case 200: 
+          case 200:
             commit('setDocuments', data.Response);
             return data.Response;
         }
       });
     },
-    fetchAanvullingVragen: async ({commit}) => {
+    fetchAanvullingVragen: async ({ commit }) => {
       const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
@@ -121,22 +121,19 @@ export default new Vuex.Store({
           case 401:
             commit('setUnauthorized');
             return false;
-          case 200: 
+          case 200:
             commit('setAanvullingVragen', data.Response);
             commit('setAanvullingenGecontroleerd');
             return data.Response;
         }
       });
     },
-    OpslaanAanvulling: async ({commit}, email) => {
-
-      console.log('OpslaanAanvulling 2a')
+    OpslaanAanvulling: async ({ commit }, email) => {
 
       const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
 
-      commit('incrementLoading', 1);
       const url = `/api/Deelnemer/OpslaanAanvulling?email=${email}&csrf=${csrfToken}`;
       return axios.get(url).then((resp) => {
         commit('incrementLoading', -1);
@@ -144,17 +141,24 @@ export default new Vuex.Store({
         switch (data.StatusCode) {
           case 401:
             commit('setUnauthorized');
-            console.log('OpslaanAanvulling 2b')
             return false;
-          case 200: 
+          case 200:
             commit('setAanvullingVragen', false);
             commit('setAanvullingenGecontroleerd');
-            console.log('OpslaanAanvulling 2c')
             return data.Response;
         }
       });
     },
-    
+    VerifyEmail: async ({},id) => {
+      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      if (!csrfToken)
+        return false;
+
+
+      const url = `/api/Deelnemer/VerifyEmail?guid=${id}&csrf=${csrfToken}`;
+      return axios.get(url)
+    }
+
   },
   modules: {
   }
