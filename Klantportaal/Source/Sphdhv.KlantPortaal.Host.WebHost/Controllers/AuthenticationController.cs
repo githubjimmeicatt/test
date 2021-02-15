@@ -77,13 +77,13 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             {
                 //Goto login page
                 var statusMessage = response.Status.ToString();
-                return new RedirectResult($"/?statuscode={HttpUtility.UrlEncode(statusMessage)}#login");              
+                return new RedirectResult($"/login?statuscode={HttpUtility.UrlEncode(statusMessage)}");              
             }
 
 
             if (response.Status != Manager.Authentication.Contract.StatusCode.Success)
             {
-                return new RedirectResult($"/#login");               
+                return new RedirectResult($"/login");               
             }
             else
             {

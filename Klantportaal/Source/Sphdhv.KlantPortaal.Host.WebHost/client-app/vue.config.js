@@ -1,8 +1,5 @@
 ﻿module.exports = {
       outputDir: 'dist',
-      configureWebpack: {
-        devtool: 'source-map'
-    },
       chainWebpack: config => {
             config.module
                 .rule('images')
