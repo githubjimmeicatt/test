@@ -8,6 +8,7 @@ import Documenten from '../views/Documenten.vue';
 import Login from '../views/Login.vue';
 import Email from '../views/Email.vue';
 import Emailverificatie from '../views/Emailverificatie.vue'
+import PageNotFound from '../views/PageNotFound.vue';
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,14 @@ const routes = [
       requiresAuth: true
     }
   },
+  {
+    path: '*',
+    name: 'PageNotFound',
+    component: PageNotFound,
+    meta: {
+      requiresAuth: false
+    }
+  },
 ]
 
 const router = new VueRouter({
@@ -69,25 +78,23 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+
   let isLoggedIn = !!$store.state.user;
   isLoggedIn = isLoggedIn || await $store.dispatch('fetchUser');
-  
+
   const { requiresAuth } = to?.meta || {};
 
-  if(isLoggedIn && !$store.state.aanvullingenGecontroleerd  ){
+  if (isLoggedIn && !$store.state.aanvullingenGecontroleerd) {
     await $store.dispatch('fetchAanvullingVragen')
   }
 
-  if(isLoggedIn && requiresAuth &&  $store.state.aanvullingenGecontroleerd && $store.state.aanvullingVragen && to.name  !== "Email"){  
-    next({name: 'Email'})
-  } else if (requiresAuth === false && isLoggedIn) {
-    next({path: '/'})
+  if (isLoggedIn && requiresAuth && $store.state.aanvullingenGecontroleerd && $store.state.aanvullingVragen && to.name !== "Email") {
+    next({ name: 'Email' })
   } else if (requiresAuth === true && !isLoggedIn) {
-    next({name: 'Login'})
+    next({ name: 'Login' })
   } else {
     next();
   }
-
 
 });
 

@@ -64,6 +64,9 @@ export default new Vuex.Store({
           case 200:
             commit('setPension', data.Response);
             return data.Response;
+          default:
+            window.location.href = "/500.html";
+            return false;
         }
       });
     },
@@ -84,6 +87,9 @@ export default new Vuex.Store({
           case 200:
             commit('setUser', data.Response);
             return data.Response;
+          default:
+            window.location.href = "/500.html";
+            return false;
         }
       });
     },
@@ -104,6 +110,9 @@ export default new Vuex.Store({
           case 200:
             commit('setDocuments', data.Response);
             return data.Response;
+          default:
+            window.location.href = "/500.html";
+            return false;
         }
       });
     },
@@ -125,6 +134,9 @@ export default new Vuex.Store({
             commit('setAanvullingVragen', data.Response);
             commit('setAanvullingenGecontroleerd');
             return data.Response;
+          default:
+            window.location.href = "/500.html";
+            return false;
         }
       });
     },
@@ -146,6 +158,9 @@ export default new Vuex.Store({
             commit('setAanvullingVragen', false);
             commit('setAanvullingenGecontroleerd');
             return data.Response;
+          default:
+            window.location.href = "/500.html";
+            return false;
         }
       });
     },
@@ -153,8 +168,7 @@ export default new Vuex.Store({
       const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
-
-
+        
       const url = `/api/Deelnemer/VerifyEmail?guid=${id}&csrf=${csrfToken}`;
       return axios.get(url)
     }
