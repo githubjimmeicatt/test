@@ -77,13 +77,13 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             {
                 //Goto login page
                 var statusMessage = response.Status.ToString();
-                return new RedirectResult($"/?statuscode={HttpUtility.UrlEncode(statusMessage)}#login");              
+                return new RedirectResult($"/login?statuscode={HttpUtility.UrlEncode(statusMessage)}");              
             }
 
 
             if (response.Status != Manager.Authentication.Contract.StatusCode.Success)
             {
-                return new RedirectResult($"/#login");               
+                return new RedirectResult($"/login");               
             }
             else
             {
@@ -103,7 +103,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
                 Response.Cookies.Add(CreateAuthenticationCookie(bsnClaim?.Value, dossierClaim?.Value, csrfClaim?.Value, false));
                 Response.Cookies.Add(CreateCookie("CSRF_COOKIE", csrfClaim?.Value));
                 Response.Cookies.Add(CreateCookie("KP_CSRF_CLIENT", csrfClaim?.Value, false));
-                return new RedirectResult("/#start");
+                return new RedirectResult("/");
             }
         }
 

@@ -30,6 +30,11 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <AdditionalFileItemNames>$(AdditionalFileItemNames);Content</AdditionalFileItemNames>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +44,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,6 +53,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Azure.Core, Version=1.8.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
@@ -338,62 +345,10 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="cdn\img\sphdhv\mail-logo.png" />
-    <Content Include="cdn\jsmvc\1.1\application-1.1.1.js" />
-    <Content Include="cdn\js\dust-helpers\1.7.4\dust-helpers.min.js" />
-    <Content Include="cdn\js\dust\2.7.2\dust-full.min.js" />
-    <Content Include="cdn\js\is.js\0.9.0\is.min.js" />
-    <Content Include="cdn\js\jquery.paging\1.2.0\jquery.paging.min.js" />
-    <Content Include="cdn\js\jquery.query-object\1.0.0\jquery.query-object.min.js" />
-    <Content Include="cdn\js\jquery\3.5.1\jquery.min.js" />
-    <Content Include="cdn\plugin\tooltipster\4.0\js\tooltipster.bundle.min.js" />
+    <Content Include="cdn\js\auth.js" />
     <Content Include="favicon.ico" />
-    <Content Include="Portals\mijn\logo_digid.png" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\css\main.css" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\chevron-thin-down.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\chevron-thin-left.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\chevron-thin-right.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\chevron-thin-up.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\cross.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\eye.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn-arrow-left.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn-logout.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn_chevron_small_down.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn_file.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn_messages.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn_piggybank.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\input\icn_user.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\icons\output\icons.symbol.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\backlink.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\bg_html_bottom.png" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\bg_html_right.png" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\logo.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\logo_block.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\logo_secondary.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\logo_subtitle.svg" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\img\mijnpensioenoverzicht_logo.png" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\js\main.js" />
-    <Content Include="Portals\mijn\Skins\klantportaal\gulpfile.js" />
-    <Content Include="StaticFiles\Client\Controller\404.js" />
-    <Content Include="StaticFiles\Client\Controller\alert.js" />
-    <Content Include="StaticFiles\Client\Controller\mijnpensioen-actueelpensioen.js" />
-    <Content Include="StaticFiles\Client\Controller\email-collect.js" />
-    <Content Include="StaticFiles\Client\Controller\mijnpensioen-berichten.js" />
-    <Content Include="StaticFiles\Client\Controller\mijnpensioen-login.js" />
-    <Content Include="StaticFiles\Client\Controller\mijnpensioen-profiel.js" />
-    <Content Include="StaticFiles\Client\Controller\mijnpensioen-content.js" />
-    <Content Include="StaticFiles\Client\Controller\mijnpensioen-tabcontroller.js" />
-    <Content Include="StaticFiles\Client\Controller\start.js" />
-    <Content Include="StaticFiles\Client\View\404View.html" />
-    <Content Include="StaticFiles\Client\View\alertview.html" />
-    <Content Include="StaticFiles\Client\View\mijnpensioen-actueelpensioenview.html" />
-    <Content Include="StaticFiles\Client\View\email-collectview.html" />
-    <Content Include="StaticFiles\Client\View\mijnpensioen-berichtenview.html" />
-    <Content Include="StaticFiles\Client\View\mijnpensioen-loginview.html" />
-    <Content Include="StaticFiles\Client\View\startview.html" />
-    <Content Include="StaticFiles\Client\View\mijnpensioen-profielview.html" />
-    <Content Include="StaticFiles\Client\View\mijnpensioen-tabcontrollerview.html" />
-    <Content Include="StaticFiles\Client\View\mijnpensioen-contentview.html" />
     <Content Include="Global.asax" />
+    <Content Include="client-app\vue.config.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -457,162 +412,16 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Portals\mijn\Skins\klantportaal\package.json" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_5_.eot" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_5_.woff" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_5_italic.eot" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_5_italic.woff" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_6_.eot" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_6_.woff" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_6_italic.eot" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_6_italic.woff" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_7_.eot" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_7_.woff" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_7_italic.eot" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\fonts\TheSans_B2_7_italic.woff" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\base\_base.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\base\_buttons.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\base\_layout.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\base\_typography.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_accordeon.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_actiontitle.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_alert.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_backlink.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_dropdown.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_footer.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_form.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_header.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_help-icon.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_linklist.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_overview-table.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_pension-highlight.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\components\_tabs.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\config\_colors.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\config\_layout.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\config\_typography.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\main.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\regions\_page.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\utils\_functions.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\utils\_helpers.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\utils\_mixins.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_border-color.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_border-radius.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_border-style.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_border-width.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_buttons.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_clearfix.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_ellipsis.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_font-stacks.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_hide-text.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_margin.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_padding.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_position.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_prefixer.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_retina-image.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_size.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_text-inputs.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_timing-functions.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_triangle.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\addons\_word-wrap.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_animation.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_appearance.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_backface-visibility.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_background-image.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_background.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_border-image.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_calc.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_columns.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_filter.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_flex-box.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_font-face.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_font-feature-settings.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_hidpi-media-query.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_hyphens.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_image-rendering.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_keyframes.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_linear-gradient.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_perspective.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_placeholder.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_radial-gradient.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_selection.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_text-decoration.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_transform.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_transition.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\css3\_user-select.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_assign-inputs.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_contains-falsy.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_contains.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_is-length.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_is-light.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_is-number.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_is-size.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_modular-scale.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_px-to-em.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_px-to-rem.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_shade.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_strip-units.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_tint.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_transition-property-name.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\functions\_unpack.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_convert-units.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_directional-values.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_font-source-declaration.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_gradient-positions-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_linear-angle-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_linear-gradient-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_linear-positions-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_linear-side-corner-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_radial-arg-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_radial-gradient-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_radial-positions-parser.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_render-gradients.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_shape-size-stripper.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\helpers\_str-to-num.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\settings\_asset-pipeline.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\settings\_deprecation-warnings.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\settings\_prefixer.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\settings\_px-to-em.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\_bourbon-deprecate.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\_bourbon-deprecated-upcoming.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\bourbon\_bourbon.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-append-grid-visual.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-column-default.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-column-ratio.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-column-width.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-float-direction.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-merge-defaults.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-opposite-direction.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-parse-columns.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_neat-parse-media.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\functions\_retrieve-neat-settings.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-collapse.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-column.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-container.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-media.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-push.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-shift.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\mixins\_grid-visual.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\neat\settings\_settings.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\neat\_neat.scss" />
-    <Content Include="Portals\mijn\Skins\klantportaal\assets\scss\vendor\normalize\_normalize.scss" />
-    <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Views\HomePage\Index.cshtml" />
     <Content Include="Web.Accept.config" />
     <Content Include="Web.Live.config" />
     <None Include="SecurityCodeScan.config.yml_" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="scripts\" />
-    <Folder Include="Views\Client\" />
-    <Folder Include="Views\Digid\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Icatt.Auditing.Access.AuditTrail.Contract\Icatt.Auditing.Access.AuditTrail.Contract.csproj">
@@ -873,20 +682,20 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Accept|AnyCPU'">
     <OutputPath>bin\</OutputPath>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
     <OutputPath>bin\</OutputPath>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>61890</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44304/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
@@ -922,4 +731,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <SpaRoot>client-app\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v16.0\WebApplications\Microsoft.WebApplication.targets" />
 </Project>

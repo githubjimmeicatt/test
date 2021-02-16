@@ -1,0 +1,38 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+
+    tr {
+        &:not(:last-of-type) {
+            border-bottom: 1px solid $clr-special;
+        }
+    }
+
+    td {
+        padding: $dist-medium;
+
+        &.align-right {
+            text-align: right;
+        }
+    }
+
+    a {
+        background-color: $clr-primary;
+        color: $clr-front !important;
+        padding: $dist-smallest $dist-medium;
+        border-radius: 4px;
+
+        svg {
+            margin-right: $dist-smallest;
+            fill: $clr-front;
+        }
+
+        &:hover,
+        &:focus {
+            border-radius: 4px;
+            background-color: $clr-primary-dark;
+            text-decoration: none !important;
+
+        }
+    }
+}

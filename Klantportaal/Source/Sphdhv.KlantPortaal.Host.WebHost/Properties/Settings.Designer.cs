@@ -79,15 +79,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44392/")]
-        public string DnnMijnOmgevingUrl {
-            get {
-                return ((string)(this["DnnMijnOmgevingUrl"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("wachtwoordwijzigen")]
         public string DnnPasswordResetConfirmationPage {
             get {
@@ -200,6 +191,15 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         public string KeyVaultUrl {
             get {
                 return ((string)(this["KeyVaultUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:44304/")]
+        public string DnnMijnOmgevingUrl {
+            get {
+                return ((string)(this["DnnMijnOmgevingUrl"]));
             }
         }
     }

@@ -74,7 +74,7 @@ namespace Sphdhv.Klantportaal.Manager.Deelnemer.Service
 
                 //querystring verif mail zo opbouwen:
                 var rootUrl = Properties.Settings.Default.DnnMijnOmgevingUrl;
-                const string ActionPath = "#start$verifyemail$";
+                const string ActionPath = "emailverificatie/";
                 var url = $"{rootUrl}{ActionPath}{deelnemerupdate.VerificationId.ToString("N")}";
                 var prox = FactoryContainer.ProxyFactory.CreateProxy<INotification>(Context);
 

@@ -1,0 +1,239 @@
+// Generic content
+
+.content-section {
+    padding: $dist-gap 0;
+    max-width: 620px;
+
+    p {
+        font-size: $font-medium;
+        padding: 0;
+        margin: 0 0 $dist-medium 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: $clr-primary;
+
+        &:hover,
+        &:focus {
+            color: $clr-primary-dark;
+            text-decoration: underline;
+        }
+    }
+}
+
+// No results message
+
+.no-results-message {
+    //todo
+    
+}
+
+// Logo link
+
+.logo-link {
+    display: inline-block;
+    border: 1px solid $clr-primary-light;
+    transition: border-color .2s;
+    padding: $dist-small $dist-medium;
+    border-radius: 8px;
+    margin-bottom: $dist-largest;
+    box-shadow: $box-light;
+
+    img {
+        height: 50px;
+        width: auto;
+    }
+
+    &:hover,
+    &:focus {
+        border-color: $clr-primary;
+    }
+}
+
+// Headers
+
+h1, h2, h3 {
+    color: $clr-primary;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+}
+
+h2, h3 {
+    font-weight: 600;
+}
+
+h1 { 
+    font-weight: lighter;
+    font-size: $font-h1;
+    margin-bottom: $dist-largest;
+}
+
+h2 {
+    font-size: $font-h2;
+    margin-bottom: $dist-largest;
+}
+
+h3 {
+    font-size: $font-h3;
+}
+
+
+
+
+
+.form-error {
+    display: none;
+    margin-top: rem(12);
+    color: rgb(228,31,24);
+
+    .is-invalid & {
+        display: block;
+    }
+}
+
+//
+// Base: Buttons
+//
+
+//
+// Button config
+
+// sm
+
+$button-height-sm:      32;
+$button-font-size-sm:   14;
+
+// md
+
+$button-height-md:      40;
+$button-font-size-md:   16;
+
+.button {
+    display: inline-block;
+    padding: em(9,$button-font-size-sm);
+    border: none;
+    border-radius: em(3,16);
+    font-family: 'Open Sans', sans-serif;
+    font-size: rem($button-font-size-sm);
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.15s ease-in-out 0s;
+    outline: none;
+    white-space: nowrap;
+
+    @media (min-width: 900px) {
+        padding: em(12,$button-font-size-md);
+        font-size: rem($button-font-size-md);
+    }
+}
+
+.button--primary,
+.button--primary:link,
+.button--primary:visited {
+    background-color: #0086a8;
+    box-shadow: 0 em(2) 0 0 $clr-primary-dark;
+    color: #fff;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #40a4be;
+        box-shadow: 0 em(2) 0 0 $clr-primary-light;
+        color: #fff;
+    }
+
+}
+
+.button--secondary,
+.button--secondary:link,
+.button--secondary:visited {
+    padding: em(9,$button-font-size-sm) em(9,$button-font-size-sm) em(8,$button-font-size-sm) em(9,$button-font-size-sm);
+    border: 1px solid rgb(191,213,223);
+    border-bottom: 0;
+    background-color: rgb(229,243,246);
+    box-shadow: 0 em(2) 0 0 rgb(191,213,223);
+    color: rgb(51,51,51);
+    font-weight: 400;
+
+    &:hover {
+        border-color: rgb(204,221,229);
+        background-color: rgb(234,245,248);
+        color: rgb(51,51,51);
+    }
+
+    @media (min-width: 900px) {
+        padding: em(11,$button-font-size-md) em(12,$button-font-size-md) em(12,$button-font-size-md) em(12,$button-font-size-md);
+    }
+
+}
+
+.button--link,
+.button--link:link,
+.button--link:visited {
+    font-weight: 400;
+}
+
+.button--icon {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    padding: em(12,$button-font-size-sm);
+}
+
+@media (max-width: 999px) {
+
+    .button--icon::after {
+        margin-left: rem(8);
+        content: attr(title);
+    }
+
+}
+
+.button--icon svg {
+    width: rem(16);
+    height: rem(16);
+    fill: currentColor;
+}
+
+.button-group {
+    margin-top: rem(24);
+
+    &:not(:last-child) {
+        margin-bottom: rem(24);
+    }
+
+    .button + .button {
+        margin-left: rem(16);
+    }
+
+}
+
+
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    max-width: rem(254);
+    height: em(38,14);
+    padding: em(4,14) em(8,14);
+    border: 1px solid rgb(153,153,153);
+    border-radius: em(3,14);
+    color: rgb(0,0,0);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: rem(14);
+    outline: none;
+
+    .is-invalid & {
+        border-color: currentColor;
+        color: rgb(228,31,24);
+    }
+
+}
+
+button, [role="button"] {
+    cursor: pointer;
+}
