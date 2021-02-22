@@ -423,6 +423,12 @@
 						</div>
 						<span><%=_("CascadeCategorySelection.Text")%></span>
 					</div>
+					<div>
+						<div class="switchCheckbox">
+							<asp:CheckBox CssClass="normalCheckBox" ID="cbUseANDOperatorByCategory" resourcekey="UseANDOperatorByCategory" runat="server" Text="Use AND operator for categories." />
+						</div>
+						<span><%=_("UseANDOperatorByCategory.Text")%></span>
+					</div>
 					<asp:PlaceHolder ID="phDinamicTreeView" runat="server" />
 					<asp:CustomValidator ID="cvCategoriesTreeview" resourcekey="SelectAtLeastOneCategory.ErrorMessage" runat="server" CssClass="smallInfo error" ClientValidationFunction="CategoryClientValidate" Display="Dynamic" Enabled="False" ErrorMessage="Please select at least one category." ValidationGroup="vgLatestArticles" />
 				</div>
