@@ -56,6 +56,7 @@
                 EditMode: true,
                 UserInfoMessage: '<%= !ManageExpiryDate.HasValue ? "" : "Management License will expire on " + ManageExpiryDate.Value.ToLongDateString() %>',
                 BackUrl: '<%= GetBackUrl() %>',
+                ScriptsUrl: '<%= ResolveUrl("../Scripts") %>',
                 Version: '<%= this.Version %>'
             }).then(bootstrapApplication);
         });

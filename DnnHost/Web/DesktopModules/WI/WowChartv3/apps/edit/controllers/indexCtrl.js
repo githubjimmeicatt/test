@@ -1,6 +1,6 @@
 ﻿WowChartv3_indexCtrl.$inject = ['$scope', '$rootScope', '$filter', 'chartService', 'toastrService', 'ModuleInfo', 'utils', 'dialogService'];
 function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrService, ModuleInfo, utils, dialogService) {
-    var self = this, tabId = "t1", previewHtml, selectFDSFolder = null, xLine = null;
+    var self = this, tabId = "t1", previewHtml, selectFDSFolder = null, xLine = null, autoRefreshInterval;
 
     self.init = init;
     self.newLabel = newLabel;
@@ -42,6 +42,12 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     self.validPointColor = validPointColor;
     self.cancelPointColor = cancelPointColor;
 
+    self.newUserAction = newUserAction;
+    self.removeUserAction = removeUserAction;
+    self.saveUserAction = saveUserAction;
+    self.validUserAction = validUserAction;
+    self.cancelUserAction = cancelUserAction;
+
     self.toggleDriveTableSelection = toggleDriveTableSelection;
     self.toggleDriveChartSelection = toggleDriveChartSelection;
     self.onTabSelected = onTabSelected;
@@ -53,6 +59,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     self.onSeriesChange = onSeriesChange;
     self.exitPreview = exitPreview;
     self.deleteChart = deleteChart;
+    self.copyChart = copyChart;
 
     self.editXAxisLine = editXAxisLine;
     self.removeXAxisLine = removeXAxisLine;
@@ -62,6 +69,48 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     self.removeYAxisLine = removeYAxisLine;
     self.newYAxisLine = newYAxisLine;
     self.showTab = showTab;
+
+    self.nextTab = nextTab;
+    self.previousTab = previousTab;
+
+    self.showNext = showNext;
+    self.showPrevious = showPrevious;
+
+    function nextTab() {
+        if (showNext()) {
+            self.activeTabIndex += 1
+            var liList = $('#tabs ul.dnnVerticalTabs li');
+            var $li = $(liList[self.activeTabIndex]);
+            onTabSelected($li.attr('id'));
+        }
+    }
+    function previousTab() {
+        if (showPrevious()) {
+            self.activeTabIndex -= 1
+            var liList = $('#tabs ul.dnnVerticalTabs li');
+            var $li = $(liList[self.activeTabIndex]);
+            onTabSelected($li.attr('id'));
+        }
+    }
+
+    function showNext() {
+        if (!angular.isUndefinedOrNull(self.activeTabIndex)) {
+            var liList = $('#tabs ul.dnnVerticalTabs li');
+            var $li = $(liList[self.activeTabIndex]);
+            return !$li.hasClass('ng-invalid') && self.activeTabIndex < (liList.length - 1);
+        } else {
+            return false;
+        }
+    }
+    function showPrevious() {
+        if (!angular.isUndefinedOrNull(self.activeTabIndex)) {
+            var liList = $('#tabs ul.dnnVerticalTabs li');
+            var $li = $(liList[self.activeTabIndex]);
+            return !$li.hasClass('ng-invalid') && self.activeTabIndex > 0;
+        } else {
+            return false;
+        }
+    }
 
     function showTab(tId) {
         if (angular.isUndefinedOrNull(self.ChartSettings)) return false;
@@ -74,17 +123,19 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             || tId == 19 || tId == 20) {
             return self.ChartSettings.Options.chart.typeId != 255;
         } else if (tId == 27) {
-            return self.ChartSettings.Options.chart.typeId < 200 && self.DriveCharts != null;
+            return self.ChartSettings.Options.chart.typeId < 200;
         } else if (tId == 21) {
-            return self.ChartSettings.Options.chart.typeId < 200 && self.DriveTables != null;
+            return self.ChartSettings.Options.chart.typeId < 200;
         } else if (tId == 23 || tId == 24) {
             return self.ChartSettings.Options.chart.typeId == 255;
         } else if (tId == 25 || tId == 26) {
             return self.ChartSettings.Options.chart.typeId == 200;
         } else if (tId == 7 || tId == 8 || tId == 9 || tId == 10
             || tId == 11 || tId == 12 || tId == 13 || tId == 16 || tId == 17 || tId == 18
-            || tId == 28 || tId == 29) {
+            || tId == 28 || tId == 29 || tId == 33) {
             return self.ChartSettings.Options.chart.typeId != 10 && self.ChartSettings.Options.chart.typeId < 200;
+        } else if (tId == 32) {
+            return self.ChartSettings.Options.chart.typeId == 11;
         }
     }
 
@@ -307,11 +358,26 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             });
         }
     }
+    function copyChart() {
+        var copyChart = angular.copy(self.selectedChart);
+        delete copyChart.Id;
+
+        copyChart.Name += ' - Copy';
+        copyChart.ReportId += ' - Copy';
+        copyChart.ViewOrder += 1;
+        copyChart.IsDefault = false;
+
+        self.selectedChart = copyChart;
+        onDefinedTableChange();
+    }
     function exitPreview() {
-        self.previewMode = false;
+        if (!angular.isUndefinedOrNull(autoRefreshInterval)) {
+            clearInterval(autoRefreshInterval);
+        }
         delete self.PreviewChartSettings;
         delete self.data;
         delete self.currentSeries;
+        self.previewMode = false;
     }
     function onSeriesChange() {
         self.data = data[self.currentSeries];
@@ -348,11 +414,13 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
         onChartTypeChange();
     }
     function previewChart() {
+        self.previewMode = true;
+        refreshChart();
+    }
+    function refreshChart() {
         delete self.PreviewChartSettings;
         delete self.data;
         delete self.currentSeries;
-
-        self.previewMode = true;
 
         var chartObj = fillChartObjectFromUI();
         var settings = settings = angular.fromJson(chartObj.ChartSettings);
@@ -377,6 +445,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             }
             self.PreviewChartSettings = _settings;
             self.PreviewChartSettings._name = chartObj.Name;
+            setupAutoRefresh(self.PreviewChartSettings.Options);
         } else {
             var requestInput = { chart: chartObj };
             self.appPromise = chartService.getChartData(requestInput);
@@ -397,6 +466,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
                     return;
                 }
 
+                var settings = angular.fromJson(result.d.ChartSettings);
                 settings.Labels = chartData.Labels;
                 settings.Series = chartData.Series;
                 settings.PlotLinesData = result.d.PlotLinesData;
@@ -419,9 +489,22 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
 
                 self.PreviewChartSettings = settings;
                 self.PreviewChartSettings._name = chartObj.Name;
+                setupAutoRefresh(self.PreviewChartSettings.Options);
             });
         }
     }
+    function setupAutoRefresh(options) {
+        if (!angular.isUndefinedOrNull(autoRefreshInterval)) {
+            clearInterval(autoRefreshInterval);
+        }
+        if (!angular.isUndefinedOrNull(options.autoRefresh) && options.autoRefresh.enabled == true) {
+            autoRefreshInterval = setInterval(() => {
+                clearInterval(autoRefreshInterval);
+                refreshChart();
+            }, options.autoRefresh.rate * 1000);
+        }
+    }
+
     function getPreviewHtml(chartId, settings) {
         var frameId = Math.floor(Math.random() * 10000);
         var width = "100%", heigth = "100%";
@@ -661,8 +744,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     }
 
     function newSeriesType() {
-        self.selectedSeriesType = {
-        };
+        self.selectedSeriesType = {};
     }
     function removeSeriesType() {
         if (self.selectedSeriesType.id) {
@@ -703,6 +785,51 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
     }
     function cancelSeriesType() {
         delete self.selectedSeriesType;
+    }
+
+    function newUserAction() {
+        self.selectedUserAction = {};
+    }
+    function removeUserAction() {
+        if (self.selectedUserAction.id) {
+            if (confirm("Are You Sure You Want To Remove Action '" + self.selectedUserAction.description + "'?") == true) {
+                var items = self.ChartSettings.Options.userActions;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].id == self.selectedUserAction.id) {
+                        items.splice(i, 1);
+                        cancelUserAction();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    function saveUserAction() {
+        var item = angular.copy(self.selectedUserAction);
+        if (angular.isUndefinedOrNull(item.id)) {
+            var items = self.ChartSettings.Options.userActions;
+            item.id = items.length + 1;
+            items.push(item);
+            self.selectedUserAction = items[items.length - 1];
+        }
+
+        cancelUserAction();
+    }
+    function validUserAction() {
+        if (self.selectedUserAction) {
+            if (angular.isUndefinedOrNull(self.selectedUserAction.description)) return false;
+            if (angular.isUndefinedOrNull(self.selectedUserAction.type)) return false;
+            if (angular.isUndefinedOrNull(self.selectedUserAction.action)) return false;
+            if (angular.isUndefinedOrNull(self.selectedUserAction.target)) return false;
+            if (self.selectedUserAction.type == "openURL" &&
+                (angular.isUndefinedOrNull(self.selectedUserAction.url) || self.selectedUserAction.url == "")) return false;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function cancelUserAction() {
+        delete self.selectedUserAction;
     }
 
     function onFileDataSourceInfoChanged() {
@@ -812,7 +939,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
 
     function onChartTypeChange() {
         var settings = self.ChartSettings;
-        var isGoalChart = false, isPieChart = false, isBubbleChart = false, isWordcloudChart = false;
+        var isGoalChart = false, isPieChart = false, isBubbleChart = false, isWordcloudChart = false, isParetoChart = false;
 
         if (self.SelectedChartType) {
             settings.Options.chart.typeId = self.SelectedChartType.Id;
@@ -821,6 +948,7 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             isPieChart = self.SelectedChartType.Id == 5;
             isBubbleChart = self.SelectedChartType.Id == 9;
             isWordcloudChart = self.SelectedChartType.Id == 10;
+            isParetoChart = self.SelectedChartType.Id == 11;
             isGoalChart = self.SelectedChartType.Id == 255;
 
             settings.Options.chart.options3d.depth = 100;
@@ -841,6 +969,10 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
             settings.DataSourceInfos.push({});
         } else if (!isGoalChart && settings.Data.length > 0 && settings.Data[0].push == undefined) {
             settings.Data = [];
+        }
+
+        if (isParetoChart && settings.Options.pareto == undefined) {
+            settings.Options.pareto = utils.getInitialParetoOptions();
         }
 
         if (!isPieChart) {
@@ -925,6 +1057,9 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
         self.Folders = editModel.folders;
         self.DriveTables = editModel.driveTables;
         self.DriveCharts = editModel.driveCharts;
+        self.UserActionTypes = editModel.userActionTypes;
+        self.UserActionActs = editModel.userActionActs;
+        self.UserActionTargets = editModel.userActionTargets;
 
         previewHtml = editModel.previewHtml;
         onDefinedChartChange();
@@ -932,6 +1067,8 @@ function WowChartv3_indexCtrl($scope, $rootScope, $filter, chartService, toastrS
 
     function init() {
         self.previewMode = false;
+        self.version = ModuleInfo.Version;
+
         self.QueryTypes = [{ Id: 1, Name: 'Table/View/Function' }, { Id: 2, Name: 'Select Statement' }];
         self.DataSources = [{ Id: 1, Text: 'Predefined Data' }, { Id: 2, Text: 'SQL Data' }, { Id: 3, Text: 'CSV File' }];
         self.DrillDownXLocations = [{ Id: 1, Text: 'Title' }, { Id: 2, Text: 'Subtitle' }];

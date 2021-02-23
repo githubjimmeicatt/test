@@ -8,20 +8,25 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
         },
         link: function (scope, element, attrs) {
             var $element = $(element), settings, data, additionalDataProps, additionalData, defaultSeries;
-            var unregSettings;
+            var unregSettings, hcOptions;
 
             function onSettingsChanged(newValue, oldValue) {
                 settings = newValue;
-                data = settings.Data;
-                additionalDataProps = settings.AdditionalDataProps;
-                additionalData = settings.AdditionalData;
+                if (!angular.isUndefinedOrNull(settings)) {
+                    data = settings.Data;
+                    additionalDataProps = settings.AdditionalDataProps;
+                    additionalData = settings.AdditionalData;
 
-                unregSettings();
-                buildChart();
+                    unregSettings();
+                    buildChart();
+                } else {
+                    $element.empty();
+                }
             }
             function getQueryString(field, url) {
                 var href = url ? url : window.location.href;
-                var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+                //var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+                var reg = new RegExp('[/?&]' + field + '[=/]([^?&/]*)', 'i');
                 var string = reg.exec(href);
                 return string ? string[1] : null;
             }
@@ -33,9 +38,12 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                     dataType: "script",
                     cache: true
                 });
-            };
+            }
+            function containsUserActions(hcOptions) {
+                if (angular.isUndefinedOrNull(hcOptions.userActions)) return false;
+                return hcOptions.userActions.length > 0;
+            }
             function highCharts(hcOptions) {
-
                 if (hcOptions.exporting.enabled == true
                     && hcOptions.exporting.externalServer == false)
                     hcOptions.exporting.url = 'WowChartsv3Export.axd';
@@ -69,11 +77,16 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                         window.HighchartsWordcloudModuleUrl = 0;
                         highCharts(hcOptions);
                     });
-                    /*} else if (angular.isUndefinedOrNull(window.HighchartsParetoModuleUrl)) {
-                        cachedScript(ModuleInfo.HighchartsParetoModuleUrl, function () {
-                            window.HighchartsParetoModuleUrl = 0;
-                            highCharts(hcOptions);
-                        });*/
+                } else if (hcOptions.isParetoChart == true && angular.isUndefinedOrNull(window.HighchartsParetoModuleUrl)) {
+                    cachedScript(ModuleInfo.HighchartsParetoModuleUrl, function () {
+                        window.HighchartsParetoModuleUrl = 0;
+                        highCharts(hcOptions);
+                    });
+                } else if (containsUserActions(hcOptions) == true && angular.isUndefinedOrNull(window.HighchartsCustomEventsUrl)) {
+                    cachedScript(ModuleInfo.ScriptsUrl + '/customEvents.min.js', function () {
+                        window.HighchartsCustomEventsUrl = 0;
+                        highCharts(hcOptions);
+                    });
                 } else {
                     if (hcOptions.exporting.enabled) {
                         var buttons = Highcharts.getOptions().exporting.buttons;
@@ -191,8 +204,9 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                         lang: hcOptions.lang
                     });
 
-                    if (angular.isUndefinedOrNull(hcOptions.plotOptions.series.point))
+                    if (angular.isUndefinedOrNull(hcOptions.plotOptions.series.point)) {
                         hcOptions.plotOptions.series.point = { events: {} };
+                    }
 
                     if (angular.isUndefinedOrNull(ModuleInfo.EditMode)) {
                         var driveTablesEnabled = false, driveChartsEnabled = false;
@@ -279,6 +293,37 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                         hcOptions.exporting.enabled = true;
                     }
 
+                    if (containsUserActions(hcOptions)) {
+                        for (var idx = 0; idx < hcOptions.userActions.length; idx++) {
+                            var userAct = hcOptions.userActions[idx], target;
+                            target = eval("hcOptions." + userAct.target);
+                            if (angular.isUndefinedOrNull(target)) {
+                                target = eval("hcOptions." + userAct.target + "={};");
+                            }
+                            if (angular.isUndefinedOrNull(target.events)) {
+                                target.events = {};
+                            }
+                            if (angular.isUndefinedOrNull(target.events[userAct.action])) {
+                                target.events[userAct.action] = function (a, b, c) {
+                                    var action = a.type, target = null;
+                                    if (!angular.isUndefinedOrNull(this.x) && !angular.isUndefinedOrNull(this.y)) { target = "plotOptions.series.point" }
+                                    var userActions = this.series.chart.options.userActions;
+                                    for (var idx = 0; idx < userActions.length; idx++) {
+                                        var userAct = userActions[idx];
+                                        if (userAct.action != action || userAct.target != target) {
+                                            continue;
+                                        }
+
+                                        if (userAct.type == "openURL") {
+                                            var url = Highcharts.format(userAct.url, this);
+                                            window.open(url, '_blank');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     var chart = $element.highcharts(hcOptions).highcharts();
 
                     if (hcOptions.xAxis.type == 'category') {
@@ -359,16 +404,32 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                         var $iframe = $parent.find('#' + ModuleInfo.FrameId);
                         $iframe.after(svg);
                         $iframe.remove();
+                    } else {
+                        if (ModuleInfo.PreviewMode &&
+                            !angular.isUndefinedOrNull(ModuleInfo.FrameId)) {
+                            var $parent = $(window.parent.document);
+                            var $iframe = $parent.find('#' + ModuleInfo.FrameId);
+                            $iframe.mouseout(function () {
+                                chart.tooltip.hide(0);
+                            });
+                        }
                     }
                 }
             }
             function buildChartOptions() {
-                var hcOptions = angular.copy(settings.Options);
+                hcOptions = angular.copy(settings.Options);
                 try {
-                    hcOptions.title.style.fontSize += 'px';
+                    var isPieChart = hcOptions.chart.type == 'pie';
+                    var isBubbleChart = hcOptions.chart.type == 'bubble';
+                    var isWordcloudChart = hcOptions.chart.type == 'wordcloud';
+                    var isParetoChart = hcOptions.chart.typeId == 11;
+                    var yPropName = isWordcloudChart ? 'weight' : 'y';
+                    var disableLegendClick = hcOptions.legend.enabled == true && hcOptions.legend.disableClick == true;
 
                     delete hcOptions.chart.typeId;
                     delete hcOptions.style;
+
+                    hcOptions.title.style.fontSize += 'px';
 
                     if (hcOptions.chart.margin[0] == 0
                         && hcOptions.chart.margin[1] == 0
@@ -381,56 +442,17 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                     hcOptions.yAxis = [hcOptions.yAxis];
                     hcOptions.xAxis.categories = [];
 
-                    /*
-                    hcOptions.series.push({
-                        type: 'pareto',
-                        name: 'Pareto',
-                        yAxis: 1,
-                        zIndex: 10,
-                        baseSeries: 1,
-                        tooltip: {
-                            valueDecimals: 2,
-                            valueSuffix: '%'
+                    if (isParetoChart == true) {
+                        if (!angular.isUndefinedOrNull(hcOptions.pareto)) {
+                            hcOptions.isParetoChart = true;
+                            hcOptions.series.push(hcOptions.pareto.series);
+                            hcOptions.yAxis.push(hcOptions.pareto.yAxis);
+                            delete hcOptions.pareto;
+                        } else {
+                            isParetoChart = false;
                         }
-                    });
-                    hcOptions.yAxis.push({
-                        title: {
-                            text: ''
-                        },
-                        minPadding: 0,
-                        maxPadding: 0,
-                        max: 100,
-                        min: 0,
-                        opposite: true,
-                        labels: {
-                            format: "{value}%"
-                        }
-                    });
-                    hcOptions.series.push({
-                        type: 'pareto',
-                        name: 'Pareto',
-                        yAxis: 1,
-                        zIndex: 10,
-                        baseSeries: 1,
-                        tooltip: {
-                            valueDecimals: 2,
-                            valueSuffix: '%'
-                        }
-                    });
-                    hcOptions.yAxis.push({
-                        title: {
-                            text: ''
-                        },
-                        minPadding: 0,
-                        maxPadding: 0,
-                        max: 100,
-                        min: 0,
-                        opposite: true,
-                        labels: {
-                            format: "{value}%"
-                        }
-                    }); */
-                    
+                    }
+
                     if (hcOptions.chart.type == 'pie') {
                         hcOptions.xAxis.type = 'linear';
                     } else {
@@ -486,12 +508,6 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                                 return result;
                         }
                     }
-
-                    var isPieChart = hcOptions.chart.type == 'pie';
-                    var isBubbleChart = hcOptions.chart.type == 'bubble';
-                    var isWordcloudChart = hcOptions.chart.type == 'wordcloud';
-                    var yPropName = isWordcloudChart ? 'weight' : 'y';
-                    var disableLegendClick = hcOptions.legend.enabled == true && hcOptions.legend.disableClick == true;
 
                     // Pie Chart with Series Dropdown
                     if (isPieChart && settings.Options.mics.showSeriesSelector) {
@@ -867,7 +883,6 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                     alert(error.message);
                     console.error(error.stack);
                 }
-                return hcOptions;
             }
 
             function buildChart() {
@@ -876,7 +891,7 @@ function WowChartv3_ngHighChart($filter, ModuleInfo) {
                     return;
                 }
 
-                var hcOptions = buildChartOptions();
+                buildChartOptions();
                 highCharts(hcOptions);
             }
 
