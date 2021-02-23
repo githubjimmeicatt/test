@@ -9,6 +9,17 @@
 			}
 		});
 	}
+	eds3_5_jq().ready(function ($) {
+		$('.edNews__toggleNextTableRow').on('change', 'input[type="checkbox"]', function () {
+			var $this = $(this);
+			if (!this.checked) {
+				$this.closest('tr').next('tr').hide();
+			} else {
+				$this.closest('tr').next('tr').show();
+			};
+		});
+		$('input[type="checkbox"]', '.edNews__toggleNextTableRow').trigger("change");
+	});
 </script>
 <div class="edNews_adminWrapper mainContentWrapper topPadded bottomPadded">
 	<div class="contentSection bottomPadded">
@@ -53,8 +64,18 @@
 						<asp:Label ID="lblRedirectArticlesTo404" runat="server" Text="Return 404 for non existing articles:" resourcekey="lblRedirectArticlesTo404"></asp:Label>
 					</td>
 					<td>
-						<div class="switchCheckbox">
+						<div class="switchCheckbox edNews__toggleNextTableRow">
 							<asp:CheckBox ID="cbRedirectArticlesTo404" runat="server" Text="Return 404 for non existing articles" />
+						</div>
+					</td>
+				</tr>
+				<tr id="trRedirectArticlesToDNNErrorPage" runat="server">
+					<td class="tdLabel">
+						<asp:Label ID="lblRedirectArticlesToDNNErrorPage" runat="server" Text="Return DNN 404 error page for non existing articles:" resourcekey="lblRedirectArticlesToDNNErrorPage"></asp:Label>
+					</td>
+					<td>
+						<div class="switchCheckbox">
+							<asp:CheckBox ID="cbRedirectArticlesToDNNErrorPage" runat="server" Text="Return DNN  404 error page for non existing articles" />
 						</div>
 					</td>
 				</tr>

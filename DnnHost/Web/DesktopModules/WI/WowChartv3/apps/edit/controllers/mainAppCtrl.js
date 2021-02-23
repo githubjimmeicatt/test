@@ -21,7 +21,10 @@ function WowChartv3_mainAppCtrl($scope, $rootScope, chartService, toastrService,
                 folders: result.d.Folders,
                 previewHtml: result.d.PreviewHtml,
                 driveTables: result.d.DriveTables,
-                driveCharts: result.d.DriveCharts
+                driveCharts: result.d.DriveCharts,
+                userActionTypes: result.d.UserActionTypes,
+                userActionActs: result.d.UserActionActs,
+                userActionTargets: result.d.UserActionTargets
             };
 
             $rootScope.editModel = editModel;

@@ -57,6 +57,7 @@
                 PreviewMode: true,
                 FrameId: '<%= Request.QueryString.Get("iframe") %>',
                 ChartId: '<%= Request.QueryString.Get("chartId") %>',
+                ScriptsUrl: '<%= ResolveUrl("../Scripts") %>',
                 Version: '<%= this.Version %>'
             }).then(bootstrapApplication);
         });

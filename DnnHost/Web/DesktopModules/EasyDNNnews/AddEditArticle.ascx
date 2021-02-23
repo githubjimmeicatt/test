@@ -467,7 +467,37 @@
 												<%=ThisImage%>
 											</p>
 										</div>
+										<div runat="server" id="divAddDetailsImage" class="info_box infoWithAction">
+											<p>
+												<%=AddDetailsImage%>
+											</p>
+											<div class="switchCheckbox biggerCheckBox">
+												<asp:CheckBox CssClass="normalCheckBox" ID="cbAddDetailsImage" runat="server" Text="Add" OnCheckedChanged="cbAddDetailsImage_CheckedChanged" AutoPostBack="True" />
+											</div>
+										</div>
 									</div>
+									<asp:Panel ID="pnlDetailsimage" CssClass="section_actions_mainimage articleDetailsImage" runat="server" Wrap="True" Visible="False">
+										<div>
+											<h1 class="section_box_title detailsArticleImageTitle"><span><%=ArticleDetailsImage%></span></h1>
+											<div class="clearFix"></div>
+											<div runat="server" id="divAddDetailsImageMessage" class="info_box biggerInfo detailsArticleImage">
+												<p><%=SelectArticleDetailsImage%></p>
+											</div>
+											<div class="content main_article_image">
+												<div class="left_col">
+													<asp:Image ID="imgDetailsArticleImage" runat="server" Visible="False" />
+												</div>
+												<div class="right_col">
+													<div class="info_box check_sign" id="divRemoveDetailsImage" runat="server" visible="false" style="margin-top:50px">
+														<asp:LinkButton ID="lbRemoveDetailsImage" runat="server" CssClass="action remove_btn" resourcekey="lbRemoveDetailsImage" Text="Remove" OnClick="lbRemoveDetailsImage_Click" />
+														<p>
+															<%=ThisDetailsImage%>
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</asp:Panel>
 									<asp:Panel ID="pnlImageTitleDescription" CssClass="section_actions_mainimage" Style="clear: left;" runat="server">
 										<asp:HyperLink ID="hlOpenImageTitleDescriptionOptions" runat="server" CssClass="icon down_arrows" NavigateUrl="#"><%=ImgeTitleDescriptionSettings%></asp:HyperLink>
 										<asp:Panel ID="pnlImageTitleDescriptionOptions" runat="server" Style="display: none;">
@@ -1265,6 +1295,7 @@
 															<tr>
 																<td class="action">
 																	<asp:LinkButton ID="lbSetArticleImageArtGallery" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="SetArticleImage" CssClass="action_btn article_img" resourcekey="lbSetArticleImageArtGalleryResource1">Set as main article image</asp:LinkButton>
+																	<asp:LinkButton ID="lbSetDetailsArticleImageArtGallery" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="SetDetailsArticleImage" CssClass="action_btn article_img details_article_image" Visible="<%#EnableDetailsImage %>" resourcekey="lbSetDetailsArticleImageArtGallery">Set as details article image</asp:LinkButton>
 																	<asp:LinkButton ID="lbEditImage" runat="server" CausesValidation="false" CommandName="Edit" CssClass="action_btn edit" resourcekey="LinkButton3Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
 																	<asp:LinkButton ID="lbDeleteImage" runat="server" CausesValidation="false" CommandName="Delete" CssClass="action_btn delete" OnClientClick="return AlertConfirm('image');" resourcekey="LinkButton4Resource1" Visible='<%#!EditingSharedCustomGallery%>'></asp:LinkButton>
 																	<asp:LinkButton ID="lbLocalizeimage" runat="server" CommandArgument='<%# Eval("PictureID") %>' CommandName="LocalizeImage" CssClass="image_localization" resourcekey="lbLocalizeimageResource1" Visible='<%# LocalizationEnabled && !IS_ARTICLE_REVISION%>'>Localize content</asp:LinkButton>
@@ -1352,6 +1383,7 @@
 									<asp:HiddenField ID="hfSharedGalID" runat="server" />
 									<asp:HiddenField ID="hfImageChanged" runat="server" Value="false" />
 									<asp:HiddenField ID="hfMainArticlePictureID" runat="server" Value="0" />
+									<asp:HiddenField ID="hfDetailsArticlePictureID" runat="server" Value="0" />
 									<asp:HiddenField ID="curentActiveGalleryId" runat="server" Value="1" />
 								</div>
 							</div>

@@ -56,6 +56,7 @@
                 Highcharts3dJsUrl: '<%= ResolveUrl("../Scripts/highcharts-3d.js") %>',
                 HighchartsWordcloudModuleUrl: '<%= ResolveUrl("../Scripts/hc-modules/wordcloud.js") %>',
                 HighchartsParetoModuleUrl: '<%= ResolveUrl("../Scripts/hc-modules/pareto.js") %>',
+                ScriptsUrl: '<%= ResolveUrl("../Scripts") %>',
                 Version: '<%= this.Version %>'
             }).then(bootstrapApplication);
         });

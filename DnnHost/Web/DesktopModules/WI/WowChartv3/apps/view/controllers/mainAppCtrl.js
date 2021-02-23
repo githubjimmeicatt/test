@@ -1,6 +1,6 @@
 ﻿WowChartv3_mainAppCtrl.$inject = ['$scope', 'chartService', 'utils', 'toastrService', 'ModuleInfo'];
 function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, ModuleInfo) {
-    var self = this, data;
+    var self = this, data, autoRefreshInterval;
 
     self.init = init;
     self.onSeriesChange = onSeriesChange;
@@ -8,6 +8,9 @@ function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, Modu
     self.onChartChange = onChartChange;
 
     function onChartChange() {
+        delete self.settings;
+        $scope.$broadcast('onDataChanged');
+
         var settings, chartId;
         if (self.selectedChart) {
             chartId = self.selectedChart.Id;
@@ -19,7 +22,6 @@ function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, Modu
         self.doRefreshChartData = true;
         initChart(chartId, settings);
     }
-
     function loadChart(reportId, chartPoint, filters) {
         if (!angular.isUndefinedOrNull(reportId)) {
             self.reportId = reportId;
@@ -33,6 +35,17 @@ function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, Modu
 
         self.doRefreshChartData = true;
         init();
+    }
+    function setupAutoRefresh(options) {
+        if (!angular.isUndefinedOrNull(autoRefreshInterval)) {
+            clearInterval(autoRefreshInterval);
+        }
+        if (!angular.isUndefinedOrNull(options.autoRefresh) && options.autoRefresh.enabled == true) {
+            autoRefreshInterval = setInterval(() => {
+                clearInterval(autoRefreshInterval);
+                onChartChange();
+            }, options.autoRefresh.rate * 1000);
+        }
     }
     function onSeriesChange() {
         self.data = data[self.currentSeries];
@@ -72,6 +85,7 @@ function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, Modu
                 settings.CurrentSeriesIndex = 0;
             }
             self.settings = settings;
+            setupAutoRefresh(settings.Options);
         } else {
             var requestInput = {};
             if (!angular.isUndefinedOrNull(self.chartId)) requestInput.chartId = self.chartId;
@@ -120,6 +134,7 @@ function WowChartv3_mainAppCtrl($scope, chartService, utils, toastrService, Modu
                 settings._name = result.d.Name;
 
                 self.settings = settings;
+                setupAutoRefresh(settings.Options);
                 if (self.doRefreshChartData == true) {
                     $scope.$broadcast('onDataChanged');
                     delete self.doRefreshChartData;

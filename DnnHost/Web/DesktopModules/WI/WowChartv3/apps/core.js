@@ -56,7 +56,7 @@
                 Series: [],
                 Data: [],
                 Options: obj.getInitialChartOptions(),
-                GoalChart: obj.getInitialGoalChartOptions()
+                GoalChart: obj.getInitialGoalChartOptions(),
             };
 
             return chartData;
@@ -245,11 +245,11 @@
                     shared: false
                 },
                 series: [{
-                    colorByPoint: false,
-                    colors: [],
                     pointsColors: [],
-                    fillOpacity: 1.0,
+                    colors: [],
                     types: [],
+                    colorByPoint: false,
+                    fillOpacity: 1.0
                 }],
                 title: {
                     text: null,
@@ -326,7 +326,8 @@
                             events: {}
                         },
                         allowPointSelect: false,
-                        events: {}
+                        events: {},
+                        marker: {}
                     },
                     pie: {
                         depth: 0,
@@ -402,9 +403,44 @@
                     enabled: false,
                     charts: []
                 },
-                colors: Highcharts.defaultOptions.colors
+                colors: Highcharts.defaultOptions.colors,
+                pareto: obj.getInitialParetoOptions(),
+                userActions: [],
+                autoRefresh: {
+                    enabled: false,
+                    rate: 1
+                }
             };
         }
+        obj.getInitialParetoOptions = function () {
+            return {
+                series: {
+                    type: 'pareto',
+                    name: 'Pareto',
+                    yAxis: 1,
+                    zIndex: 10,
+                    baseSeries: 1,
+                    showInLegend: true,
+                    tooltip: {
+                        valueDecimals: 2,
+                        valueSuffix: '%'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    },
+                    minPadding: 0,
+                    maxPadding: 0,
+                    max: 100,
+                    min: 0,
+                    opposite: true,
+                    labels: {
+                        format: "{value}%"
+                    }
+                }
+            };
+        };
         obj.getInitialGoalChartOptions = function () {
             return {
                 padding: {
