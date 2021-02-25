@@ -11,6 +11,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
     public class LoginController : Controller
     {
         // Post
+        [AllowAnonymous]
         [System.Web.Http.HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Login(ImpersonateLoginModel loginModel)
         {
