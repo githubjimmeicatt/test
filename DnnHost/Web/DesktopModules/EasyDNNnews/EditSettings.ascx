@@ -1629,6 +1629,16 @@
 										resourcekey="rfvWebpImageQuality.ErrorMessage" Display="Dynamic" />
 								</td>
 							</tr>
+							<tr>
+								<td class="tdLabel width50">
+									<label for="<%=cbRedirectToAnotherInstance.ClientID %>" class="edNews_tooltip" data-tooltip-content="<%=_("lblRedirectToAnotherInstance.Help", true) %>" data-tooltip-position="top-right"><%=_("lblRedirectToAnotherInstance.Text") %></label>
+								</td>
+								<td>
+									<div class="switchCheckbox">
+										<asp:CheckBox CssClass="normalCheckBox" ID="cbRedirectToAnotherInstance" Text="Redirect to selected news instance:" runat="server" />
+									</div>
+								</td>
+							</tr>
 						</table>
 					</asp:Panel>
 				</asp:Panel>
@@ -1764,6 +1774,12 @@
 												<asp:CheckBox CssClass="normalCheckBox" ID="cbAutoAddCatChilds" runat="server" Text="Auto select all child categories." resourcekey="cbAutoAddCatChildsResource1" />
 											</div>
 											<label for="<%=cbAutoAddCatChilds.ClientID %>"><%=_("cbAutoAddCatChildsResource1.Text") %></label>
+										</div>
+										<div>
+											<div class="switchCheckbox">
+												<asp:CheckBox CssClass="normalCheckBox" ID="cbUseANDOperatorByCategory" runat="server" Text="Use AND operator for categories" resourcekey="cbUseANDOperatorByCategory" />
+											</div>
+											<label for="<%=cbUseANDOperatorByCategory.ClientID %>"><%=_("lblUseANDOperatorByCategory.Text") %></label>
 										</div>
 										<asp:PlaceHolder ID="phDinamicTreeView" runat="server"></asp:PlaceHolder>
 									</div>

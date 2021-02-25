@@ -10,12 +10,11 @@
     <asp:CheckBox ID="cbxSecureSQL" runat="server" />
 </div>
 <div class="dnnFormItem">
-    <dnn:Label runat="server" controlname="cbxDontLoadAngular" resourcekey="DontLoadAngular" />
-    <asp:CheckBox ID="cbxDontLoadAngular" runat="server" />
-</div>
-<div class="dnnFormItem">
-    <dnn:Label runat="server" controlname="cbxDontLoadAngularRoute" resourcekey="DontLoadAngularRoute" />
-    <asp:CheckBox ID="cbxDontLoadAngularRoute" runat="server" />
+    <dnn:Label runat="server" controlname="ddlAngularVersion" resourcekey="AngularVersion" />
+    <asp:DropDownList ID="ddlAngularVersion" runat="server">
+        <asp:ListItem Value="1.6.2" Text="1.6.2" />
+        <asp:ListItem Value="1.3.9" Text="1.3.9" />
+    </asp:DropDownList>
 </div>
 <div class="dnnFormItem">
     <dnn:Label runat="server" controlname="cbxHideChartsSelector" resourcekey="HideChartsSelector" />

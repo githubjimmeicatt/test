@@ -9,7 +9,7 @@
                         <td><strong>{{document.Titel}}</strong></td>
                         <td>{{document.MutatieDatum}}</td>
                         <td class="align-right">
-                            <a :href="`${document.url}OpenFile?documentId=${document.Id}`" target="_blank">
+                            <a :href="`/api/Correspondentie/OpenFile?documentId=${document.Id}`" target="_blank">
                                 <SvgIcon icon="download"/>
                                 Download
                             </a>
@@ -34,7 +34,7 @@
         computed: {
             documents() {
                 const { $store } = this;
-                return $store.state.documents?.items || [];
+                return $store.state.documents?.Items || [];
             }
         },
         async mounted() {

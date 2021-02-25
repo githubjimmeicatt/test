@@ -4,61 +4,42 @@
     };
 }
 
-function verifyAngularLibVersion() {
-    try {
-        if (angular.version.major != 1 ||
-            angular.version.minor < 6) {
-            alert("Another angular library ver. " + angular.version.full + " is loaded and module might not working propertly. Go to the module settings, under 'WI Wow Chart - V3 Settings' tab, select the 'Dont Load Angular Lib' & 'Dont Load Angular Route Lib' options then Save the settings. Please contact support@wow-extensions.com if does not help.");
-        }
-    } catch (err) { 
-    }
+angular.isUndefinedOrNull = function (val) {
+    return angular.isUndefined(val) || val === null
 }
-function verifyAngularLibExists() {
+angular.deepExtend = function (initial, data) {
+    var result;
+
+    if (angular.isUndefinedOrNull(data)) {
+        data = {};
+        result = {};
+    } else {
+        result = angular.copy(data);
+    }
+
     try {
-        var v = angular.version;
-    } catch (err) {
-        alert("Angular library is not loaded and module might not working propertly. Go to the module settings, under 'WI Wow Chart - V3 Settings' tab, unselect the 'Dont Load Angular Lib' & 'Dont Load Angular Route Lib' options then Save the settings. Please contact support@wow-extensions.com if does not help.");
+        angular.forEach(initial, function (value, key) {
+            if (initial[key] && initial[key].constructor && initial[key].constructor === Object)
+                result[key] = angular.deepExtend(initial[key], data[key]);
+            else
+                result[key] = data[key] == undefined ? initial[key] : data[key];
+        });
+    } catch (er) {
+        alert(er);
     }
-}
 
-if (window["angular"]) {
-    angular.isUndefinedOrNull = function (val) {
-        return angular.isUndefined(val) || val === null
-    }
-    angular.deepExtend = function (initial, data) {
-        var result;
-
-        if (angular.isUndefinedOrNull(data)) {
-            data = {};
-            result = {};
-        } else {
-            result = angular.copy(data);
-        }
-
-        try {
-            angular.forEach(initial, function (value, key) {
-                if (initial[key] && initial[key].constructor && initial[key].constructor === Object)
-                    result[key] = angular.deepExtend(initial[key], data[key]);
-                else
-                    result[key] = data[key] == undefined ? initial[key] : data[key];
-            });
-        } catch (er) {
-            alert(er);
-        }
-
-        return result;
+    return result;
+};
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+        });
     };
-    if (!String.prototype.format) {
-        String.prototype.format = function () {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function (match, number) {
-                return typeof args[number] != 'undefined'
-                    ? args[number]
-                    : match
-                    ;
-            });
-        };
-    }
 }
 
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius, fill) {

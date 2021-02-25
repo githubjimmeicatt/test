@@ -1080,6 +1080,31 @@
 								</table>
 							</asp:Panel>
 							<asp:Label ID="lblRangeSearchFromToManualInfo" runat="server" EnableViewState="false" />
+							<asp:Panel ID="pnlRangeSearchStepInteger" runat="server" Visible="false">
+								<table class="optionsList fullWidthTable tablePadding5 noBorder">
+									<tr>
+										<td class="tdLabel">
+											<label class="edNews_tooltip" data-tooltip-content="<%=_("RangeSliderStep.HelpText", true) %>" data-tooltip-position="top-right"><%=_("RangeSliderStep.Text") %></label>
+										</td>
+										<td>
+											<asp:TextBox ID="tbRangeSearchStepInteger" runat="server" Text="1" Width="50" />
+											<asp:RangeValidator ID="rvRangeSearchStepInteger" runat="server" ControlToValidate="tbRangeSearchStepInteger" Display="Dynamic" ErrorMessage="Enter value between 1-10000." MaximumValue="10000" MinimumValue="1" resourcekey="rvRangeSearchStepInteger.ErrorMessage" SetFocusOnError="True" Type="Integer" ValidationGroup="vgSaveField" />
+										</td>
+									</tr>
+								</table>
+							</asp:Panel>
+							<asp:Panel ID="pnlRangeSearchStepDecimal" runat="server" Visible="false">
+								<table class="optionsList fullWidthTable tablePadding5 noBorder">
+									<tr>
+										<td class="tdLabel">
+											<label class="edNews_tooltip" data-tooltip-content="<%=_("RangeSliderStep.HelpText", true) %>" data-tooltip-position="top-right"><%=_("RangeSliderStep.Text") %></label>
+										</td>
+										<td>
+											<asp:TextBox ID="tbRangeSearchStepDecimal" runat="server" Text="0.01" Width="50" />
+										</td>
+									</tr>
+								</table>
+							</asp:Panel>
 						</asp:Panel>
 					</asp:Panel>
 				</asp:Panel>
