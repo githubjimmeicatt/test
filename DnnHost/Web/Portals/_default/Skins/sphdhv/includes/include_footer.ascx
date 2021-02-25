@@ -9,7 +9,7 @@
         <p class="address">
             <span class="address__line address__line--address">Laan 1914 nr. 35, 3818 EX Amersfoort<br />
                 Postbus 1388, 3800 BJ Amersfoort</span>
-            <span class="address__line address__line--phone">088 348 2190 (pensioenbureau)</span>
+            <span class="address__line address__line--phone">088 348 2190 (bereikbaar tussen 9.00 en 17.00 uur)</span>
             <a class="address__line address__line--email" href="mailto:pensioenfonds@rhdhv.com">pensioenfonds@rhdhv.com</a>
         </p>
 
