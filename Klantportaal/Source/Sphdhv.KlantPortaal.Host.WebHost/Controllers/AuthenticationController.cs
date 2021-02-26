@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Security;
+using AllowAnonymousAttribute = System.Web.Mvc.AllowAnonymousAttribute;
 using AuthMethodType = Icatt.OAuth.Contract.AuthMethodType;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
@@ -20,6 +21,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
     public class AuthenticationController : Controller
     {
         // GET: Login (login user op klantportaal
+        [AllowAnonymous]
         public ActionResult Login([FromUri(Name = "relaystate")]string relaystate = null)
         {
             //Return URL is hier de DNN return url
@@ -50,12 +52,15 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             }
             if (Url.IsLocalUrl(authMethod.Url))
             {
+#pragma warning disable SCS0027 // localurl check dus geen issue
                 Redirect(authMethod.Url);
+#pragma warning restore SCS0027
             }
             return new RedirectResult("noLocalUrl");
         }
 
         // ReSharper disable once InconsistentNaming - Naming taken from format used by DIGID API
+        [AllowAnonymous]
         public async Task<ActionResult> VerifyToken([FromUri(Name = "SAMLart")]string SAMLart = null, [FromUri(Name = "RelayState")]string RelayState = null)
         {
             var container = new KlantPortaalFactoryContainer();
@@ -107,7 +112,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
 

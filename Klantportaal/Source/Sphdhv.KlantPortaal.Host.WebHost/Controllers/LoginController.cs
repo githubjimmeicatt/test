@@ -4,12 +4,14 @@ using Sphdhv.KlantPortaal.Host.WebHost.Models;
 using Sphdhv.KlantPortaal.Host.WebHost.Properties;
 using System.Web.Http;
 using System.Web.Mvc;
+using AllowAnonymousAttribute = System.Web.Mvc.AllowAnonymousAttribute;
 
 namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 {
     public class LoginController : Controller
     {
         // Post
+        [AllowAnonymous]
         [System.Web.Http.HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Login(ImpersonateLoginModel loginModel)
         {
@@ -50,6 +52,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 
 
         [System.Web.Http.HttpPost]
+        [AllowAnonymous]
         public ActionResult ResetPasswordToken(RequestPasswordResetTokenModel model)
         {
             var container = new KlantPortaalFactoryContainer();
@@ -69,6 +72,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
 
 
         [System.Web.Http.HttpGet]
+        [AllowAnonymous]
         public ActionResult ResetPassword([FromUri(Name = "token")]string token = null, [FromUri(Name = "userid")]string userid = null, [FromUri(Name = "newpassword")]string newPassword = null, [FromUri(Name = "newpassword")]string newPasswordConfirm = null)
         {
             var container = new KlantPortaalFactoryContainer();
