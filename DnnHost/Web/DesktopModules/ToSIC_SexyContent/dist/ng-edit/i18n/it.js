@@ -4,10 +4,11 @@
       "Save": "SAVE (CTRL + S)",
       "Save.Tip": "save and close (CTRL + S saves and doesn't close)",
       "Exit.Tip": "exit - if something changed, you will be asked to save",
-      "Return.Tip": "return to previous dialog"
+      "Return.Tip": "return to previous dialog",
+      "History.Tip": "history / previous versions"
     }
   },
-  "SaveMode": {
+  "PublishStatus": {
     "Label": "Status:",
     "show": "show",
     "show.Tip": "changes are public",
@@ -35,9 +36,13 @@
   "Message": {
     "Saved": "salvato",
     "Saving": "salvataggio...",
+    "Deleted": "deleted",
+    "Deleting": "deleting...",
+    "DeleteError": "delete failed. Please check console for more information",
     "DebugEnabled": "debug mode enabled",
     "DebugDisabled": "debug mode disabled",
-    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values"
+    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values",
+    "CantSwitchLanguage": "Can't switch languages until current language has all required values"
   },
   "LangMenu": {
     "Translate": "Translate",
@@ -96,7 +101,8 @@
   "ItemCard": {
     "DefaultTitle": "Modifica elemento",
     "SlotUsedTrue": "Questo elemento è possibile modificarlo. Clicca qui per bloccarlo / rimuoverlo e tornare al default.",
-    "SlotUsedFalse": "Questo elemento è bloccato e resterà vuoto/predefinito. Questi valori vengono mostrati per facilarti. Clicca qui per sbloccare se necessario."
+    "SlotUsedFalse": "Questo elemento è bloccato e resterà vuoto/predefinito. Questi valori vengono mostrati per facilarti. Clicca qui per sbloccare se necessario.",
+    "CopyHint": "(copy)"
   },
   "ValidationMessage": {
     "NotValid": "Not valid",
@@ -111,11 +117,14 @@
     "Entity": {
       "Choose": "-- scegli l'elemento per aggiungerlo  --",
       "New": "-- crea nuovo --",
+      "EmptySlot": "empty slot",
       "EntityNotFound": "(elemento non trovato)",
       "DragMove": "trascina l'elemento per riordinare la lista",
       "Edit": "modifica questo elemento",
       "Remove": "rimuovi dalla lista",
-      "Delete": "delete"
+      "Delete": "delete",
+      "Loading": "loading...",
+      "Search": "search"
     },
     "EntityQuery": {
       "QueryNoItems": "No items found",
@@ -159,9 +168,7 @@
       }
     },
     "DateTime": {
-      "Open": "open calendar",
-      "Cancel": "Cancel",
-      "Set": "Set"
+      "Open": "open calendar"
     },
     "String": {
       "Dropdown": "switch to dropdown select",
@@ -189,6 +196,7 @@
     "H4": "H4",
     "H5": "H5",
     "H6": "H6",
+    "Paragraph": "Paragrafo",
     "ContentBlock.Add": "add app or content-block"
   }
 }

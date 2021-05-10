@@ -4,10 +4,11 @@
       "Save": "Speichern (CTRL + S)",
       "Save.Tip": "speichern und schliessen - mit CTRL + S nur speichern",
       "Exit.Tip": "verlassen - bei Änderungen wird zum Speichern aufgefordert",
-      "Return.Tip": "zurück zum vorherigen Dialog"
+      "Return.Tip": "zurück zum vorherigen Dialog",
+      "History.Tip": "Änderungen / Vorversionen"
     }
   },
-  "SaveMode": {
+  "PublishStatus": {
     "Label": "Status:",
     "show": "anzeigen",
     "show.Tip": "Änderungen sind öffentlich",
@@ -34,10 +35,14 @@
   },
   "Message": {
     "Saved": "gespeichert",
-    "Saving": "saving...",
+    "Saving": "speichern...",
+    "Deleted": "gelöscht",
+    "Deleting": "löschen...",
+    "DeleteError": "Löschen hat versagt. Bitte genauen Grund aus der Konsole entnehmen. ",
     "DebugEnabled": "debug aktiviert",
     "DebugDisabled": "debug deaktiviert",
-    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values"
+    "SwitchedLanguageToDefault": "Es fehlen Werte in der Primärsprache, deshalb wurde auf die Standardsprache {{language}} umgestellt.",
+    "CantSwitchLanguage": "Sprachwechsel erst möglich wenn alle Pflichtfelder in der aktuellen Sprache befüllt sind"
   },
   "LangMenu": {
     "Translate": "Übersetzen",
@@ -96,7 +101,8 @@
   "ItemCard": {
     "DefaultTitle": "Element bearbeiten",
     "SlotUsedTrue": "Dieses Element kann bearbeitet werden. Klicke um die Bearbeitung zu sperren - eingegebene Werte werden dann mit den Standardwerten ersetzt.",
-    "SlotUsedFalse": "Dieses Element kann nicht bearbeitet werden und zeigt die Standardwerte an. Klicke um das Element freizuschalten."
+    "SlotUsedFalse": "Dieses Element kann nicht bearbeitet werden und zeigt die Standardwerte an. Klicke um das Element freizuschalten.",
+    "CopyHint": "(Kopie)"
   },
   "ValidationMessage": {
     "NotValid": "Ungültig",
@@ -111,11 +117,14 @@
     "Entity": {
       "Choose": "bestehendes Element auswählen",
       "New": "neues Element erstellen",
+      "EmptySlot": "leerer Eintrag",
       "EntityNotFound": "(Element nicht gefunden)",
       "DragMove": "Ziehen um die Liste neu zu ordnen",
       "Edit": "Element bearbeiten",
       "Remove": "Aus Liste entfernen",
-      "Delete": "Löschen"
+      "Delete": "Löschen",
+      "Loading": "lädt...",
+      "Search": "suchen"
     },
     "EntityQuery": {
       "QueryNoItems": "Keine Elemente gefunden",
@@ -159,9 +168,7 @@
       }
     },
     "DateTime": {
-      "Open": "Kalendar öffnen",
-      "Cancel": "Abbrechen",
-      "Set": "Speichern"
+      "Open": "Kalendar öffnen"
     },
     "String": {
       "Dropdown": "Auswahl",
@@ -189,6 +196,7 @@
     "H4": "Ü4",
     "H5": "Ü5",
     "H6": "Ü6",
+    "Paragraph": "Absatz",
     "ContentBlock.Add": "App oder Inhaltsbaustein einfügen"
   }
 }

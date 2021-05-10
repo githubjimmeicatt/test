@@ -4,10 +4,11 @@
       "Save": "SAVE (CTRL + S)",
       "Save.Tip": "save and close (CTRL + S saves and doesn't close)",
       "Exit.Tip": "exit - if something changed, you will be asked to save",
-      "Return.Tip": "return to previous dialog"
+      "Return.Tip": "return to previous dialog",
+      "History.Tip": "history / previous versions"
     }
   },
-  "SaveMode": {
+  "PublishStatus": {
     "Label": "Status:",
     "show": "show",
     "show.Tip": "changes are public",
@@ -35,9 +36,13 @@
   "Message": {
     "Saved": "opgeslagen",
     "Saving": "opslaan...",
+    "Deleted": "deleted",
+    "Deleting": "deleting...",
+    "DeleteError": "delete failed. Please check console for more information",
     "DebugEnabled": "debug mode enabled",
     "DebugDisabled": "debug mode disabled",
-    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values"
+    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values",
+    "CantSwitchLanguage": "Can't switch languages until current language has all required values"
   },
   "LangMenu": {
     "Translate": "Translate",
@@ -96,7 +101,8 @@
   "ItemCard": {
     "DefaultTitle": "Bewerk item",
     "SlotUsedTrue": "dit item is open voor bewerken. Klik hier om te vergrendelen / verwijder het an keer terug naar de standaard.",
-    "SlotUsedFalse": "dit item is vergrendeld en zal leeg/standaard blijven. De waarden worden getoond voor uw gemak. Klik hier om te ontgrendelen indien nodig."
+    "SlotUsedFalse": "dit item is vergrendeld en zal leeg/standaard blijven. De waarden worden getoond voor uw gemak. Klik hier om te ontgrendelen indien nodig.",
+    "CopyHint": "(copy)"
   },
   "ValidationMessage": {
     "NotValid": "Not valid",
@@ -111,11 +117,14 @@
     "Entity": {
       "Choose": "bestaand item toevoegen",
       "New": "maak nieuw",
+      "EmptySlot": "empty slot",
       "EntityNotFound": "(item niet gevonden)",
       "DragMove": "drag om de lijst te herordenen",
       "Edit": "bewerk dit item",
       "Remove": "verwijder van lijst",
-      "Delete": "delete"
+      "Delete": "delete",
+      "Loading": "loading...",
+      "Search": "search"
     },
     "EntityQuery": {
       "QueryNoItems": "No items found",
@@ -159,9 +168,7 @@
       }
     },
     "DateTime": {
-      "Open": "open calendar",
-      "Cancel": "Cancel",
-      "Set": "Set"
+      "Open": "open calendar"
     },
     "String": {
       "Dropdown": "switch to dropdown select",
@@ -189,6 +196,7 @@
     "H4": "H4",
     "H5": "H5",
     "H6": "H6",
+    "Paragraph": "Paragraaf",
     "ContentBlock.Add": "app of inhoudsblok toevoegen"
   }
 }

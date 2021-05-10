@@ -4,10 +4,11 @@
       "Save": "SAVE (CTRL + S)",
       "Save.Tip": "save and close (CTRL + S saves and doesn't close)",
       "Exit.Tip": "exit - if something changed, you will be asked to save",
-      "Return.Tip": "return to previous dialog"
+      "Return.Tip": "return to previous dialog",
+      "History.Tip": "history / previous versions"
     }
   },
-  "SaveMode": {
+  "PublishStatus": {
     "Label": "Status:",
     "show": "show",
     "show.Tip": "changes are public",
@@ -35,9 +36,13 @@
   "Message": {
     "Saved": "збережено",
     "Saving": "зберігаємо...",
+    "Deleted": "deleted",
+    "Deleting": "deleting...",
+    "DeleteError": "delete failed. Please check console for more information",
     "DebugEnabled": "debug mode enabled",
     "DebugDisabled": "debug mode disabled",
-    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values"
+    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values",
+    "CantSwitchLanguage": "Can't switch languages until current language has all required values"
   },
   "LangMenu": {
     "Translate": "Translate",
@@ -96,7 +101,8 @@
   "ItemCard": {
     "DefaultTitle": "Редагувати елемент",
     "SlotUsedTrue": "цей елемент відкритий для редагування. Натисніть тут для блокування / видаліть його і поверніть до значення по замовчуванню.",
-    "SlotUsedFalse": "цей елемент заблокований і залишиться пустим або значенням по замовчуванню. Значення наведені для вашої зручності. Натисніть тут для розблокування, якщо необхідно."
+    "SlotUsedFalse": "цей елемент заблокований і залишиться пустим або значенням по замовчуванню. Значення наведені для вашої зручності. Натисніть тут для розблокування, якщо необхідно.",
+    "CopyHint": "(copy)"
   },
   "ValidationMessage": {
     "NotValid": "Not valid",
@@ -111,11 +117,14 @@
     "Entity": {
       "Choose": "додати існуючий елемент",
       "New": "створити новий",
+      "EmptySlot": "empty slot",
       "EntityNotFound": "(елемент не знайдено)",
       "DragMove": "перетягніть для того щоб змінити порядок у списку",
       "Edit": "редагувати цей елемент",
       "Remove": "видалити зі списку",
-      "Delete": "delete"
+      "Delete": "delete",
+      "Loading": "loading...",
+      "Search": "search"
     },
     "EntityQuery": {
       "QueryNoItems": "No items found",
@@ -159,9 +168,7 @@
       }
     },
     "DateTime": {
-      "Open": "open calendar",
-      "Cancel": "Cancel",
-      "Set": "Set"
+      "Open": "open calendar"
     },
     "String": {
       "Dropdown": "switch to dropdown select",
@@ -189,6 +196,7 @@
     "H4": "H4",
     "H5": "H5",
     "H6": "H6",
+    "Paragraph": "Paragraph",
     "ContentBlock.Add": "add app or content-block"
   }
 }

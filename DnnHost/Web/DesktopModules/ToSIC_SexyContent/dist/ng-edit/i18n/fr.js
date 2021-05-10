@@ -4,10 +4,11 @@
       "Save": "SAVE (CTRL + S)",
       "Save.Tip": "save and close (CTRL + S saves and doesn't close)",
       "Exit.Tip": "exit - if something changed, you will be asked to save",
-      "Return.Tip": "return to previous dialog"
+      "Return.Tip": "return to previous dialog",
+      "History.Tip": "history / previous versions"
     }
   },
-  "SaveMode": {
+  "PublishStatus": {
     "Label": "Status:",
     "show": "show",
     "show.Tip": "changes are public",
@@ -35,9 +36,13 @@
   "Message": {
     "Saved": "Enregistré",
     "Saving": "En cours d'enregistrement...",
+    "Deleted": "deleted",
+    "Deleting": "deleting...",
+    "DeleteError": "delete failed. Please check console for more information",
     "DebugEnabled": "debug mode enabled",
     "DebugDisabled": "debug mode disabled",
-    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values"
+    "SwitchedLanguageToDefault": "We have switched language to default {{language}} because it's missing some or all values",
+    "CantSwitchLanguage": "Can't switch languages until current language has all required values"
   },
   "LangMenu": {
     "Translate": "Translate",
@@ -96,7 +101,8 @@
   "ItemCard": {
     "DefaultTitle": "Mise a jour d'item",
     "SlotUsedTrue": "Cet item est en mode modif. Click here to lock / remove it and revert to default.",
-    "SlotUsedFalse": "Cet item est verrouillé et restera vide ou par défault. Les valeurs sont montrées a titre indicatif. Cliquer ici pour déverrouiller si nécessaire."
+    "SlotUsedFalse": "Cet item est verrouillé et restera vide ou par défault. Les valeurs sont montrées a titre indicatif. Cliquer ici pour déverrouiller si nécessaire.",
+    "CopyHint": "(copy)"
   },
   "ValidationMessage": {
     "NotValid": "Not valid",
@@ -111,11 +117,14 @@
     "Entity": {
       "Choose": "-- Choix de l'item a ajouter --",
       "New": "-- Nouveau --",
+      "EmptySlot": "empty slot",
       "EntityNotFound": "(item non trouvé)",
       "DragMove": "ré-ordonner la liste a la souris",
       "Edit": "mettre a jour cet item",
       "Remove": "supprimer de la liste",
-      "Delete": "delete"
+      "Delete": "delete",
+      "Loading": "loading...",
+      "Search": "search"
     },
     "EntityQuery": {
       "QueryNoItems": "No items found",
@@ -159,9 +168,7 @@
       }
     },
     "DateTime": {
-      "Open": "open calendar",
-      "Cancel": "Cancel",
-      "Set": "Set"
+      "Open": "open calendar"
     },
     "String": {
       "Dropdown": "switch to dropdown select",
@@ -189,6 +196,7 @@
     "H4": "H4",
     "H5": "H5",
     "H6": "H6",
+    "Paragraph": "Paragraphe",
     "ContentBlock.Add": "Ajouter une application ou un content-type"
   }
 }
