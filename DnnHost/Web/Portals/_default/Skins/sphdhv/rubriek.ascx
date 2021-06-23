@@ -14,12 +14,12 @@
 
 <%-- Include CSS file(s) --%>
 
-<dnn:DnnCssInclude runat="server" FilePath="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" />
+<dnn:DnnCssInclude runat="server" FilePath="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" />
 <dnn:DnnCssInclude runat="server" PathNameAlias="SkinPath" FilePath="assets/css/main.css" />
 
 <%-- Include JS file(s) --%>
 
-<dnn:DnnJsInclude runat="server" FilePath="//js.icatt-services.nl/js/pgwbrowser/1.2/pgwbrowser.min.js" />
+<dnn:DnnJsInclude runat="server" FilePath="https://js.icatt-services.nl/js/pgwbrowser/1.2/pgwbrowser.min.js" HtmlAttributesAsString="integrity:sha384-leBYE1Crk5R0v605Mdl109nz8SWT0HFwaVc0GgAzw4JQiq5J0GvN3tkVaKByT/ps,crossorigin:anonymous"/>
 <dnn:DnnJsInclude runat="server" PathNameAlias="SkinPath" FilePath="assets/js/main.js" />
 
 <%-- Skin HTML --%>

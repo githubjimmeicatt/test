@@ -16,7 +16,7 @@ namespace Sphdhv.Saml.Metadata.Console
             string certificateThumbprint;
             MetadataConfiguration metadataConfiguration;
             CreateProductionConfig(out certificateThumbprint, out metadataConfiguration);
-           // CreateAcceptConfig(out certificateThumbprint, out metadataConfiguration);
+            //CreateAcceptConfig(out certificateThumbprint, out metadataConfiguration);
             GenerateMetadataFile(certificateThumbprint, metadataConfiguration);
 
         }
@@ -32,7 +32,7 @@ namespace Sphdhv.Saml.Metadata.Console
             var assertionConsumerServiceEndpointAcceptMijnDhv = "https://mijn.accept.pensioenfondshaskoningdhv.nl/DesktopModules/Sphdhv/KlantPortaal/api/digid/VerifyToken";
 
             var certificateKeyName = "SSO Key"; // AR: Vermoed dat deze niet verplicht is;
-            certificateThumbprint = "db6ebc6098355941e2b741fe54b647a32cca4c63";
+            certificateThumbprint = "7d7434a54ffe00ddfae06369cda7655d3e81a806";
             var id = "_1234567";
 
             // configuration objects
@@ -58,7 +58,7 @@ namespace Sphdhv.Saml.Metadata.Console
             var assertionConsumerServiceEndpointProdMijnDhvRoot = "https://mijn.pensioenfondshaskoningdhv.nl/DesktopModules/Sphdhv/KlantPortaal/api/digid/VerifyToken";
 
             var certificateKeyName = "SSO Key"; // AR: Vermoed dat deze niet verplicht is;
-            certificateSubject = "d0b0f307eef13df6b4e91b4f140c8608d9654522";
+            certificateSubject = "b55b73e241fa4cd60038f633db652fb40bf8c458";
             var id = "_1234567";
 
             // configuration objects
