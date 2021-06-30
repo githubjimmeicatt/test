@@ -19,7 +19,7 @@
 <%@ Register TagPrefix="dnn" TagName="CONTROLPANEL" Src="~/Admin/Skins/controlpanel.ascx" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.Client.ClientResourceManagement" Assembly="DotNetNuke.Web.Client" %>
 
-<dnn:DnnCssInclude runat="server" ID="DnnCssInclude1" FilePath="//fonts.googleapis.com/css?family=Open+Sans:600,400"></dnn:DnnCssInclude>
+<dnn:DnnCssInclude runat="server" ID="DnnCssInclude1" FilePath="https://fonts.googleapis.com/css?family=Open+Sans:600,400"></dnn:DnnCssInclude>
 <dnn:DnnCssInclude runat="server" ID="OwlCarouselCss" FilePath="assets/css/owl.carousel.css" PathNameAlias="SkinPath"></dnn:DnnCssInclude>
 <dnn:DnnCssInclude runat="server" ID="MainCss" FilePath="assets/css/main.min.css" PathNameAlias="SkinPath"></dnn:DnnCssInclude>
 
