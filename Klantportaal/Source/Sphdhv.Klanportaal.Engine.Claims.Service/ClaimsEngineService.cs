@@ -22,8 +22,7 @@ namespace Sphdhv.KlantPortaal.Engine.Claims.Service
 
         private static object[] BsnMappingTable = new[]{
             //            usernm,  digid bsn  , sph bsn  , sph dossiernr, digid email
-            new object[] {"wapppie1980", "137999057", 079180978, "0000309576", "??"},
-            new object[] {"digid1", "900132188", 178424912, "0000307944", "??"},
+            new object[] {"digid1","900132188", 178424912, "0000307944", "??"},
             new object[] {"digid1", "900132206", 292634110, "0000307949", "??"},
             new object[] {"digid1", "900132218", 279618013, "0000307950", "??"},
             new object[] {"digid1", "900132231", 70704703, "0000308222", "??"},
