@@ -149,6 +149,7 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                         }
                         catch (Exception)
                         {
+                            result.RequestMessage.RequestUri = null; //geen mogelijke BSN in logging
                             Log.Warning("Unable to parse {@response}", result);
                             return default;
                         }
