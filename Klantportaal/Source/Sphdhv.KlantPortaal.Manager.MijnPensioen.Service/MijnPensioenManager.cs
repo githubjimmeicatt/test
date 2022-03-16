@@ -49,10 +49,17 @@ namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service
             {
                 return null;
             }
+            var isStaging = Properties.Settings.Default.IsStaging;
 
             var proxy = FactoryContainer.ProxyFactory.CreateProxy<ICorrespondentieAccess>(Context);
             var accessResponse = await proxy.Overzicht();
-            var filteredDocuments = accessResponse.Items.Where(d => d.AanmaakDatum.HasValue && d.AanmaakDatum.Value > new DateTime(2017, 1, 1) && d.Categorie == "Pensioenopgaven" && d.Type == "Pensioenopgave");
+            var filteredDocuments = accessResponse.Items
+                .Where(d => d.AanmaakDatum.HasValue && d.AanmaakDatum.Value > new DateTime(2017, 1, 1)
+                && (
+                        (d.Categorie == "Pensioenopgaven" && d.Type == "Pensioenopgave")
+                        || isStaging
+                    )
+                );
 
             var overzicht = new CorrespondentieOverzicht
             {
