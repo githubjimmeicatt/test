@@ -142,8 +142,17 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                     }
                     else
                     {
-                        var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
-                        Log.Error("{Error}", error);
+                        try
+                        {
+                            var error = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorData>(data);
+                            Log.Error("{Error}", error);
+                        }
+                        catch (Exception)
+                        {
+                            result.RequestMessage.RequestUri = null; //geen mogelijke BSN in logging
+                            Log.Warning("Unable to parse {@response}", result);
+                            return default;
+                        }
                     }
 
                     return serialized;
@@ -167,7 +176,7 @@ namespace Sphdhv.DeelnemerPortalApi.Client
                 store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
 
-                var find = store.Certificates.Find(X509FindType.FindBySubjectName, certificateSubject, Properties.Settings.Default.CertificateMustBeValid); //CBA Client Authentication
+                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, certificateSubject, Properties.Settings.Default.CertificateMustBeValid); //CBA Client Authentication
                 cert = find.OfType<X509Certificate2>()
                     .Where(c => c.NotBefore <= time.UtcNow && c.NotAfter >= time.UtcNow)
                     .OrderByDescending(c => c.NotBefore) //Meest recent geldig geworden
