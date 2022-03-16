@@ -57,7 +57,7 @@ namespace Sphdhv.KlantPortaal.Manager.MijnPensioen.Service
                 .Where(d => d.AanmaakDatum.HasValue && d.AanmaakDatum.Value > new DateTime(2017, 1, 1)
                 && (
                         (d.Categorie == "Pensioenopgaven" && d.Type == "Pensioenopgave")
-                        || (isStaging && (d.Type == "1" || d.Type == "8"))
+                        || isStaging
                     )
                 );
 
