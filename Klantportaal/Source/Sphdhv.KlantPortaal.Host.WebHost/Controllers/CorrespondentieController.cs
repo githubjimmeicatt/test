@@ -36,6 +36,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
         }
 
         [HttpGet]
+        [AuthenticationExceptionFilter]
         [GeneralExceptionFilter ]
         public async Task<HttpResponseMessage> OpenFile(string documentId)
         {
