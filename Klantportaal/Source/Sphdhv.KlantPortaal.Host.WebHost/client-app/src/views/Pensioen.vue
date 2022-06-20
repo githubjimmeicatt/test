@@ -6,16 +6,14 @@
             <p>U kunt uw pensioenoverzicht bekijken op <a target="_blank" href="//www.mijnpensioenoverzicht.nl">mijnpensioenoverzicht.nl</a>.</p>
 
             <a class="logo-link" target="_blank" href="//www.mijnpensioenoverzicht.nl">
-                <img :src="require('../assets/mijnpensioenoverzicht.png')"/>
+                <img :src="require('../assets/mijnpensioenoverzicht.png')" />
             </a>
 
-            <div v-if="$store.state.pension && $store.state.pension.IsActief">
-                <p>Meer inzicht in je financiële situatie en pensioen? Maak een berekening op <a target="_blank" href="//www.pensioenpod.nl">Pensioenpod.nl</a>.</p>
-
-                <a class="logo-link" target="_blank" href="//www.pensioenpod.nl">
-                    <img :src="require('../assets/pensioenpod.svg')"/>
-                </a>
-            </div>
+            <article>
+                <p>Tot voor kort stelden wij de tool PensioenPod beschikbaar om je te helpen meer inzicht in je financi&#235;le situatie bij pensionering te krijgen.</p>
+                <p>Omdat we onvoldoende feedback van PensioenPod kregen over aantallen en gebruik van de tool om vast te stellen of de tool aan de verwachtingen voldeed hebben we besloten de toegang tot deze tool van onze website te verwijderen.</p>
+                <p>We verwijzen je naar je UPO voor meer inzicht in je pensioen bij ons pensioenfonds en naar <a href="//www.mijnpensioenoverzicht.nl" target=”_blank”>mijn pensioenoverzicht</a> voor meer inzicht in het totale pensioen dat je al opgebouwd hebt en het verwachte pensioenbedrag na pensionering, inclusief de AOW. En natuurlijk kan je altijd bij ons <a href="https://www.pensioenfondshaskoningdhv.nl/Home/Over-het-pensioenfonds/Pensioenbureau" target=”_blank”>Pensioenbureau</a> terecht voor vragen over je pensioen.</p>
+            </article>
 
         </div>
     </div>

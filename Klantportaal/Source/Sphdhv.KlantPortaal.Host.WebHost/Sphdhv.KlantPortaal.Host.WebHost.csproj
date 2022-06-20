@@ -741,10 +741,13 @@
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
-   <!-- hebben we dit nodig?? zo ja, dan moeten we vs op de server updaten? nu werkt het lokaal niet als je geen oude vs versie hebt-->
-  <!--
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v17.0\WebApplications\Microsoft.WebApplication.targets" /> 
-  -->
+   <!-- Werkt lokaal niet als je geen oude vs versie hebt. 
+		temp fix: kopie van de v17.0 map maken en die v16.0 noemen 
+		staat in  C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VisualStudio
+		todo:
+		pad weer aanpassen naar v17.0 maar dan moet eerts een nieuwere versie geinstalleerd worden op de buildserver 
+		-->
+  
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v16.0\WebApplications\Microsoft.WebApplication.targets" /> 
 
 </Project>
