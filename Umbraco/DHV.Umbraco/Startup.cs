@@ -116,9 +116,6 @@ namespace Wsg.CorporateUmbraco
                 }
             });
 
-            //static files worden per RequestPath geconfigureerd
-            app.UseSecureStaticFiles(_env);
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
