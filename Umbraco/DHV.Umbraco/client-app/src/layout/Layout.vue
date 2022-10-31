@@ -1,0 +1,337 @@
+<template>
+  <slot
+    name="header"
+    :menu="menu"
+  >
+    <the-header />
+  </slot>
+  <main>
+    <slot
+      name="main"
+      :content="content"
+    />
+  </main>
+  <slot
+    name="footer"
+    :menu="menu"
+  >
+    <the-footer
+      :menu="menu"
+    />
+  </slot>
+</template>
+
+<script>
+import { inject } from 'vue'
+import TheHeader from '../components/TheHeader.vue'
+import TheFooter from '../components/TheFooter.vue'
+
+export default {
+  components: { TheHeader, TheFooter },
+  props: {
+    theme: {
+      type: String,
+      default: '',
+    },
+  },
+  setup() {
+    const menu = inject('menu')
+    const content = inject('content')
+    return {
+      menu,
+      content,
+    }
+  },
+}
+</script>
+
+<style lang="scss">
+@import "../assets/scss/_mixins.scss";
+@import "nprogress/nprogress.css";
+
+#nprogress {
+  .bar {
+    background: var(--color-accent-1) !important;
+    height:3px !important;
+  }
+  .peg {
+    box-shadow: 0 0 10px var(--color-accent-1), 0 0 5px var(--color-accent-1);
+  }
+  .spinner  .spinner-icon {
+    border-top-color: var(--color-accent-1);
+    border-left-color: #FFBB00;
+    width:30px !important;
+    height:30px !important;
+
+  }
+}
+
+@include fonts;
+
+p.richtext, .richtext p {
+  line-height: 1.5rem;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+body {
+  max-width: 100vw;
+  font-family: 'Sarabun', sans-serif;
+}
+
+textarea {
+  font: inherit;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+html {
+  box-sizing: border-box;
+
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+:root {
+  // base variables
+
+  --space-smallest: 0.25rem;
+  --space-smaller: 0.5rem;
+  --space-small: 1rem;
+  --space-medium: 2.5rem;
+  --space-large: 4rem;
+  --space-larger: 8rem;
+  --space-largest: 11.5rem;
+
+  --dynamic-spacing-medium: max(1rem, calc(50vw - var(--card-width) * 1.5 - var(--card-gap)));
+  --dynamic-spacing-large: max(1rem, calc(50vw - var(--card-width-large) - 1.75rem));
+  --gap-medium: #{$gap-medium};
+
+  --card-gap: #{$gap-medium};
+  --card-border: #{$card-border};
+  --card-width: #{$card-width};
+  --card-width-small: #{$card-width-small};
+  --card-width-large: #{$card-width-large};
+
+  --card-two-width: #{$card-two-width};
+
+  --card-three-width: #{$card-three-width};
+
+  --card-four-width: #{$card-four-width};
+
+.arrow-before::before {
+    @include arrow-inline();
+    margin-right: 0.5rem;
+}
+
+.arrow-after::after {
+    @include arrow-inline();
+    margin-left: 0.5rem;
+}
+  //themes
+  --color-background-1: #fff4ec;
+  --color-background-2: rgb(232,246,246);
+
+  //pvj
+  --color-pvj-base: rgb(0,111,71);
+  --color-pvj-accent-1: rgb(216,166,35);
+  --color-pvj-accent-2: rgb(29,168,161);
+  --color-pvj-accent-1-dark: rgb(216,166,35);
+  --color-pvj-accent-2-dark: rgb(34,173,166);
+  //djgb
+  --color-djgb-base: rgb(0,117,145);
+  --color-djgb-accent-1: rgb(36,171,222);
+  --color-djgb-accent-2: rgb(240,140,62);
+  --color-djgb-accent-1-dark: rgb(36,171,222);
+  --color-djgb-accent-2-dark: rgb(245, 145, 67);
+  //jbjr
+  --color-jbjr-base: rgb(0,70,117);
+  --color-jbjr-accent-1: rgb(135,188,87);
+  --color-jbjr-accent-2: rgb(36,171,222);
+  --color-jbjr-accent-1-dark: rgb(135,188,87);
+  --color-jbjr-accent-2-dark: rgb(41,176,227);
+  //wsgv
+  --color-wsgv-base: rgb(0, 117, 145);
+  --color-wsgv-accent-1: rgb(195,85,0);
+  --color-wsgv-accent-2: rgb(69, 133, 10);
+  --color-wsgv-accent-1-dark: rgb(190, 80, 0);
+  --color-wsgv-accent-2-dark: rgb(64, 128, 5);
+  //expect
+  --color-expect-base: rgb(0, 70, 117);
+  --color-expect-accent-1: rgb(29,168,161);
+  --color-expect-accent-2: rgb(216, 166, 35);
+  --color-expect-accent-1-dark: rgb(29,168,161);
+  --color-expect-accent-2-dark: rgb(216, 166, 35);
+
+  --color-error: rgb(210,21,21);
+  --color-background-default:   rgb(232,246,246);
+}
+
+.PVJ {
+  --color-base: var(--color-pvj-base);
+  --color-accent-1: var(--color-pvj-accent-1);
+  --color-accent-1-dark: var(--color-pvj-accent-1-dark);
+  --color-accent-2: var(--color-pvj-accent-2);
+  --color-button: var(--color-pvj-accent-2);
+  --color-button-hover: var(--color-pvj-accent-2-dark);
+}
+
+.DJGB {
+  --color-base: var(--color-djgb-base);
+  --color-accent-1: var(--color-djgb-accent-1);
+  --color-accent-1-dark: var(--color-djgb-accent-1-dark);
+  --color-accent-2: var(--color-djgb-accent-2);
+  --color-button: var(--color-djgb-accent-2);
+  --color-button-hover: var(--color-djgb-accent-2-dark);
+}
+
+.JBJR{
+  --color-base: var(--color-jbjr-base);
+  --color-accent-1: var(--color-jbjr-accent-1);
+   --color-accent-1-dark: var(--color-jbjr-accent-1-dark);
+  --color-accent-2: var(--color-jbjr-accent-2);
+  --color-button: var(--color-jbjr-accent-2);
+  --color-button-hover: var(--color-jbjr-accent-2-dark);
+}
+
+.WSGV{
+  --color-base: var(--color-wsgv-base);
+  --color-accent-1: var(--color-wsgv-accent-1);
+  --color-accent-1-dark: var(--color-wsgv-accent-1-dark);
+  --color-accent-2: var(--color-wsgv-accent-2);
+  --color-button: var(--color-wsgv-accent-2);
+  --color-button-hover: var(--color-wsgv-accent-2-dark);
+
+  .prefix {
+    color: white; // uitzondering. onder protest :(
+  }
+}
+
+.Expect {
+  --color-base: var(--color-expect-base);
+  --color-accent-1: var(--color-expect-accent-1);
+  --color-accent-1-dark: var(--color-expect-accent-1-dark);
+  --color-accent-2: var(--color-expect-accent-2);
+  --color-button: var(--color-expect-accent-2);
+  --color-button-hover: var(--color-expect-accent-2-dark);
+}
+
+.cta {
+  @include button-default;
+}
+
+.container {
+  padding: 5rem var(--dynamic-spacing-medium);
+}
+
+main > section {
+  background-color: white;
+  z-index: 0;
+
+  &.cards {
+    background-color: var(--color-background-2);
+  }
+
+  &:only-child {
+    flex: 1;
+  }
+}
+
+h1 {
+  font-size: 2rem;
+}
+h1, h2, h3, a {
+  color: var(--color-base);
+}
+
+h3 {
+  font-size: 1.625rem;
+}
+
+h1:first-child, h2:first-child, section > h2  {
+  margin-block-start: 0;
+}
+
+.richtext {
+  max-width: 50rem;
+
+  h1 {
+    margin-block-end: 0;
+  }
+
+  img {
+    width: 100%;
+    height: unset;
+    object-fit: contain;
+    display: block;
+    background-color: #F7F7F7;
+    padding: 1rem;
+    margin: 2rem 0;
+    max-height: 25rem;
+  }
+
+  .large img {
+    max-height: 50rem;
+  }
+}
+
+.screen-reader-only {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.sidebar  {
+  --sidebar-gap: var(--space-medium);
+  --header-width: calc(50vw + var(--card-width) / 2 + var(--card-gap) / 2);
+  --article-width: calc(var(--header-width) - var(--dynamic-spacing-medium) - var(--sidebar-gap));
+  display: grid;
+  gap: var(--sidebar-gap);
+  grid-template-columns: 1fr;
+
+  @include screen-fits-two-cards {
+    grid-template-columns: var(--article-width) 1fr;
+  }
+
+  > ul, > nav > ul  {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    gap: 3rem;
+
+    li {
+      display: block;
+
+      > h1:first-child, h2:first-child {
+        margin-block-start: 0;
+      }
+
+    }
+  }
+}
+
+</style>

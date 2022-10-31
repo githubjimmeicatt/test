@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ClientAppFolder>client-app\</ClientAppFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(ClientAppFolder)**" />
+    <Content Remove="Data\**" />
+    <None Include="$(ClientAppFolder)**" Exclude="$(ClientAppFolder)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="**\*.schema.json" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="**\*.schema.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".htaccess" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".htaccess">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- ivm een bug in de umcbraco client gebruiken we tijdelij niet het Umbraco.Headless.Client.Net package, maar een eigen versie
+    zodra dit in umbraco is hersteld, de losse dll verwijdern en weer het package gebruiken. dan kunnen ook refit en newtonsoft er weer uit!
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
+    <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
+    <PackageReference Include="Schema.NET" Version="11.0.1" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Icatt.Heartcore\Icatt.Heartcore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Umbraco.Headless.Client.Net">
+      <HintPath>..\External\Umbraco.Headless.Client.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\dummy.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
