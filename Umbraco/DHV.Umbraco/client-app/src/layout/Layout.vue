@@ -148,35 +148,18 @@ html {
     @include arrow-inline();
     margin-left: 0.5rem;
 }
-  //themes
-  --color-background-1: #fff4ec;
+  // themes
+  --color-background-1: #fff;
   --color-background-2: rgb(232,246,246);
 
-  //pvj
-  --color-pvj-base: rgb(0,111,71);
-  --color-pvj-accent-1: rgb(216,166,35);
-  --color-pvj-accent-2: rgb(29,168,161);
-  --color-pvj-accent-1-dark: rgb(216,166,35);
-  --color-pvj-accent-2-dark: rgb(34,173,166);
-  //djgb
-  --color-djgb-base: rgb(0,117,145);
-  --color-djgb-accent-1: rgb(36,171,222);
-  --color-djgb-accent-2: rgb(240,140,62);
-  --color-djgb-accent-1-dark: rgb(36,171,222);
-  --color-djgb-accent-2-dark: rgb(245, 145, 67);
-  //jbjr
-  --color-jbjr-base: rgb(0,70,117);
-  --color-jbjr-accent-1: rgb(135,188,87);
-  --color-jbjr-accent-2: rgb(36,171,222);
-  --color-jbjr-accent-1-dark: rgb(135,188,87);
-  --color-jbjr-accent-2-dark: rgb(41,176,227);
-  //wsgv
-  --color-wsgv-base: rgb(0, 117, 145);
-  --color-wsgv-accent-1: rgb(195,85,0);
-  --color-wsgv-accent-2: rgb(69, 133, 10);
-  --color-wsgv-accent-1-dark: rgb(190, 80, 0);
-  --color-wsgv-accent-2-dark: rgb(64, 128, 5);
-  //expect
+  // sph
+  --color-sph-base: rgb(0, 86, 125);
+  --color-sph-accent-1: rgb(0, 134, 168);
+  --color-sph-accent-2: rgb(229, 243, 246);
+  --color-sph-accent-1-dark: rgb(0, 134, 168);
+  --color-sph-accent-2-dark: rgb(229, 243, 246);
+
+  // expect ?
   --color-expect-base: rgb(0, 70, 117);
   --color-expect-accent-1: rgb(29,168,161);
   --color-expect-accent-2: rgb(216, 166, 35);
@@ -187,44 +170,13 @@ html {
   --color-background-default:   rgb(232,246,246);
 }
 
-.PVJ {
-  --color-base: var(--color-pvj-base);
-  --color-accent-1: var(--color-pvj-accent-1);
-  --color-accent-1-dark: var(--color-pvj-accent-1-dark);
-  --color-accent-2: var(--color-pvj-accent-2);
-  --color-button: var(--color-pvj-accent-2);
-  --color-button-hover: var(--color-pvj-accent-2-dark);
-}
-
-.DJGB {
-  --color-base: var(--color-djgb-base);
-  --color-accent-1: var(--color-djgb-accent-1);
-  --color-accent-1-dark: var(--color-djgb-accent-1-dark);
-  --color-accent-2: var(--color-djgb-accent-2);
-  --color-button: var(--color-djgb-accent-2);
-  --color-button-hover: var(--color-djgb-accent-2-dark);
-}
-
-.JBJR{
-  --color-base: var(--color-jbjr-base);
-  --color-accent-1: var(--color-jbjr-accent-1);
-   --color-accent-1-dark: var(--color-jbjr-accent-1-dark);
-  --color-accent-2: var(--color-jbjr-accent-2);
-  --color-button: var(--color-jbjr-accent-2);
-  --color-button-hover: var(--color-jbjr-accent-2-dark);
-}
-
-.WSGV{
-  --color-base: var(--color-wsgv-base);
-  --color-accent-1: var(--color-wsgv-accent-1);
-  --color-accent-1-dark: var(--color-wsgv-accent-1-dark);
-  --color-accent-2: var(--color-wsgv-accent-2);
-  --color-button: var(--color-wsgv-accent-2);
-  --color-button-hover: var(--color-wsgv-accent-2-dark);
-
-  .prefix {
-    color: white; // uitzondering. onder protest :(
-  }
+.WSGV {
+  --color-base: var(--color-sph-base);
+  --color-accent-1: var(--color-sph-accent-1);
+  --color-accent-1-dark: var(--color-sph-accent-1-dark);
+  --color-accent-2: var(--color-sph-accent-2);
+  --color-button: var(--color-sph-base);
+  --color-button-hover: var(--color-sph-accent-1);
 }
 
 .Expect {

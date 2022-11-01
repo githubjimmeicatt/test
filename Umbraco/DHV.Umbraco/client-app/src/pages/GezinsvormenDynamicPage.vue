@@ -5,6 +5,16 @@
     v-bind="content.hero"
     :narrow="!content.heroBig"
   />
+
+  <breadcrumbs class="breadcrumbs" />
+
+  <!-- tmp -->
+  <section class="container">
+    <h1>{{ content.name }}</h1>
+
+    <!-- <pre>{{ content }}</pre> -->
+  </section>
+
   <template
     v-for="(c,i) in main"
     :key="i"

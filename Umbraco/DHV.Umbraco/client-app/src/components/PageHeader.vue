@@ -2,7 +2,6 @@
   <section
     :class="{transparent, narrow, hasImage, hasVideo}"
   >
-    <beeldmerk class="beeldmerk" />
     <img
       v-if="hasImage"
       ref="imageEl"
@@ -50,14 +49,12 @@
 <script>
 import { ref, computed, watch } from 'vue'
 import useUmbracoImage from '../composables/useUmbracoImage'
-
-import Beeldmerk from './Beeldmerk.vue'
 import TheLink from './TheLink.vue'
 import RichText from './RichText.vue'
 
 export default {
   components: {
-    Beeldmerk, TheLink, RichText,
+    TheLink, RichText,
   },
   props: {
     narrow: {
