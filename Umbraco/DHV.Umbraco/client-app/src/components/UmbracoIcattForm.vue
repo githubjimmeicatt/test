@@ -39,7 +39,7 @@
       :is="getInputTemplateType(item.type)"
       v-for="item in displayableFormItems"
       :key="item.alias"
-
+      v-bind="item.attributes"
       :form-element="item"
     />
     <slot
@@ -205,7 +205,7 @@ fieldset{
   color: var(--color-error)
 }
 
-:deep(input[type=text]), :deep(textarea),:deep(input[type=email]), :deep(select) {
+:deep(input[type=text]), :deep(textarea),:deep(input[type=email]), :deep(select), :deep(option) {
   width: 100%;
   padding: 0.5rem;
 }
