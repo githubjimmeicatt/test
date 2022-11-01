@@ -163,10 +163,12 @@ export default function useUmbracoForm(form, confirmation) {
       loading.value = true
       error.value = false
       success.value = false
-      const response = portal.submitForm(form._id, postData)
-      if (response.status > 400) {
-        error.value = true
-      } else {
+      try {
+        /** @type {import('axios').AxiosResponse} */
+        const response = await portal.submitForm(form._id, postData)
+        if (response.status >= 400) {
+          throw new Error(response.statusText)
+        }
         success.value = true
         if (!confirmation && gotoAfterSubmit.value) {
           const redirectUrl = await portal.fetchById(gotoAfterSubmit.value)
@@ -174,9 +176,11 @@ export default function useUmbracoForm(form, confirmation) {
         } else {
           window.scrollTo(0, 0)
         }
+      } catch (e) {
+        error.value = true
+      } finally {
+        loading.value = false
       }
-
-      loading.value = false
     }, FormParser.formats.json)
   }
 
