@@ -45,42 +45,37 @@ export default {
     },
   },
   setup() {
-      return {
-          copyright: `© ${window.UMBRACO_PORTAL?.footerName || ''} ${new Date().getFullYear()}`,
-          getSortedChildren: (  children, title ) => {
+    return {
+      copyright: `© ${window.UMBRACO_PORTAL?.footerName || ''} ${new Date().getFullYear()}`,
+      getSortedChildren: (children, title) => {
+        if (!title || title.toUpperCase() != 'NIEUWS') { return children }
 
-              if (!title || title.toUpperCase() != "NIEUWS")
-                  return children
+        if (!Array.isArray(children)) { return children }
 
-              if (!Array.isArray(children))
-                  return children
+        return children.sort((a, b) => {
+          if (!a || !b) {
+            return 0
+          }
 
-              return children.sort((a, b) => {
+          let compareDateA = Date.parse(a.updateDate)
+          if (isNaN(compareDateA)) {
+            compareDateA = Date.parse(a.createDate)
+          }
+          if (isNaN(compareDateA)) {
+            return 1
+          }
 
-                  if (!a || !b) {
-                      return 0;
-                  }
+          let compareDateB = Date.parse(b.updateDate)
+          if (isNaN(compareDateB)) {
+            compareDateB = Date.parse(b.createDate)
+          }
+          if (isNaN(compareDateB)) {
+            return -1
+          }
 
-                  let compareDateA = Date.parse(a.updateDate);
-                  if (isNaN(compareDateA)) {
-                      compareDateA = Date.parse(a.createDate); 
-                  }
-                  if (isNaN(compareDateA)) {
-                      return 1;
-                  }
-
-                  let compareDateB = Date.parse(b.updateDate);
-                  if (isNaN(compareDateB)) {
-                      compareDateB = Date.parse(b.createDate);
-                  }
-                  if (isNaN(compareDateB)) {
-                      return -1;
-                  }
-
-
-                  return compareDateB - compareDateA;
-              });
-        }
+          return compareDateB - compareDateA
+        })
+      },
     }
   },
 }
@@ -92,7 +87,7 @@ footer {
   flex-direction: column;
   gap: 5rem;
   align-items: flex-start;
-  background-color: var(--color-accent-1);
+  background-color: var(--color-base);
   color: white;
   padding: 5rem var(--dynamic-spacing-medium);
   display: flex;
