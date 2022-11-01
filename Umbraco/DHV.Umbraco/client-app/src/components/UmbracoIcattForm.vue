@@ -42,14 +42,17 @@
 
       :form-element="item"
     />
-    <slot 
-          name="submit"
-          :onSubmit="onSubmit">
-        <button class="form-button is-submit"
-                type="button"
-                @click="onSubmit">
-            Verzenden
-        </button>
+    <slot
+      name="submit"
+      :onSubmit="onSubmit"
+    >
+      <button
+        class="form-button is-submit"
+        type="button"
+        @click="onSubmit"
+      >
+        Verzenden
+      </button>
     </slot>
   </vue-form>
 </template>
@@ -202,16 +205,13 @@ fieldset{
   color: var(--color-error)
 }
 
-::v-deep(input[type=text]), ::v-deep(textarea) {
+:deep(input[type=text]), :deep(textarea),:deep(input[type=email]), :deep(select) {
   width: 100%;
+  padding: 0.5rem;
 }
 
 ::v-deep(input[type=date])  {
   display: block;
-}
-
-::v-deep(input)  {
-  padding: 0.5rem;
 }
 
  form {

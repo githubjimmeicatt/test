@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Mail;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -11,7 +10,7 @@ namespace Wsg.CorporateUmbraco.Features.Forms
 {
     public class SendFormSubmittedNotification
     {
-        private SmtpClient _smtpClient;
+        private readonly SmtpClient _smtpClient;
         private readonly IOptions<FormsConfig> _config;
 
         public SendFormSubmittedNotification(SmtpClient smtpClient, IOptions<FormsConfig> config)
@@ -20,16 +19,29 @@ namespace Wsg.CorporateUmbraco.Features.Forms
             _config = config;
         }
 
-        public async Task SendAsync(string formId, CancellationToken token)
+        public async Task SendAsync(string formId, JsonElement formData, CancellationToken token)
         {
             var formConfig = GetFormConfigOrDefault(formId);
 
-            if(formConfig == null)
+            if (formConfig == null)
             {
                 return;
             }
 
             var formsBackofficeDomain = _config.Value.FormsBackofficeDomain;
+
+            var to = formConfig.To;
+
+            if (formId == "b357efe2-46f0-4993-8775-c1e8bf54c50a")
+            {
+                TryGetToAddressForContactFormulier(formData, out to);
+            }
+
+            if (string.IsNullOrWhiteSpace(to))
+            {
+                return;
+            }
+
             using var message = new MailMessage()
             {
                 IsBodyHtml = true,
@@ -38,7 +50,7 @@ namespace Wsg.CorporateUmbraco.Features.Forms
                 Subject = formConfig.Subject
             };
 
-            message.To.Add(new MailAddress(formConfig.To));
+            message.To.Add(new MailAddress(to));
             message.ReplyToList.Add(new MailAddress(formConfig.ReplyTo));
 
             await _smtpClient.SendMailAsync(message, token);
@@ -55,6 +67,18 @@ namespace Wsg.CorporateUmbraco.Features.Forms
             }
 
             return formConfig;
+        }
+
+        private static bool TryGetToAddressForContactFormulier(JsonElement formData, out string to)
+        {
+            to = null;
+
+            if (formData.ValueKind == JsonValueKind.Object && formData.TryGetProperty("subject", out var subjectProp))
+            {
+                to = subjectProp.GetString();
+            }
+
+            return string.IsNullOrWhiteSpace(to);
         }
     }
 }
