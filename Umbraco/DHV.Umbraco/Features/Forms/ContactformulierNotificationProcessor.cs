@@ -22,7 +22,7 @@ namespace DHV.Umbraco.Features.Forms
 
         public async Task Process(IFormSubmission formInstance, CancellationToken cancellationToken)
         {
-            if (_config == null || !TryGetToAddressForContactFormulier(formInstance.Body, out var to))
+            if (_config == null || !TryGetToAddress(formInstance.Body, out var to))
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace DHV.Umbraco.Features.Forms
             await _smtpClient.SendMailAsync(message, cancellationToken);
         }
 
-        private static bool TryGetToAddressForContactFormulier(JsonElement formData, out string to)
+        private static bool TryGetToAddress(JsonElement formData, out string to)
         {
             to = null;
 
