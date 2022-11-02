@@ -1,0 +1,89 @@
+# ASP.NET Core
+
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - Umbraco/*
+pool:
+  name: Default
+
+stages:
+- stage: Build_Test
+
+  variables:
+    projectPath: Umbraco/DHV.Umbraco/DHV.Umbraco.csproj
+    NPM_PROJECT_DIR: Umbraco/DHV.Umbraco
+    NPM_WORKING_DIR: $(NPM_PROJECT_DIR)/client-app
+
+  jobs:
+  - job: Build_Backend
+    steps:
+    - task: UseDotNet@2
+      displayName: 'use dotnet 6'
+      inputs:
+        packageType: 'sdk'
+        version: '6.x'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+        command: 'restore'
+        projects: '$(projectPath)'
+        feedsToUse: 'select'
+        vstsFeed: '14f1be66-fc8b-4820-8fbd-ee97d11a18ef'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: '$(projectPath)'
+        arguments: '-c Release --output $(build.artifactstagingdirectory) --no-restore'
+        modifyOutputPath: false
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'backend'
+
+  - job: Build_Frontend
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '16.13.x'
+        checkLatest: true
+  #- task: Npm@1  
+  #  displayName: 'npm cache verify'
+  #  inputs:
+  #    command: 'custom'
+  #    workingDir: '$(WORKING_DIR)'
+  #    customCommand: 'cache verify'
+
+  #- task: Npm@1
+  #  displayName: 'npm cache clean'
+  #  inputs:
+  #    command: 'custom'
+  #    workingDir: '$(WORKING_DIR)'
+  #    customCommand: 'cache clean -f'
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        command: install
+        workingDir: '$(NPM_WORKING_DIR)'
+    - task: Npm@1
+      displayName: 'npm run build'
+      inputs:
+        command: custom
+        workingDir: '$(NPM_WORKING_DIR)'
+        customCommand: 'run build'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(NPM_PROJECT_DIR)/wwwroot'
+        ArtifactName: wwwroot

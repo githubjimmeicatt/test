@@ -1,0 +1,107 @@
+$gap-medium: 2.5rem;
+$card-width: 28rem;
+$card-border: 0.5rem;
+$card-width-small: calc(((#{$card-width}) * 3 - #{$gap-medium}) / 4);
+$card-width-large: 35rem;
+
+$card-two-width: calc(#{$card-width-large} * 2 + #{$gap-medium} + #{$card-border} * 2);
+$card-three-width: calc(#{$card-width} * 3 + #{$gap-medium} * 2 + #{$card-border} * 3);
+$card-four-width: calc(#{$card-width-small} * 4 + #{$gap-medium} * 3 + #{$card-border} * 4);
+
+$arrow-icon: url("/assets/arrow.svg");
+
+@mixin screen-fits-two-cards {
+    @media only screen and (min-width: $card-two-width) {
+        @content;
+    }
+}
+
+@mixin screen-fits-three-cards {
+    @media only screen and (min-width: $card-three-width) {
+        @content;
+    }
+}
+
+@mixin screen-fits-four-cards {
+    @media only screen and (min-width: $card-four-width) {
+        @content;
+    }
+}
+
+@mixin arrow-inline($color: white) {
+    content: "";
+    mask: $arrow-icon;
+    -webkit-mask: $arrow-icon;
+    width: 0.75rem;
+    height: 0.6rem;
+    display: inline-block;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: $color;
+}
+
+@mixin button-default {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    color: white;
+    text-decoration: none;
+    background-color: var(--color-button);
+    margin-top: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 1px;
+    transition: 0.4s;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--color-button-hover);
+    }
+
+    &::before {
+        @include arrow-inline();
+        margin-right: 0.5rem;
+    }
+}
+
+@mixin fonts {
+    /* latin */
+    @font-face {
+        font-family: "Sarabun";
+        font-style: normal;
+        font-weight: 200;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YNpoilss6w.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,
+            U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin */
+    @font-face {
+        font-family: "Sarabun";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YL5rilss6w.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,
+            U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin */
+    @font-face {
+        font-family: "Sarabun";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YOZqilss6w.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,
+            U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin */
+    @font-face {
+        font-family: "Sarabun";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YMptilss6w.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,
+            U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+}

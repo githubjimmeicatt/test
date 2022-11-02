@@ -1,0 +1,90 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+@using Wsg.CorporateUmbraco.Features.Renderer
+@model PageResponse
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://media.umbraco.io" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  @if (!string.IsNullOrWhiteSpace(Model.Head.Title))
+  {
+    <title>@Model.Head.Title</title>
+  }
+
+  @if (!string.IsNullOrWhiteSpace(Model.Head.JsonLd))
+  {
+    <script type="application/ld+json">@Html.Raw(Model.Head.JsonLd)</script>
+  }
+
+  @foreach (var meta in Model.Head.Meta)
+  {
+	<meta property="@meta?.Property" name="@meta?.Name" content="@meta?.Content" />
+  }
+
+  <!-- Google Tag Manager -->
+  @if (!string.IsNullOrWhiteSpace(Model.Head?.Portal?.GtmId))
+  {
+<script nws-csp-add-nonce="true">
+(function (w, d, s, l, i) {
+  w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+  }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      'https://www.googletagmanager.com/gtm.js?id=' + i + dl; var n = d.querySelector('[nonce]');
+  n && j.setAttribute('nonce', n.nonce || n.getAttribute('nonce')); f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', '@Model.Head.Portal.GtmId');</script>
+  }
+  <!-- End Google Tag Manager -->
+
+  <script type="text/javascript" nws-csp-add-nonce="true">
+    @if (!string.IsNullOrWhiteSpace(Model.Head.InitialState))
+    {
+    @:window.UMBRACO_INITIAL_STATE = @Html.Raw(Model.Head.InitialState)
+    }
+    @if (Model.Head.Portal != null){
+    @:window.UMBRACO_PORTAL = @Html.Raw(Json.Serialize(Model.Head.Portal))
+    }
+	@if (Model.Head.Menu != null){
+    @:window.UMBRACO_MENU = @Html.Raw(Json.Serialize(Model.Head.Menu))
+    }
+  </script>
+
+
+  <environment exclude="Development">
+    @foreach (var asset in Model.Assets)
+    {
+      if (asset is Script script)
+      {
+        <script type="@script.Type" src="@script.Src"></script>
+      }
+      else if (asset is Link link)
+      {
+        <link href="@link.Href" rel="@link.Rel" type="@link.Type" as="@link.As" crossorigin="@link.CrossOrigin" />
+      }
+    }
+  </environment>
+</head>
+<body>
+  <div id="app"></div>
+  <environment names="Development">
+    <script type="module" src="http://localhost:33446/@@vite/client"></script>
+    <script type="module" src="http://localhost:33446/src/main.js"></script>
+  </environment>
+
+  <!-- Google Tag Manager (noscript) -->
+  @if (!string.IsNullOrWhiteSpace(Model.Head?.Portal?.GtmId))
+  {
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=@Model.Head.Portal.GtmId"
+              height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+  }
+    <!-- End Google Tag Manager (noscript) -->
+
+  </body>
+</html>
