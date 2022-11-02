@@ -268,28 +268,15 @@ section {
 
   //narrow variant
 
-  // &.narrow {
-  //   @include screen-fits-two-cards {
-  //     --distance-from-middle: calc(var(--card-width) / 2 + var(--card-gap) / 2);
-  //     header {
-  //       margin-top: 0;
-  //       padding-top: var(--space-large);
-  //       padding-bottom: 4rem;
-  //       max-width: calc(50vw + var(--distance-from-middle));
-  //     }
+  &.narrow {
+    @include screen-fits-two-cards {
+      border-left: solid var(--dynamic-spacing-large) white;
+      border-right: solid var(--dynamic-spacing-large) white;
 
-  //     .beeldmerk {
-  //       width: 37%;
-  //     }
-
-  //     .background {
-  //       position: absolute;
-  //       right: 0;
-  //       top: 0;
-  //       height: 100%;
-  //       max-width: calc(50vw - var(--distance-from-middle));
-  //     }
-  //   }
-  // }
+      header {
+        padding-inline-end: var(--space-medium);
+      }
+    }
+  }
 }
 </style>

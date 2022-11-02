@@ -70,20 +70,20 @@ export default {
 ol {
   display: flex;
   width: 100%;
-  background-color: var(--color-accent-1);
   margin-left: 0;
   margin-right: 0;
   margin-bottom: 0;
-  padding: var(--space-smaller) var(--dynamic-spacing-medium);
-  color: white;
+  padding: var(--space-small) var(--dynamic-spacing-large);
   gap: var(--space-smaller);
-
-  &.isMobile {
-    font-size: .875rem;
-  }
+  font-size: .875rem;
 }
+
 li {
   display: block;
+
+  &.arrow-after::after {
+    background-color: var(--color-base);
+  }
 }
 
 .link {
