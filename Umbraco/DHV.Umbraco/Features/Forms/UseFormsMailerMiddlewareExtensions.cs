@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Wsg.CorporateUmbraco.Features.Forms;
 
 namespace Wsg.CorporateUmbraco
@@ -18,10 +19,12 @@ namespace Wsg.CorporateUmbraco
     public class FormsMailerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<FormsMailerMiddleware> _logger;
 
-        public FormsMailerMiddleware(RequestDelegate next)
+        public FormsMailerMiddleware(RequestDelegate next, ILogger<FormsMailerMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         //scoped lifetime service DI via invoke
@@ -58,9 +61,16 @@ namespace Wsg.CorporateUmbraco
 
             if (shouldSend && httpContext.Response.StatusCode < 300)
             {
-                //send mails affter form is saved in umbraco
-                await notification.SendAsync(formId, root, token);
-                await confirmation.SendAsync(formId, root, token);
+                //send mails affter form is saved in umbraco, don't fail on exceptions
+                try
+                {
+                    await notification.SendAsync(formId, root, token);
+                    await confirmation.SendAsync(formId, root, token);
+                }
+                catch (System.Exception e)
+                {
+                    _logger.LogError(e, "Error sending notification and/or confirmation of form submission");
+                }
             }
         }
     }
