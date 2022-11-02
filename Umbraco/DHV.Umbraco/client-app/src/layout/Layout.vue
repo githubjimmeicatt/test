@@ -170,7 +170,7 @@ html {
   --color-background-default:   rgb(232,246,246);
 }
 
-.WSGV {
+.SPH {
   --color-base: var(--color-sph-base);
   --color-accent-1: var(--color-sph-accent-1);
   --color-accent-1-dark: var(--color-sph-accent-1-dark);

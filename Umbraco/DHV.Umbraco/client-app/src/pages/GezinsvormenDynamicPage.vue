@@ -79,6 +79,7 @@ function mapComponent(props) {
       props,
     }
   }
+
   return {
     component: contentTypeAlias,
     props: {

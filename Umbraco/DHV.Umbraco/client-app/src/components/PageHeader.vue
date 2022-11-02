@@ -217,7 +217,7 @@ section {
         position: relative;
         padding-block: var(--space-smaller);
         padding-inline: var(--space-medium);
-        border-radius: 12px;
+        border-radius: 0.75rem;
         background-color: rgba(229, 243, 246, 0.9);
 
         .title {

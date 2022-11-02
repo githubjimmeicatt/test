@@ -704,6 +704,10 @@ export default {
   //   // visibility: hidden;
   // }
 
+  .cta {
+    border-radius: 1rem;
+  }
+
   button {
     margin-left: 5rem;
     display: none;
