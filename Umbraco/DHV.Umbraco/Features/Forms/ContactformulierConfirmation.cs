@@ -30,7 +30,7 @@ namespace DHV.Umbraco.Features.Forms
             using var message = new MailMessage()
             {
                 IsBodyHtml = true,
-                Body = "<p>Bedankt voor het invullen van het contactformulier.</p>",
+                Body = "<p>Hartelijk dank voor je bericht aan Pensioenfonds HaskoningDHV.</p><p>Dit is een automatisch antwoord.</p><p>Wij streven ernaar binnen enkele werkdagen een reactie te geven op je vraag of je opmerking.</p><p>Met vriendelijke groet,</p><p>Pensioenfonds HaskoningDHV</p>",
                 From = new MailAddress(_config.Value.From),
                 Subject = _config.Value.Subject,
             };
