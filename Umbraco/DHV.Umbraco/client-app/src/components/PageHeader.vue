@@ -24,23 +24,32 @@
     </video>
 
     <header>
-      <p class="prefix">
+      <!-- <p class="prefix">
         {{ subtitle }}
-      </p>
-      <h1>{{ title }}</h1>
-      <rich-text
+      </p> -->
+
+      <ul>
+        <li>
+          <span class="title">{{ title }}</span>
+
+          <the-link
+            v-if="target?.url"
+            :href="target.url"
+            :target="target.target"
+            class="aa"
+            data-gtm-button-type="cta"
+          >
+            <!-- {{ target.name || target.url }} -->
+            Lees meer
+          </the-link>
+        </li>
+      </ul>
+
+      <!-- <rich-text
         v-if="body"
         :body="body"
-      />
-      <the-link
-        v-if="target?.url"
-        :href="target.url"
-        :target="target.target"
-        class="cta"
-        data-gtm-button-type="cta"
-      >
-        {{ target.name ||target.url }}
-      </the-link>
+      /> -->
+
       <slot name="bottom" />
     </header>
   </section>
@@ -123,7 +132,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
 section {
-  color: white;
+  // color: white;
   background-color: var(--color-base);
   position: relative;
   transition: background-color 0ms;
@@ -163,10 +172,12 @@ section {
     object-fit: cover;
     object-position: center;
 
-    @include screen-fits-two-cards {
-      height: 100%;
-      position: absolute;
-    }
+    height: 100%;
+    position: absolute;
+    // @include screen-fits-two-cards {
+    //   height: 100%;
+    //   position: absolute;
+    // }
 
     &.hide {
       opacity: 0;
@@ -179,23 +190,40 @@ section {
       margin: 0;
     }
 
-    font-size: 1.125em;
-    background-color: var(--color-base);
-    padding-top: var(--space-medium);
-    padding-bottom: var(--space-large);
-    padding-left: var(--dynamic-spacing-large);
-    padding-right: max(1rem, calc(100vw - 51rem));
+    font-size: 14px;
 
+    padding-block: var(--space-medium);
+    padding-inline: var(--dynamic-spacing-medium);
+
+    margin-top: 136px;
     @include screen-fits-two-cards {
-      max-width: calc(50vw - 1.75rem);
-      margin-top: 136px;
-      padding-right: var(--space-larger);
+      // max-width: calc(50vw - 1.75rem);
+      // margin-top: 136px;
+      // padding-right: var(--space-larger);
+      padding-left: calc(50vw - 1.75rem);
+      padding-right: var(--dynamic-spacing-large);
     }
 
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      li {
+        padding-block: var(--space-smaller);
+        padding-inline: var(--space-medium);
+        border-radius: 12px;
+        background-color: rgba(229, 243, 246, 0.9);
+
+        .title {
+          display: block;
+        }
+      }
+    }
 
     h1 {
       font-size: 2.25em;
@@ -207,9 +235,9 @@ section {
       line-height: 1.75em;
     }
 
-    ::v-deep(a, h1, h2, h3), h1,h2,h3 {
-      color: white;
-    }
+    // ::v-deep(a, h1, h2, h3), h1,h2,h3 {
+    //   color: white;
+    // }
   }
 
   .prefix {

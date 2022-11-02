@@ -8,13 +8,6 @@
 
   <breadcrumbs class="breadcrumbs" />
 
-  <!-- tmp -->
-  <section class="container">
-    <h1>{{ content.name }}</h1>
-
-    <!-- <pre>{{ content }}</pre> -->
-  </section>
-
   <template
     v-for="(c,i) in main"
     :key="i"
@@ -50,6 +43,10 @@
       v-else-if="c.component === 'richtext'"
       class="container"
     >
+      <h1 v-if="i === 0">
+        {{ content.name }}
+      </h1>
+
       <richtext :body="c.props.body" />
     </section>
     <component
