@@ -54,8 +54,8 @@
 <script>
 
 import { computed } from 'vue'
-import useUmbracoForm from '../../composables/useUmbracoForm'
-import RichText from '../RichText.vue'
+import useUmbracoForm from '../composables/useUmbracoForm'
+import RichText from '../../components/RichText.vue'
 
 export default {
   components: { RichText },

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import UmbracoIcattForm from './library-candidates/UmbracoIcattForm.vue'
+import UmbracoIcattForm from '../icatt-heartcore/components/UmbracoIcattForm.vue'
 import RichText from './RichText.vue'
 import Spinner from '../assets/spinner.svg'
 
