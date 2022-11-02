@@ -1,6 +1,6 @@
 <template>
   <ol
-    v-if="isEnabled"
+    v-show="isEnabled"
     :class="{isMobile}"
   >
     <li

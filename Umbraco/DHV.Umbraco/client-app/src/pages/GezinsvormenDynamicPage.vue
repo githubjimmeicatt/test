@@ -124,6 +124,32 @@ export default defineComponent({
 main > .container {
   --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 
+  &:nth-child(4n+2), &:nth-child(4n+4) {
+    background-color: white;
+
+    :deep(.card) {
+      box-shadow: var(--card-shadow);
+    }
+  }
+
+  &:nth-child(4n+1) {
+    background-color: var(--color-background-1);
+
+    :deep(.card) {
+      box-shadow: none;
+    }
+  }
+
+  &:nth-child(4n+3) {
+    background-color: var(--color-background-2);
+
+    :deep(.card) {
+      box-shadow: none;
+    }
+  }
+}
+
+.pageheader ~ .container {
   &:nth-child(4n+1), &:nth-child(4n+3) {
     background-color: white;
 
@@ -134,38 +160,15 @@ main > .container {
 
   &:nth-child(4n+2) {
     background-color: var(--color-background-1);
+
     :deep(.card) {
       box-shadow: none;
     }
-
   }
 
   &:nth-child(4n+4) {
     background-color: var(--color-background-2);
-    :deep(.card) {
-      box-shadow: none;
-    }
-  }
-}
 
-.pageheader ~ .container {
-  &:nth-child(4n+2), &:nth-child(4n+4) {
-    background-color: white;
-
-    :deep(.card) {
-      box-shadow: var(--card-shadow);
-    }
-  }
-
-  &:nth-child(4n+3) {
-    background-color: var(--color-background-1);
-    :deep(.card) {
-      box-shadow: none;
-    }
-  }
-
-  &:nth-child(4n+1) {
-    background-color: var(--color-background-2);
     :deep(.card) {
       box-shadow: none;
     }

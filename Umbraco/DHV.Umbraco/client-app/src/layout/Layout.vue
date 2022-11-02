@@ -150,7 +150,7 @@ html {
 }
   // themes
   --color-background-1: rgb(229, 243, 246);
-  --color-background-2: rgb(232, 246, 246);
+  --color-background-2: rgb(229, 243, 246);
 
   // sph
   --color-sph-base: rgb(0, 86, 125);
@@ -193,7 +193,7 @@ html {
 }
 
 .container {
-  padding: 4rem var(--dynamic-spacing-large);
+  padding: var(--space-medium) var(--dynamic-spacing-large);
 }
 
 main > section {
