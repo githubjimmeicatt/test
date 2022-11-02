@@ -26,6 +26,7 @@ namespace Icatt.Heartcore.Umbraco
         private readonly IPortalConfig _portalConfig;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UmbracoHeartcoreConfig _umbracoHeartcoreConfig;
+        private readonly Uri _baseUri;
 
         public HeartcoreMediaManager(
             IContentManagementService contentManagement,
@@ -43,6 +44,7 @@ namespace Icatt.Heartcore.Umbraco
             _portalConfig = portalConfig;
             _httpContextAccessor = httpContextAccessor;
             _umbracoHeartcoreConfig = umbracoHeartcoreConfig;
+            _baseUri = new Uri(_umbracoHeartcoreConfig.BackofficeUrl);
         }
 
         public async Task<string> SaveMedia(UmbracoMedia model)
@@ -174,7 +176,7 @@ namespace Icatt.Heartcore.Umbraco
             DeleteFolderRecursive(folder);
 
             // hack: url aanpassen zodat we cache kunnen busten. anders krijgen we de gecachte, geblurde versie van het bestand
-            var alternativeUrl = $"https://{alias}.euwest01.umbraco.io/media/{path}?{Guid.NewGuid():N}";
+            var alternativeUrl = new Uri(_baseUri, $"media/{path}?{Guid.NewGuid():N}").ToString();
             var filePath = await DownloadFile(alternativeUrl, folder);
             var fileName = Path.GetFileName(filePath);
 

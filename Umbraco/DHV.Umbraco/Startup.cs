@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using DHV.Umbraco.Features.Forms;
 using Icatt.Heartcore.Config;
 using Icatt.Heartcore.Umbraco;
+using Icatt.Heartcore.Umbraco.Forms;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,8 +48,7 @@ namespace Wsg.CorporateUmbraco
 
             services.AddHeartcore(Configuration);
             services.AddSingleton<GetAssets>();
-            services.AddScoped<SendFormSubmittedConfirmation>();
-            services.AddScoped<SendFormSubmittedNotification>();
+            services.AddScoped<IFormProcessor, ContactformulierNotificationProcessor>();
 
             var emailConfig = ConfigurationBinder.Get<EmailConfig>(Configuration.GetSection("Email"));
             services.AddScoped((serviceProvider) => new SmtpClient
@@ -119,7 +120,7 @@ namespace Wsg.CorporateUmbraco
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapReverseProxy(x => x.UseFormsMailer());
+                endpoints.MapReverseProxy(x => x.UseUmbracoFormsProcessing());
                 endpoints.MapFallbackToController("Index", "Renderer");
             });
             if (env.IsDevelopment())
