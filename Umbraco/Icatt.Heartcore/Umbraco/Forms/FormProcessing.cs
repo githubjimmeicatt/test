@@ -95,7 +95,7 @@ namespace Icatt.Heartcore.Umbraco.Forms
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e, "Error sending notification and/or confirmation of form submission for {FormId}", formId);
+                    _logger.LogError(e, "Error processing form submission for {FormId}. However, the form is succesfully posted to the Umbraco backoffice.", formId);
                 }
             }
         }
