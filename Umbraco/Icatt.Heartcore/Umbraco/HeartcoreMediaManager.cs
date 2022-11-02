@@ -153,8 +153,8 @@ namespace Icatt.Heartcore.Umbraco
             var alias = parts[2];
 
             //bedankt Umbraco!!! na uploaden in heartcore dev omgeving gewoon zelf de verkeerde media url teruggeven....
-            if (alias != _umbracoHeartcoreConfig.UmbProjectAlias.ToLower()){
-                alias = _umbracoHeartcoreConfig.UmbProjectAlias.ToLower();
+            if (alias != _umbracoHeartcoreConfig.UmbProjectAlias.ToLower())
+            {
                 _log.LogError("{UmbracoMedia} heeft geen correcte umbracoalias ", media.Id); 
             }
             var folder = parts[3];
