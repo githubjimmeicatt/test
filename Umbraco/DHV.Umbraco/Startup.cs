@@ -38,7 +38,8 @@ namespace Wsg.CorporateUmbraco
             services.AddSwaggerGen();
             services.AddHttpContextAccessor();
             services.AddSingleton<IPortalConfig, PortalConfig>();
-            services.Configure<FormsConfig>(Configuration.GetSection("FormsConfig"));
+            services.Configure<ContactFormulierConfirmationConfig>(Configuration.GetSection("ContactFormulierConfirmationConfig"));
+            services.Configure<ContactFormulierNotificationConfig>(Configuration.GetSection("ContactFormulierNotificationConfig"));
 
             services.AddHttpsRedirection(options =>
             {
@@ -47,7 +48,8 @@ namespace Wsg.CorporateUmbraco
 
             services.AddHeartcore(Configuration);
             services.AddSingleton<GetAssets>();
-            services.AddScoped<IFormProcessor, ContactformulierNotificationProcessor>();
+            services.AddScoped<IFormProcessor, ContactformulierNotification>();
+            services.AddScoped<IFormProcessor, ContactformulierConfirmation>();
 
             var emailConfig = ConfigurationBinder.Get<EmailConfig>(Configuration.GetSection("Email"));
             services.AddScoped((serviceProvider) => new SmtpClient

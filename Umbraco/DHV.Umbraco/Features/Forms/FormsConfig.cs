@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-
-namespace DHV.Umbraco.Features.Forms
+﻿namespace DHV.Umbraco.Features.Forms
 {
-    public class FormsConfig
+    public class ContactFormulierNotificationConfig : FormEmailConfig
     {
-        public Form Default { get; set; }
-
-        public IReadOnlyDictionary<string, Form> Forms { get; set; }
     }
 
-    public class Form
+    public class ContactFormulierConfirmationConfig : FormEmailConfig
     {
-        public string Id { get; set; }
+    }
+
+    public class FormEmailConfig
+    {
+        public string FormId { get; set; }
         public string To { get; set; }
         public string ReplyTo { get; set; }
         public string From { get; set; }

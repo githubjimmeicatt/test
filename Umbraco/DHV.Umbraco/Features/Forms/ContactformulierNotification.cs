@@ -7,18 +7,18 @@ using Microsoft.Extensions.Options;
 
 namespace DHV.Umbraco.Features.Forms
 {
-    public class ContactformulierNotificationProcessor : IFormProcessor
+    public class ContactformulierNotification : IFormProcessor
     {
         private readonly SmtpClient _smtpClient;
-        private readonly Form _config;
+        private readonly IOptions<ContactFormulierNotificationConfig> _config;
 
-        public ContactformulierNotificationProcessor(SmtpClient smtpClient, IOptions<FormsConfig> config)
+        public ContactformulierNotification(SmtpClient smtpClient, IOptions<ContactFormulierNotificationConfig> config)
         {
             _smtpClient = smtpClient;
-            _config = config.Value.Forms.TryGetValue("Contactformulier", out var cfConfig) ? cfConfig : config.Value.Default;
+            _config = config;
         }
 
-        public bool ShouldProcess(IFormSubmission formInstance) => _config != null && formInstance.FormDefinitionId == _config.Id;
+        public bool ShouldProcess(IFormSubmission formInstance) => _config.Value != null && formInstance.FormDefinitionId == _config.Value.FormId;
 
         public async Task Process(IFormSubmission formInstance, CancellationToken cancellationToken)
         {
@@ -31,12 +31,16 @@ namespace DHV.Umbraco.Features.Forms
             {
                 IsBodyHtml = true,
                 Body = @$"Er is een formulier ingevuld in de website.<br/>Bekijk <a href=""{formInstance.BackofficeUrl}"">hier</a> de gegevens",
-                From = new MailAddress(_config.From),
-                Subject = _config.Subject
+                From = new MailAddress(_config.Value.From),
+                Subject = _config.Value.Subject,
             };
 
             message.To.Add(new MailAddress(to));
-            message.ReplyToList.Add(new MailAddress(_config.ReplyTo));
+
+            if (!string.IsNullOrWhiteSpace(_config.Value.ReplyTo))
+            {
+                message.ReplyToList.Add(new MailAddress(_config.Value.ReplyTo));
+            }
 
             await _smtpClient.SendMailAsync(message, cancellationToken);
         }
