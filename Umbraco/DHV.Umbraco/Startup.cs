@@ -15,7 +15,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Serilog;
 using Wsg.CorporateUmbraco.Config;
-using Wsg.CorporateUmbraco.Features.Forms;
 using Wsg.CorporateUmbraco.Features.Renderer;
 
 namespace Wsg.CorporateUmbraco

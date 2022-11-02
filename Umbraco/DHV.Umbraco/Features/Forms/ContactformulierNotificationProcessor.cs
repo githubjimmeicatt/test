@@ -2,11 +2,10 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DHV.Umbraco.Features.Forms;
 using Icatt.Heartcore.Umbraco.Forms;
 using Microsoft.Extensions.Options;
 
-namespace Wsg.CorporateUmbraco.Features.Forms
+namespace DHV.Umbraco.Features.Forms
 {
     public class ContactformulierNotificationProcessor : IFormProcessor
     {
