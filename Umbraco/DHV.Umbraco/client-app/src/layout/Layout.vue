@@ -149,7 +149,7 @@ html {
     margin-left: 0.5rem;
 }
   // themes
-  --color-background-1: #fff;
+  --color-background-1: rgb(229, 243, 246);
   --color-background-2: rgb(232,246,246);
 
   // sph

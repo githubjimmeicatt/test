@@ -283,10 +283,10 @@ export default {
   --logo-reset: -5px;
   --border-height: var(--space-smallest);
 
-  @media screen and (min-width: 501px) {
-    --header-height: 125px;
-    --logo-height: 105px;
-  }
+  // @media screen and (min-width: 501px) {
+  //   --header-height: 125px;
+  //   --logo-height: 105px;
+  // }
 
   z-index: 1;
 
@@ -300,14 +300,15 @@ export default {
     flex: 1;
     padding-top: var(--border-height);
     padding-bottom: var(--border-height);
+    height: calc(var(--logo-height) + (2 * var(--border-height)));
   }
 
   svg.logo {
     fill: white;
-    height: var(--logo-height);
-    .secondary{
-      fill: var(--color-base)
-    }
+    // height: var(--logo-height);
+    // .secondary{
+    //   fill: var(--color-base)
+    // }
   }
 
   nav {
@@ -687,8 +688,8 @@ export default {
   // transition: max-height  var(--timing) ease-in-out, opacity var(--timing) ease-in-out;
   max-width: 100vw;
   // max-height: 0;
-  padding-right: var(--dynamic-spacing-medium);
-  padding-left: var(--dynamic-spacing-medium);
+  padding-right: var(--dynamic-spacing-large);
+  padding-left: var(--dynamic-spacing-large);
   padding-block: var(--space-small);
   margin: 0;
   overflow: hidden;

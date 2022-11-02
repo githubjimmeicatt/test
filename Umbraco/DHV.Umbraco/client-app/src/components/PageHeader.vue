@@ -190,7 +190,7 @@ section {
       margin: 0;
     }
 
-    font-size: 14px;
+    font-size: 0.875rem;
 
     padding-block: var(--space-medium);
     padding-inline: var(--dynamic-spacing-medium);
@@ -214,6 +214,7 @@ section {
       gap: 1rem;
 
       li {
+        position: relative;
         padding-block: var(--space-smaller);
         padding-inline: var(--space-medium);
         border-radius: 12px;
@@ -221,6 +222,21 @@ section {
 
         .title {
           display: block;
+        }
+
+        &::before {
+          content: "";
+          mask: url(../assets/info-circle-solid.svg);
+          -webkit-mask: url(../assets/info-circle-solid.svg);
+          mask-size: cover;
+          -webkit-mask-size: cover;
+          position: absolute;
+          left: calc(var(--space-medium) / 2);
+          top: calc(var(--space-smaller) + 0.1rem);
+          transform: translateX(-50%);
+          width: 1rem;
+          height: 1rem;
+          background-color: var(--color-base);
         }
       }
     }
@@ -252,28 +268,28 @@ section {
 
   //narrow variant
 
-  &.narrow {
-    @include screen-fits-two-cards {
-      --distance-from-middle: calc(var(--card-width) / 2 + var(--card-gap) / 2);
-      header {
-        margin-top: 0;
-        padding-top: var(--space-large);
-        padding-bottom: 4rem;
-        max-width: calc(50vw + var(--distance-from-middle));
-      }
+  // &.narrow {
+  //   @include screen-fits-two-cards {
+  //     --distance-from-middle: calc(var(--card-width) / 2 + var(--card-gap) / 2);
+  //     header {
+  //       margin-top: 0;
+  //       padding-top: var(--space-large);
+  //       padding-bottom: 4rem;
+  //       max-width: calc(50vw + var(--distance-from-middle));
+  //     }
 
-      .beeldmerk {
-        width: 37%;
-      }
+  //     .beeldmerk {
+  //       width: 37%;
+  //     }
 
-      .background {
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        max-width: calc(50vw - var(--distance-from-middle));
-      }
-    }
-  }
+  //     .background {
+  //       position: absolute;
+  //       right: 0;
+  //       top: 0;
+  //       height: 100%;
+  //       max-width: calc(50vw - var(--distance-from-middle));
+  //     }
+  //   }
+  // }
 }
 </style>
