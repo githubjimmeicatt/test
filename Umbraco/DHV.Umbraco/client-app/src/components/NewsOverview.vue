@@ -11,25 +11,14 @@
         <card v-bind="card" />
       </li>
     </ol>
-    <nav v-if="pagination?.length > 1">
-      <ol
-        role="navigation"
-      >
-        <li
-          v-for="({pageNumber, to, isCurrent}, key) in pagination"
-          :key="key"
-          :aria-current="isCurrent"
-        >
-          <strong v-if="isCurrent">{{ pageNumber }}</strong>
-          <router-link
-            v-else
-            :to="to"
-          >
-            {{ pageNumber }}
-          </router-link>
-        </li>
-      </ol>
-    </nav>
+    <Spinner v-if="isLoading" />
+    <button
+      v-else-if="hasNextPage"
+      type="button"
+      @click="getNextPage"
+    >
+      Meer laden
+    </button>
   </section>
 </template>
 
@@ -38,25 +27,24 @@ import {
   computed, inject,
 } from 'vue'
 
-import usePagination from '../composables/usePagination'
 import useNewsCards from '../composables/useNewsCards'
 import Card from './Card.vue'
+import Spinner from '../assets/spinner.svg'
 
 export default {
-  components: { Card },
+  components: { Card, Spinner },
   setup() {
-    const params = {
-      pageNumber: '1',
-      pageSize: '100', // voor nu hoog zetten, paginering gebeurd nu nog volledig op de client, geen nieuwe server callbacks
-    }
     const content = inject('content')
     const id = computed(() => content.value?._id)
-    const articles = useNewsCards(id, params)
-    const { currentPage, pagination } = usePagination(articles)
+    const {
+      currentPage, hasNextPage, getNextPage, isLoading,
+    } = useNewsCards(id)
 
     return {
       currentPage,
-      pagination,
+      hasNextPage,
+      isLoading,
+      getNextPage,
       content,
       id,
     }
