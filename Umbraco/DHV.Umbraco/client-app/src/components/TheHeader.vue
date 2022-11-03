@@ -78,16 +78,7 @@
             </template>
           </li>
         </router-link>
-        <!-- <li
-          class="search-button"
-        >
-          <button
-            aria-label="zoek"
-            @click="toggleSearchExpanded"
-          >
-            <search-icon />
-          </button>
-        </li> -->
+
         <li class="hamburger">
           <button
             aria-label="Menu uitklappen"
@@ -119,8 +110,6 @@ import SearchBar from './SearchBar.vue'
 const logos = cleanGlobImport(import.meta.globEager('../assets/logos/*.svg'))
 const logoName = window.UMBRACO_PORTAL?.logo || window.UMBRACO_PORTAL?.theme
 const logo = logoName && logos[logoName.toLowerCase()]
-
-console.log(logo)
 
 export default {
   components: {
@@ -377,7 +366,7 @@ export default {
             padding: 0;
             margin-left: var(--space-small);
             font-weight: bold;
-            width: 12px;
+            width: .75rem;
 
             > svg {
               fill: white;

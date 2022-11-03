@@ -24,10 +24,6 @@
     </video>
 
     <header>
-      <!-- <p class="prefix">
-        {{ subtitle }}
-      </p> -->
-
       <ul>
         <li>
           <span class="title">{{ title }}</span>
@@ -39,16 +35,10 @@
             class="aa"
             data-gtm-button-type="cta"
           >
-            <!-- {{ target.name || target.url }} -->
             Lees meer
           </the-link>
         </li>
       </ul>
-
-      <!-- <rich-text
-        v-if="body"
-        :body="body"
-      /> -->
 
       <slot name="bottom" />
     </header>
