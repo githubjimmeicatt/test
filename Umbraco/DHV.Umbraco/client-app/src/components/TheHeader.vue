@@ -1,5 +1,9 @@
 <template>
   <header :class="headerClasses">
+    <search-bar
+      ref="searchBar"
+      class="header-search-bar"
+    />
     <nav>
       <ul ref="ulEl">
         <li
@@ -49,7 +53,7 @@
                 type="button"
                 @click="toggleOpen(key)"
               >
-                <Triangle />
+                <ChevronDown />
               </button>
               <ul @mouseenter="enterSub(key)">
                 <router-link
@@ -74,16 +78,7 @@
             </template>
           </li>
         </router-link>
-        <li
-          class="search-button"
-        >
-          <button
-            aria-label="zoek"
-            @click="toggleSearchExpanded"
-          >
-            <search-icon />
-          </button>
-        </li>
+
         <li class="hamburger">
           <button
             aria-label="Menu uitklappen"
@@ -95,19 +90,6 @@
         </li>
       </ul>
     </nav>
-    <search-bar
-      ref="searchBar"
-      class="header-search-bar"
-    >
-      <button
-        aria-label="sluit zoeken"
-        type="button"
-        @click="toggleSearchExpanded"
-      >
-        <close-icon />
-      </button>
-    </search-bar>
-    <breadcrumbs class="breadcrumbs" />
   </header>
 </template>
 
@@ -118,13 +100,12 @@ import {
 import { useRoute } from 'vue-router'
 
 import { useMediaQuery, useResizeObserver } from '@vueuse/core'
-import Triangle from '../assets/triangle.svg'
+import ChevronDown from '../assets/chevron-down.svg'
 import SearchIcon from '../assets/search.svg'
 import CloseIcon from '../assets/close.svg'
 
 import cleanGlobImport from '../helpers/cleanGlobImport'
 import SearchBar from './SearchBar.vue'
-import Breadcrumbs from './Breadcrumbs.vue'
 
 const logos = cleanGlobImport(import.meta.globEager('../assets/logos/*.svg'))
 const logoName = window.UMBRACO_PORTAL?.logo || window.UMBRACO_PORTAL?.theme
@@ -132,11 +113,10 @@ const logo = logoName && logos[logoName.toLowerCase()]
 
 export default {
   components: {
-    Triangle,
+    ChevronDown,
     SearchIcon,
     CloseIcon,
     SearchBar,
-    Breadcrumbs,
   },
   setup() {
     const route = useRoute()
@@ -272,22 +252,12 @@ export default {
   transform: translateY(-50%);
 }
 
-.breadcrumbs {
-  display: block;
-  margin-top: -.25rem;
-}
-
 .header {
   --timing: 0.3s;
   --header-height: 60px;
   --logo-height: 52px;
   --logo-reset: -5px;
   --border-height: var(--space-smallest);
-
-  @media screen and (min-width: 501px) {
-    --header-height: 125px;
-    --logo-height: 105px;
-  }
 
   z-index: 1;
 
@@ -297,27 +267,24 @@ export default {
 
   li.logo {
     padding-left: var(--dynamic-spacing-medium);
-    background-color: white;
+    background-color: var(--color-base);
     flex: 1;
     padding-top: var(--border-height);
     padding-bottom: var(--border-height);
+    height: calc(var(--logo-height) + (2 * var(--border-height)));
   }
 
   svg.logo {
-    height: var(--logo-height);
-    .secondary{
-      fill: var(--color-base)
-    }
+    fill: white;
   }
 
   nav {
     flex-grow: 1;
-    background: white;
+    background: var(--color-base);
     margin: 0;
-    color: var(--color-base);
+    color: white;
     font-size: 1.125rem;
     font-weight: 600;
-    border-bottom: var(--border-height) var(--color-accent-1) solid;
 
     a {
       color: inherit;
@@ -329,10 +296,10 @@ export default {
       }
     }
 
-    .navItem.router-link-active{
-      color:white;
-      background-color: var(--color-accent-1);
-      button > svg{
+    .navItem.router-link-active {
+      color: white;
+
+      button > svg {
         fill: white !important
       }
     }
@@ -359,7 +326,7 @@ export default {
         display: flex;
         align-items: center;
 
-        &.navItem:nth-last-child(3) {
+        &.navItem:nth-last-child(2) {
           margin-right: calc(var(--dynamic-spacing-medium) + 4rem);
         }
 
@@ -371,7 +338,7 @@ export default {
             border: none;
           }
           svg {
-            fill: var(--color-accent-2);
+            fill: var(--color-base);
             width: 2.25rem;
             display: block;
           }
@@ -386,8 +353,8 @@ export default {
           text-transform: lowercase;
           padding-top: var(--space-smallest);
           padding-bottom: var(--space-smaller);
-          padding-right: var(--space-smaller);
-          padding-left: var(--space-smaller);
+          padding-right: var(--space-small);
+          padding-left: var(--space-small);
           a {
             display: inline-block;
           }
@@ -397,14 +364,12 @@ export default {
             background: none;
             transition: color var(--timing) ease-in-out, opacity var(--timing) ease-in-out var(--timing);
             padding: 0;
-             margin-left: var(--space-smallest);
+            margin-left: var(--space-small);
             font-weight: bold;
-            width: 18px;
-            height: 18px;
-            align-self: flex-end;
+            width: .75rem;
 
             > svg {
-              fill: var(--color-accent-1);
+              fill: white;
               transform: rotate(0);
               transition: transform var(--timing) ease-in-out;
             }
@@ -500,7 +465,7 @@ export default {
       padding: 0;
 
       span {
-        background-color: var(--color-base);
+        background-color: white;
         display: block;
         height: 0.22rem;
         position: relative;
@@ -508,7 +473,7 @@ export default {
         width: 2rem;
 
         &:before,&:after{
-          background-color: var(--color-base);
+          background-color: white;
           content: '';
           display: block;
           height: 100%;
@@ -554,9 +519,6 @@ export default {
 
     button {
       opacity: 0;
-      > svg {
-        fill: var(--color-base);
-      }
     }
 
   &.router-link-active{
@@ -690,21 +652,18 @@ export default {
 
 //search bar
 .header-search-bar {
-  transition: max-height  var(--timing) ease-in-out, opacity var(--timing) ease-in-out;
   max-width: 100vw;
-  max-height: 0;
-  padding-right: var(--dynamic-spacing-medium);
-  padding-left: var(--dynamic-spacing-medium);
+  padding-right: var(--dynamic-spacing-large);
+  padding-left: var(--dynamic-spacing-large);
+  padding-block: var(--space-small);
   margin: 0;
   overflow: hidden;
   flex-wrap: wrap;
+  align-items: center;
   gap: .5rem;
 
-  align-items: center;
-  > * {
-    transition: opacity var(--timing) ease-in-out;
-    opacity: 0;
-    // visibility: hidden;
+  .cta {
+    border-radius: 1rem;
   }
 
   button {
@@ -724,15 +683,4 @@ export default {
     }
   }
 }
-
-.header.searchExpanded .header-search-bar {
-  max-height: 800px;
-  padding-bottom: .25rem;
-
-  > * {
-    opacity: 100%;
-    visibility: visible;
-  }
-}
-
 </style>

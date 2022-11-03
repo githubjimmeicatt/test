@@ -2,7 +2,6 @@
   <section
     :class="{transparent, narrow, hasImage, hasVideo}"
   >
-    <beeldmerk class="beeldmerk" />
     <img
       v-if="hasImage"
       ref="imageEl"
@@ -25,23 +24,22 @@
     </video>
 
     <header>
-      <p class="prefix">
-        {{ subtitle }}
-      </p>
-      <h1>{{ title }}</h1>
-      <rich-text
-        v-if="body"
-        :body="body"
-      />
-      <the-link
-        v-if="target?.url"
-        :href="target.url"
-        :target="target.target"
-        class="cta"
-        data-gtm-button-type="cta"
-      >
-        {{ target.name ||target.url }}
-      </the-link>
+      <ul>
+        <li>
+          <span class="title">{{ title }}</span>
+
+          <the-link
+            v-if="target?.url"
+            :href="target.url"
+            :target="target.target"
+            class="aa"
+            data-gtm-button-type="cta"
+          >
+            Lees meer
+          </the-link>
+        </li>
+      </ul>
+
       <slot name="bottom" />
     </header>
   </section>
@@ -50,14 +48,12 @@
 <script>
 import { ref, computed, watch } from 'vue'
 import useUmbracoImage from '../composables/useUmbracoImage'
-
-import Beeldmerk from './Beeldmerk.vue'
 import TheLink from './TheLink.vue'
 import RichText from './RichText.vue'
 
 export default {
   components: {
-    Beeldmerk, TheLink, RichText,
+    TheLink, RichText,
   },
   props: {
     narrow: {
@@ -125,8 +121,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
+
 section {
-  color: white;
   background-color: var(--color-base);
   position: relative;
   transition: background-color 0ms;
@@ -166,10 +162,8 @@ section {
     object-fit: cover;
     object-position: center;
 
-    @include screen-fits-two-cards {
-      height: 100%;
-      position: absolute;
-    }
+    height: 100%;
+    position: absolute;
 
     &.hide {
       opacity: 0;
@@ -182,23 +176,53 @@ section {
       margin: 0;
     }
 
-    font-size: 1.125em;
-    background-color: var(--color-base);
-    padding-top: var(--space-medium);
-    padding-bottom: var(--space-large);
-    padding-left: var(--dynamic-spacing-large);
-    padding-right: max(1rem, calc(100vw - 51rem));
+    font-size: 0.875rem;
 
+    padding-block: var(--space-medium);
+    padding-inline: var(--dynamic-spacing-medium);
+
+    margin-top: 136px;
     @include screen-fits-two-cards {
-      max-width: calc(50vw - 1.75rem);
-      margin-top: 136px;
-      padding-right: var(--space-larger);
+      padding-left: calc(50vw - 1.75rem);
+      padding-right: var(--dynamic-spacing-large);
     }
 
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      li {
+        position: relative;
+        padding-block: var(--space-smaller);
+        padding-inline: var(--space-medium);
+        border-radius: 0.75rem;
+        background-color: rgba(229, 243, 246, 0.9);
+
+        .title {
+          display: block;
+        }
+
+        &::before {
+          content: "";
+          mask: url(../assets/info-circle-solid.svg);
+          -webkit-mask: url(../assets/info-circle-solid.svg);
+          mask-size: cover;
+          -webkit-mask-size: cover;
+          position: absolute;
+          left: calc(var(--space-medium) / 2);
+          top: calc(var(--space-smaller) + 0.1rem);
+          transform: translateX(-50%);
+          width: 1rem;
+          height: 1rem;
+          background-color: var(--color-base);
+        }
+      }
+    }
 
     h1 {
       font-size: 2.25em;
@@ -209,14 +233,9 @@ section {
     p {
       line-height: 1.75em;
     }
-
-    ::v-deep(a, h1, h2, h3), h1,h2,h3 {
-      color: white;
-    }
   }
 
   .prefix {
-   // color: var(--color-accent-1);
     font-weight: 500;
 
     + h1
@@ -229,24 +248,11 @@ section {
 
   &.narrow {
     @include screen-fits-two-cards {
-      --distance-from-middle: calc(var(--card-width) / 2 + var(--card-gap) / 2);
+      border-left: solid var(--dynamic-spacing-large) white;
+      border-right: solid var(--dynamic-spacing-large) white;
+
       header {
-        margin-top: 0;
-        padding-top: var(--space-large);
-        padding-bottom: 4rem;
-        max-width: calc(50vw + var(--distance-from-middle));
-      }
-
-      .beeldmerk {
-        width: 37%;
-      }
-
-      .background {
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        max-width: calc(50vw - var(--distance-from-middle));
+        padding-inline-end: var(--space-medium);
       }
     }
   }

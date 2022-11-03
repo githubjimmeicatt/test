@@ -1,9 +1,5 @@
 <template>
   <article class="card">
-    <div class="beeldmerkcontainer">
-      <beeldmerk />
-    </div>
-
     <lazy-img
       v-if="image"
       height="100%"
