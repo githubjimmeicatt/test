@@ -1,6 +1,6 @@
 <template>
   <ol
-    v-if="isEnabled"
+    v-show="isEnabled"
     :class="{isMobile}"
   >
     <li
@@ -70,20 +70,20 @@ export default {
 ol {
   display: flex;
   width: 100%;
-  background-color: var(--color-accent-1);
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  padding: var(--space-smaller) var(--dynamic-spacing-medium);
-  color: white;
+  margin: 0;
+  padding: var(--space-smaller) var(--dynamic-spacing-large);
+  padding-block-end: 0;
   gap: var(--space-smaller);
-
-  &.isMobile {
-    font-size: .875rem;
-  }
+  font-size: .875rem;
 }
+
 li {
   display: block;
+
+  &.arrow-after::after,
+  &.arrow-before::before {
+    background-color: var(--color-base);
+  }
 }
 
 .link {

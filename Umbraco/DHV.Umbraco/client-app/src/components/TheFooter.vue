@@ -45,42 +45,37 @@ export default {
     },
   },
   setup() {
-      return {
-          copyright: `© ${window.UMBRACO_PORTAL?.footerName || ''} ${new Date().getFullYear()}`,
-          getSortedChildren: (  children, title ) => {
+    return {
+      copyright: `© ${window.UMBRACO_PORTAL?.footerName || ''} ${new Date().getFullYear()}`,
+      getSortedChildren: (children, title) => {
+        if (!title || title.toUpperCase() != 'NIEUWS') { return children }
 
-              if (!title || title.toUpperCase() != "NIEUWS")
-                  return children
+        if (!Array.isArray(children)) { return children }
 
-              if (!Array.isArray(children))
-                  return children
+        return children.sort((a, b) => {
+          if (!a || !b) {
+            return 0
+          }
 
-              return children.sort((a, b) => {
+          let compareDateA = Date.parse(a.updateDate)
+          if (isNaN(compareDateA)) {
+            compareDateA = Date.parse(a.createDate)
+          }
+          if (isNaN(compareDateA)) {
+            return 1
+          }
 
-                  if (!a || !b) {
-                      return 0;
-                  }
+          let compareDateB = Date.parse(b.updateDate)
+          if (isNaN(compareDateB)) {
+            compareDateB = Date.parse(b.createDate)
+          }
+          if (isNaN(compareDateB)) {
+            return -1
+          }
 
-                  let compareDateA = Date.parse(a.updateDate);
-                  if (isNaN(compareDateA)) {
-                      compareDateA = Date.parse(a.createDate); 
-                  }
-                  if (isNaN(compareDateA)) {
-                      return 1;
-                  }
-
-                  let compareDateB = Date.parse(b.updateDate);
-                  if (isNaN(compareDateB)) {
-                      compareDateB = Date.parse(b.createDate);
-                  }
-                  if (isNaN(compareDateB)) {
-                      return -1;
-                  }
-
-
-                  return compareDateB - compareDateA;
-              });
-        }
+          return compareDateB - compareDateA
+        })
+      },
     }
   },
 }
@@ -91,11 +86,9 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 5rem;
-  align-items: flex-start;
-  background-color: var(--color-accent-1);
+  background-color: var(--color-base);
   color: white;
-  padding: 5rem var(--dynamic-spacing-medium);
-  display: flex;
+  padding: var(--space-medium) var(--dynamic-spacing-large);
 
   a {
     color: white;
@@ -107,6 +100,7 @@ footer {
   }
 
   ul {
+    list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
@@ -116,30 +110,12 @@ footer {
 
   .footermenu {
     width: 100%;
-    display: inline-grid;
-    grid-template-columns: 1fr;
-    align-content: start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 5rem;
 
     li {
-      display: block;
       padding: 0.125rem 0;
-    }
-
-    @media only screen and (min-width: 30rem) {
-      grid-template-columns: 12.5rem 12.5rem;
-    }
-
-    @media only screen and (min-width: 47.5rem) {
-      grid-template-columns: 12.5rem 12.5rem 12.5rem;
-    }
-
-    @media only screen and (min-width: 65rem) {
-      grid-template-columns: 12.5rem 12.5rem 12.5rem 12.5rem;
-    }
-
-    @media only screen and (min-width: 82.5rem) {
-      grid-template-columns: 12.5rem 12.5rem 12.5rem 12.5rem 12.5rem;
     }
   }
 

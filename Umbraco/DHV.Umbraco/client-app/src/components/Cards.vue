@@ -114,14 +114,14 @@ p {
 
 @include screen-fits-two-cards {
     .strip {
-      grid-template-columns: repeat(2, var(--card-width-large));
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @include screen-fits-three-cards {
       .three, .four {
         .strip {
-          grid-template-columns: repeat(3, var(--card-width));
+          grid-template-columns: repeat(3, 1fr);
         }
       }
   }
@@ -129,9 +129,8 @@ p {
   @include screen-fits-four-cards {
       .four {
           .strip {
-            grid-template-columns: repeat(4, var(--card-width-small));
+            grid-template-columns: repeat(4, 1fr);
           }
       }
   }
-
 </style>
