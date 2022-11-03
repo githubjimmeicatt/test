@@ -1,4 +1,5 @@
 <template>
+  <breadcrumbs class="breadcrumbs" />
   <section class="container">
     <router-link :to="parentPath">
       🡨 Nieuws
