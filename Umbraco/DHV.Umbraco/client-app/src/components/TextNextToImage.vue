@@ -9,20 +9,18 @@
         {{ title }}
       </h1>
 
-      <!-- <rich-text
+      <rich-text
         v-if="text"
         :body="text"
-      /> -->
+      />
 
-      <p v-if="text">
-        {{ text }}
-      </p>
-
-      <!-- TODO: button property? -->
-      <a
-        href=""
+      <the-link
+        :href="button?._url || '#'"
         class="cta"
-      >Meer informatie</a>
+        data-gtm-button-type="cta"
+      >
+        Meer informatie
+      </the-link>
     </div>
   </section>
 </template>
@@ -49,6 +47,10 @@ export default {
     imagePosition: {
       type: String,
       default: '',
+    },
+    button: {
+      type: Object,
+      default: () => {},
     },
   },
 }
@@ -80,12 +82,17 @@ figure {
   }
 
   img {
-    height: 100%;
+    // height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
 
-    max-width: var(--card-width-large); // ...
+    // max-width: var(--card-width-large);
+    max-height: 25rem;
+
+    @include screen-fits-two-cards {
+       max-height: 100%;
+    }
   }
 }
 </style>

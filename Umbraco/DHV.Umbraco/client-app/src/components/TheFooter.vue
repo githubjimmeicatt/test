@@ -89,7 +89,7 @@ footer {
   align-items: flex-start;
   background-color: var(--color-base);
   color: white;
-  padding: 5rem var(--dynamic-spacing-medium);
+  padding: var(--space-medium) var(--dynamic-spacing-large);
   display: flex;
 
   a {

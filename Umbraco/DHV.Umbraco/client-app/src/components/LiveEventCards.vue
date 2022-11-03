@@ -10,12 +10,15 @@
         :key="i"
       >
         <the-link
-          :href="card.text.url || '#'"
+          :href="card.text?.url || '#'"
           data-gtm-button-type="cta"
         >
-          <img :src="card.icon.src">
+          <img
+            v-if="card.icon?.src"
+            :src="card.icon.src"
+          >
 
-          <span>{{ card.text.name }} &gt;</span>
+          <span v-if="card.text?.name">{{ card.text.name }} &gt;</span>
         </the-link>
       </li>
     </ul>
