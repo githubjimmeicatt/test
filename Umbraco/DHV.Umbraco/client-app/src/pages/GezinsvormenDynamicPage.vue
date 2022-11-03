@@ -7,9 +7,9 @@
   />
 
   <breadcrumbs class="breadcrumbs" />
-
+  <LineChart />
   <template
-    v-for="(c,i) in main"
+    v-for="(c, i) in main"
     :key="i"
   >
     <div
@@ -33,7 +33,7 @@
       />
       <aside>
         <template
-          v-for="(a,j) in aside"
+          v-for="(a, j) in aside"
           :key="j"
         >
           <component
@@ -64,6 +64,7 @@
 <script>
 import { inject, defineComponent, computed } from 'vue'
 import cleanGlobImport from '../helpers/cleanGlobImport'
+import LineChart from '../components/LineChart'
 
 const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
 
@@ -94,6 +95,7 @@ function mapComponent(props) {
 
 export default defineComponent({
   components,
+  LineChart,
   setup() {
     const content = inject('content')
     const main = computed(() => (Array.isArray(content.value?.main) ? content.value.main.map(mapComponent) : []))
