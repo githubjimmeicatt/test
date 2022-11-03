@@ -88,7 +88,7 @@ footer {
   gap: 5rem;
   background-color: var(--color-base);
   color: white;
-  padding: var(--space-medium) var(--dynamic-spacing-large);
+  padding: var(--space-medium) var(--dynamic-spacing-medium);
 
   a {
     color: white;
@@ -111,8 +111,8 @@ footer {
   .footermenu {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 5rem;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 3rem;
 
     li {
       padding: 0.125rem 0;
