@@ -3,15 +3,7 @@
     <search-bar
       ref="searchBar"
       class="header-search-bar"
-    >
-      <!-- <button
-        aria-label="sluit zoeken"
-        type="button"
-        @click="toggleSearchExpanded"
-      >
-        <close-icon />
-      </button> -->
-    </search-bar>
+    />
     <nav>
       <ul ref="ulEl">
         <li
@@ -271,22 +263,12 @@ export default {
   transform: translateY(-50%);
 }
 
-.breadcrumbs {
-  display: block;
-  margin-top: -.25rem;
-}
-
 .header {
   --timing: 0.3s;
   --header-height: 60px;
   --logo-height: 52px;
   --logo-reset: -5px;
   --border-height: var(--space-smallest);
-
-  // @media screen and (min-width: 501px) {
-  //   --header-height: 125px;
-  //   --logo-height: 105px;
-  // }
 
   z-index: 1;
 
@@ -305,10 +287,6 @@ export default {
 
   svg.logo {
     fill: white;
-    // height: var(--logo-height);
-    // .secondary{
-    //   fill: var(--color-base)
-    // }
   }
 
   nav {
@@ -685,24 +663,15 @@ export default {
 
 //search bar
 .header-search-bar {
-  // transition: max-height  var(--timing) ease-in-out, opacity var(--timing) ease-in-out;
   max-width: 100vw;
-  // max-height: 0;
   padding-right: var(--dynamic-spacing-large);
   padding-left: var(--dynamic-spacing-large);
   padding-block: var(--space-small);
   margin: 0;
   overflow: hidden;
   flex-wrap: wrap;
-  gap: .5rem;
-
   align-items: center;
-
-  // > * {
-  //   transition: opacity var(--timing) ease-in-out;
-  //   opacity: 0;
-  //   // visibility: hidden;
-  // }
+  gap: .5rem;
 
   .cta {
     border-radius: 1rem;
@@ -725,15 +694,4 @@ export default {
     }
   }
 }
-
-// .header.searchExpanded .header-search-bar {
-//   max-height: 800px;
-//   padding-bottom: .25rem;
-
-//   > * {
-//     opacity: 100%;
-//     visibility: visible;
-//   }
-// }
-
 </style>

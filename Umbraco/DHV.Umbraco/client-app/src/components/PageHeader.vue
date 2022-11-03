@@ -131,8 +131,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
+
 section {
-  // color: white;
   background-color: var(--color-base);
   position: relative;
   transition: background-color 0ms;
@@ -174,10 +174,6 @@ section {
 
     height: 100%;
     position: absolute;
-    // @include screen-fits-two-cards {
-    //   height: 100%;
-    //   position: absolute;
-    // }
 
     &.hide {
       opacity: 0;
@@ -197,9 +193,6 @@ section {
 
     margin-top: 136px;
     @include screen-fits-two-cards {
-      // max-width: calc(50vw - 1.75rem);
-      // margin-top: 136px;
-      // padding-right: var(--space-larger);
       padding-left: calc(50vw - 1.75rem);
       padding-right: var(--dynamic-spacing-large);
     }
@@ -250,14 +243,9 @@ section {
     p {
       line-height: 1.75em;
     }
-
-    // ::v-deep(a, h1, h2, h3), h1,h2,h3 {
-    //   color: white;
-    // }
   }
 
   .prefix {
-   // color: var(--color-accent-1);
     font-weight: 500;
 
     + h1

@@ -86,11 +86,9 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 5rem;
-  align-items: flex-start;
   background-color: var(--color-base);
   color: white;
   padding: var(--space-medium) var(--dynamic-spacing-large);
-  display: flex;
 
   a {
     color: white;
@@ -102,6 +100,7 @@ footer {
   }
 
   ul {
+    list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
@@ -111,30 +110,12 @@ footer {
 
   .footermenu {
     width: 100%;
-    display: inline-grid;
-    grid-template-columns: 1fr;
-    align-content: start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 5rem;
 
     li {
-      display: block;
       padding: 0.125rem 0;
-    }
-
-    @media only screen and (min-width: 30rem) {
-      grid-template-columns: 12.5rem 12.5rem;
-    }
-
-    @media only screen and (min-width: 47.5rem) {
-      grid-template-columns: 12.5rem 12.5rem 12.5rem;
-    }
-
-    @media only screen and (min-width: 65rem) {
-      grid-template-columns: 12.5rem 12.5rem 12.5rem 12.5rem;
-    }
-
-    @media only screen and (min-width: 82.5rem) {
-      grid-template-columns: 12.5rem 12.5rem 12.5rem 12.5rem 12.5rem;
     }
   }
 

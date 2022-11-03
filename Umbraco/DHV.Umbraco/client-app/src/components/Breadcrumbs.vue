@@ -70,10 +70,9 @@ export default {
 ol {
   display: flex;
   width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  padding: var(--space-small) var(--dynamic-spacing-large);
+  margin: 0;
+  padding: var(--space-smaller) var(--dynamic-spacing-large);
+  padding-block-end: 0;
   gap: var(--space-smaller);
   font-size: .875rem;
 }
@@ -81,7 +80,8 @@ ol {
 li {
   display: block;
 
-  &.arrow-after::after {
+  &.arrow-after::after,
+  &.arrow-before::before {
     background-color: var(--color-base);
   }
 }
