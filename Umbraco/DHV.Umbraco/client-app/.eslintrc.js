@@ -1,17 +1,17 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+
 module.exports = {
   root: true,
-  env: {
-    node: true,
-    browser: true,
-  },
   extends: [
+    'plugin:vue/vue3-essential',
     'eslint:recommended',
-    'airbnb-base',
-    'plugin:vue-scoped-css/vue3-recommended',
-    'plugin:vue/vue3-recommended',
+    '@vue/eslint-config-typescript/recommended',
+    '@vue/eslint-config-airbnb-with-typescript',
+    '@vue/eslint-config-airbnb-with-typescript/allow-js-in-vue',
   ],
-  parserOptions: {
-    ecmaVersion: 2020,
+  env: {
+    'vue/setup-compiler-macros': true,
   },
   rules: {
     'linebreak-style': 'off',
@@ -38,6 +38,7 @@ module.exports = {
         'el', // for DOM properties,
       ],
     }],
-    semi: ['error', 'never'],
+    semi: 'off',
+    '@typescript-eslint/semi': ['error', 'never'],
   },
 }
