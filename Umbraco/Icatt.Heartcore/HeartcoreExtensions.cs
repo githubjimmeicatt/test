@@ -96,6 +96,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .GetSection(heartcoreConfigSection)
                 .Bind(heartcoreConfig);
 
+            heartcoreConfig.BackofficeUrl ??= $"https://{heartcoreConfig.UmbProjectAlias}.euwest01.umbraco.io";
+
             services.AddSingleton(heartcoreConfig);
 
             services.AddMemoryCache();

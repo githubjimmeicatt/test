@@ -36,7 +36,19 @@ function setValidators(required, settings) {
   const validators = []
   if (required) validators.push(FormValidators.required)
   if (settings.pattern) validators.push((value) => FormValidators.regex(value, settings.pattern, settings.patternInvalidErrorMessage))
+  if (settings.fieldType === 'email') validators.push(FormValidators.email)
   return validators
+}
+
+function getAttributes(settings) {
+  const entries = []
+  if (settings.fieldType) {
+    entries.push(['type', settings.fieldType])
+  }
+  if (settings.autocompleteAttribute) {
+    entries.push(['autocomplete', settings.autocompleteAttribute])
+  }
+  return Object.fromEntries(entries)
 }
 
 /**
@@ -75,11 +87,28 @@ export default function useUmbracoForm(form, confirmation) {
         alert('title+description en recaptcha worden nog niet ondersteund')
       }
 
+      let opties
+
+      const prevalueSplitChar = '~|~'
+
+      if (Array.isArray(field.preValues)) {
+        opties = field.preValues.map((pv) => {
+          const [left, right] = pv.split(prevalueSplitChar)
+          return {
+            value: left || right,
+            label: right || left,
+          }
+        })
+      } else if (field.preValues && typeof field.preValues === 'object') {
+        opties = Object.entries(field.preValues).map(([value, label]) => ({ label, value }))
+      }
+
       icattVueForm.items[field.alias] = new FormItem({
         label: field.caption,
         type: field.type ?? 'text',
-        opties: field.preValues?.map((pv) => ({ label: pv, value: pv })),
+        opties,
         validators: setValidators(field.required, field.settings),
+        attributes: getAttributes(field.settings),
       })
 
       // niet alle vraagtypes van umbraco en icatt-vue-forms matchen
@@ -134,10 +163,12 @@ export default function useUmbracoForm(form, confirmation) {
       loading.value = true
       error.value = false
       success.value = false
-      const response = portal.submitForm(form._id, postData)
-      if (response.status > 400) {
-        error.value = true
-      } else {
+      try {
+        /** @type {import('axios').AxiosResponse} */
+        const response = await portal.submitForm(form._id, postData)
+        if (response.status >= 400) {
+          throw new Error(response.statusText)
+        }
         success.value = true
         if (!confirmation && gotoAfterSubmit.value) {
           const redirectUrl = await portal.fetchById(gotoAfterSubmit.value)
@@ -145,9 +176,11 @@ export default function useUmbracoForm(form, confirmation) {
         } else {
           window.scrollTo(0, 0)
         }
+      } catch (e) {
+        error.value = true
+      } finally {
+        loading.value = false
       }
-
-      loading.value = false
     }, FormParser.formats.json)
   }
 

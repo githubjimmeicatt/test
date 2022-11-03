@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 <template>
   <slot
     v-if="error"
@@ -25,31 +24,29 @@
   <slot
     v-else-if="loading"
     name="loading"
-  >
-    <div class="overlay">
-      <Spinner />
-    </div>
-  </slot>
+  />
 
   <vue-form
     v-else-if="icattVueForm"
     :form="icattVueForm"
+    @submit="onSubmit"
   >
     <component
       :is="getInputTemplateType(item.type)"
       v-for="item in displayableFormItems"
       :key="item.alias"
-
+      v-bind="item.attributes"
       :form-element="item"
     />
-    <slot 
-          name="submit"
-          :onSubmit="onSubmit">
-        <button class="form-button is-submit"
-                type="button"
-                @click="onSubmit">
-            Verzenden
-        </button>
+    <slot
+      name="submit"
+      :onSubmit="onSubmit"
+    >
+      <button
+        class="form-button is-submit"
+      >
+        Verzenden
+      </button>
     </slot>
   </vue-form>
 </template>
@@ -57,12 +54,11 @@
 <script>
 
 import { computed } from 'vue'
-import Spinner from '../assets/spinner.svg'
 import useUmbracoForm from '../composables/useUmbracoForm'
-import RichText from './RichText.vue'
+import RichText from '../../components/RichText.vue'
 
 export default {
-  components: { Spinner, RichText },
+  components: { RichText },
   props: {
     confirmation: {
       type: String,
@@ -169,68 +165,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss" scoped>
-@import "../assets/scss/_mixins.scss";
-
-fieldset{
-  border:none;
-  padding:0px;
-  margin:0px;
-}
-
- ::v-deep(.is-stacked)  {
-  display: flex;
-  flex-direction: column;
-}
-
-::v-deep(textarea) {
-  display: block;
-}
-
-::v-deep(.form-options-group), ::v-deep(.form-group){
-  margin-bottom: var(--space-medium);
-}
-
-::v-deep(legend), ::v-deep(.form-label) {
-  font-weight: bold;
-  display: inline-block;
-  margin-bottom: var(--space-smaller);
-}
-
-::v-deep(.form-error){
-  color: var(--color-error)
-}
-
-::v-deep(input[type=text]), ::v-deep(textarea) {
-  width: 100%;
-}
-
-::v-deep(input[type=date])  {
-  display: block;
-}
-
-::v-deep(input)  {
-  padding: 0.5rem;
-}
-
- form {
- width:600px;
-}
-
-/* todo: media queries gelijk trekken */
-@media only screen and (max-width: 600px) {
-   form {
- width:100%;
-}
-}
-
- button {
-  @include button-default;
-}
-
-.overlay{
- height: 100%;
-  width:100%;
-}
-</style>

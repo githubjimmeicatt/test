@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using DHV.Umbraco.Features.Forms;
 using Icatt.Heartcore.Config;
 using Icatt.Heartcore.Umbraco;
+using Icatt.Heartcore.Umbraco.Forms;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +15,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Serilog;
 using Wsg.CorporateUmbraco.Config;
-using Wsg.CorporateUmbraco.Features.Forms;
 using Wsg.CorporateUmbraco.Features.Renderer;
 
 namespace Wsg.CorporateUmbraco
@@ -37,7 +38,8 @@ namespace Wsg.CorporateUmbraco
             services.AddSwaggerGen();
             services.AddHttpContextAccessor();
             services.AddSingleton<IPortalConfig, PortalConfig>();
-            services.Configure<FormsConfig>(Configuration.GetSection("FormsConfig"));
+            services.Configure<ContactFormulierConfirmationConfig>(Configuration.GetSection("ContactFormulierConfirmationConfig"));
+            services.Configure<ContactFormulierNotificationConfig>(Configuration.GetSection("ContactFormulierNotificationConfig"));
 
             services.AddHttpsRedirection(options =>
             {
@@ -46,8 +48,8 @@ namespace Wsg.CorporateUmbraco
 
             services.AddHeartcore(Configuration);
             services.AddSingleton<GetAssets>();
-            services.AddScoped<SendFormSubmittedConfirmation>();
-            services.AddScoped<SendFormSubmittedNotification>();
+            services.AddScoped<IFormProcessor, ContactformulierNotification>();
+            services.AddScoped<IFormProcessor, ContactformulierConfirmation>();
 
             var emailConfig = ConfigurationBinder.Get<EmailConfig>(Configuration.GetSection("Email"));
             services.AddScoped((serviceProvider) => new SmtpClient
@@ -119,7 +121,7 @@ namespace Wsg.CorporateUmbraco
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapReverseProxy(x => x.UseFormsMailer());
+                endpoints.MapReverseProxy(x => x.UseUmbracoFormsProcessing());
                 endpoints.MapFallbackToController("Index", "Renderer");
             });
             if (env.IsDevelopment())
