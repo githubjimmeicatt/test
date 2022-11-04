@@ -47,6 +47,7 @@ const getNewsQuery = ({
     }
     ) {
     items {
+      id
       name
       summary
       url
@@ -76,7 +77,7 @@ const getNewsQuery = ({
 
 type NewsParams = {
   queryName: string,
-  pageSize: number,
+  pageSize?: number,
   cursor?: string,
   now: Date
   startsWithUrl: string
@@ -90,10 +91,11 @@ async function getNewsCards(params: NewsParams) {
   const { pageInfo } = result
 
   const items = (result.items ?? []).map(({
-    summary, name, url, image, publishDate,
+    summary, name, url, image, publishDate, id,
   }: any) => {
     const date = parseDate(publishDate)
     return {
+      id,
       body: summary,
       title: name,
       date,
@@ -115,7 +117,10 @@ async function getNewsCards(params: NewsParams) {
   }
 }
 
-export default function useNewsCards(id: Ref<string>, params: { pageSize: Ref<number> }) {
+export default function useNewsCards(
+  id: Ref<string>,
+  params: { pageSize: Ref<number> | number | undefined },
+) {
   const now = new Date()
   const urlRef = ref<string>()
   const queryNameRef = ref<string>()
@@ -125,6 +130,7 @@ export default function useNewsCards(id: Ref<string>, params: { pageSize: Ref<nu
   const hasNextPageRef = ref(false)
   const isLoadingRef = ref(false)
   const errorRef = ref()
+  const pageSizeRef = params.pageSize && typeof params.pageSize !== 'number' ? params.pageSize : ref(params.pageSize)
 
   watch(id, (i) => {
     queryNameRef.value = ''
@@ -144,9 +150,9 @@ export default function useNewsCards(id: Ref<string>, params: { pageSize: Ref<nu
   }, { immediate: true })
 
   watch(
-    [cursorRef, queryNameRef, params.pageSize, urlRef],
+    [cursorRef, queryNameRef, pageSizeRef, urlRef],
     ([cursor, queryName, pageSize, startsWithUrl]) => {
-      if (!queryName || !pageSize || !startsWithUrl) return
+      if (!queryName || !startsWithUrl) return
 
       isLoadingRef.value = true
 

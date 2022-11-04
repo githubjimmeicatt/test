@@ -12,9 +12,9 @@ export default defineComponent({
   setup() {
     const content = inject('content')
     const newsParent = computed(() => ({
-      _id: content.value._id,
+      _id: content.value?._id,
     }))
-    const title = computed(() => content.value.name)
+    const title = computed(() => content.value?.name)
     return {
       newsParent,
       title,

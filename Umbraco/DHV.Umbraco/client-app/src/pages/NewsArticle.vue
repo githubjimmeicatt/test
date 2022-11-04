@@ -17,13 +17,18 @@
       <rich-text :body="content.body" />
     </article>
   </section>
+  <Spinner v-if="isLoading" />
+  <Cards v-else title="Ander nieuws" :cards="otherNews" />
 </template>
 
 <script>
 import { inject, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import RichText from '../components/RichText.vue'
-import LazyImg from '../components/LazyImg.vue'
+import useNewsCards from '@/composables/useNewsCards'
+import Cards from '@/components/Cards.vue'
+import Spinner from '@/assets/spinner.svg'
+import RichText from '@/components/RichText.vue'
+import LazyImg from '@/components/LazyImg.vue'
 
 function formatDate(date) {
   if (!date || date === '0001-01-01T00:00:00') return null
@@ -42,17 +47,30 @@ function upOneLevel(path) {
   return path
 }
 
+const maxItems = 3
+
 export default {
-  components: { RichText, LazyImg },
+  components: {
+    RichText, LazyImg, Cards, Spinner,
+  },
   setup() {
     const route = useRoute()
     const parentPath = computed(() => upOneLevel(route.path))
     const content = inject('content')
+    const parentId = computed(() => content.value?.parentId)
+    const { currentPage, isLoading } = useNewsCards(parentId, {
+      pageSize: maxItems + 1,
+    })
+
+    const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems))
+
     return {
       content,
       parentPath,
+      isLoading,
+      otherNews,
       date: computed(() => {
-        const { publishDate, _createDate } = content.value
+        const { publishDate, _createDate } = content.value ?? {}
         return formatDate(publishDate) || formatDate(_createDate)
       }),
     }
