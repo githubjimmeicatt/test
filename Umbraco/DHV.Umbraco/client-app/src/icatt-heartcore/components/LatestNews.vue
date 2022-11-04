@@ -16,9 +16,9 @@ import {
   computed, ref,
 } from 'vue'
 import { useElementVisibility, whenever } from '@vueuse/core'
-import useNewsCards from '../composables/useNewsCards'
-import Cards from '../../components/Cards.vue'
-import Spinner from '../assets/spinner.svg'
+import Spinner from '@/assets/spinner.svg'
+import Cards from '@/components/Cards.vue'
+import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
 
 const props = defineProps<{ maxItems?: number; title: string; newsParent: { _id: string } }>()
 
