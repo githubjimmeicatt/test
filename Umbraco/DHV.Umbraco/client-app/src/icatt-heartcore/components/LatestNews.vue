@@ -8,7 +8,7 @@
     v-if="!hideTrackEl"
     ref="trackEl"
     class="visually-hidden"
-  >Hi mum</span>
+  />
 </template>
 
 <script lang="ts" setup>
@@ -17,7 +17,7 @@ import {
 } from 'vue'
 import { useElementVisibility, whenever } from '@vueuse/core'
 import useNewsCards from '../composables/useNewsCards'
-import Cards from './Cards.vue'
+import Cards from '../../components/Cards.vue'
 import Spinner from '../assets/spinner.svg'
 
 const props = defineProps<{ maxItems?: number; title: string; newsParent: { _id: string } }>()

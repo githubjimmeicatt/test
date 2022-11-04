@@ -24,7 +24,7 @@
 <script>
 import { inject, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import useNewsCards from '@/composables/useNewsCards'
+import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
 import Cards from '@/components/Cards.vue'
 import Spinner from '@/assets/spinner.svg'
 import RichText from '@/components/RichText.vue'

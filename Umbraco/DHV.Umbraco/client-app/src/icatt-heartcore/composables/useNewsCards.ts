@@ -2,8 +2,8 @@ import {
   ref, watch, type Ref,
 } from 'vue'
 
-import { api } from '../api/umbraco'
-import { parseDate, formatDate } from '../helpers/formatDate'
+import { api } from '../../api/umbraco'
+import { parseDate, formatDate } from '../../helpers/formatDate'
 
 const getChildrenTypeQuery = (id: string) => `{
   content(id: "${id}") {
