@@ -24,7 +24,9 @@ const props = defineProps<{ maxItems?: number; title: string; newsParent: { _id:
 
 const trackEl = ref()
 
-const pageSize = computed(() => Math.min(props.maxItems ?? 0, 15))
+const defaultPageSize = 15
+
+const pageSize = computed(() => Math.min(props.maxItems ?? defaultPageSize, defaultPageSize))
 const id = computed(() => props.newsParent._id)
 
 const {

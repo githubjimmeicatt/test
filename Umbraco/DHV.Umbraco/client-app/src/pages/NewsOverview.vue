@@ -1,5 +1,5 @@
 <template>
-  <LatestNews :news-parent="newsParent" />
+  <LatestNews :news-parent="newsParent" :title="title" />
 </template>
 
 <script>
@@ -12,10 +12,12 @@ export default defineComponent({
   setup() {
     const content = inject('content')
     const newsParent = computed(() => ({
-      _id: content._id,
+      _id: content.value._id,
     }))
+    const title = computed(() => content.value.name)
     return {
       newsParent,
+      title,
     }
   },
 })
