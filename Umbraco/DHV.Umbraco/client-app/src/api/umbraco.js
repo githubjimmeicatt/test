@@ -83,6 +83,12 @@ export const api = {
     const { data } = await instance.get(`/forms/${id}`)
     return data
   },
+  postGraphQlQuery: (query, removePortalPrefix = true) => {
+    const axiosOrInstance = removePortalPrefix ? instance : axios
+    return axiosOrInstance.post('/graphql', {
+      query,
+    }).then(({ data }) => data)
+  },
 }
 
 export class Portal {
