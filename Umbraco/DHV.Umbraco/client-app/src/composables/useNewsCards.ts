@@ -1,11 +1,13 @@
 import {
-  ref, watch, isReactive,
+  ref, watch, type Ref,
 } from 'vue'
+
 import { api } from '../api/umbraco'
 import { parseDate, formatDate } from '../helpers/formatDate'
 
-const getChildrenTypeQuery = (id) => `{
+const getChildrenTypeQuery = (id: string) => `{
   content(id: "${id}") {
+    url
     children(first: 1) {
       items {
         contentTypeAlias
@@ -14,20 +16,24 @@ const getChildrenTypeQuery = (id) => `{
   }
 }`
 
-const getChildrenType = (id) => {
+const getChildrenTypeAndUrl = (id: string) => {
   const query = getChildrenTypeQuery(id)
-  return api.postGraphQlQuery(query).then((json) => json.data.content.children.items[0].contentTypeAlias)
+  return api.postGraphQlQuery(query, false).then((json) => {
+    const { url, children } = json?.data?.content ?? {}
+    const componentName = Array.isArray(children?.items) ? children.items[0]?.contentTypeAlias : undefined
+
+    return {
+      componentName,
+      startsWithUrl: url,
+    }
+  })
 }
 
-const getQueryName = (componentName) => `all${componentName[0]?.toUpperCase()}${componentName.substring(1)}`
+const getQueryName = (componentName?: string) => componentName && `all${componentName[0]?.toUpperCase()}${componentName.substring(1)}`
 
-const getNewsQuery = (params = {}) => {
-  /**
-   * @type {{queryName: string;cursor: string; pageSize:number; now: Date}}
-   */
-  const {
-    queryName, cursor, pageSize, now,
-  } = params
+const getNewsQuery = ({
+  queryName, cursor, pageSize, now, startsWithUrl,
+} : NewsParams) => {
   if (!queryName) return ''
   const cursorPart = cursor ? `, after: "${cursor}"` : ''
 
@@ -37,6 +43,7 @@ const getNewsQuery = (params = {}) => {
     first:${pageSize || 15}${cursorPart},
     where: {
       publishDate_lt: "${now.toISOString()}"
+      url_starts_with: "${startsWithUrl}"
     }
     ) {
     items {
@@ -67,28 +74,24 @@ const getNewsQuery = (params = {}) => {
 }`
 }
 
-async function getNewsCards(params) {
-  const {
-    queryName,
-    pageSize,
-    cursor,
-    now,
-  } = params
+type NewsParams = {
+  queryName: string,
+  pageSize: number,
+  cursor?: string,
+  now: Date
+  startsWithUrl: string
+}
 
-  const json = await api.postGraphQlQuery(getNewsQuery({
-    queryName,
-    now,
-    pageSize,
-    cursor,
-  }))
+async function getNewsCards(params: NewsParams) {
+  const json = await api.postGraphQlQuery(getNewsQuery(params))
 
-  const result = json.data?.[queryName] ?? {}
+  const result = json.data?.[params.queryName] ?? {}
 
   const { pageInfo } = result
 
   const items = (result.items ?? []).map(({
     summary, name, url, image, publishDate,
-  }) => {
+  }: any) => {
     const date = parseDate(publishDate)
     return {
       body: summary,
@@ -112,28 +115,26 @@ async function getNewsCards(params) {
   }
 }
 
-export default function useNewsCards(id, params) {
-  const pageSize = params?.pageSize || 15
-
-  const idRef = isReactive(id) ? id : ref(id)
-
+export default function useNewsCards(id: Ref<string>, params: { pageSize: Ref<number> }) {
   const now = new Date()
-  const queryNameRef = ref()
-  const cursorRef = ref()
-  const nextCursorRef = ref()
-  const itemsRef = ref([])
+  const urlRef = ref<string>()
+  const queryNameRef = ref<string>()
+  const cursorRef = ref<string>()
+  const nextCursorRef = ref<string>()
+  const itemsRef = ref<any[]>([])
   const hasNextPageRef = ref(false)
   const isLoadingRef = ref(false)
   const errorRef = ref()
 
-  watch(idRef, (i) => {
+  watch(id, (i) => {
     queryNameRef.value = ''
     itemsRef.value = []
     isLoadingRef.value = true
     cursorRef.value = ''
     if (i) {
-      getChildrenType(i).then((componentName) => {
+      getChildrenTypeAndUrl(i).then(({ componentName, startsWithUrl }) => {
         queryNameRef.value = getQueryName(componentName)
+        urlRef.value = startsWithUrl
       }).catch((e) => {
         errorRef.value = e
       }).finally(() => {
@@ -142,23 +143,30 @@ export default function useNewsCards(id, params) {
     }
   }, { immediate: true })
 
-  watch([cursorRef, queryNameRef], ([cursor, queryName]) => {
-    isLoadingRef.value = true
-    getNewsCards({
-      queryName,
-      now,
-      cursor,
-      pageSize,
-    }).then(({ items, endCursor, hasNextPage }) => {
-      itemsRef.value = [...itemsRef.value, ...items]
-      hasNextPageRef.value = hasNextPage
-      nextCursorRef.value = endCursor
-    }).catch((e) => {
-      errorRef.value = e
-    }).finally(() => {
-      isLoadingRef.value = false
-    })
-  })
+  watch(
+    [cursorRef, queryNameRef, params.pageSize, urlRef],
+    ([cursor, queryName, pageSize, startsWithUrl]) => {
+      if (!queryName || !pageSize || !startsWithUrl) return
+
+      isLoadingRef.value = true
+
+      getNewsCards({
+        queryName,
+        startsWithUrl,
+        now,
+        cursor,
+        pageSize,
+      }).then(({ items, endCursor, hasNextPage }) => {
+        itemsRef.value = [...itemsRef.value, ...items]
+        hasNextPageRef.value = hasNextPage
+        nextCursorRef.value = endCursor
+      }).catch((e) => {
+        errorRef.value = e
+      }).finally(() => {
+        isLoadingRef.value = false
+      })
+    },
+  )
 
   return {
     currentPage: itemsRef,
