@@ -18,7 +18,7 @@
     </article>
   </section>
   <Spinner v-if="isLoading" />
-  <Cards v-else title="Ander nieuws" :cards="otherNews" />
+  <Cards v-else title="Bekijk ook" :cards="otherNews" />
 </template>
 
 <script>
