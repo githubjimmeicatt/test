@@ -2,8 +2,8 @@ import {
   ref, watch, type Ref,
 } from 'vue'
 
-import { api } from '../../api/umbraco'
-import { parseDate, formatDate } from '../../helpers/formatDate'
+import { api } from '@/icatt-heartcore/api/umbraco'
+import parseDate from '@/icatt-heartcore/api/parse-date'
 
 const getChildrenTypeQuery = (id: string) => `{
   content(id: "${id}") {
@@ -83,24 +83,39 @@ type NewsParams = {
   startsWithUrl: string
 }
 
-async function getNewsCards(params: NewsParams) {
+export interface NewsCard {
+  id: string;
+  summary: string;
+  name: string;
+  url: string;
+  createDate: Date;
+  updateDate: Date;
+  publishDate: Date;
+  image: any;
+}
+
+interface PaginatedNewsCards {
+  items: NewsCard[]
+  endCursor: string;
+  hasNextPage: boolean;
+}
+
+async function getNewsCards(params: NewsParams): Promise<PaginatedNewsCards> {
   const json = await api.postGraphQlQuery(getNewsQuery(params))
 
   const result = json.data?.[params.queryName] ?? {}
 
   const { pageInfo } = result
 
-  const items = (result.items ?? []).map(({
-    summary, name, url, image, publishDate, id,
-  }: any) => {
-    const date = parseDate(publishDate)
+  const items = (result.items ?? []).map((item: any) => {
+    const {
+      updateDate, publishDate, createDate, image,
+    } = item
     return {
-      id,
-      body: summary,
-      title: name,
-      date,
-      subtitle: formatDate(date),
-      target: { url, name: 'Lees meer' },
+      ...item,
+      publishDate: parseDate(publishDate),
+      updateDate: parseDate(updateDate),
+      createDate: parseDate(createDate),
       image: {
         ...image,
         // for backwards compatibility
@@ -126,7 +141,7 @@ export default function useNewsCards(
   const queryNameRef = ref<string>()
   const cursorRef = ref<string>()
   const nextCursorRef = ref<string>()
-  const itemsRef = ref<any[]>([])
+  const itemsRef = ref<NewsCard[]>([])
   const hasNextPageRef = ref(false)
   const isLoadingRef = ref(false)
   const errorRef = ref()

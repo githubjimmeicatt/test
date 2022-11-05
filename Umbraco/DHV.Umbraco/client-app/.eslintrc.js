@@ -22,6 +22,7 @@ module.exports = {
       code: 200,
       ignorePattern: 'd="([\\s\\S]*?)"',
     }],
+    'import/first': 'off',
     'import/extensions': ['error', 'always', {
       js: 'never',
       mjs: 'never',

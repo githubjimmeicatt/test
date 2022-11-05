@@ -1,9 +1,5 @@
 <template>
-  <cards
-    :cards="limitedPage"
-    :title="title"
-  />
-  <Spinner v-if="isLoading" />
+  <slot name="default" :items="limitedPage" :is-loading="isLoading" />
   <span
     v-if="!hideTrackEl"
     ref="trackEl"
@@ -11,16 +7,29 @@
   />
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script lang="ts" setup>
 import {
-  computed, ref,
+  computed, ref, type PropType,
 } from 'vue'
 import { useElementVisibility, whenever } from '@vueuse/core'
-import Spinner from '@/assets/spinner.svg'
-import Cards from '@/components/Cards.vue'
 import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
 
-const props = defineProps<{ maxItems?: number; title: string; newsParent: { _id: string } }>()
+const props = defineProps({
+  maxItems: {
+    type: Number,
+    default: undefined,
+  },
+  newsParent: {
+    type: Object as PropType<{ _id: string }>,
+    required: true,
+  },
+})
 
 const trackEl = ref()
 

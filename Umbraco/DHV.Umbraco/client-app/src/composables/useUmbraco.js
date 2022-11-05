@@ -2,7 +2,7 @@ import {
   ref, watch, computed,
 } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { api, Portal } from '../api/umbraco'
+import { api, Portal } from '@/icatt-heartcore/api/umbraco'
 import cleanGlobImport from '../helpers/cleanGlobImport'
 import useMetaData from './useMetadata'
 
