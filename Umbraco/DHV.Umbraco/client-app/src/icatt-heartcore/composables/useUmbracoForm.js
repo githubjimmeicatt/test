@@ -37,6 +37,9 @@ function setValidators(required, settings) {
   if (required) validators.push(FormValidators.required)
   if (settings.pattern) validators.push((value) => FormValidators.regex(value, settings.pattern, settings.patternInvalidErrorMessage))
   if (settings.fieldType === 'email') validators.push(FormValidators.email)
+  if (settings.maximumLength) {
+    validators.push(FormValidators.maxLength(+settings.maximumLength))
+  }
   return validators
 }
 
@@ -47,6 +50,9 @@ function getAttributes(settings) {
   }
   if (settings.autocompleteAttribute) {
     entries.push(['autocomplete', settings.autocompleteAttribute])
+  }
+  if (settings.placeholder) {
+    entries.push(['placeholder', settings.placeholder])
   }
   return Object.fromEntries(entries)
 }
