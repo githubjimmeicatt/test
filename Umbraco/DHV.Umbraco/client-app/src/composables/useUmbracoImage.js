@@ -29,7 +29,9 @@ export default function useUmbracoImage(umbracoImageFunc, el) {
   }
 
   const getUrl = (rectangle) => {
-    const urlTemplate = umbracoImage.value?.umbracoFile?.focalPointUrlTemplate
+    // backwards compatible
+    const file = umbracoImage.value?.umbracoFile ? umbracoImage.value.umbracoFile : umbracoImage.value
+    const urlTemplate = file?.focalPointUrlTemplate
     if (!rectangle || !urlTemplate) return null
     const { width, height } = rectangle
     if (!width || !height) return null
