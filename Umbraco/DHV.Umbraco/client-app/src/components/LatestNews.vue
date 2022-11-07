@@ -34,7 +34,7 @@ const {
 
 const extraUrls = computed(() => (props.newsParent._id === content?.value?._id
   ? []
-  : [{ url: props.newsParent._url, name: 'Meer nieuws' }]))
+  : [{ url: props.newsParent._url, name: 'Bekijk al het nieuws' }]))
 
 function mapNewsItem({
   summary, name, publishDate, url, image,
