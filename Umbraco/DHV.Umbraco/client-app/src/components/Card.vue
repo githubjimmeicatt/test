@@ -35,14 +35,13 @@
 </template>
 
 <script>
-import Beeldmerk from './Beeldmerk.vue'
 import LazyImg from './LazyImg.vue'
 import RichText from './RichText.vue'
 import TheLink from './TheLink.vue'
 
 export default {
   components: {
-    Beeldmerk, LazyImg, TheLink, RichText,
+    LazyImg, TheLink, RichText,
   },
   props: {
     contentTypeAlias: {
@@ -89,22 +88,6 @@ article {
     padding: 2rem;
   }
 
-  .beeldmerkcontainer {
-    position: absolute;
-    width: var(--card-border);
-    left: 0;
-    background-color: var(--color-base);
-    top: 0;
-    bottom: 0;
-    overflow: hidden;
-
-    svg {
-      margin-left: -2.125rem;
-      margin-top: -2.75rem;
-      width: 3.5rem;
-    }
-  }
-
   ::v-deep(h1) {
     font-size: 1.375rem;
     font-weight: 600;
@@ -118,6 +101,7 @@ article {
       background-color: var(--color-accent-1);
     }
   }
+
   ::v-deep(.toptitle) {
     margin-top: 0;
     font-size: 0.75rem;
