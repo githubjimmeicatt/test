@@ -127,15 +127,22 @@ export default {
     const ulEl = ref(null)
     const isWrapped = ref(false)
 
+    let timeoutId = 0
+
     useResizeObserver(ulEl, ([e]) => {
-      // zoek alle navItems
-      const all = e.target.getElementsByClassName('navItem')
-      // zijn er minder dan twee navItems, dan kunnen we niks vergelijken
-      if (all.length < 2) return
-      const first = all[0]
-      const last = all[all.length - 1]
-      // als het laatste item lager zit dan het eerste item, is de container wrapped.
-      isWrapped.value = last.offsetTop > first.offsetTop + first.offsetHeight
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+      timeoutId = setTimeout(() => {
+        // zoek alle navItems
+        const all = e.target.getElementsByClassName('navItem')
+        // zijn er minder dan twee navItems, dan kunnen we niks vergelijken
+        if (all.length < 2) return
+        const first = all[0]?.getBoundingClientRect()
+        const last = all[all.length - 1]?.getBoundingClientRect()
+        // als het laatste item lager zit dan het eerste item, is de container wrapped.
+        isWrapped.value = first.y < last.y
+      }, 10)
     })
 
     const isMobile = useMediaQuery('(max-width: 500px)')
@@ -509,7 +516,7 @@ export default {
     visibility: collapse;
     min-width: 0;
     transition: min-width 1s var(--timing);
-    height: 0;
+    height: .1px;
     padding-top: 0;
     padding-bottom: 0;
 
