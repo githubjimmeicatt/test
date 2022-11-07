@@ -3,6 +3,7 @@
     v-bind="$attrs"
     :cards="currentPage.map(mapNewsItem)"
     :title="title"
+    :extra-urls="[{ url: newsParent._url, name: 'Meer nieuws' }]"
   />
   <Spinner v-if="isLoading" />
   <EndlessScroll v-else-if="hasNextPage" :get-next-page="getNextPage" />
@@ -17,16 +18,18 @@ import type { NewsCard } from '@/icatt-heartcore/composables/useNewsCards'
 import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
 import { computed } from 'vue'
 
-const props = defineProps<{ maxItems?: number; title: string; newsParent: { _id: string } }>()
+const props = defineProps<{
+  maxItems?: number;
+  title: string;
+  newsParent: { _id: string, _url: string; }
+}>()
 
-const defaultPageSize = 15
-
-const pageSize = computed(() => Math.min(props.maxItems ?? defaultPageSize, defaultPageSize))
 const id = computed(() => props.newsParent._id)
+const maxItems = computed(() => props.maxItems)
 
 const {
   currentPage, isLoading, getNextPage, hasNextPage,
-} = useNewsCards(id, { pageSize })
+} = useNewsCards(id, { maxItems })
 
 function mapNewsItem({
   summary, name, publishDate, url, image,

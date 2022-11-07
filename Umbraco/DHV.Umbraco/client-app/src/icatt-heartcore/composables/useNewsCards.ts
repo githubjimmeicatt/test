@@ -1,5 +1,6 @@
 import {
   ref, watch, type Ref,
+  computed,
 } from 'vue'
 
 import { api } from '@/icatt-heartcore/api/umbraco'
@@ -134,7 +135,7 @@ async function getNewsCards(params: NewsParams): Promise<PaginatedNewsCards> {
 
 export default function useNewsCards(
   id: Ref<string>,
-  params: { pageSize: Ref<number> | number | undefined },
+  params?: { pageSize?: Ref<number | undefined> | number, maxItems?: Ref<number | undefined> | number | undefined },
 ) {
   const now = new Date()
   const urlRef = ref<string>()
@@ -145,7 +146,29 @@ export default function useNewsCards(
   const hasNextPageRef = ref(false)
   const isLoadingRef = ref(false)
   const errorRef = ref()
-  const pageSizeRef = params.pageSize && typeof params.pageSize !== 'number' ? params.pageSize : ref(params.pageSize)
+
+  const maxItemsRef = computed(() => {
+    if (!params?.maxItems) return undefined
+    if (typeof params.maxItems === 'number') return params.maxItems
+    return params.maxItems.value
+  })
+
+  const pageSizeRef = computed(() => {
+    if (!params?.pageSize) return undefined
+    if (typeof params.pageSize === 'number') return params.pageSize
+    return params.pageSize.value
+  })
+
+  const limtedPageSizeRef = computed(() => (maxItemsRef.value && (!pageSizeRef.value || maxItemsRef.value < pageSizeRef.value)
+    ? maxItemsRef.value
+    : pageSizeRef.value))
+
+  const limitedHasNextPage = computed(() => hasNextPageRef.value
+    && (!maxItemsRef.value || maxItemsRef.value > itemsRef.value.length))
+
+  const limitedPage = computed(() => (maxItemsRef.value && maxItemsRef.value < itemsRef.value.length
+    ? itemsRef.value.slice(0, maxItemsRef.value)
+    : itemsRef.value))
 
   watch(id, (i) => {
     queryNameRef.value = ''
@@ -165,7 +188,7 @@ export default function useNewsCards(
   }, { immediate: true })
 
   watch(
-    [cursorRef, queryNameRef, pageSizeRef, urlRef],
+    [cursorRef, queryNameRef, limtedPageSizeRef, urlRef],
     ([cursor, queryName, pageSize, startsWithUrl]) => {
       if (!queryName || !startsWithUrl) return
 
@@ -190,10 +213,10 @@ export default function useNewsCards(
   )
 
   return {
-    currentPage: itemsRef,
-    hasNextPage: hasNextPageRef,
+    currentPage: limitedPage,
+    hasNextPage: limitedHasNextPage,
     getNextPage() {
-      if (hasNextPageRef.value) {
+      if (limitedHasNextPage.value) {
         cursorRef.value = nextCursorRef.value
       }
     },

@@ -10,21 +10,24 @@
     class="row"
   >
     <li
-      v-for="({url, name}, i) in links"
+      v-for="({ url, name }, i) in links"
       :key="i"
     >
-      <router-link
+      <the-link
         class="arrow-before link"
         :to="url"
       >
         {{ name }}
-      </router-link>
+      </the-link>
     </li>
   </ul>
 </template>
 
 <script>
+import TheLink from './TheLink.vue'
+
 export default {
+  components: { TheLink },
   props: {
     title: {
       type: String,
