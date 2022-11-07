@@ -200,10 +200,6 @@ main > section {
   background-color: white;
   z-index: 0;
 
-  &.cards {
-    background-color: var(--color-background-2);
-  }
-
   &:only-child {
     flex: 1;
   }

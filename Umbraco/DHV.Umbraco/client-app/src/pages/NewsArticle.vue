@@ -1,23 +1,27 @@
 <template>
+  <section class="container topimage">
+    <lazy-img
+      v-if="content.image"
+      :src="content.image"
+    />
+  </section>
+
   <breadcrumbs class="breadcrumbs" />
+
   <section class="container">
-    <router-link :to="parentPath">
-      🡨 Nieuws
-    </router-link>
-    <article class="richtext">
-      <p v-if="date">
+    <article>
+      <h1>{{ content.name }}</h1>
+
+      <p v-if="date" class="article-date">
         {{ date }}
       </p>
-      <h1>{{ content.name }}</h1>
-      <lazy-img
-        v-if="content.image"
-        :src="content.image"
-        class="topimage"
-      />
+
       <rich-text :body="content.body" />
     </article>
   </section>
-  <Spinner v-if="isLoading" />
+
+  <Spinner v-if="isLoading" class="spinner" />
+
   <Cards v-else title="Bekijk ook" :cards="otherNews" />
 </template>
 
@@ -30,6 +34,7 @@ import Spinner from '@/assets/spinner.svg'
 import RichText from '@/components/RichText.vue'
 import LazyImg from '@/components/LazyImg.vue'
 import { formatDate } from '@/helpers/formatDate'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 function mapNewsItem({
   summary, name, publishDate, url, image,
@@ -58,7 +63,7 @@ const maxItems = 3
 
 export default {
   components: {
-    RichText, LazyImg, Cards, Spinner,
+    RichText, LazyImg, Cards, Spinner, Breadcrumbs,
   },
   setup() {
     const route = useRoute()
@@ -87,11 +92,22 @@ export default {
 
 <style lang="scss" scoped>
 .topimage {
-  width: 100%;
-  height: 20rem;
-  margin-top: 2rem;
-  margin-bottom: var(--space-small);
-  object-fit: cover;
-  object-position: center;
+  padding-block: 0;
+
+  img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.article-date {
+  text-transform: capitalize;
+  margin-block-start: -1rem;
+}
+
+.spinner {
+  align-self: center;
 }
 </style>
