@@ -23,7 +23,7 @@
         </li>
 
         <router-link
-          v-for="({href, title, children}, key) in filteredMenu"
+          v-for="({ href, title, children }, key) in filteredMenu"
           :key="key"
           v-slot="{ navigate, isActive, isExactActive }"
           :to="href || '#'"
@@ -31,12 +31,12 @@
         >
           <li
             :class="{
-              'router-link-active':isActive,
+              'router-link-active': isActive,
               'router-link-exact-active': isExactActive,
               children,
               navItem: true,
               open: isOpen(key),
-              'has-submenu' : (children && children.length > 0)
+              'has-submenu': (children && children.length > 0),
             }"
             @mouseenter="open(key)"
             @mouseleave="close(key)"
@@ -59,14 +59,15 @@
                 <router-link
                   v-for="(childItem, childIndex) in children"
                   :key="`${key}_${childIndex}`"
-                  v-slot="{navigate, isActive, isExactActive }"
+                  v-slot="{ navigate, isActive, isExactActive }"
                   :to="childItem.href || '#'"
                   custom
                 >
                   <li
                     :class="{
-                      'router-link-active':isActive,
-                      'router-link-exact-active': isExactActive}"
+                      'router-link-active': isActive,
+                      'router-link-exact-active': isExactActive,
+                    }"
                   >
                     <a
                       :href="childItem.href || '#'"
@@ -661,10 +662,6 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   gap: .5rem;
-
-  .cta {
-    border-radius: 1rem;
-  }
 
   button {
     margin-left: 5rem;

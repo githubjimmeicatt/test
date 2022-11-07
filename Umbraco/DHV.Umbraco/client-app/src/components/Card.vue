@@ -7,29 +7,33 @@
       :src="image"
       :alt="title ? `card ${title} banner` : 'card banner'"
     />
-    <p
-      v-if="subtitle"
-      class="toptitle"
-    >
-      {{ subtitle }}
-    </p>
+
     <h1 v-if="title">
       {{ title }}
     </h1>
+
+    <p
+      v-if="subtitle"
+      class="subtitle"
+    >
+      {{ subtitle }}
+    </p>
+
     <slot>
       <rich-text
         v-if="body"
         :body="body"
       />
     </slot>
+
     <the-link
       v-if="target?.url"
       :href="target.url"
       :target="target.target"
-      class="arrow-before"
     >
-      {{ target.name || target.url }}
+      {{ target.name || target.url }} &gt;
     </the-link>
+
     <slot name="postlink" />
   </article>
 </template>
@@ -74,6 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
+
 article {
   position: relative;
   padding: 1.5rem;
@@ -83,6 +88,8 @@ article {
   flex-direction: column;
   overflow: hidden;
   height: 100%;
+  border-radius: 0 0 0.75rem 0.75rem;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.25);
 
   @include screen-fits-two-cards {
     padding: 2rem;
@@ -93,35 +100,23 @@ article {
     font-weight: 600;
     margin: 0;
   }
-  a:last-child {
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: auto;
-    &::before {
-      background-color: var(--color-accent-1);
-    }
-  }
 
-  ::v-deep(.toptitle) {
-    margin-top: 0;
-    font-size: 0.75rem;
-    font-weight:600;
-    color: var(--color-accent-1-dark);
-    text-transform: uppercase;
-    margin-bottom: 0;
+  ::v-deep(.subtitle) {
+    text-transform: capitalize;
+    margin-block: 0;
   }
 
   img {
     position: absolute;
     top: 0;
-    left: 0.5rem;
-    width: calc(100% + 1px);
+    left: 0;
+    width: 100%;
     height: 12rem;
     object-fit: cover;
     object-position: center;
   }
 
-  img + .toptitle, img + h1, img + p {
+  img + .subtitle, img + h1, img + p {
     margin-top: var(--space-largest);
   }
 }
