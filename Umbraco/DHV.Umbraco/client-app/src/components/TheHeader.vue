@@ -514,9 +514,6 @@ export default {
     padding-bottom: 0;
 
     color: white;
-    > a{
-      font-size: 1.5rem;
-    }
 
     button {
       opacity: 0;
@@ -581,6 +578,7 @@ export default {
     }
 
     li.navItem {
+      font-size: 1.5rem;
       visibility: visible;
       height: unset;
       min-width: 100%;
