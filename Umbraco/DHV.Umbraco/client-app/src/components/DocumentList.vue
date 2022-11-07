@@ -18,7 +18,6 @@
         <the-link
           :href="x.document._url || '#'"
           target="_blank"
-          class="cta"
           data-gtm-button-type="cta"
         >
           <span v-if="x.documentLinkText">{{ x.documentLinkText }}</span>
@@ -53,15 +52,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+section {
+  padding: 1.5rem;
+  background-color: var(--color-sph-accent-2);
+  border-radius: 1rem;
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  :deep(.richtext img) {
+    padding: 0;
+    background-color: var(--color-sph-accent-2);
+  }
+}
+
 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-small);
-  margin: 0;
-  padding: 0;
-}
 
-li {
-  display: block;
+  li {
+    &::before {
+      content: ">";
+      margin-inline-end: .5rem;
+    }
+  }
 }
 </style>

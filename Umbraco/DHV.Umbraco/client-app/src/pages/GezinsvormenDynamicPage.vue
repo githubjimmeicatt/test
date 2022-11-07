@@ -112,6 +112,7 @@ export default defineComponent({
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  row-gap: var(--space-medium);
 
   > :first-child {
     width: min(100%, 40rem);
