@@ -5,7 +5,9 @@
     :title="title"
     :extra-urls="extraUrls"
   />
-  <Spinner v-if="isLoading" />
+
+  <Spinner v-if="isLoading" class="spinner" />
+
   <EndlessScroll v-else-if="hasNextPage" :get-next-page="getNextPage" />
 </template>
 
@@ -51,3 +53,10 @@ function mapNewsItem({
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.spinner {
+  align-self: center;
+  margin-block: var(--space-medium);
+}
+</style>

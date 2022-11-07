@@ -1,14 +1,16 @@
 <template>
+  <breadcrumbs class="breadcrumbs" />
+
   <LatestNews :news-parent="newsParent" :title="title" />
 </template>
 
 <script>
 import { computed, defineComponent, inject } from 'vue'
-
 import LatestNews from '@/components/LatestNews.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default defineComponent({
-  components: { LatestNews },
+  components: { LatestNews, Breadcrumbs },
   setup() {
     const content = inject('content')
     const newsParent = computed(() => ({
