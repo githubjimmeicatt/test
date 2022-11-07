@@ -10,7 +10,7 @@
     class="row"
   >
     <li
-      v-for="({ url, name }, i) in links"
+      v-for="({url, name}, i) in links"
       :key="i"
     >
       <router-link
