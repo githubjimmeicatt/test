@@ -4,7 +4,7 @@
     :title="title"
     :cards="employees"
   >
-    <template #card="{card}">
+    <template #card="{ card }">
       <employee v-bind="card" />
     </template>
   </cards>
@@ -32,3 +32,20 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+  padding-block: 0 var(--space-medium);
+  background-color: white !important;
+}
+
+:deep(article) {
+  padding: 0;
+  box-shadow: none !important;
+}
+
+:deep(h1) {
+  font-size: 1.25rem;
+  margin-block-end: var(--space-small);
+}
+</style>

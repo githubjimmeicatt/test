@@ -1,13 +1,17 @@
 <template>
   <card>
-    <lazy-img
-      v-if="photo"
-      class="profielfoto"
-      :src="photo"
-    />
-    <h1 v-if="fullName">
-      {{ fullName }}
-    </h1>
+    <figure>
+      <lazy-img
+        v-if="photo"
+        class="profielfoto"
+        :src="photo.src"
+      />
+
+      <figcaption v-if="fullName">
+        {{ fullName }}
+      </figcaption>
+    </figure>
+
     <p
       v-if="role"
       class="toptitle"
@@ -44,13 +48,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toptitle {
-  margin-top: 0;
-}
+figure {
+  margin: 0;
 
+   figcaption {
+    font-weight: 600;
+    padding-block: var(--space-smallest);
+   }
+}
 .profielfoto {
-  width: 6rem;
-  height: 6rem;
-  margin-bottom: var(--space-small);
+  max-width: 10rem;
 }
 </style>

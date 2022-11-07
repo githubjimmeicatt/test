@@ -3,12 +3,14 @@
     <h1 v-if="title">
       {{ title }}
     </h1>
+
     <article
       v-if="intro"
       class="richtext"
     >
       <rich-text :body="intro" />
     </article>
+
     <umbraco-icatt-form v-bind="$props">
       <template #loading>
         <div class="overlay">
@@ -54,14 +56,11 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
 
-main > section {
-  &:nth-of-type(2) {
-    background-color: #fff4ec;
-  }
-}
-
 :deep(button) {
-    @include button-default;
+  @include button-default;
+
+  float: right;
+  margin-inline-start: var(--space-small);
 }
 
 :deep(fieldset){
@@ -80,7 +79,7 @@ main > section {
 }
 
 ::v-deep(.form-options-group), ::v-deep(.form-group){
-  margin-bottom: var(--space-medium);
+  margin-bottom: var(--space-small);
 }
 
 ::v-deep(legend), ::v-deep(.form-label) {
@@ -96,25 +95,23 @@ main > section {
 :deep(input[type=text]), :deep(textarea),:deep(input[type=email]), :deep(select), :deep(option) {
   width: 100%;
   padding: 0.5rem;
+  border: 1px solid var(--color-sph-accent-1);
+  border-radius: 0.75rem;
 }
 
 ::v-deep(input[type=date])  {
   display: block;
 }
 
- :deep(form) {
- width:600px;
-}
-
-/* todo: media queries gelijk trekken */
-@media only screen and (max-width: 600px) {
-   :deep(form) {
-    width:100%;
-  }
+:deep(h1),
+:deep(article),
+:deep(form) {
+  width: min(100%, 40rem);
+  margin-inline: auto;
 }
 
 .overlay {
- height: 100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
 }
 </style>

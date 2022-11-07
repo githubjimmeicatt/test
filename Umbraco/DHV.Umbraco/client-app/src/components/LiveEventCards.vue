@@ -16,6 +16,7 @@
           <img
             v-if="card.icon?.src"
             :src="card.icon.src"
+            :alt="card.text?.name"
           >
 
           <span v-if="card.text?.name">{{ card.text.name }} &gt;</span>

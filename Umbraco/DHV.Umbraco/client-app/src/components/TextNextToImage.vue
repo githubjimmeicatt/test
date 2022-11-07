@@ -1,7 +1,10 @@
 <template>
   <section :class="[imagePosition !== 'Links' && 'align-right']">
     <figure>
-      <img :src="image?.src">
+      <img
+        :src="image?.src"
+        :alt="title ? title : ''"
+      >
     </figure>
 
     <div>
