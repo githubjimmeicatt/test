@@ -4,13 +4,8 @@
       <lazy-img
         v-if="photo"
         class="profielfoto"
-        :src="photo"
+        :src="photo.src"
       />
-
-      <!-- <img
-        src="https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/foudex5c/image-42.png"
-        alt=""
-      > -->
 
       <figcaption v-if="fullName">
         {{ fullName }}
@@ -58,11 +53,10 @@ figure {
 
    figcaption {
     font-weight: 600;
-    padding-block: var(--space-smaller);
+    padding-block: var(--space-smallest);
    }
 }
 .profielfoto {
   max-width: 10rem;
-  margin-bottom: var(--space-small);
 }
 </style>
