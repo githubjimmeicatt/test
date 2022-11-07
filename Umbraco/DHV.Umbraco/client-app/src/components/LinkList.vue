@@ -13,21 +13,18 @@
       v-for="({ url, name }, i) in links"
       :key="i"
     >
-      <the-link
+      <router-link
         class="arrow-before link"
-        :href="url"
+        :to="url"
       >
         {{ name }}
-      </the-link>
+      </router-link>
     </li>
   </ul>
 </template>
 
 <script>
-import TheLink from './TheLink.vue'
-
 export default {
-  components: { TheLink },
   props: {
     title: {
       type: String,
