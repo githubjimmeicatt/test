@@ -201,6 +201,10 @@ const tableData = computed(() => descendingData.value.map(({ date, actueel, bele
 .chart-wrapper, .table-wrapper {
   width: min(100%, 40rem);
   overflow-x: auto;
+
+  &:not(:last-child) {
+    margin-block-end: 1rem;
+  }
 }
 
 table {
