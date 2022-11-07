@@ -1,9 +1,10 @@
 import {
   ref, watch, type Ref,
+  computed,
 } from 'vue'
 
-import { api } from '../../api/umbraco'
-import { parseDate, formatDate } from '../../helpers/formatDate'
+import { api } from '@/icatt-heartcore/api/umbraco'
+import parseDate from '@/icatt-heartcore/api/parse-date'
 
 const getChildrenTypeQuery = (id: string) => `{
   content(id: "${id}") {
@@ -83,24 +84,39 @@ type NewsParams = {
   startsWithUrl: string
 }
 
-async function getNewsCards(params: NewsParams) {
+export interface NewsCard {
+  id: string;
+  summary: string;
+  name: string;
+  url: string;
+  createDate: Date;
+  updateDate: Date;
+  publishDate: Date;
+  image: any;
+}
+
+interface PaginatedNewsCards {
+  items: NewsCard[]
+  endCursor: string;
+  hasNextPage: boolean;
+}
+
+async function getNewsCards(params: NewsParams): Promise<PaginatedNewsCards> {
   const json = await api.postGraphQlQuery(getNewsQuery(params))
 
   const result = json.data?.[params.queryName] ?? {}
 
   const { pageInfo } = result
 
-  const items = (result.items ?? []).map(({
-    summary, name, url, image, publishDate, id,
-  }: any) => {
-    const date = parseDate(publishDate)
+  const items = (result.items ?? []).map((item: any) => {
+    const {
+      updateDate, publishDate, createDate, image,
+    } = item
     return {
-      id,
-      body: summary,
-      title: name,
-      date,
-      subtitle: formatDate(date),
-      target: { url, name: 'Lees meer' },
+      ...item,
+      publishDate: parseDate(publishDate),
+      updateDate: parseDate(updateDate),
+      createDate: parseDate(createDate),
       image: {
         ...image,
         // for backwards compatibility
@@ -119,18 +135,40 @@ async function getNewsCards(params: NewsParams) {
 
 export default function useNewsCards(
   id: Ref<string>,
-  params: { pageSize: Ref<number> | number | undefined },
+  params?: { pageSize?: Ref<number | undefined> | number, maxItems?: Ref<number | undefined> | number | undefined },
 ) {
   const now = new Date()
   const urlRef = ref<string>()
   const queryNameRef = ref<string>()
   const cursorRef = ref<string>()
   const nextCursorRef = ref<string>()
-  const itemsRef = ref<any[]>([])
+  const itemsRef = ref<NewsCard[]>([])
   const hasNextPageRef = ref(false)
   const isLoadingRef = ref(false)
   const errorRef = ref()
-  const pageSizeRef = params.pageSize && typeof params.pageSize !== 'number' ? params.pageSize : ref(params.pageSize)
+
+  const maxItemsRef = computed(() => {
+    if (!params?.maxItems) return undefined
+    if (typeof params.maxItems === 'number') return params.maxItems
+    return params.maxItems.value
+  })
+
+  const pageSizeRef = computed(() => {
+    if (!params?.pageSize) return undefined
+    if (typeof params.pageSize === 'number') return params.pageSize
+    return params.pageSize.value
+  })
+
+  const limtedPageSizeRef = computed(() => (maxItemsRef.value && (!pageSizeRef.value || maxItemsRef.value < pageSizeRef.value)
+    ? maxItemsRef.value
+    : pageSizeRef.value))
+
+  const limitedHasNextPage = computed(() => hasNextPageRef.value
+    && (!maxItemsRef.value || maxItemsRef.value > itemsRef.value.length))
+
+  const limitedPage = computed(() => (maxItemsRef.value && maxItemsRef.value < itemsRef.value.length
+    ? itemsRef.value.slice(0, maxItemsRef.value)
+    : itemsRef.value))
 
   watch(id, (i) => {
     queryNameRef.value = ''
@@ -150,7 +188,7 @@ export default function useNewsCards(
   }, { immediate: true })
 
   watch(
-    [cursorRef, queryNameRef, pageSizeRef, urlRef],
+    [cursorRef, queryNameRef, limtedPageSizeRef, urlRef],
     ([cursor, queryName, pageSize, startsWithUrl]) => {
       if (!queryName || !startsWithUrl) return
 
@@ -175,10 +213,10 @@ export default function useNewsCards(
   )
 
   return {
-    currentPage: itemsRef,
-    hasNextPage: hasNextPageRef,
+    currentPage: limitedPage,
+    hasNextPage: limitedHasNextPage,
     getNextPage() {
-      if (hasNextPageRef.value) {
+      if (limitedHasNextPage.value) {
         cursorRef.value = nextCursorRef.value
       }
     },

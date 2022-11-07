@@ -21,23 +21,30 @@
   <Cards v-else title="Bekijk ook" :cards="otherNews" />
 </template>
 
-<script>
+<script lang="ts">
 import { inject, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
+import useNewsCards, { type NewsCard } from '@/icatt-heartcore/composables/useNewsCards'
 import Cards from '@/components/Cards.vue'
 import Spinner from '@/assets/spinner.svg'
 import RichText from '@/components/RichText.vue'
 import LazyImg from '@/components/LazyImg.vue'
+import { formatDate } from '@/helpers/formatDate'
 
-function formatDate(date) {
-  if (!date || date === '0001-01-01T00:00:00') return null
-  return new Date(date).toLocaleDateString('nl-NL', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-  })
+function mapNewsItem({
+  summary, name, publishDate, url, image,
+}: NewsCard) {
+  return {
+    body: summary,
+    title: name,
+    date: publishDate,
+    subtitle: formatDate(publishDate),
+    image,
+    target: { url, name: 'Lees meer' },
+  }
 }
 
-function upOneLevel(path) {
+function upOneLevel(path: string) {
   const upperPath = path.replace(/\/$/, '').split('/')
 
   if (upperPath.length > 0) {
@@ -56,13 +63,13 @@ export default {
   setup() {
     const route = useRoute()
     const parentPath = computed(() => upOneLevel(route.path))
-    const content = inject('content')
+    const content = inject<any>('content')
     const parentId = computed(() => content.value?.parentId)
     const { currentPage, isLoading } = useNewsCards(parentId, {
-      pageSize: maxItems + 1,
+      maxItems: maxItems + 1, // one more so we can exclude the current if necessary
     })
 
-    const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems))
+    const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems).map(mapNewsItem))
 
     return {
       content,

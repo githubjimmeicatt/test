@@ -5,7 +5,7 @@
 <script>
 import { computed, defineComponent, inject } from 'vue'
 
-import LatestNews from '@/icatt-heartcore/components/LatestNews.vue'
+import LatestNews from '@/components/LatestNews.vue'
 
 export default defineComponent({
   components: { LatestNews },
