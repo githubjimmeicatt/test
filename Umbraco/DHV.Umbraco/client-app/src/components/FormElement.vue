@@ -56,16 +56,11 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
 
-// section {
-//   background-color: var(--color-sph-accent-2) !important;
-// }
-
 :deep(button) {
   @include button-default;
 
   float: right;
   margin-inline-start: var(--space-small);
-  border-radius: 0.75rem;
 }
 
 :deep(fieldset){
@@ -108,13 +103,11 @@ export default {
   display: block;
 }
 
-@include screen-fits-two-cards {
-  :deep(h1),
-  :deep(article),
-  :deep(form) {
-    width: 36rem;
-    margin-inline: auto;
-  }
+:deep(h1),
+:deep(article),
+:deep(form) {
+  width: min(100%, 40rem);
+  margin-inline: auto;
 }
 
 .overlay {
