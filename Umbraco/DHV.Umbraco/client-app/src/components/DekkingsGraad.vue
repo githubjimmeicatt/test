@@ -6,7 +6,7 @@
       <div class="table-wrapper" v-if="item === 'table'">
         <table>
           <thead>
-            <tr><th>SPHDHV</th><th>Actuele dekkingsgraad</th><th>Beleidsdekkingsgraad</th></tr>
+            <tr><th>SPHDHV</th><th>Actuele dekkings&shy;graad</th><th>Beleids&shy;dekkings&shy;graad</th></tr>
           </thead>
           <tbody>
             <tr v-for="({ date, actueel, beleid }, i) in tableData" :key="i">
@@ -199,7 +199,7 @@ const tableData = computed(() => descendingData.value.map(({ date, actueel, bele
 
 <style lang="scss" scoped>
 .chart-wrapper, .table-wrapper {
-  width: min(100%, 40rem);
+  width: min(100%, 50rem);
   overflow-x: auto;
 
   &:not(:last-child) {
@@ -214,7 +214,6 @@ table {
 
 th, td {
   text-align: left;
-  white-space: nowrap;
   padding: 0.25rem .5rem;
 }
 
@@ -222,9 +221,11 @@ th {
   background-color: var(--color-accent-1);
   border: 1px solid var(--color-base);
   color: white;
+  hyphens: auto;
 }
 
 td {
+  white-space: nowrap;
   border: 1px solid #d4d4d4;
 }
 
