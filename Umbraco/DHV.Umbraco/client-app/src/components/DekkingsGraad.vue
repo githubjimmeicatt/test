@@ -1,27 +1,29 @@
 <template>
   <section class="container">
     <h1>{{title}}</h1>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr><th>SPHDHV</th><th>Actuele dekkingsgraad</th><th>Beleidsdekkingsgraad</th></tr>
-        </thead>
-        <tbody>
-          <tr v-for="(row, i) in descendingData" :key="i">
-            <td>{{shortDate(row.date)}}</td>
-            <td>{{percentageFormat.format(parseNumber(row.actueel) / 100)}}</td>
-            <td>{{percentageFormat.format(parseNumber(row.beleid) / 100)}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <LineChart class="chart-wrapper" :chart-data="chartData" :chart-options="chartOptions" />
+    <RichText :body="intro" />
+    <template v-for="(item, idx) in visualItems" :key="idx">
+      <div class="table-wrapper" v-if="item === 'table'">
+        <table>
+          <thead>
+            <tr><th>SPHDHV</th><th>Actuele dekkingsgraad</th><th>Beleidsdekkingsgraad</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="({ date, actueel, beleid }, i) in tableData" :key="i">
+              <td><time v-if="date" :datetime="date.iso">{{date.display}}</time></td>
+              <td>{{actueel}}</td>
+              <td>{{beleid}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <LineChart v-if="item === 'graph'" class="chart-wrapper" :chart-data="chartData" :chart-options="chartOptions" />
+    </template>
+
   </section>
 </template>
 
-<script setup lang="ts">
-import { Line as LineChart } from 'vue-chartjs'
-import type { TChartData, TChartOptions } from 'vue-chartjs/dist/types'
+<script lang="ts">
 import {
   Title,
   Tooltip,
@@ -31,14 +33,8 @@ import {
   PointElement,
   CategoryScale,
   Chart as ChartJS,
-  type ChartDataset,
-} from 'chart.js'
-import { computed } from 'vue'
-import { shortDate, parseDate } from '@/helpers/formatDate'
 
-type LineChartData = TChartData<'line'>
-type LineChartOptions = TChartOptions<'line'>
-type LineDataSet = ChartDataset<'line'>
+} from 'chart.js'
 
 ChartJS.register(
   Title,
@@ -49,6 +45,21 @@ ChartJS.register(
   PointElement,
   CategoryScale,
 )
+</script>
+
+<script setup lang="ts">
+import { Line as LineChart } from 'vue-chartjs'
+import type { TChartData, TChartOptions } from 'vue-chartjs/dist/types'
+import type { ChartDataset } from 'chart.js'
+import { computed } from 'vue'
+import { shortDate, isoDate } from '@/helpers/formatDate'
+
+import parseDate from '@/icatt-heartcore/api/parse-date'
+import RichText from './RichText.vue'
+
+type LineChartData = TChartData<'line'>
+type LineChartOptions = TChartOptions<'line'>
+type LineDataSet = ChartDataset<'line'>
 
 type Data = {
   date: string;
@@ -60,16 +71,36 @@ type Data = {
 
 const props = defineProps<{
   title: string;
-  data: Data[]
+  data: Data[];
+  order: string;
+  intro: string;
 }>()
+
+type VisualItem = 'table' | 'graph'
+
+const visualItems = computed<VisualItem[]>(() => {
+  switch (props.order) {
+    case 'Eerst grafiek, dan tabel':
+      return ['graph', 'table']
+    case 'Alleen tabel':
+      return ['table']
+    case 'Alleen grafiek':
+      return ['graph']
+    case 'Eerst tabel, dan grafiek':
+    default:
+      return ['table', 'graph']
+  }
+})
 
 const percentageOptions: Intl.NumberFormatOptions = {
   style: 'percent',
   notation: 'standard',
   minimumFractionDigits: 1,
 }
+
 const percentageFormat = new Intl.NumberFormat('nl-NL', percentageOptions)
 const parseNumber = (s: string) => (s ? Number.parseFloat(s.replace(',', '.').replace('%', '')) : 0)
+const parseAndFormatPercentage = (s: string) => percentageFormat.format(parseNumber(s) / 100)
 
 const getTime = (d: string) => parseDate(d)?.getTime() || 0
 const byDateAscending = (a: Data, b: Data) => getTime(a.date) - getTime(b.date)
@@ -152,20 +183,28 @@ const chartData = computed<LineChartData>(() => ({
   labels: labels.value,
   datasets: [actueelSet.value, beleidSet.value, minimaalSet.value, ftkSet.value],
 }))
+
+const tableData = computed(() => descendingData.value.map(({ date, actueel, beleid }) => {
+  const dateTime = parseDate(date)
+  return {
+    date: dateTime && {
+      iso: isoDate(dateTime),
+      display: shortDate(dateTime),
+    },
+    actueel: parseAndFormatPercentage(actueel),
+    beleid: parseAndFormatPercentage(beleid),
+  }
+}))
 </script>
 
 <style lang="scss" scoped>
 .chart-wrapper, .table-wrapper {
   width: min(100%, 40rem);
-}
-
-.table-wrapper {
-  margin-block-end: 4rem;
   overflow-x: auto;
 }
 
 table {
-  // min-width: 100%;
+  width: 100%;
   border-collapse: collapse;
 }
 
