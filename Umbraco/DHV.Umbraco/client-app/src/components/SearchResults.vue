@@ -46,7 +46,7 @@ import {
   ref, watch, computed,
 } from 'vue'
 import { useRoute } from 'vue-router'
-import { Portal } from '../api/umbraco'
+import { Portal } from '@/icatt-heartcore/api/umbraco'
 
 export default {
 

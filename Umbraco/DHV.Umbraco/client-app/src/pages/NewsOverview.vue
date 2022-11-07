@@ -1,17 +1,23 @@
 <template>
-  <NewsOverview v-bind="content" />
+  <LatestNews :news-parent="newsParent" :title="title" />
 </template>
 
 <script>
-import { defineComponent, inject } from 'vue'
-import NewsOverview from '../components/NewsOverview.vue'
+import { computed, defineComponent, inject } from 'vue'
+
+import LatestNews from '@/components/LatestNews.vue'
 
 export default defineComponent({
-  components: { NewsOverview },
+  components: { LatestNews },
   setup() {
     const content = inject('content')
+    const newsParent = computed(() => ({
+      _id: content.value?._id,
+    }))
+    const title = computed(() => content.value?.name)
     return {
-      content,
+      newsParent,
+      title,
     }
   },
 })
