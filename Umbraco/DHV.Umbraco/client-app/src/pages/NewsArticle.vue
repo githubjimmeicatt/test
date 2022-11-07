@@ -66,7 +66,7 @@ export default {
     const content = inject<any>('content')
     const parentId = computed(() => content.value?.parentId)
     const { currentPage, isLoading } = useNewsCards(parentId, {
-      pageSize: maxItems + 1,
+      maxItems: maxItems + 1, // one more so we can exclude the current if necessary
     })
 
     const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems).map(mapNewsItem))
