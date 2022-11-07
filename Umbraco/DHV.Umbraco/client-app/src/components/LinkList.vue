@@ -15,7 +15,7 @@
     >
       <the-link
         class="arrow-before link"
-        :to="url"
+        :href="url"
       >
         {{ name }}
       </the-link>

@@ -3,7 +3,7 @@
     v-bind="$attrs"
     :cards="currentPage.map(mapNewsItem)"
     :title="title"
-    :extra-urls="[{ url: newsParent._url, name: 'Meer nieuws' }]"
+    :extra-urls="extraUrls"
   />
   <Spinner v-if="isLoading" />
   <EndlessScroll v-else-if="hasNextPage" :get-next-page="getNextPage" />
@@ -16,7 +16,7 @@ import { formatDate } from '@/helpers/formatDate'
 import EndlessScroll from '@/icatt-heartcore/components/EndlessScroll.vue'
 import type { NewsCard } from '@/icatt-heartcore/composables/useNewsCards'
 import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
 const props = defineProps<{
   maxItems?: number;
@@ -26,10 +26,15 @@ const props = defineProps<{
 
 const id = computed(() => props.newsParent._id)
 const maxItems = computed(() => props.maxItems)
+const content = inject<any>('content')
 
 const {
   currentPage, isLoading, getNextPage, hasNextPage,
 } = useNewsCards(id, { maxItems })
+
+const extraUrls = computed(() => (props.newsParent._id === content?.value?._id
+  ? []
+  : [{ url: props.newsParent._url, name: 'Meer nieuws' }]))
 
 function mapNewsItem({
   summary, name, publishDate, url, image,
