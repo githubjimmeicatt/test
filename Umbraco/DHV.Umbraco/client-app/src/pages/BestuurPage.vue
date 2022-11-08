@@ -3,8 +3,8 @@
   <page-header
     v-bind="content.pageHeader" />
 
-  <RichTextVue
-    v-bind="content.tekstblok" />
+  <!-- Wordt niet getoond op pagina, alleen in DOM -->
+  <RichTextVue v-bind="content.tekstblok" />
 
   <EmployeeList
     v-bind="content.employeeList1" />
