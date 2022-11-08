@@ -2,7 +2,17 @@
 
   <page-header
     v-bind="content.hero"
-  />
+  >
+    <template #above v-if="latestDekkingsgraad">
+      <article>
+        <header>Financiele situatie</header>
+        <dl>
+          <dt>Actuele dekkingsgraad</dt>
+          <dd>{{latestDekkingsgraad}}</dd>
+        </dl>
+      </article>
+    </template>
+  </page-header>
 
   <LiveEventCards
     class="container"
@@ -27,11 +37,13 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, computed } from 'vue'
 import LatestNews from '@/components/LatestNews.vue'
 import LiveEventCards from '@/components/LiveEventCards.vue'
 import TextNextToImage from '@/components/TextNextToImage.vue'
 import FormElement from '@/components/FormElement.vue'
+import parseDate from '@/icatt-heartcore/api/parse-date'
+import { parseAndFormatPercentage } from '@/helpers/percentage'
 import PageHeader from '../components/PageHeader.vue'
 
 export default {
@@ -44,8 +56,18 @@ export default {
   },
   setup() {
     const content = inject('content')
+    const latestDekkingsgraad = computed(() => {
+      if (!Array.isArray(content?.value?.dekkingsgraad?.data)) return undefined
+      const ordered = content.value.dekkingsgraad.data.map((x) => ({
+        ...x,
+        date: parseDate(x.date),
+      })).sort((a, b) => a.date - b.date)
+      const first = ordered[0]?.actueel
+      return first && parseAndFormatPercentage(first)
+    })
     return {
       content,
+      latestDekkingsgraad,
     }
   },
 
