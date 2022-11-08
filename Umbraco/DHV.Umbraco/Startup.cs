@@ -99,7 +99,7 @@ namespace DHV.Umbraco
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "WSG Umbraco API");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "SPH Umbraco API");
 
                 });
                 app.UseDeveloperExceptionPage();

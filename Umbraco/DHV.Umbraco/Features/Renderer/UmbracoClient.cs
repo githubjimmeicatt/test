@@ -158,7 +158,7 @@ namespace DHV.Umbraco.Features.Renderer
 
         private async Task<Head> GetHead(Uri uri, Portal portal, string initialState, IReadOnlyList<MenuItem> menu, CancellationToken token)
         {
-            const string SiteName = "WSG";
+            const string SiteName = "SPH";
             using var doc = JsonDocument.Parse(initialState);
             var json = doc.RootElement;
 
