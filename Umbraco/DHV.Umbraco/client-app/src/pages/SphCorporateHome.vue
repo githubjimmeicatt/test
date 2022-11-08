@@ -1,19 +1,28 @@
 <template>
 
   <page-header
-    v-bind="content.hero" />
+    v-bind="content.hero"
+  />
 
   <LiveEventCards
-    v-bind="content.cards" />
+    class="container"
+    v-bind="content.cards"
+  />
 
   <TextNextToImage
-    v-bind="content.textNextToImage" />
+    class="container"
+    v-bind="content.textNextToImage"
+  />
 
   <LatestNews
-    v-bind="content.newsPicker" />
+    class="container"
+    v-bind="content.newsPicker"
+  />
 
   <FormElement
-    v-bind="content.formulier" />
+    class="container"
+    v-bind="content.formulier"
+  />
 
 </template>
 
@@ -42,3 +51,82 @@ export default {
 
 }
 </script>
+
+<style lang="scss" scoped>
+.aside-with-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  row-gap: var(--space-medium);
+
+  > :first-child {
+    width: min(100%, 40rem);
+  }
+
+  .container {
+    padding: 0;
+  }
+}
+
+.pageheader {
+  overflow: hidden;
+}
+
+main > .container {
+  --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+  &:nth-child(4n+2), &:nth-child(4n+4) {
+    background-color: white;
+
+    :deep(.card) {
+      box-shadow: var(--card-shadow);
+    }
+  }
+
+  &:nth-child(4n+1) {
+    background-color: var(--color-background-1);
+
+    :deep(.card) {
+      box-shadow: none;
+    }
+  }
+
+  &:nth-child(4n+3) {
+    background-color: var(--color-background-2);
+
+    :deep(.card) {
+      box-shadow: none;
+    }
+  }
+}
+
+.pageheader ~ .container {
+  &:nth-child(4n+1), &:nth-child(4n+3) {
+    background-color: white;
+
+    :deep(.card) {
+      box-shadow: var(--card-shadow);
+    }
+  }
+
+  &:nth-child(4n+2) {
+    background-color: var(--color-background-1);
+
+    :deep(.card) {
+      box-shadow: none;
+    }
+  }
+
+  &:nth-child(4n+4) {
+    background-color: var(--color-background-2);
+
+    :deep(.card) {
+      box-shadow: none;
+    }
+  }
+}
+
+.container section.container {
+  background: none;
+}
+</style>
