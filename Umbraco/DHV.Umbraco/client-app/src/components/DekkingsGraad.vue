@@ -6,7 +6,11 @@
       <div class="table-wrapper" v-if="item === 'table'">
         <table>
           <thead>
-            <tr><th>SPHDHV</th><th>Actuele dekkings&shy;graad</th><th>Beleids&shy;dekkings&shy;graad</th></tr>
+            <tr>
+              <th>SPHDHV</th>
+              <th>Actuele dekkings&shy;graad</th>
+              <th>Beleids&shy;dekkings&shy;graad</th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="({ date, actueel, beleid }, i) in tableData" :key="i">
@@ -17,7 +21,12 @@
           </tbody>
         </table>
       </div>
-      <LineChart v-if="item === 'graph'" class="chart-wrapper" :chart-data="chartData" :chart-options="chartOptions" />
+      <LineChart
+        v-if="item === 'graph'"
+        class="chart-wrapper"
+        :chart-data="chartData"
+        :chart-options="chartOptions"
+      />
     </template>
 
   </section>
@@ -53,6 +62,7 @@ import type { TChartData, TChartOptions } from 'vue-chartjs/dist/types'
 import type { ChartDataset } from 'chart.js'
 import { computed } from 'vue'
 import { shortDate, isoDate } from '@/helpers/formatDate'
+import { useMediaQuery } from '@vueuse/core'
 
 import parseDate from '@/icatt-heartcore/api/parse-date'
 import RichText from './RichText.vue'
@@ -143,9 +153,9 @@ const minimaalSet = computed<LineDataSet>(() => {
   return {
     label: 'Minimaal vereiste dekkingsgraad',
     data,
-    borderColor: '#cccccc',
+    borderColor: '#717171',
     pointStyle: 'rect',
-    pointBackgroundColor: '#cccccc',
+    pointBackgroundColor: '#717171',
     pointRadius: 5,
     pointHoverRadius: 7,
   }
@@ -164,10 +174,17 @@ const ftkSet = computed<LineDataSet>(() => {
   }
 })
 
-const chartOptions: LineChartOptions = {
+const isSmallScreen = useMediaQuery('(max-width: 30rem)')
+
+const chartOptions = computed<LineChartOptions>(() => ({
   responsive: true,
   maintainAspectRatio: true,
-  aspectRatio: 1.5,
+  aspectRatio: isSmallScreen.value ? 0.875 : 1.5,
+  layout: {
+    padding: {
+      bottom: 20,
+    },
+  },
   plugins: {
     legend: {
       position: 'bottom',
@@ -175,11 +192,11 @@ const chartOptions: LineChartOptions = {
         boxWidth: 15,
         textAlign: 'left',
         usePointStyle: true,
+        padding: 30,
       },
-
     },
   },
-}
+}))
 
 const chartData = computed<LineChartData>(() => ({
   labels: labels.value,
@@ -231,7 +248,7 @@ td {
   border: 1px solid #d4d4d4;
 }
 
-tbody tr:nth-child(even) td {
+.chart-wrapper, tbody tr:nth-child(even) td  {
     background-color: #f2f9fb;
 }
 </style>
