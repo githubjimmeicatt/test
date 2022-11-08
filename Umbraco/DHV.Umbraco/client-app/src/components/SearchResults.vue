@@ -1,7 +1,6 @@
 <template>
   <slot
     name="query"
-    :searchQuery="searchQuery"
   />
   <slot
     v-if="loading"
@@ -45,12 +44,16 @@
 import {
   ref, watch, computed,
 } from 'vue'
-import { useRoute } from 'vue-router'
 import { Portal } from '@/icatt-heartcore/api/umbraco'
 
 export default {
-
-  setup() {
+  props: {
+    searchQuery: {
+      type: String,
+      default: '',
+    },
+  },
+  setup(props) {
     const response = ref({
       content: {
         items: [],
@@ -69,10 +72,7 @@ export default {
       }))
     })
 
-    const route = useRoute()
-    const searchQuery = computed(() => route.query.searchQuery)
-
-    watch(searchQuery, async (val) => {
+    watch(() => props.searchQuery, async (val) => {
       try {
         if (val) {
           loading.value = true
@@ -85,7 +85,6 @@ export default {
 
     return {
       searchResults,
-      searchQuery,
       loading,
     }
   },
