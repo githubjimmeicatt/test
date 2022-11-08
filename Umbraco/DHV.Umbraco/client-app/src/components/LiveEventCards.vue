@@ -76,6 +76,7 @@ li {
     padding-block-start: var(--space-medium);
 
     color: white;
+    font-weight: 600;
     text-decoration: none;
 
     &:hover {

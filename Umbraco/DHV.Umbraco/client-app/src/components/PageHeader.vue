@@ -1,18 +1,20 @@
 <template>
   <section
-    :class="{transparent, narrow, hasImage, hasVideo}"
+    :class="{
+      transparent, narrow, hasImage, hasVideo,
+    }"
   >
     <img
       v-if="hasImage"
       ref="imageEl"
-      :class="{background: true, hide: !backgroundUrl}"
+      :class="{ background: true, hide: !backgroundUrl }"
       :src="backgroundUrl"
       alt="Hero"
       @load="setLoaded"
     >
     <video
       v-if="hasVideo"
-      :class="{background: true, hide: !backgroundUrl}"
+      :class="{ background: true, hide: !backgroundUrl }"
       autoplay
       muted
       loop
@@ -236,7 +238,7 @@ section {
   }
 
   .prefix {
-    font-weight: 500;
+    font-weight: 600;
 
     + h1
     {
