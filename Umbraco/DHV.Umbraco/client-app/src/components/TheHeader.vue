@@ -112,6 +112,30 @@ const logos = cleanGlobImport(import.meta.globEager('../assets/logos/*.svg'))
 const logoName = window.UMBRACO_PORTAL?.logo || window.UMBRACO_PORTAL?.theme
 const logo = logoName && logos[logoName.toLowerCase()]
 
+/**
+ *
+ * @param {Element} el
+ */
+function checkIfWrapped(el) {
+  const all = el.children
+  // zijn er minder dan twee navItems, dan kunnen we niks vergelijken
+  if (all.length < 2) return false
+
+  let previous
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const current of all) {
+    // eslint-disable-next-line no-continue
+    if (!(current instanceof HTMLElement) || current.classList.contains('hamburger')) continue
+    if (previous && previous instanceof HTMLElement && previous.offsetLeft > current.offsetLeft) {
+      return true
+    }
+    previous = current
+  }
+
+  return false
+}
+
 export default {
   components: {
     ChevronDown,
@@ -129,13 +153,7 @@ export default {
 
     useResizeObserver(ulEl, ([e]) => {
       // zoek alle navItems
-      const all = e.target.getElementsByClassName('navItem')
-      // zijn er minder dan twee navItems, dan kunnen we niks vergelijken
-      if (all.length < 2) return
-      const first = all[0]
-      const last = all[all.length - 1]
-      // als het laatste item lager zit dan het eerste item, is de container wrapped.
-      isWrapped.value = last.offsetTop > first.offsetTop + first.offsetHeight
+      isWrapped.value = checkIfWrapped(e.target)
     })
 
     const isMobile = useMediaQuery('(max-width: 500px)')
@@ -496,6 +514,9 @@ export default {
   }
 }
 
+// DO NOT CHANGE ANY CSS THAT RESULTS IN A NEW WIDTH OF NAV ITEMS HERE.
+// This will prevent correctly checking wether the desktop nav fits on the screen.
+// You can safely make these changes below, in the expanded state.
 .header.hamburgerEnabled {
   .hamburger {
     display: flex;
@@ -514,9 +535,6 @@ export default {
     padding-bottom: 0;
 
     color: white;
-    > a{
-      font-size: 1.5rem;
-    }
 
     button {
       opacity: 0;
@@ -547,6 +565,7 @@ export default {
   }
 }
 
+// ANY CHANGES RESULTING IN A DIFFERENT WIDTH OF NAV ITEMS GO HERE
 .header.hamburgerEnabled.hamburgerExpanded {
   .hamburger button span {
     background-color: transparent;
@@ -569,6 +588,10 @@ export default {
     > li.navItem {
       margin-top: 16px;
       margin-left: 0;
+
+      > a{
+        font-size: 1.5rem;
+      }
 
       button > svg{
         margin-top: var(--space-small);
