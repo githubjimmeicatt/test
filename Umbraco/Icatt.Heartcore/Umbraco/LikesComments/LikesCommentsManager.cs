@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Ganss.XSS;
+using Icatt.Heartcore.Umbraco.Shared;
 using Umbraco.Headless.Client.Net.Management;
 
 namespace Icatt.Heartcore.Umbraco.LikesComments

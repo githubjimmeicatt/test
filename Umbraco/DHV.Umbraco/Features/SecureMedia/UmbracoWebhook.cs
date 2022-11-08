@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Wsg.CorporateUmbraco.Features.Webhook
+namespace DHV.Umbraco.Features.SecureMedia
 {
     [Route("api/[controller]")]
     [AllowAnonymous]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Icatt.Heartcore.Umbraco
+namespace Icatt.Heartcore.Umbraco.Shared
 {
 
     internal class GraphQlQueryRequest

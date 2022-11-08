@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Icatt.Heartcore.Umbraco;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Icatt.Heartcore.Umbraco
+namespace DHV.Umbraco.Features.Search
 {
     [ApiController]
     [Route("content/search")]

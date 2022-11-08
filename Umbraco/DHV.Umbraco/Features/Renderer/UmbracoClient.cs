@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using Schema.NET;
 using MenuItem = Icatt.Heartcore.Umbraco.Menu.MenuItem;
 
-namespace Wsg.CorporateUmbraco.Features.Renderer
+namespace DHV.Umbraco.Features.Renderer
 {
     public interface IUmbracoClient
     {
@@ -117,7 +117,7 @@ namespace Wsg.CorporateUmbraco.Features.Renderer
             var fullUri = new Uri(baseUri + path);
 
             var umbracoPath = path;
-            
+
             if (_portalConfig.TryGetPortal(out var portal) && !string.IsNullOrWhiteSpace(portal.Prefix))
             {
                 umbracoPath = '/' + portal.Prefix.Trim('/') + path;
@@ -154,7 +154,7 @@ namespace Wsg.CorporateUmbraco.Features.Renderer
             return new(portal: portal);
         }
 
-        
+
 
         private async Task<Head> GetHead(Uri uri, Portal portal, string initialState, IReadOnlyList<MenuItem> menu, CancellationToken token)
         {
@@ -286,7 +286,7 @@ namespace Wsg.CorporateUmbraco.Features.Renderer
             {
                 jsonLd.DatePublished = createDateTime;
             }
-            
+
             if (DateTime.TryParse(updateDate, out var updateDateTime))
             {
                 jsonLd.DateModified = updateDateTime;
@@ -388,7 +388,7 @@ namespace Wsg.CorporateUmbraco.Features.Renderer
                     return false;
                 }
                 var rest = string.Join('.', splitOnDot.Skip(1));
-                return TryGetNonWhitespaceStringProperty(inner, rest, out value);
+                return inner.TryGetNonWhitespaceStringProperty(rest, out value);
             }
 
             if (!element.TryGetProperty(propName, out var prop) || prop.ValueKind != JsonValueKind.String)
@@ -404,7 +404,7 @@ namespace Wsg.CorporateUmbraco.Features.Renderer
         {
             foreach (var propName in propNames)
             {
-                if (TryGetNonWhitespaceStringProperty(element, propName, out value))
+                if (element.TryGetNonWhitespaceStringProperty(propName, out value))
                 {
                     return true;
                 }

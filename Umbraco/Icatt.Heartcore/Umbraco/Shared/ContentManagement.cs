@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icatt.Heartcore.Umbraco.Shared;
 using Newtonsoft.Json.Linq;
+using Umbraco.Headless.Client.Net.Management;
 using Umbraco.Headless.Client.Net.Management.Models;
 
-namespace Umbraco.Headless.Client.Net.Management
+namespace Icatt.Heartcore.Umbraco.Shared
 {
 
     public class UmbracoList<T> : IReadOnlyCollection<T> where T : HeartcoreComponent
