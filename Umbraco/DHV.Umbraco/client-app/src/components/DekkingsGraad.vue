@@ -71,7 +71,9 @@ type Data = {
 
 const props = defineProps<{
   title: string;
-  data: Data[];
+  data: {
+    data: Data[];
+  };
   order: string;
   intro: string;
 }>()
@@ -106,10 +108,10 @@ const getTime = (d: string) => parseDate(d)?.getTime() || 0
 const byDateAscending = (a: Data, b: Data) => getTime(a.date) - getTime(b.date)
 const byDateDescending = (a: Data, b: Data) => getTime(b.date) - getTime(a.date)
 
-const labels = computed(() => props.data.map(({ date }) => shortDate(date) || ''))
+const labels = computed(() => props.data.data.map(({ date }) => shortDate(date) || ''))
 
-const ascendingData = computed(() => [...props.data].sort(byDateAscending))
-const descendingData = computed(() => [...props.data].sort(byDateDescending))
+const ascendingData = computed(() => [...props.data.data].sort(byDateAscending))
+const descendingData = computed(() => [...props.data.data].sort(byDateDescending))
 
 const actueelSet = computed<LineDataSet>(() => {
   const data = ascendingData.value.map(({ actueel }) => parseNumber(actueel))
@@ -150,7 +152,7 @@ const minimaalSet = computed<LineDataSet>(() => {
 })
 
 const ftkSet = computed<LineDataSet>(() => {
-  const data = props.data.map(({ vereistFTK }) => parseNumber(vereistFTK))
+  const data = ascendingData.value.map(({ vereistFTK }) => parseNumber(vereistFTK))
   return {
     label: 'Vereiste FTK dekkingsgraad',
     data,
