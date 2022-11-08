@@ -9,7 +9,7 @@ export default createRouter({
       path: '/zoeken',
       name: 'Search',
       component: Search,
-      props: (route) => ({ searchQuery: route.query.searchQuery }),
+      props: (route) => ({ searchQuery: route.query.s }),
     },
     {
       path: '/:pathMatch(.*)',
