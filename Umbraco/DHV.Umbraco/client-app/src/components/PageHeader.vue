@@ -1,18 +1,20 @@
 <template>
   <section
-    :class="{transparent, narrow, hasImage, hasVideo}"
+    :class="{
+      transparent, narrow, hasImage, hasVideo,
+    }"
   >
     <img
       v-if="hasImage"
       ref="imageEl"
-      :class="{background: true, hide: !backgroundUrl}"
+      :class="{ background: true, hide: !backgroundUrl }"
       :src="backgroundUrl"
       alt="Hero"
       @load="setLoaded"
     >
     <video
       v-if="hasVideo"
-      :class="{background: true, hide: !backgroundUrl}"
+      :class="{ background: true, hide: !backgroundUrl }"
       autoplay
       muted
       loop
@@ -25,6 +27,9 @@
 
     <header>
       <ul>
+        <li v-if="$slots.above">
+          <slot name="above" />
+        </li>
         <li>
           <span class="title">{{ title }}</span>
 
