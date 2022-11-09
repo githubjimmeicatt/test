@@ -27,10 +27,11 @@
 
     <header>
       <ul>
-        <li v-if="$slots.above">
+        <li v-if="$slots.above" class="header-highlight">
           <slot name="above" />
         </li>
-        <li>
+
+        <li class="header-info">
           <span class="title">{{ title }}</span>
 
           <the-link
@@ -206,12 +207,18 @@ section {
         padding-inline: var(--space-medium);
         border-radius: 0.75rem;
         background-color: rgba(229, 243, 246, 0.9);
+        box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
 
         .title {
           display: block;
         }
 
-        &::before {
+        &.header-highlight {
+          max-width: 30rem;
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        &.header-info::before {
           content: "";
           mask: url(../assets/info-circle-solid.svg) center / cover;
           -webkit-mask: url(../assets/info-circle-solid.svg) center / cover;

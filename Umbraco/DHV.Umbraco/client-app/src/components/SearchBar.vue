@@ -121,6 +121,7 @@ section {
 
   a.cta-inverse {
     display: flex;
+    justify-content: center;
     align-items: center;
     color: var(--color-base);
     white-space: nowrap;

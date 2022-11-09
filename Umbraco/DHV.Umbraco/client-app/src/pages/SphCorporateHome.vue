@@ -4,7 +4,7 @@
     v-bind="content.hero"
   >
     <template #above v-if="latestDekkingsgraad">
-      <article class="page-header-article">
+      <article class="page-header-highlight">
         <header>Financiele situatie</header>
 
         <dl>
@@ -153,7 +153,7 @@ main > .container {
   background: none;
 }
 
-.page-header-article {
+.page-header-highlight {
   display: flex;
   flex-direction: column;
   align-items: center;
