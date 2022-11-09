@@ -19,24 +19,16 @@ namespace DHV.Umbraco
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
             app.UseXfo(options => options.SameOrigin());
 
-            var scriptSources = new List<string>()
-            {
-                        //"ajax.googleapis.com",
-            };
             var connectSources = new List<string>
             {
                 "https://cdn.umbraco.io",
                 "www.google-analytics.com",
                 "region1.google-analytics.com",
-                        //"region1.analytics.google.com"
             };
 
 
             if (env.IsDevelopment())
             {
-                //scriptSources.Add("http://localhost:33446");
-                //scriptSources.Add("sha256-Tui7QoFlnLXkJCSl1/JvEZdIXTmBttnWNxzJpXomQjg="); //swagger
-                //scriptSources.Add("sha256-WqZMSFvFlODggpww6zvVklruK7R5P+U46bod2Rp2C+U="); //swagger
                 connectSources.Add("ws:");
             }
 
