@@ -1,11 +1,10 @@
 <template>
 
-  <page-header
-    v-bind="content.pageHeader" />
+  <section class="container">
+    <h1>
+      {{ content.name }}
+    </h1>
 
-  <section
-    class="container"
-  >
     <RichText :body="content.tekstblok.textEditor" />
   </section>
 
@@ -13,17 +12,16 @@
     v-for="(employee, index) in content.employeeList"
     :key="index"
     v-bind="employee" />
+
 </template>
 
 <script>
 import { inject } from 'vue'
 import EmployeeList from '@/components/EmployeeList.vue'
 import RichText from '@/components/RichText.vue'
-import PageHeader from '../components/PageHeader.vue'
 
 export default {
   components: {
-    PageHeader,
     EmployeeList,
     RichText,
   },
