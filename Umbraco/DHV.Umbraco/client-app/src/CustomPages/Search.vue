@@ -1,7 +1,7 @@
 <template>
   <section class="container">
-    <search-results>
-      <template #query="{ searchQuery }">
+    <search-results v-bind="$props">
+      <template #query>
         <h2>{{ searchQuery }}</h2>
       </template>
       <template #results="{ result }">
@@ -26,6 +26,12 @@ import SearchResults from '../components/SearchResults.vue'
 export default {
   components: {
     SearchResults,
+  },
+  props: {
+    searchQuery: {
+      type: String,
+      default: '',
+    },
   },
   setup() {
     const getTitle = (page) => ((page?.header?.title) ? page.header.title : page.name)

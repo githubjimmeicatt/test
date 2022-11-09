@@ -35,7 +35,7 @@ export default {
     const searchInput = ref(null)
     const searchLink = computed(() => ({
       name: 'Search',
-      query: {
+      params: {
         searchQuery: searchText.value,
       },
     }))
