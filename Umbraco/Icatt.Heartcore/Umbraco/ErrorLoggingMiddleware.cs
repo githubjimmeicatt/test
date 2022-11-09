@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Yarp.ReverseProxy.Forwarder;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Icatt.Heartcore.Umbraco
 {
     public static class ErrorLoggingMiddlewareExtensions
     {

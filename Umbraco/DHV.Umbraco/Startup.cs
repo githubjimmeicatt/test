@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using DHV.Umbraco.Config;
 using DHV.Umbraco.Features.Forms;
+using DHV.Umbraco.Features.Renderer;
 using Icatt.Heartcore.Config;
 using Icatt.Heartcore.Umbraco;
 using Icatt.Heartcore.Umbraco.Forms;
@@ -14,10 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Serilog;
-using Wsg.CorporateUmbraco.Config;
-using Wsg.CorporateUmbraco.Features.Renderer;
 
-namespace Wsg.CorporateUmbraco
+namespace DHV.Umbraco
 {
     public partial class Startup
     {
@@ -51,7 +51,7 @@ namespace Wsg.CorporateUmbraco
             services.AddScoped<IFormProcessor, ContactformulierNotification>();
             services.AddScoped<IFormProcessor, ContactformulierConfirmation>();
 
-            var emailConfig = ConfigurationBinder.Get<EmailConfig>(Configuration.GetSection("Email"));
+            var emailConfig = Configuration.GetSection("Email").Get<EmailConfig>();
             services.AddScoped((serviceProvider) => new SmtpClient
             {
                 Host = emailConfig.Host,
@@ -98,7 +98,7 @@ namespace Wsg.CorporateUmbraco
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "WSG Umbraco API");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "SPH Umbraco API");
 
                 });
                 app.UseDeveloperExceptionPage();

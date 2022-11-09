@@ -11,7 +11,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
-namespace Wsg.CorporateUmbraco.Features.Renderer
+namespace DHV.Umbraco.Features.Renderer
 {
     public class GetAssets
     {

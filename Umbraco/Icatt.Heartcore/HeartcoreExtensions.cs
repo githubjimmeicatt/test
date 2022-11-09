@@ -109,8 +109,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IPortalSearchManager, PortalSearchManager>();
             services.AddScoped<IUmbracoWebhookAuthorizer, UmbracoWebhookAuthorizer>();
 
-            services.AddHttpClient<IMenuManager, MenuManager>(nameof(MenuManager),SetupGraphQl).LogAndAbsorbTimeout();
-            services.AddHttpClient<ISitemapManager, SitemapManager>(nameof(SitemapManager),SetupGraphQl).LogAndAbsorbTimeout();
+            services.AddHttpClient<IMenuManager, MenuManager>(nameof(MenuManager), SetupGraphQl).LogAndAbsorbTimeout();
+            services.AddHttpClient<ISitemapManager, SitemapManager>(nameof(SitemapManager), SetupGraphQl).LogAndAbsorbTimeout();
 
             return services;
         }

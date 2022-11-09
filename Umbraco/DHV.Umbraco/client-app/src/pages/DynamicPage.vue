@@ -9,7 +9,7 @@
   <breadcrumbs class="breadcrumbs" />
 
   <template
-    v-for="(c,i) in main"
+    v-for="(c, i) in main"
     :key="i"
   >
     <div
@@ -33,7 +33,7 @@
       />
       <aside>
         <template
-          v-for="(a,j) in aside"
+          v-for="(a, j) in aside"
           :key="j"
         >
           <component

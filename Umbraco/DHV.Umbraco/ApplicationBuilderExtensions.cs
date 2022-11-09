@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Wsg.CorporateUmbraco
+namespace DHV.Umbraco
 {
     public static class ApplicationBuilderExtensions
     {
@@ -69,7 +69,7 @@ namespace Wsg.CorporateUmbraco
                     .ScriptSources(s => s.Self().CustomSources(scriptSources.ToArray()))
                     .FormActions(s => s.Self())
                     .FrameAncestors(s => s.Self())
-                    .FrameSources(s => s.Self().CustomSources("https://open.spotify.com/","https://w.soundcloud.com/", "https://www.youtube.com/", "https://youtu.be", "https://www.google.com/", "https://player.vimeo.com", "https://www.spelpartners.nl/complexe-scheidingen", "https://www.youtube-nocookie.com/"))               
+                    .FrameSources(s => s.Self().CustomSources("https://open.spotify.com/", "https://w.soundcloud.com/", "https://www.youtube.com/", "https://youtu.be", "https://www.google.com/", "https://player.vimeo.com", "https://www.spelpartners.nl/complexe-scheidingen", "https://www.youtube-nocookie.com/"))
                     .ObjectSources(s => s.None())
                     .BaseUris(s => s.None())
                     .ReportUris(s =>
@@ -89,8 +89,8 @@ namespace Wsg.CorporateUmbraco
 
                 await context.HttpContext.Response.WriteAsync(
                     "Status code page, status code: " +
-                    context.HttpContext.Response.StatusCode);                
-       
+                    context.HttpContext.Response.StatusCode);
+
             });
             if (env.IsStaging())
             {

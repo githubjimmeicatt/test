@@ -7,14 +7,14 @@ using Serilog.AspNetCore;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Wsg.CorporateUmbraco
+namespace DHV.Umbraco
 {
     public static class SerilogExtensions
     {
         public static RequestLoggingOptions SetCancellationLogLevel(this RequestLoggingOptions options, LogEventLevel logLevel)
         {
             var inner = options.GetLevel;
-            options.GetLevel = (HttpContext httpContext, double elapsed, Exception exception) =>
+            options.GetLevel = (httpContext, elapsed, exception) =>
                 httpContext.RequestAborted.IsCancellationRequested
                     ? logLevel
                     : inner(httpContext, elapsed, exception);
@@ -29,10 +29,10 @@ namespace Wsg.CorporateUmbraco
                 .Enrich.With(filter);
         }
 
-        public static RequestLoggingOptions EnrichWithHostName(this RequestLoggingOptions opt) 
+        public static RequestLoggingOptions EnrichWithHostName(this RequestLoggingOptions opt)
         {
             var inner = opt.EnrichDiagnosticContext;
-            
+
             opt.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
             {
                 diagnosticContext.Set("Host", httpContext.Request.Host.Host);

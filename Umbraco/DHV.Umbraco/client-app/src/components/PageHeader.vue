@@ -27,6 +27,9 @@
 
     <header>
       <ul>
+        <li v-if="$slots.above">
+          <slot name="above" />
+        </li>
         <li>
           <span class="title">{{ title }}</span>
 

@@ -6,7 +6,7 @@ using Icatt.Heartcore.Umbraco.Sitemap;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Wsg.CorporateUmbraco.Features.Sitemap
+namespace DHV.Umbraco.Features.Sitemap
 {
     public class SitemapController : Controller
     {
