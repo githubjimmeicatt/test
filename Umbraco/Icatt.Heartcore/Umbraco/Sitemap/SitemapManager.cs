@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Icatt.Heartcore.Config;
+using Icatt.Heartcore.Umbraco.Shared;
 
 namespace Icatt.Heartcore.Umbraco.Sitemap
 { 

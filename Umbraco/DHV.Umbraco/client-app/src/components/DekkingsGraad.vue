@@ -44,6 +44,7 @@ import {
   Chart as ChartJS,
 
 } from 'chart.js'
+import { parseAndFormatPercentage, parsePercentageToNumber } from '@/helpers/percentage'
 
 ChartJS.register(
   Title,
@@ -104,16 +105,6 @@ const visualItems = computed<VisualItem[]>(() => {
   }
 })
 
-const percentageOptions: Intl.NumberFormatOptions = {
-  style: 'percent',
-  notation: 'standard',
-  minimumFractionDigits: 1,
-}
-
-const percentageFormat = new Intl.NumberFormat('nl-NL', percentageOptions)
-const parseNumber = (s: string) => (s ? Number.parseFloat(s.replace(',', '.').replace('%', '')) : 0)
-const parseAndFormatPercentage = (s: string) => percentageFormat.format(parseNumber(s) / 100)
-
 const getTime = (d: string) => parseDate(d)?.getTime() || 0
 const byDateAscending = (a: Data, b: Data) => getTime(a.date) - getTime(b.date)
 const byDateDescending = (a: Data, b: Data) => getTime(b.date) - getTime(a.date)
@@ -124,7 +115,7 @@ const ascendingData = computed(() => [...props.data.data].sort(byDateAscending))
 const descendingData = computed(() => [...props.data.data].sort(byDateDescending))
 
 const actueelSet = computed<LineDataSet>(() => {
-  const data = ascendingData.value.map(({ actueel }) => parseNumber(actueel))
+  const data = ascendingData.value.map(({ actueel }) => parsePercentageToNumber(actueel))
   return {
     label: 'Actuele dekkingsgraad',
     data,
@@ -136,7 +127,7 @@ const actueelSet = computed<LineDataSet>(() => {
 })
 
 const beleidSet = computed<LineDataSet>(() => {
-  const data = ascendingData.value.map(({ beleid }) => parseNumber(beleid))
+  const data = ascendingData.value.map(({ beleid }) => parsePercentageToNumber(beleid))
   return {
     label: 'Beleidsdekkingsgraad',
     data,
@@ -149,7 +140,7 @@ const beleidSet = computed<LineDataSet>(() => {
 })
 
 const minimaalSet = computed<LineDataSet>(() => {
-  const data = ascendingData.value.map(({ minimaalVereist }) => parseNumber(minimaalVereist))
+  const data = ascendingData.value.map(({ minimaalVereist }) => parsePercentageToNumber(minimaalVereist))
   return {
     label: 'Minimaal vereiste dekkingsgraad',
     data,
@@ -162,7 +153,7 @@ const minimaalSet = computed<LineDataSet>(() => {
 })
 
 const ftkSet = computed<LineDataSet>(() => {
-  const data = ascendingData.value.map(({ vereistFTK }) => parseNumber(vereistFTK))
+  const data = ascendingData.value.map(({ vereistFTK }) => parsePercentageToNumber(vereistFTK))
   return {
     label: 'Vereiste FTK dekkingsgraad',
     data,

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 
-namespace Wsg.CorporateUmbraco.Features.Renderer
+namespace DHV.Umbraco.Features.Renderer
 {
     [Route("")]
     public class RendererController : Controller
