@@ -20,5 +20,9 @@ export default {
   max-width: 28rem;
   height: 3.5rem;
   padding: 0 var(--space-small);
+
+  :deep(.cta-inverse) {
+    display: none;
+  }
 }
 </style>

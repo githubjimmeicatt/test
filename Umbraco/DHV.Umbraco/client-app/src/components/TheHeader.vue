@@ -321,7 +321,7 @@ export default {
         align-items: center;
 
         &.navItem:nth-last-child(2) {
-          margin-right: calc(var(--dynamic-spacing-medium) + 4rem);
+          margin-right: var(--dynamic-spacing-medium);
         }
 
         &.search-button {
