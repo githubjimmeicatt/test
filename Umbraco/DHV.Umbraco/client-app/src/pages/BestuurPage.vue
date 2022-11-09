@@ -6,10 +6,6 @@
   <section
     class="container"
   >
-    <h1 v-if="i === 0">
-      {{ content.name }}
-    </h1>
-
     <RichText :body="content.tekstblok.textEditor" />
   </section>
 
