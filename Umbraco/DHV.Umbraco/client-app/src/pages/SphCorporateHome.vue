@@ -5,7 +5,7 @@
   >
     <template #above v-if="latestDekkingsgraad">
       <article class="page-header-highlight">
-        <header>Financiele situatie</header>
+        <header>Financiële situatie</header>
 
         <dl>
           <dt>Actuele dekkingsgraad</dt>
