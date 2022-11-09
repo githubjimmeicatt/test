@@ -137,7 +137,7 @@ export default {
     })
 
     const isMobile = useMediaQuery('(max-width: 500px)')
-    const hamburgerEnabled = computed(() => isMobile.value || isWrapped.value)
+    const hamburgerEnabled = computed(() => isMobile.value || isWrapped.value || hamburgerExpanded.value)
     const openSubmenu = ref(-1)
 
     const filteredMenu = computed(() => menu.value.filter((x) => x.showInMenu).map((x) => ({
