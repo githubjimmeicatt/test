@@ -63,6 +63,43 @@ $arrow-icon: url("/assets/arrow.svg");
     }
 }
 
+@mixin contact-icons($color: white, $size: 1rem) {
+    position: relative;
+    padding-inline-start: calc(#{$size} * 1.5);
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: $size;
+        height: $size;
+        background-color: $color;
+    }
+
+    &.envelope::before {
+        mask: url(../assets/envelope.svg) center / cover;
+        -webkit-mask: url(../assets/envelope.svg) center / cover;
+    }
+
+    &.phone::before {
+        mask: url(../assets/phone.svg) center / cover;
+        -webkit-mask: url(../assets/phone.svg) center / cover;
+    }
+
+    &.linkedin::before {
+        mask: url(../assets/exclamation-triangle-solid.svg) center / cover;
+        -webkit-mask: url(../assets/linkedin.svg) center / cover;
+    }
+}
+
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 @mixin fonts {
     /* latin italic */
     @font-face {

@@ -19,9 +19,12 @@
   background: var(--color-base);
 
   @include screen-fits-two-cards {
-    flex-direction: row;
-    gap: var(--space-smallest);
     font-size: 1.5rem;
+
+    &:not(.stacked) {
+      flex-direction: row;
+      gap: var(--space-smallest);
+    }
   }
 
   &,

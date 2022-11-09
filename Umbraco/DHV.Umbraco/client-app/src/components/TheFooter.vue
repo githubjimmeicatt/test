@@ -1,11 +1,39 @@
 <template>
   <footer>
+    <ul class="footermenu">
+      <li>
+        <site-logo class="stacked" />
+      </li>
+      <li>
+        <ul>
+          <li class="contact-icon phone">+31 6 12345678</li>
+          <li class="contact-icon linkedin">example@email.nl</li>
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li>
+            <address>
+              <span>Laan 1914 nr. 35</span>
+              <span>3818 EX Amersfoort</span>
+            </address>
+          </li>
+          <li>
+            <address>
+              <span>Postbus 1388</span>
+              <span>3800 BJ Amersfoort</span>
+            </address>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
     <ul
       v-if="menu?.length"
       class="footermenu"
     >
       <li
-        v-for="({href, title, children}, key) in menu"
+        v-for="({ href, title, children }, key) in menu"
         :key="key"
       >
         <h2>
@@ -36,8 +64,12 @@
 </template>
 
 <script>
+import SiteLogo from './SiteLogo.vue'
 
 export default {
+  components: {
+    SiteLogo,
+  },
   props: {
     menu: {
       type: Array,
@@ -82,10 +114,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/scss/_mixins.scss";
+
 footer {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 3rem;
   background-color: var(--color-base);
   color: white;
   padding: var(--space-medium) var(--dynamic-spacing-medium);
@@ -111,11 +145,27 @@ footer {
   .footermenu {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 3rem;
+
+    @include screen-fits-two-cards {
+      grid-template-columns: repeat(5, 1fr);
+    }
 
     li {
       padding: 0.125rem 0;
+
+      &.contact-icon {
+        @include contact-icons();
+      }
+    }
+
+    address {
+      font-style: normal;
+
+      span {
+        display: block;
+      }
     }
   }
 

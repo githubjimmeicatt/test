@@ -51,11 +51,10 @@
 import { ref, computed, watch } from 'vue'
 import useUmbracoImage from '../composables/useUmbracoImage'
 import TheLink from './TheLink.vue'
-import RichText from './RichText.vue'
 
 export default {
   components: {
-    TheLink, RichText,
+    TheLink,
   },
   props: {
     narrow: {
@@ -211,10 +210,8 @@ section {
 
         &::before {
           content: "";
-          mask: url(../assets/info-circle-solid.svg);
-          -webkit-mask: url(../assets/info-circle-solid.svg);
-          mask-size: cover;
-          -webkit-mask-size: cover;
+          mask: url(../assets/info-circle-solid.svg) center / cover;
+          -webkit-mask: url(../assets/info-circle-solid.svg) center / cover;
           position: absolute;
           left: calc(var(--space-medium) / 2);
           top: calc(var(--space-smaller) + 0.1rem);
