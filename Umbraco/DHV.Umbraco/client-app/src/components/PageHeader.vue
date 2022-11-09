@@ -184,8 +184,8 @@ section {
 
     padding-block: var(--space-medium);
     padding-inline: var(--dynamic-spacing-medium);
+    margin-block-start: var(--space-medium);
 
-    margin-top: 136px;
     @include screen-fits-two-cards {
       padding-left: calc(50vw - 1.75rem);
       padding-right: var(--dynamic-spacing-large);
