@@ -4,11 +4,12 @@
     v-bind="content.hero"
   >
     <template #above v-if="latestDekkingsgraad">
-      <article>
+      <article class="page-header-highlight">
         <header>Financiele situatie</header>
+
         <dl>
           <dt>Actuele dekkingsgraad</dt>
-          <dd>{{latestDekkingsgraad}}</dd>
+          <dd>{{ latestDekkingsgraad }}</dd>
         </dl>
       </article>
     </template>
@@ -150,5 +151,34 @@ main > .container {
 
 .container section.container {
   background: none;
+}
+
+.page-header-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: var(--space-smaller);
+
+  header {
+    font-size: 1.5rem;
+    color: var(--color-base);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  dl {
+    margin: 0;
+    text-align: center;
+
+    dt {
+      font-weight: 600;
+      margin-block-end: var(--space-smaller);
+    }
+
+    dd {
+      font-size: 2rem;
+      margin: 0;
+    }
+  }
 }
 </style>
