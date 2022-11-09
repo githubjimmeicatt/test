@@ -19,32 +19,22 @@ namespace DHV.Umbraco
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
             app.UseXfo(options => options.SameOrigin());
 
-            var scriptSources = new List<string>()
-            {
-                "https://app.hellodialog.com/",
-                "https://maps.googleapis.com/",
-                        "ajax.googleapis.com",
-            };
             var connectSources = new List<string>
             {
                 "https://cdn.umbraco.io",
-                        "www.google-analytics.com",
-                        "region1.google-analytics.com",
-                        "region1.analytics.google.com"
+                "www.google-analytics.com",
+                "region1.google-analytics.com",
             };
 
 
             if (env.IsDevelopment())
             {
-                scriptSources.Add("http://localhost:33446");
-                scriptSources.Add("sha256-Tui7QoFlnLXkJCSl1/JvEZdIXTmBttnWNxzJpXomQjg="); //swagger
-                scriptSources.Add("sha256-WqZMSFvFlODggpww6zvVklruK7R5P+U46bod2Rp2C+U="); //swagger
                 connectSources.Add("ws:");
             }
 
             app.UseCsp(opts =>
             {
-                if (env.IsDevelopment())
+                if (!env.IsDevelopment())
                 {
                     opts.UpgradeInsecureRequests();
                 }
@@ -52,24 +42,17 @@ namespace DHV.Umbraco
                 opts
                     .DefaultSources(s => s.None())
                     .ConnectSources(s => s.Self().CustomSources(connectSources.ToArray()))
-                    .StyleSources(s => s.Self().UnsafeInline().CustomSources(
-                        "https://fonts.googleapis.com/",
-                        "https://tagmanager.google.com/debug/",
-                        "https://www.googletagmanager.com/debug/"))
+                    .StyleSources(s => s.Self().UnsafeInline())
                     .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com/"))
-                    .ImageSources(s => s.Self().CustomSources("https://media.umbraco.io", "maps.gstatic.com", "*.googleapis.com", "*.ggpht",
-                        "www.google-analytics.com",
-                        "www.googletagmanager.com",
-                        "region1.google-analytics.com",
-                        "region1.analytics.google.com",
-                        // google maps icoontjes:
-                        "data:"
+                    .ImageSources(s => s.Self().CustomSources(
+                        "https://media.umbraco.io",
+                        "www.google-analytics.com"
                     ))
                     .MediaSources(s => s.Self())
-                    .ScriptSources(s => s.Self().CustomSources(scriptSources.ToArray()))
+                    .ScriptSources(s => s.Self().StrictDynamic())
                     .FormActions(s => s.Self())
                     .FrameAncestors(s => s.Self())
-                    .FrameSources(s => s.Self().CustomSources("https://open.spotify.com/", "https://w.soundcloud.com/", "https://www.youtube.com/", "https://youtu.be", "https://www.google.com/", "https://player.vimeo.com", "https://www.spelpartners.nl/complexe-scheidingen", "https://www.youtube-nocookie.com/"))
+                    .FrameSources(s=> s.Self())
                     .ObjectSources(s => s.None())
                     .BaseUris(s => s.None())
                     .ReportUris(s =>
