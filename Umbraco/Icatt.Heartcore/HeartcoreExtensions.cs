@@ -19,7 +19,7 @@ using Umbraco.Headless.Client.Net.Management;
 using Yarp.ReverseProxy.Transforms;
 using Yarp.ReverseProxy.Transforms.Builder;
 
-namespace Icatt.Heartcore
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class HeartcoreExtensions
     {

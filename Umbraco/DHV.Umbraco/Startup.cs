@@ -4,7 +4,6 @@ using System.Net.Mail;
 using DHV.Umbraco.Config;
 using DHV.Umbraco.Features.Forms;
 using DHV.Umbraco.Features.Renderer;
-using Icatt.Heartcore;
 using Icatt.Heartcore.Config;
 using Icatt.Heartcore.Umbraco;
 using Icatt.Heartcore.Umbraco.Forms;

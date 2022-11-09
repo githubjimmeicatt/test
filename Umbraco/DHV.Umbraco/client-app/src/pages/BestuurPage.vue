@@ -3,28 +3,33 @@
   <page-header
     v-bind="content.pageHeader" />
 
-  <!-- Wordt niet getoond op pagina, alleen in DOM -->
-  <RichTextVue v-bind="content.tekstblok" />
+  <section
+    class="container"
+  >
+    <h1 v-if="i === 0">
+      {{ content.name }}
+    </h1>
+
+    <RichText :body="content.tekstblok.textEditor" />
+  </section>
 
   <EmployeeList
-    v-bind="content.employeeList1" />
-  <EmployeeList
-    v-bind="content.employeeList2" />
-  <EmployeeList
-    v-bind="content.employeeList3" />
+    v-for="(employee, index) in content.employeeList"
+    :key="index"
+    v-bind="employee" />
 </template>
 
 <script>
 import { inject } from 'vue'
-import RichTextVue from '@/components/RichText.vue'
 import EmployeeList from '@/components/EmployeeList.vue'
+import RichText from '@/components/RichText.vue'
 import PageHeader from '../components/PageHeader.vue'
 
 export default {
   components: {
     PageHeader,
-    RichTextVue,
     EmployeeList,
+    RichText,
   },
   setup() {
     const content = inject('content')
