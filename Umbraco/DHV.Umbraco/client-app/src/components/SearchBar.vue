@@ -1,25 +1,39 @@
 <template>
   <section>
-    <label
-      id="searchLabel"
-      class="screen-reader-only"
-    >zoekterm</label>
-    <input
-      ref="searchInput"
-      v-model="searchText"
-      type="text"
-      placeholder="Waar ben je naar op zoek?"
-      aria-labelledby="searchLabel"
-      @keydown.enter="navigateToSearch"
+    <fieldset>
+      <label
+        for="searchLabel"
+        class="screen-reader-only"
+      >Zoekterm</label>
+
+      <input
+        ref="searchInput"
+        v-model="searchText"
+        type="text"
+        placeholder="Waar ben je naar op zoek?"
+        id="searchLabel"
+        @keydown.enter="navigateToSearch"
+      >
+
+      <router-link
+        :to="searchLink"
+        data-gtm-button-type="cta"
+        class="cta-search"
+        @click="navigateToSearch"
+      >
+        <SearchIcon />
+
+        <span class="screen-reader-only">Zoeken</span>
+      </router-link>
+    </fieldset>
+
+    <the-link
+      href="https://mijn.pensioenfondshaskoningdhv.nl"
+      class="cta cta-inverse"
     >
-    <router-link
-      :to="searchLink"
-      class="cta"
-      data-gtm-button-type="cta"
-      @click="navigateToSearch"
-    >
-      Zoeken
-    </router-link>
+      Mijn pensioen
+    </the-link>
+
     <slot />
   </section>
 </template>
@@ -27,8 +41,14 @@
 <script>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import SearchIcon from '../assets/search.svg'
+import TheLink from './TheLink.vue'
 
 export default {
+  components: {
+    SearchIcon,
+    TheLink,
+  },
   setup() {
     const router = useRouter()
     const searchText = ref('')
@@ -58,27 +78,76 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/_mixins.scss";
+
 section {
+  --item-width: 36rem;
+
   display: flex;
   background-color: var(--color-accent-1);
+  justify-content: flex-end;
   align-items: center;
+  row-gap: var(--space-small);
 
-  input {
-    flex: 1;
+  fieldset {
+    display: flex;
+    align-items: center;
+    width: min(100%, var(--item-width));
+    padding: 0;
+    margin-inline: auto;
     border: none;
-    box-sizing: content-box;
-    border-radius: 1rem;
-    padding: 0.75rem 1.5rem;
-    margin-right: var(--space-small);
 
-    &:focus {
-      outline: none !important;
-      border:2px solid black;
+    padding-inline-end: 0.5rem;
+
+    input {
+      flex: 1;
+      border: none;
+      border-radius: 1rem;
+      padding-block: 0.75rem;
+      padding-inline: 1.5rem 3rem;
+
+      &:focus {
+        outline: none !important;
+        border: 2px solid black;
+      }
+    }
+    a.cta-search {
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      margin-inline-start: -2.5rem;
     }
   }
-  a.cta{
-    display: block;
-    margin-top: 0;
+
+  a.cta-inverse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-base);
+    white-space: nowrap;
+    background-color: white;
+    padding-inline: 1.5rem;
+    margin-block-start: 0;
+
+    width: min(100%, var(--item-width));
+    margin-inline: auto;
+
+    @include screen-fits-two-cards {
+      width: auto;
+      margin-inline: 0;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      mask: url(../assets/user.svg) center / cover;
+      -webkit-mask: url(../assets/user.svg) center / cover;
+      width: 0.873rem;
+      height: 1rem;
+      background-color: var(--color-base);
+    }
   }
 }
 </style>

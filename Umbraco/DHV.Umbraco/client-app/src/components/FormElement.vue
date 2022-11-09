@@ -83,7 +83,7 @@ export default {
 }
 
 ::v-deep(legend), ::v-deep(.form-label) {
-  font-weight: bold;
+  font-weight: 600;
   display: inline-block;
   margin-bottom: var(--space-smaller);
 }

@@ -72,10 +72,12 @@ li {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    padding: var(--space-small);
+    padding-inline: var(--space-smaller);
     padding-block-start: var(--space-medium);
+    padding-block-end: var(--space-small);
 
     color: white;
+    font-weight: 600;
     text-decoration: none;
 
     &:hover {

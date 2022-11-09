@@ -27,10 +27,11 @@
 
     <header>
       <ul>
-        <li v-if="$slots.above">
+        <li v-if="$slots.above" class="header-highlight">
           <slot name="above" />
         </li>
-        <li>
+
+        <li class="header-info">
           <span class="title">{{ title }}</span>
 
           <the-link
@@ -54,11 +55,10 @@
 import { ref, computed, watch } from 'vue'
 import useUmbracoImage from '../composables/useUmbracoImage'
 import TheLink from './TheLink.vue'
-import RichText from './RichText.vue'
 
 export default {
   components: {
-    TheLink, RichText,
+    TheLink,
   },
   props: {
     narrow: {
@@ -185,8 +185,8 @@ section {
 
     padding-block: var(--space-medium);
     padding-inline: var(--dynamic-spacing-medium);
+    margin-block-start: var(--space-medium);
 
-    margin-top: 136px;
     @include screen-fits-two-cards {
       padding-left: calc(50vw - 1.75rem);
       padding-right: var(--dynamic-spacing-large);
@@ -207,17 +207,21 @@ section {
         padding-inline: var(--space-medium);
         border-radius: 0.75rem;
         background-color: rgba(229, 243, 246, 0.9);
+        box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
 
         .title {
           display: block;
         }
 
-        &::before {
+        &.header-highlight {
+          max-width: 30rem;
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        &.header-info::before {
           content: "";
-          mask: url(../assets/info-circle-solid.svg);
-          -webkit-mask: url(../assets/info-circle-solid.svg);
-          mask-size: cover;
-          -webkit-mask-size: cover;
+          mask: url(../assets/info-circle-solid.svg) center / cover;
+          -webkit-mask: url(../assets/info-circle-solid.svg) center / cover;
           position: absolute;
           left: calc(var(--space-medium) / 2);
           top: calc(var(--space-smaller) + 0.1rem);
@@ -241,7 +245,7 @@ section {
   }
 
   .prefix {
-    font-weight: 500;
+    font-weight: 600;
 
     + h1
     {

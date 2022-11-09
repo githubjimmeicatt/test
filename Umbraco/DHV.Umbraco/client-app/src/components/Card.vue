@@ -96,14 +96,13 @@ article {
   }
 
   ::v-deep(h1) {
-    font-size: 1.375rem;
-    font-weight: 600;
+    font-size: 1.25rem;
     margin: 0;
   }
 
   ::v-deep(.subtitle) {
     text-transform: capitalize;
-    margin-block: 0;
+    margin-block: var(--space-smaller);
   }
 
   img {

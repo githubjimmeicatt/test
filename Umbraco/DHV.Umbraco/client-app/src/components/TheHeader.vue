@@ -6,20 +6,8 @@
     />
     <nav>
       <ul ref="ulEl">
-        <li
-          class="logo"
-        >
-          <router-link
-            class="logo"
-            to="/"
-            aria-label="logo"
-          >
-            <component
-              :is="logo"
-              v-if="logo"
-              class="logo"
-            />
-          </router-link>
+        <li class="logo">
+          <site-logo />
         </li>
 
         <router-link
@@ -102,15 +90,8 @@ import { useRoute } from 'vue-router'
 
 import { useMediaQuery, useResizeObserver } from '@vueuse/core'
 import ChevronDown from '../assets/chevron-down.svg'
-import SearchIcon from '../assets/search.svg'
-import CloseIcon from '../assets/close.svg'
-
-import cleanGlobImport from '../helpers/cleanGlobImport'
 import SearchBar from './SearchBar.vue'
-
-const logos = cleanGlobImport(import.meta.globEager('../assets/logos/*.svg'))
-const logoName = window.UMBRACO_PORTAL?.logo || window.UMBRACO_PORTAL?.theme
-const logo = logoName && logos[logoName.toLowerCase()]
+import SiteLogo from './SiteLogo.vue'
 
 /**
  *
@@ -139,9 +120,8 @@ function checkIfWrapped(el) {
 export default {
   components: {
     ChevronDown,
-    SearchIcon,
-    CloseIcon,
     SearchBar,
+    SiteLogo,
   },
   setup() {
     const route = useRoute()
@@ -157,7 +137,7 @@ export default {
     })
 
     const isMobile = useMediaQuery('(max-width: 500px)')
-    const hamburgerEnabled = computed(() => isMobile.value || isWrapped.value)
+    const hamburgerEnabled = computed(() => isMobile.value || isWrapped.value || hamburgerExpanded.value)
     const openSubmenu = ref(-1)
 
     const filteredMenu = computed(() => menu.value.filter((x) => x.showInMenu).map((x) => ({
@@ -241,7 +221,6 @@ export default {
       filteredMenu,
       hamburgerEnabled,
       headerClasses,
-      logo,
       ulEl,
       hamburgerExpanded,
       toggleHamburgerExpanded,
@@ -261,6 +240,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/scss/_mixins.scss";
 
 .search-button {
   position: absolute;
@@ -293,17 +273,12 @@ export default {
     height: calc(var(--logo-height) + (2 * var(--border-height)));
   }
 
-  svg.logo {
-    fill: white;
-  }
-
   nav {
     flex-grow: 1;
     background: var(--color-base);
     margin: 0;
     color: white;
     font-size: 1.125rem;
-    font-weight: 600;
 
     a {
       color: inherit;
@@ -346,7 +321,7 @@ export default {
         align-items: center;
 
         &.navItem:nth-last-child(2) {
-          margin-right: calc(var(--dynamic-spacing-medium) + 4rem);
+          margin-right: var(--dynamic-spacing-medium);
         }
 
         &.search-button {
@@ -384,7 +359,7 @@ export default {
             transition: color var(--timing) ease-in-out, opacity var(--timing) ease-in-out var(--timing);
             padding: 0;
             margin-left: var(--space-small);
-            font-weight: bold;
+            font-weight: 600;
             width: .75rem;
 
             > svg {

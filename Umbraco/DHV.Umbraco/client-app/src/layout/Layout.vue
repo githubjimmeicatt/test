@@ -75,7 +75,6 @@ p.richtext, .richtext p {
 html, body {
   margin: 0;
   padding: 0;
-  font-weight: 300;
 }
 
 .bold {
@@ -84,7 +83,7 @@ html, body {
 
 body {
   max-width: 100vw;
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 textarea {
@@ -205,15 +204,20 @@ main > section {
   }
 }
 
+h1, h2, h3 {
+  font-weight: 600;
+}
+
 h1 {
   font-size: 2rem;
 }
-h1, h2, h3, a {
-  color: var(--color-base);
+
+h2, h3 {
+  font-size: 1.25rem;
 }
 
-h3 {
-  font-size: 1.625rem;
+h1, h2, h3, a {
+  color: var(--color-base);
 }
 
 h1:first-child, h2:first-child, section > h2  {
@@ -244,12 +248,15 @@ h1:first-child, h2:first-child, section > h2  {
 }
 
 .screen-reader-only {
-  position:absolute;
-  left:-10000px;
-  top:auto;
-  width:1px;
-  height:1px;
-  overflow:hidden;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .sidebar  {
