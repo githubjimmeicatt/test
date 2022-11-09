@@ -6,8 +6,15 @@
       </li>
       <li>
         <ul>
-          <li class="contact-icon phone">+31 6 12345678</li>
-          <li class="contact-icon linkedin">example@email.nl</li>
+          <li class="contact-icon phone">
+            088 348 2190<br />
+            ( 9.00 - 17.00 uur )
+          </li>
+          <li class="contact-icon linkedin">
+            <the-link href="pensioenfonds@rhdhv.com">
+              pensioenfonds@rhdhv.com
+            </the-link>
+          </li>
         </ul>
       </li>
       <li>
@@ -65,10 +72,12 @@
 
 <script>
 import SiteLogo from './SiteLogo.vue'
+import TheLink from './TheLink.vue'
 
 export default {
   components: {
     SiteLogo,
+    TheLink,
   },
   props: {
     menu: {
@@ -153,10 +162,10 @@ footer {
     }
 
     li {
-      padding: 0.125rem 0;
+      padding-block: 0.125rem;
 
       &.contact-icon {
-        @include contact-icons();
+        @include contact-icons;
       }
     }
 
