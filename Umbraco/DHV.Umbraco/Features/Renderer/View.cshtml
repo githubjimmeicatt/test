@@ -60,7 +60,7 @@
     {
       if (asset is Script script)
       {
-        <script type="@script.Type" src="@script.Src"></script>
+        <script type="@script.Type" src="@script.Src" nws-csp-add-nonce="true"></script>
       }
       else if (asset is Link link)
       {
@@ -72,8 +72,8 @@
 <body>
   <div id="app"></div>
   <environment names="Development">
-    <script type="module" src="http://localhost:33446/@@vite/client"></script>
-    <script type="module" src="http://localhost:33446/src/main.js"></script>
+        <script type="module" src="http://localhost:33446/@@vite/client" nws-csp-add-nonce="true"></script>
+        <script type="module" src="http://localhost:33446/src/main.js" nws-csp-add-nonce="true"></script>
   </environment>
 
   <!-- Google Tag Manager (noscript) -->
