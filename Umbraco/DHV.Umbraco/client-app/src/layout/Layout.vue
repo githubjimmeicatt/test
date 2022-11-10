@@ -307,10 +307,6 @@ td {
   border: 1px solid #d4d4d4;
 }
 
-tbody tr:nth-child(even) td  {
-    background-color: --color-accent-2;
-}
-
 .chart-wrapper, tbody tr:nth-child(even) td  {
     background-color: --color-accent-2;
 }
