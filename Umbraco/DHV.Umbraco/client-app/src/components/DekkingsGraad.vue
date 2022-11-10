@@ -14,9 +14,9 @@
           </thead>
           <tbody>
             <tr v-for="({ date, actueel, beleid }, i) in tableData" :key="i">
-              <td><time v-if="date" :datetime="date.iso">{{date.display}}</time></td>
-              <td>{{actueel}}</td>
-              <td>{{beleid}}</td>
+              <td class="nowrap"><time v-if="date" :datetime="date.iso">{{date.display}}</time></td>
+              <td class="nowrap">{{actueel}}</td>
+              <td class="nowrap">{{beleid}}</td>
             </tr>
           </tbody>
         </table>

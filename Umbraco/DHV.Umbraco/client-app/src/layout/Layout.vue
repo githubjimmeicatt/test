@@ -299,8 +299,11 @@ th {
 }
 
 td {
-  white-space: nowrap;
   border: 1px solid #d4d4d4;
+}
+
+td.nowrap {
+  white-space: nowrap;
 }
 
 </style>
