@@ -27,7 +27,9 @@
               'has-submenu': (children && children.length > 0),
             }"
             @mouseenter="open(key)"
+            @focusin="open(key)"
             @mouseleave="close(key)"
+            @focusout="close(key)"
           >
             <a
               :href="href || '#'"
@@ -43,7 +45,7 @@
               >
                 <ChevronDown />
               </button>
-              <ul @mouseenter="enterSub(key)">
+              <ul @mouseenter="enterSub(key)" @focusin="enterSub(key)">
                 <router-link
                   v-for="(childItem, childIndex) in children"
                   :key="`${key}_${childIndex}`"
