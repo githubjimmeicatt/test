@@ -138,6 +138,8 @@ html {
 
   --card-four-width: #{$card-four-width};
 
+  --max-text-width: min(100%, 50rem);
+
 .arrow-before::before {
     @include arrow-inline();
     margin-right: 0.5rem;
@@ -211,7 +213,7 @@ h1:first-child, h2:first-child, section > h2  {
 }
 
 .richtext {
-  max-width: 50rem;
+  max-width: var(--max-text-width);
 
   h1 {
     margin-block-end: 0;
@@ -276,7 +278,7 @@ h1:first-child, h2:first-child, section > h2  {
 }
 
 .chart-wrapper, .table-wrapper {
-  width: min(100%, 50rem);
+  width: var(--max-text-width);
   overflow-x: auto;
 
   > table {
