@@ -10,7 +10,7 @@
             088 348 2190<br />
             ( 9.00 - 17.00 uur )
           </li>
-          <li class="contact-icon linkedin">
+          <li class="contact-icon envelope">
             <the-link href="pensioenfonds@rhdhv.com">
               pensioenfonds@rhdhv.com
             </the-link>

@@ -103,7 +103,7 @@ p {
 
 .stripIntro{
   grid-column: 1 /-1;
-  max-width: 50rem;
+  max-width: var(--max-text-width);
 }
 
 .cta {

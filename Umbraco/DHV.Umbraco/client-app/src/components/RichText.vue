@@ -10,6 +10,15 @@
 import { onBeforeUnmount, ref, watch } from 'vue'
 import DOMPurify from 'dompurify'
 
+// wrap tables
+DOMPurify.addHook('afterSanitizeElements', (node) => {
+  if (!(node instanceof HTMLTableElement) || !node.parentElement || node.parentElement.classList.contains('table-wrapper')) return
+  const wrapper = document.createElement('div')
+  wrapper.classList.add('table-wrapper')
+  node.parentNode?.insertBefore(wrapper, node)
+  wrapper.appendChild(node)
+})
+
 let idCounter = 0
 
 const getClassName = (id) => `${id}_inserted`

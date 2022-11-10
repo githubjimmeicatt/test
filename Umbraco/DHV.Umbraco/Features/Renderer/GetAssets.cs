@@ -20,13 +20,6 @@ namespace DHV.Umbraco.Features.Renderer
         private readonly IWebHostEnvironment _env;
         private readonly IPortalConfig _portalConfig;
         private readonly IFileProvider _fileProvider;
-        private static readonly IAsset[] s_fonts =
-        {
-            new Link{ Href = "https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YNpoilss6w.woff2", Rel = "preload", As = "font", Type ="font/woff2", CrossOrigin = true },
-            new Link{ Href = "https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YL5rilss6w.woff2", Rel = "preload", As = "font", Type ="font/woff2", CrossOrigin = true },
-            new Link{ Href = "https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YOZqilss6w.woff2", Rel = "preload", As = "font", Type ="font/woff2", CrossOrigin = true },
-            new Link{ Href = "https://fonts.gstatic.com/s/sarabun/v8/DtVmJx26TKEr37c9YMptilss6w.woff2", Rel = "preload", As = "font", Type ="font/woff2", CrossOrigin = true },
-        };
 
         public GetAssets(IMemoryCache memoryCache, IWebHostEnvironment env, IPortalConfig portalConfig)
         {
@@ -51,7 +44,7 @@ namespace DHV.Umbraco.Features.Renderer
                 var entry = manifest.Values.Where(x => x.IsEntry).FirstOrDefault();
                 if (entry != null)
                 {
-                    var result = new List<IAsset>(s_fonts);
+                    var result = new List<IAsset>();
 
                     if (entry.Css != null && entry.Css.Any())
                     {

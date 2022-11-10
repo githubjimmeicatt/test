@@ -96,7 +96,7 @@ ul {
   .contact-icon {
     font-size:  0.875rem;
     padding-block: var(--space-smallest);
-    @include contact-icons(#000);
+    @include contact-icons(#000, 0.1rem);
   }
 }
 </style>

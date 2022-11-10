@@ -3,7 +3,9 @@
     <h1>Reacties</h1>
     <ul>
       <li
-        v-for="({UserId, UserFullName, Date, Usercontent, dateString}, index) in comments"
+        v-for="({
+          UserId, UserFullName, Date, Usercontent, dateString,
+        }, index) in comments"
         :key="index"
       >
         <card>
@@ -22,7 +24,7 @@
       </li>
     </ul>
 
-    <form @submit.prevent="comment(pageId,textComment)">
+    <form @submit.prevent="comment(pageId, textComment)">
       <h2 @click="commentInput.focus()">
         Reageren
       </h2>
@@ -33,9 +35,10 @@
         :aria-label="reactieLabel"
         :placeholder="reactieLabel"
       />
-      <button :class="{cta: true, loading}"
-              data-gtm-button-type="cta">
-          Verstuur
+      <button
+        :class="{ cta: true, loading }"
+        data-gtm-button-type="cta">
+        Verstuur
       </button>
     </form>
   </section>
@@ -127,10 +130,10 @@ ul {
 }
 li, textarea {
   display: block;
-  max-width: 50rem;
+  max-width: var(--max-text-width);
 }
 textarea {
-  width: min(100%, 50rem);
+  width: var(--max-text-width);
   padding: 0.5rem;
 }
 

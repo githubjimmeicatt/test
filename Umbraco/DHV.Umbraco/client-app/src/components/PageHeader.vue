@@ -214,7 +214,8 @@ section {
         }
 
         &.header-highlight {
-          max-width: 30rem;
+          max-width: 22rem;
+          padding-block: var(--space-small);
           background-color: rgba(255, 255, 255, 0.9);
         }
 

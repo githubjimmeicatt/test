@@ -14,9 +14,9 @@
           </thead>
           <tbody>
             <tr v-for="({ date, actueel, beleid }, i) in tableData" :key="i">
-              <td><time v-if="date" :datetime="date.iso">{{date.display}}</time></td>
-              <td>{{actueel}}</td>
-              <td>{{beleid}}</td>
+              <td class="nowrap"><time v-if="date" :datetime="date.iso">{{date.display}}</time></td>
+              <td class="nowrap">{{actueel}}</td>
+              <td class="nowrap">{{beleid}}</td>
             </tr>
           </tbody>
         </table>
@@ -208,38 +208,9 @@ const tableData = computed(() => descendingData.value.map(({ date, actueel, bele
 </script>
 
 <style lang="scss" scoped>
-.chart-wrapper, .table-wrapper {
-  width: min(100%, 50rem);
-  overflow-x: auto;
-
-  &:not(:last-child) {
-    margin-block-end: 1rem;
+  .chart-wrapper, .table-wrapper {
+    &:not(:last-child) {
+      margin-block-end: 1rem;
+    }
   }
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  text-align: left;
-  padding: 0.25rem .5rem;
-}
-
-th {
-  background-color: var(--color-accent-1);
-  border: 1px solid var(--color-base);
-  color: white;
-  hyphens: auto;
-}
-
-td {
-  white-space: nowrap;
-  border: 1px solid #d4d4d4;
-}
-
-.chart-wrapper, tbody tr:nth-child(even) td  {
-    background-color: #f2f9fb;
-}
 </style>

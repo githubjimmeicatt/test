@@ -1,4 +1,5 @@
 <template>
+  <breadcrumbs class="breadcrumbs" />
 
   <section class="container">
     <h1>
@@ -19,11 +20,13 @@
 import { inject } from 'vue'
 import EmployeeList from '@/components/EmployeeList.vue'
 import RichText from '@/components/RichText.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   components: {
     EmployeeList,
     RichText,
+    Breadcrumbs,
   },
   setup() {
     const content = inject('content')
