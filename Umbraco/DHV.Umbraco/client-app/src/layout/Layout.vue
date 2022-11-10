@@ -158,13 +158,6 @@ html {
   --color-sph-accent-1-dark: rgb(0, 134, 168);
   --color-sph-accent-2-dark: rgb(229, 243, 246);
 
-  // expect ?
-  --color-expect-base: rgb(0, 70, 117);
-  --color-expect-accent-1: rgb(29,168,161);
-  --color-expect-accent-2: rgb(216, 166, 35);
-  --color-expect-accent-1-dark: rgb(29,168,161);
-  --color-expect-accent-2-dark: rgb(216, 166, 35);
-
   --color-error: rgb(210,21,21);
   --color-background-default:   rgb(232,246,246);
 }
@@ -176,15 +169,6 @@ html {
   --color-accent-2: var(--color-sph-accent-2);
   --color-button: var(--color-sph-base);
   --color-button-hover: var(--color-sph-accent-1);
-}
-
-.Expect {
-  --color-base: var(--color-expect-base);
-  --color-accent-1: var(--color-expect-accent-1);
-  --color-accent-1-dark: var(--color-expect-accent-1-dark);
-  --color-accent-2: var(--color-expect-accent-2);
-  --color-button: var(--color-expect-accent-2);
-  --color-button-hover: var(--color-expect-accent-2-dark);
 }
 
 .cta {
@@ -287,6 +271,48 @@ h1:first-child, h2:first-child, section > h2  {
 
     }
   }
+}
+
+.chart-wrapper, .table-wrapper {
+  width: min(100%, 50rem);
+  overflow-x: auto;
+
+  &:not(:last-child) {
+    margin-block-end: 1rem;
+  }
+
+  > table {
+    width: 100%;
+  }
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.25rem .5rem;
+}
+
+th {
+  background-color: var(--color-accent-1);
+  border: 1px solid var(--color-base);
+  color: white;
+  hyphens: auto;
+}
+
+td {
+  white-space: nowrap;
+  border: 1px solid #d4d4d4;
+}
+
+tbody tr:nth-child(even) td  {
+    background-color: --color-accent-2;
+}
+
+.chart-wrapper, tbody tr:nth-child(even) td  {
+    background-color: --color-accent-2;
 }
 
 </style>
