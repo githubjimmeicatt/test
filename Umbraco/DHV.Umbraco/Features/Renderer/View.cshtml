@@ -6,7 +6,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://media.umbraco.io" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -80,7 +79,7 @@
   @if (!string.IsNullOrWhiteSpace(Model.Head?.Portal?.GtmId))
   {
     <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=@Model.Head.Portal.GtmId"
+      <iframe src="https://www.googletagmanager.com/ns.html?id={@Model.Head.Portal.GtmId}"
               height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
   }
