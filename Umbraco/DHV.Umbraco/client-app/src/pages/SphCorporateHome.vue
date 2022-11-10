@@ -11,6 +11,14 @@
           <dt>Actuele dekkingsgraad</dt>
           <dd>{{ latestDekkingsgraad }}</dd>
         </dl>
+        <the-link
+          v-if="content?.dekkingsgraadLink?._url"
+          class="highlight-link"
+          :href="content.dekkingsgraadLink._url"
+          title="Ga naar de dekkingsgraadpagina"
+        >
+          Ga naar de dekkingsgraadpagina
+        </the-link>
       </article>
     </template>
   </page-header>
@@ -45,6 +53,7 @@ import TextNextToImage from '@/components/TextNextToImage.vue'
 import FormElement from '@/components/FormElement.vue'
 import parseDate from '@/icatt-heartcore/api/parse-date'
 import { parseAndFormatPercentage } from '@/helpers/percentage'
+import TheLink from '@/components/TheLink.vue'
 import PageHeader from '../components/PageHeader.vue'
 
 export default {
@@ -54,6 +63,7 @@ export default {
     LiveEventCards,
     TextNextToImage,
     FormElement,
+    TheLink,
   },
   setup() {
     const content = inject('content')
@@ -182,6 +192,7 @@ main > .container {
   flex-direction: column;
   align-items: center;
   row-gap: var(--space-smaller);
+  position: relative;
 
   header {
     font-size: 1.5rem;
@@ -203,6 +214,15 @@ main > .container {
       font-size: 2rem;
       margin: 0;
     }
+  }
+  .highlight-link {
+    position: absolute;
+    font-size: 0;
+    top: 0;
+    left: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    display: block;
   }
 }
 </style>
