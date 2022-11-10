@@ -157,6 +157,7 @@ html {
   --color-sph-accent-2: rgb(229, 243, 246);
   --color-sph-accent-1-dark: rgb(0, 134, 168);
   --color-sph-accent-2-dark: rgb(229, 243, 246);
+  --color-sph-table: rgb(242, 249, 251);
 
   --color-error: rgb(210,21,21);
   --color-background-default:   rgb(232,246,246);
@@ -169,6 +170,7 @@ html {
   --color-accent-2: var(--color-sph-accent-2);
   --color-button: var(--color-sph-base);
   --color-button-hover: var(--color-sph-accent-1);
+  --color-table: var(--color-sph-table);
 }
 
 .cta {
@@ -284,6 +286,7 @@ h1:first-child, h2:first-child, section > h2  {
 
 table {
   border-collapse: collapse;
+  background-color: white;
 }
 
 th, td {
@@ -304,6 +307,10 @@ td {
 
 td.nowrap {
   white-space: nowrap;
+}
+
+.chart-wrapper, tbody tr:nth-child(even) td  {
+    background-color: var(--color-table);
 }
 
 </style>

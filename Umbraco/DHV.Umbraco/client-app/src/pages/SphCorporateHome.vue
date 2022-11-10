@@ -114,10 +114,6 @@ main > .container {
     :deep(.card) {
       box-shadow: var(--card-shadow);
     }
-
-    :deep(.chart-wrapper), :deep(tbody tr:nth-child(even) td)  {
-        background-color: var(--color-accent-2);
-    }
   }
 
   &:nth-child(4n+1) {
@@ -126,10 +122,6 @@ main > .container {
     :deep(.card) {
       box-shadow: none;
     }
-
-    :deep(.chart-wrapper), :deep(tbody tr:nth-child(even) td)  {
-        background-color: white;
-    }
   }
 
   &:nth-child(4n+3) {
@@ -137,10 +129,6 @@ main > .container {
 
     :deep(.card) {
       box-shadow: none;
-    }
-
-    :deep(.chart-wrapper), :deep(tbody tr:nth-child(even) td)  {
-        background-color: white;
     }
   }
 }
@@ -154,7 +142,7 @@ main > .container {
     }
 
     :deep(.chart-wrapper), :deep(tbody tr:nth-child(even) td)  {
-        background-color:  var(--color-accent-2);
+        background-color:  var(--color-table);
     }
   }
 
@@ -164,10 +152,6 @@ main > .container {
     :deep(.card) {
       box-shadow: none;
     }
-
-    :deep(.chart-wrapper), :deep(tbody tr:nth-child(even) td)  {
-        background-color: white;
-    }
   }
 
   &:nth-child(4n+4) {
@@ -175,10 +159,6 @@ main > .container {
 
     :deep(.card) {
       box-shadow: none;
-    }
-
-    :deep(.chart-wrapper), :deep(tbody tr:nth-child(even) td)  {
-        background-color: white;
     }
   }
 }
