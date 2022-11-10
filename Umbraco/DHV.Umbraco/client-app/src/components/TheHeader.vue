@@ -641,22 +641,5 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   gap: .5rem;
-
-  button {
-    margin-left: 5rem;
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-
-    @media screen and (min-width: 501px) {
-      display: flex;
-    }
-
-    svg {
-      display: block;
-      width: 1rem;
-    }
-  }
 }
 </style>

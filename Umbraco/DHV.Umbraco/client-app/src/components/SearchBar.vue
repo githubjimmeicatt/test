@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <form @submit.prevent="navigateToSearch">
     <fieldset>
       <label
         for="searchLabel"
@@ -9,22 +9,20 @@
       <input
         ref="searchInput"
         v-model="searchText"
-        type="text"
+        type="search"
         placeholder="Waar ben je naar op zoek?"
         id="searchLabel"
-        @keydown.enter="navigateToSearch"
       >
 
-      <router-link
-        :to="searchLink"
+      <button
         data-gtm-button-type="cta"
         class="cta-search"
-        @click="navigateToSearch"
+        type="submit"
       >
         <SearchIcon />
 
         <span class="screen-reader-only">Zoeken</span>
-      </router-link>
+      </button>
     </fieldset>
 
     <the-link
@@ -35,7 +33,7 @@
     </the-link>
 
     <slot />
-  </section>
+  </form>
 </template>
 
 <script>
@@ -55,14 +53,13 @@ export default {
     const searchInput = ref(null)
     const searchLink = computed(() => ({
       name: 'Search',
-      params: {
-        searchQuery: searchText.value,
+      query: {
+        s: searchText.value,
       },
     }))
     return {
       searchText,
       searchInput,
-      searchLink,
       navigateToSearch() {
         router.push(searchLink.value)
       },
@@ -80,7 +77,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
 
-section {
+form {
   --item-width: 36rem;
 
   display: flex;
@@ -111,11 +108,15 @@ section {
         border: 2px solid black;
       }
     }
-    a.cta-search {
+    .cta-search {
+      all: unset;
       display: block;
       width: 2rem;
       height: 2rem;
       margin-inline-start: -2.5rem;
+      &:focus-visible {
+        outline: rgb(16,16,16) auto 1px;
+      }
     }
   }
 
