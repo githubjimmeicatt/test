@@ -206,3 +206,11 @@ const tableData = computed(() => descendingData.value.map(({ date, actueel, bele
   }
 }))
 </script>
+
+<style lang="scss" scoped>
+  .chart-wrapper, .table-wrapper {
+    &:not(:last-child) {
+      margin-block-end: 1rem;
+    }
+  }
+</style>

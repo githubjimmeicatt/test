@@ -277,10 +277,6 @@ h1:first-child, h2:first-child, section > h2  {
   width: min(100%, 50rem);
   overflow-x: auto;
 
-  &:not(:last-child) {
-    margin-block-end: 1rem;
-  }
-
   > table {
     width: 100%;
   }
@@ -305,10 +301,6 @@ th {
 td {
   white-space: nowrap;
   border: 1px solid #d4d4d4;
-}
-
-.chart-wrapper, tbody tr:nth-child(even) td  {
-    background-color: --color-accent-2;
 }
 
 </style>
