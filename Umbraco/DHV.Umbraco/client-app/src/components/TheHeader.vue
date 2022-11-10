@@ -513,7 +513,6 @@ export default {
   }
 
   ~ * {
-    max-height: 1000vh;
     transition-property: all;
     transition-duration: 0.25s;
     transition-timing-function: ease-in-out;
