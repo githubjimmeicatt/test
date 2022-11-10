@@ -1,12 +1,12 @@
 <template>
   <ol
     v-show="isEnabled"
-    :class="{isMobile}"
+    :class="{ isMobile }"
   >
     <li
-      v-for="({href, title},i) in items"
+      v-for="({ href, title }, i) in items"
       :key="i"
-      :class="{ 'arrow-after': href && !isMobile, 'arrow-before': href && isMobile }"
+      :class="{ 'gt-after': href && !isMobile, 'gt-before': href && isMobile }"
     >
       <router-link
         v-if="href"
@@ -72,7 +72,6 @@ ol {
   width: 100%;
   margin: 0;
   padding: var(--space-smaller) var(--dynamic-spacing-large);
-  padding-block-end: 0;
   gap: var(--space-smaller);
   font-size: .875rem;
 }
@@ -80,9 +79,17 @@ ol {
 li {
   display: block;
 
-  &.arrow-after::after,
-  &.arrow-before::before {
-    background-color: var(--color-base);
+  &.gt-after::after,
+  &.gt-before::before {
+    content: ">";
+  }
+
+  &.gt-before::before {
+    margin-inline-end: var(--space-smaller);
+  }
+
+  &.gt-after::after {
+    margin-inline-start: var(--space-smaller);
   }
 }
 

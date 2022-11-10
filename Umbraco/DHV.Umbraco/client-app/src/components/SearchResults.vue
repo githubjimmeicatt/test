@@ -8,7 +8,6 @@
   >
     <div
       class="spinner"
-      role="spinner"
     >
       <div class="spinner-icon" />
     </div>
@@ -17,10 +16,7 @@
     v-else-if="searchResults.length"
     class="searchresultsContainer"
   >
-    <ul
-
-      class="searchresults"
-    >
+    <ul class="searchresults">
       <li
         v-for="(result, i) in searchResults"
         :key="i"
@@ -93,25 +89,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  ul{
+  ul {
     list-style: none;
-    padding:0px;
+    padding: 0;
+
+    li {
+      display: flex;
+      margin-block: var(--space-smaller);
+
+      &::before {
+        content: ">";
+        margin-inline-end: var(--space-smaller);
+      }
+    }
   }
+
   .spinner {
-  display: block;
-  z-index: 1031;
-  top: 15px;
-  right: 15px;
+    display: block;
+    z-index: 1031;
+    top: 15px;
+    right: 15px;
   }
 
   .spinner-icon {
-    width:30px;
-    height:30px;
+    width: 2rem;
+    height: 2rem;
     box-sizing: border-box;
 
     border: solid 2px transparent;
-    border-top-color: var(--color-accent-1);
-      border-left-color: #FFBB00;
+    border-top-color: var(--color-base);
+    border-left-color: var(--color-accent-1);
+    border-bottom-color: var(--color-accent-2);
     border-radius: 50%;
 
     -webkit-animation: nprogress-spinner 400ms linear infinite;

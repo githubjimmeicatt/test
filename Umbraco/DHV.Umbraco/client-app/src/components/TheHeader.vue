@@ -356,7 +356,6 @@ export default {
           button {
             border: none;
             background: none;
-            transition: color var(--timing) ease-in-out, opacity var(--timing) ease-in-out var(--timing);
             padding: 0;
             margin-left: var(--space-small);
             font-weight: 600;
@@ -364,8 +363,6 @@ export default {
 
             > svg {
               fill: white;
-              transform: rotate(0);
-              transition: transform var(--timing) ease-in-out;
             }
           }
 
@@ -383,21 +380,6 @@ export default {
             background-color: var(--color-base);
             z-index: 1;
 
-            &::before {
-              position: absolute;
-              top: 1px;
-              right: calc(var(--space-smaller) + 6px);
-              opacity: 0;
-              width: 0;
-              height: 0;
-              content: '';
-              border-left: 7px solid transparent;
-              border-right: 7px solid transparent;
-              border-bottom: 9px solid var(--color-base);
-              transition: all 125ms ease-in-out 125ms;
-              transform: translateY(0);
-            }
-
             li {
               position: relative;
               opacity: 0;
@@ -414,9 +396,6 @@ export default {
           }
 
           &.open{
-            button > svg {
-              transform: rotate(180deg);
-            }
             ul {
               max-height: 100vh;
               box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

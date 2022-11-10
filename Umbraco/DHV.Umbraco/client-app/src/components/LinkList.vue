@@ -15,7 +15,7 @@
       :key="i"
     >
       <router-link
-        class="link"
+        class="cta"
         :to="url"
       >
         {{ name }}
@@ -40,8 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/_mixins.scss";
-
 h3 {
   margin-top: var(--space-medium);
   font-variant: all-small-caps;
@@ -55,18 +53,6 @@ h3 {
   justify-content: center;
   gap: var(--space-small);
   padding: 0;
-  margin-block: var(--space-medium);
-}
-
-.row > li {
-  font-weight: 600;
-  padding: var(--space-smaller) var(--space-small);
-  background-color: var(--color-base);
-  border-radius: 0.75rem;
-}
-
-.row .link {
-  text-decoration: none;
-  color: white;
+  margin-block: var(--space-small);
 }
 </style>

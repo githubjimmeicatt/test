@@ -126,7 +126,6 @@ section {
     color: var(--color-base);
     white-space: nowrap;
     background-color: white;
-    padding-inline: 1.5rem;
     margin-block-start: 0;
 
     width: min(100%, var(--item-width));
@@ -142,10 +141,12 @@ section {
     }
 
     &::before {
+      content: "";
       mask: url(../assets/user.svg) center / cover;
       -webkit-mask: url(../assets/user.svg) center / cover;
       width: 0.873rem;
       height: 1rem;
+      margin-inline-end: var(--space-smaller);
       background-color: var(--color-base);
     }
   }
