@@ -94,7 +94,8 @@ export default {
 }
 
 :deep(.form-error) {
-  color: var(--color-error)
+  color: var(--color-error);
+  padding-block-start: var(--space-smallest);
 }
 
 :deep(input[type=text]), :deep(textarea), :deep(input[type=email]), :deep(select) {
