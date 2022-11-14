@@ -17,9 +17,4 @@ export default createRouter({
       component: Umbraco,
     },
   ],
-  scrollBehavior(to, _from, savedPosition) {
-    // always scroll to top
-    if (to.hash) return { el: to.hash }
-    return { top: savedPosition?.top || 0 }
-  },
 })
