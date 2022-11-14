@@ -6,7 +6,7 @@
     <h2 v-if="title">
       {{ title }}
     </h2>
-    <ul>
+    <ul class="card-list">
       <li
         v-for="(item, index) in accordeon"
         :key="index"
@@ -50,20 +50,17 @@ section.container {
   background-color: var(--color-background-2);
 }
 
-ul {
+.card-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-small);
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-li {
-  display: block;
-}
-
 details > summary {
-  list-style-type: none;
+  list-style: none;
   display: flex;
   column-gap: var(--space-small);
   font-weight: 600;
@@ -74,6 +71,7 @@ details > summary {
     content: "";
     flex-shrink: 0;
     margin-block-start: 0.4rem;
+    margin-inline-start: auto;
     width: 1.125rem;
     height: 0.667rem;
     background-color: var(--color-base);
