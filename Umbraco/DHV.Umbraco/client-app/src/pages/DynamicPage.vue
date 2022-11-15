@@ -14,21 +14,23 @@
       v-if="i === 0 && aside.length"
       class="aside-with-content container"
     >
+      <h1 v-if="c.component === 'richtext'">
+        {{ content.name }}
+      </h1>
+
       <section
         v-if="c.component === 'richtext'"
         class="container"
       >
-        <h1 v-if="i === 0">
-          {{ content.name }}
-        </h1>
-
         <richtext :body="c.props.body" />
       </section>
+
       <component
         :is="c.component"
         v-else
         v-bind="c.props"
       />
+
       <aside>
         <template
           v-for="(a, j) in aside"
@@ -41,6 +43,7 @@
         </template>
       </aside>
     </div>
+
     <section
       v-else-if="c.component === 'richtext'"
       class="container"
@@ -51,6 +54,7 @@
 
       <richtext :body="c.props.body" />
     </section>
+
     <component
       :is="c.component"
       v-else
@@ -109,11 +113,33 @@ export default defineComponent({
 .aside-with-content {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
-  row-gap: var(--space-medium);
+  align-items: flex-start;
+  gap: var(--space-small) var(--space-medium);
 
-  > :first-child {
+  > :first-child,
+  > h1 + section {
     width: min(100%, 40rem);
+
+    p:first-child {
+      margin-block-start: 0;
+    }
+  }
+
+  aside {
+    width: min(100%, 24rem);
+    padding: 1.5rem;
+    background-color: var(--color-sph-accent-2);
+    border-radius: 1rem;
+
+    :deep(h1) {
+      font-size: 1.5rem;
+      margin-block-end: var(--space-small);
+    }
+
+    :deep(.richtext img) {
+      padding: 0;
+      background-color: var(--color-sph-accent-2);
+    }
   }
 
   .container {
