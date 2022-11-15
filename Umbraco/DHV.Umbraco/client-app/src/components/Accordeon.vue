@@ -6,14 +6,14 @@
     <h2 v-if="title">
       {{ title }}
     </h2>
-    <ul>
+    <ul class="card-list">
       <li
         v-for="(item, index) in accordeon"
         :key="index"
       >
         <card class="richtext">
           <details>
-            <summary class="arrow-after">
+            <summary>
               {{ item.title }}
             </summary>
             <rich-text :body="item.text" />
@@ -50,41 +50,39 @@ section.container {
   background-color: var(--color-background-2);
 }
 
-ul {
+.card-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-small);
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-li {
-  display: block;
-}
-
 details > summary {
-  list-style-type: none;
-  cursor: pointer;
-  font-weight: bold;
-  position: relative;
+  list-style: none;
   display: flex;
+  column-gap: var(--space-small);
+  font-weight: 600;
   color: var(--color-base);
+  cursor: pointer;
 
-  &::-webkit-details-marker {
-    display: none;
-  }
-
-  &.arrow-after::after {
-    margin-left: auto;
-    font-weight: 600;
-    transition: transform 0.25s ease-in-out;
+  &::after {
+    content: "";
+    flex-shrink: 0;
+    margin-block-start: 0.4rem;
+    margin-inline-start: auto;
+    width: 1.125rem;
+    height: 0.667rem;
     background-color: var(--color-base);
+    mask: url(../assets/chevron-down.svg) center / cover;
+    -webkit-mask: url(../assets/chevron-down.svg) center / cover;
   }
 }
 
 details[open] > summary {
   &::after {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
   }
   ~ div {
     animation: sweep .25s ease-in-out;
