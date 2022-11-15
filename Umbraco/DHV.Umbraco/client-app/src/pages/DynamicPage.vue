@@ -1,9 +1,7 @@
 <template>
-  <pageheader
-    v-if="content.hero.title"
+  <pageheaderbase
     class="pageheader"
-    v-bind="content.hero"
-    :narrow="!content.heroBig"
+    :background-image="content.backgroundImage"
   />
 
   <breadcrumbs class="breadcrumbs" />
