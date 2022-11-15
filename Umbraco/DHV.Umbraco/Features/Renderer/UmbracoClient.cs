@@ -80,7 +80,7 @@ namespace DHV.Umbraco.Features.Renderer
 
     public class UmbracoClient : IUmbracoClient
     {
-        private const int MenuDepth = 2;
+        private const int MenuDepth = 3;
 
         private static readonly HtmlParser s_htmlParser = new();
 

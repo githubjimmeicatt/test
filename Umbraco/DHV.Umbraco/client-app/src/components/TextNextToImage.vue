@@ -18,7 +18,7 @@
       />
 
       <the-link
-        :href="button?._url || '#'"
+        :href="button?.url || '#'"
         class="cta"
         data-gtm-button-type="cta"
       >

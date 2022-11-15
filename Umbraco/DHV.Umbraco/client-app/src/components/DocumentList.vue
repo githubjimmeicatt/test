@@ -5,10 +5,12 @@
     <h1 v-if="title">
       {{ title }}
     </h1>
+
     <rich-text
       v-if="section"
       :body="section"
     />
+
     <ul v-if="documents?.length">
       <li
         v-for="(x, i) in documents"
@@ -18,6 +20,7 @@
         <the-link
           :href="x.document._url || '#'"
           target="_blank"
+          rel="noopener noreferrer"
           data-gtm-button-type="cta"
         >
           <span v-if="x.documentLinkText">{{ x.documentLinkText }}</span>
@@ -52,21 +55,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-section {
-  padding: 1.5rem;
-  background-color: var(--color-sph-accent-2);
-  border-radius: 1rem;
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  :deep(.richtext img) {
-    padding: 0;
-    background-color: var(--color-sph-accent-2);
-  }
-}
-
 ul {
   list-style: none;
   padding: 0;

@@ -16,21 +16,23 @@
       v-if="i === 0 && aside.length"
       class="aside-with-content container"
     >
+      <h1 v-if="c.component === 'richtext'">
+        {{ content.name }}
+      </h1>
+
       <section
         v-if="c.component === 'richtext'"
         class="container"
       >
-        <h1 v-if="i === 0">
-          {{ content.name }}
-        </h1>
-
         <richtext :body="c.props.body" />
       </section>
+
       <component
         :is="c.component"
         v-else
         v-bind="c.props"
       />
+
       <aside>
         <template
           v-for="(a, j) in aside"
@@ -43,6 +45,7 @@
         </template>
       </aside>
     </div>
+
     <section
       v-else-if="c.component === 'richtext'"
       class="container"
@@ -53,6 +56,7 @@
 
       <richtext :body="c.props.body" />
     </section>
+
     <component
       :is="c.component"
       v-else
@@ -60,7 +64,9 @@
       class="container"
     />
   </template>
+
 </template>
+
 <script>
 import { inject, defineComponent, computed } from 'vue'
 import cleanGlobImport from '../helpers/cleanGlobImport'
@@ -107,81 +113,103 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-.aside-with-content {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  row-gap: var(--space-medium);
+  <style lang="scss" scoped>
+    .aside-with-content {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: var(--space-small) var(--space-medium);
 
-  > :first-child {
+    > :first-child,
+    > h1 + section {
     width: min(100%, 40rem);
-  }
 
-  .container {
+    p:first-child {
+    margin-block-start: 0;
+    }
+    }
+
+    aside {
+    width: min(100%, 24rem);
+    padding: 1.5rem;
+    background-color: var(--color-sph-accent-2);
+    border-radius: 1rem;
+
+    :deep(h1) {
+    font-size: 1.5rem;
+    margin-block-end: var(--space-small);
+    }
+
+    :deep(.richtext img) {
     padding: 0;
-  }
-}
+    background-color: var(--color-sph-accent-2);
+    }
+    }
 
-.pageheader {
-  overflow: hidden;
-}
+    .container {
+    padding: 0;
+    }
+    }
 
-main > .container {
-  --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    .pageheader {
+    overflow: hidden;
+    }
 
-  &:nth-child(4n+2), &:nth-child(4n+4) {
+    main > .container {
+    --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+    &:nth-child(4n+2), &:nth-child(4n+4) {
     background-color: white;
 
     :deep(.card) {
-      box-shadow: var(--card-shadow);
+    box-shadow: var(--card-shadow);
     }
-  }
+    }
 
-  &:nth-child(4n+1) {
+    &:nth-child(4n+1) {
     background-color: var(--color-background-1);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
+    }
 
-  &:nth-child(4n+3) {
+    &:nth-child(4n+3) {
     background-color: var(--color-background-2);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
-}
+    }
+    }
 
-.pageheader ~ .container {
-  &:nth-child(4n+1), &:nth-child(4n+3) {
+    .pageheader ~ .container {
+    &:nth-child(4n+1), &:nth-child(4n+3) {
     background-color: white;
 
     :deep(.card) {
-      box-shadow: var(--card-shadow);
+    box-shadow: var(--card-shadow);
     }
-  }
+    }
 
-  &:nth-child(4n+2) {
+    &:nth-child(4n+2) {
     background-color: var(--color-background-1);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
+    }
 
-  &:nth-child(4n+4) {
+    &:nth-child(4n+4) {
     background-color: var(--color-background-2);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
-}
+    }
+    }
 
-.container section.container {
-  background: none;
-}
-</style>
+    .container section.container {
+    background: none;
+    }
+  </style>

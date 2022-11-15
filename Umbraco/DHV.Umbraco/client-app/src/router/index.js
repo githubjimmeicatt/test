@@ -17,4 +17,9 @@ export default createRouter({
       component: Umbraco,
     },
   ],
+  scrollBehavior(to) {
+    // always scroll to top
+    if (to.hash) return { el: to.hash }
+    return { top: 0 }
+  },
 })
