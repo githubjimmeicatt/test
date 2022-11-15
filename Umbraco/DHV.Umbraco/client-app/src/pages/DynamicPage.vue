@@ -1,60 +1,29 @@
 <template>
-  <template>
-    <pageheader
-      v-if="content.hero.title"
-      class="pageheader"
-      v-bind="content.hero"
-      :narrow="!content.heroBig"
-    />
+  <pageheader
+    v-if="content.hero.title"
+    class="pageheader"
+    v-bind="content.hero"
+    :narrow="!content.heroBig"
+  />
 
-    <breadcrumbs class="breadcrumbs" />
+  <breadcrumbs class="breadcrumbs" />
 
-    <template
-      v-for="(c, i) in main"
-      :key="i"
+  <template
+    v-for="(c, i) in main"
+    :key="i"
+  >
+    <div
+      v-if="i === 0 && aside.length"
+      class="aside-with-content container"
     >
-      <div
-        v-if="i === 0 && aside.length"
-        class="aside-with-content container"
-      >
-        <h1 v-if="c.component === 'richtext'">
-          {{ content.name }}
-        </h1>
-
-        <section
-          v-if="c.component === 'richtext'"
-          class="container"
-        >
-          <richtext :body="c.props.body" />
-        </section>
-
-        <component
-          :is="c.component"
-          v-else
-          v-bind="c.props"
-        />
-
-        <aside>
-          <template
-            v-for="(a, j) in aside"
-            :key="j"
-          >
-            <component
-              :is="a.component"
-              v-bind="a.props"
-            />
-          </template>
-        </aside>
-      </div>
+      <h1 v-if="c.component === 'richtext'">
+        {{ content.name }}
+      </h1>
 
       <section
-        v-else-if="c.component === 'richtext'"
+        v-if="c.component === 'richtext'"
         class="container"
       >
-        <h1 v-if="i === 0">
-          {{ content.name }}
-        </h1>
-
         <richtext :body="c.props.body" />
       </section>
 
@@ -62,55 +31,87 @@
         :is="c.component"
         v-else
         v-bind="c.props"
-        class="container"
       />
-    </template>
+
+      <aside>
+        <template
+          v-for="(a, j) in aside"
+          :key="j"
+        >
+          <component
+            :is="a.component"
+            v-bind="a.props"
+          />
+        </template>
+      </aside>
+    </div>
+
+    <section
+      v-else-if="c.component === 'richtext'"
+      class="container"
+    >
+      <h1 v-if="i === 0">
+        {{ content.name }}
+      </h1>
+
+      <richtext :body="c.props.body" />
+    </section>
+
+    <component
+      :is="c.component"
+      v-else
+      v-bind="c.props"
+      class="container"
+    />
   </template>
-  <script>
-    import { inject, defineComponent, computed } from 'vue'
-    import cleanGlobImport from '../helpers/cleanGlobImport'
 
-    const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
+</template>
 
-    function mapComponent(props) {
-    const contentTypeAlias = (props.contentTypeAlias ?? '').toLowerCase()
-    if (contentTypeAlias === 'textblock') {
-    return {
-    component: 'richtext',
-    props: {
-    body: props.textEditor,
-    },
-    }
-    }
-    if (contentTypeAlias === 'cardsandmore') {
-    return {
-    component: 'cards',
-    props,
-    }
-    }
+<script>
+import { inject, defineComponent, computed } from 'vue'
+import cleanGlobImport from '../helpers/cleanGlobImport'
 
+const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
+
+function mapComponent(props) {
+  const contentTypeAlias = (props.contentTypeAlias ?? '').toLowerCase()
+  if (contentTypeAlias === 'textblock') {
     return {
+      component: 'richtext',
+      props: {
+        body: props.textEditor,
+      },
+    }
+  }
+  if (contentTypeAlias === 'cardsandmore') {
+    return {
+      component: 'cards',
+      props,
+    }
+  }
+
+  return {
     component: contentTypeAlias,
     props: {
-    ...props,
+      ...props,
     },
-    }
-    }
+  }
+}
 
-    export default defineComponent({
-    components,
-    setup() {
+export default defineComponent({
+  components,
+  setup() {
     const content = inject('content')
     const main = computed(() => (Array.isArray(content.value?.main) ? content.value.main.map(mapComponent) : []))
     const aside = computed(() => (Array.isArray(content.value?.sidebar) ? content.value.sidebar.map(mapComponent) : []))
     return {
-    main,
-    aside,
-    content,
+      main,
+      aside,
+      content,
     }
-    },
-    })
-  </script>
+  },
+})
+</script>
 
   <style lang="scss" scoped>
     .aside-with-content {
