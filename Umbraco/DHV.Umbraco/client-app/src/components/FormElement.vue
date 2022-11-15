@@ -56,6 +56,11 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
 
+:deep(*:not(h1)) {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+}
+
 :deep(button) {
   @include button-default;
 
@@ -63,43 +68,44 @@ export default {
   margin-inline-start: var(--space-small);
 }
 
-:deep(fieldset){
-  border:none;
-  padding:0px;
-  margin:0px;
+:deep(fieldset) {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
- ::v-deep(.is-stacked)  {
+ :deep(.is-stacked) {
   display: flex;
   flex-direction: column;
 }
 
-::v-deep(textarea) {
+:deep(textarea) {
   display: block;
 }
 
-::v-deep(.form-options-group), ::v-deep(.form-group){
+:deep(.form-options-group), :deep(.form-group) {
   margin-bottom: var(--space-small);
 }
 
-::v-deep(legend), ::v-deep(.form-label) {
+:deep(legend), :deep(.form-label) {
   font-weight: 600;
   display: inline-block;
   margin-bottom: var(--space-smaller);
 }
 
-::v-deep(.form-error){
-  color: var(--color-error)
+:deep(.form-error) {
+  color: var(--color-error);
+  padding-block-start: var(--space-smallest);
 }
 
-:deep(input[type=text]), :deep(textarea),:deep(input[type=email]), :deep(select), :deep(option) {
+:deep(input[type=text]), :deep(textarea), :deep(input[type=email]), :deep(select) {
   width: 100%;
-  padding: 0.5rem;
+  padding: var(--space-smaller);
   border: 1px solid var(--color-sph-accent-1);
   border-radius: 0.75rem;
 }
 
-::v-deep(input[type=date])  {
+:deep(input[type=date]) {
   display: block;
 }
 
