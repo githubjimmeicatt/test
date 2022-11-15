@@ -1,27 +1,60 @@
 <template>
-  <pageheaderbase
-    class="pageheader"
-    :background-image="content.backgroundImage"
-  />
+  <template>
+    <pageheader
+      v-if="content.hero.title"
+      class="pageheader"
+      v-bind="content.hero"
+      :narrow="!content.heroBig"
+    />
 
-  <breadcrumbs class="breadcrumbs" />
+    <breadcrumbs class="breadcrumbs" />
 
-  <template
-    v-for="(c, i) in main"
-    :key="i"
-  >
-    <div
-      v-if="i === 0 && aside.length"
-      class="aside-with-content container"
+    <template
+      v-for="(c, i) in main"
+      :key="i"
     >
-      <h1 v-if="c.component === 'richtext'">
-        {{ content.name }}
-      </h1>
+      <div
+        v-if="i === 0 && aside.length"
+        class="aside-with-content container"
+      >
+        <h1 v-if="c.component === 'richtext'">
+          {{ content.name }}
+        </h1>
+
+        <section
+          v-if="c.component === 'richtext'"
+          class="container"
+        >
+          <richtext :body="c.props.body" />
+        </section>
+
+        <component
+          :is="c.component"
+          v-else
+          v-bind="c.props"
+        />
+
+        <aside>
+          <template
+            v-for="(a, j) in aside"
+            :key="j"
+          >
+            <component
+              :is="a.component"
+              v-bind="a.props"
+            />
+          </template>
+        </aside>
+      </div>
 
       <section
-        v-if="c.component === 'richtext'"
+        v-else-if="c.component === 'richtext'"
         class="container"
       >
+        <h1 v-if="i === 0">
+          {{ content.name }}
+        </h1>
+
         <richtext :body="c.props.body" />
       </section>
 
@@ -29,183 +62,153 @@
         :is="c.component"
         v-else
         v-bind="c.props"
+        class="container"
       />
-
-      <aside>
-        <template
-          v-for="(a, j) in aside"
-          :key="j"
-        >
-          <component
-            :is="a.component"
-            v-bind="a.props"
-          />
-        </template>
-      </aside>
-    </div>
-
-    <section
-      v-else-if="c.component === 'richtext'"
-      class="container"
-    >
-      <h1 v-if="i === 0">
-        {{ content.name }}
-      </h1>
-
-      <richtext :body="c.props.body" />
-    </section>
-
-    <component
-      :is="c.component"
-      v-else
-      v-bind="c.props"
-      class="container"
-    />
+    </template>
   </template>
-</template>
-<script>
-import { inject, defineComponent, computed } from 'vue'
-import cleanGlobImport from '../helpers/cleanGlobImport'
+  <script>
+    import { inject, defineComponent, computed } from 'vue'
+    import cleanGlobImport from '../helpers/cleanGlobImport'
 
-const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
+    const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
 
-function mapComponent(props) {
-  const contentTypeAlias = (props.contentTypeAlias ?? '').toLowerCase()
-  if (contentTypeAlias === 'textblock') {
+    function mapComponent(props) {
+    const contentTypeAlias = (props.contentTypeAlias ?? '').toLowerCase()
+    if (contentTypeAlias === 'textblock') {
     return {
-      component: 'richtext',
-      props: {
-        body: props.textEditor,
-      },
+    component: 'richtext',
+    props: {
+    body: props.textEditor,
+    },
     }
-  }
-  if (contentTypeAlias === 'cardsandmore') {
+    }
+    if (contentTypeAlias === 'cardsandmore') {
     return {
-      component: 'cards',
-      props,
+    component: 'cards',
+    props,
     }
-  }
+    }
 
-  return {
+    return {
     component: contentTypeAlias,
     props: {
-      ...props,
+    ...props,
     },
-  }
-}
+    }
+    }
 
-export default defineComponent({
-  components,
-  setup() {
+    export default defineComponent({
+    components,
+    setup() {
     const content = inject('content')
     const main = computed(() => (Array.isArray(content.value?.main) ? content.value.main.map(mapComponent) : []))
     const aside = computed(() => (Array.isArray(content.value?.sidebar) ? content.value.sidebar.map(mapComponent) : []))
     return {
-      main,
-      aside,
-      content,
+    main,
+    aside,
+    content,
     }
-  },
-})
-</script>
+    },
+    })
+  </script>
 
-<style lang="scss" scoped>
-.aside-with-content {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  gap: var(--space-small) var(--space-medium);
+  <style lang="scss" scoped>
+    .aside-with-content {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: var(--space-small) var(--space-medium);
 
-  > :first-child,
-  > h1 + section {
+    > :first-child,
+    > h1 + section {
     width: min(100%, 40rem);
 
     p:first-child {
-      margin-block-start: 0;
+    margin-block-start: 0;
     }
-  }
+    }
 
-  aside {
+    aside {
     width: min(100%, 24rem);
     padding: 1.5rem;
     background-color: var(--color-sph-accent-2);
     border-radius: 1rem;
 
     :deep(h1) {
-      font-size: 1.5rem;
-      margin-block-end: var(--space-small);
+    font-size: 1.5rem;
+    margin-block-end: var(--space-small);
     }
 
     :deep(.richtext img) {
-      padding: 0;
-      background-color: var(--color-sph-accent-2);
-    }
-  }
-
-  .container {
     padding: 0;
-  }
-}
+    background-color: var(--color-sph-accent-2);
+    }
+    }
 
-.pageheader {
-  overflow: hidden;
-}
+    .container {
+    padding: 0;
+    }
+    }
 
-main > .container {
-  --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    .pageheader {
+    overflow: hidden;
+    }
 
-  &:nth-child(4n+2), &:nth-child(4n+4) {
+    main > .container {
+    --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+    &:nth-child(4n+2), &:nth-child(4n+4) {
     background-color: white;
 
     :deep(.card) {
-      box-shadow: var(--card-shadow);
+    box-shadow: var(--card-shadow);
     }
-  }
+    }
 
-  &:nth-child(4n+1) {
+    &:nth-child(4n+1) {
     background-color: var(--color-background-1);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
+    }
 
-  &:nth-child(4n+3) {
+    &:nth-child(4n+3) {
     background-color: var(--color-background-2);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
-}
+    }
+    }
 
-.pageheader ~ .container {
-  &:nth-child(4n+1), &:nth-child(4n+3) {
+    .pageheader ~ .container {
+    &:nth-child(4n+1), &:nth-child(4n+3) {
     background-color: white;
 
     :deep(.card) {
-      box-shadow: var(--card-shadow);
+    box-shadow: var(--card-shadow);
     }
-  }
+    }
 
-  &:nth-child(4n+2) {
+    &:nth-child(4n+2) {
     background-color: var(--color-background-1);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
+    }
 
-  &:nth-child(4n+4) {
+    &:nth-child(4n+4) {
     background-color: var(--color-background-2);
 
     :deep(.card) {
-      box-shadow: none;
+    box-shadow: none;
     }
-  }
-}
+    }
+    }
 
-.container section.container {
-  background: none;
-}
-</style>
+    .container section.container {
+    background: none;
+    }
+  </style>
