@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { useUmbracoApi } from 'icatt-heartcore'
 import {
   ref, computed, defineComponent, inject,
 } from 'vue'
@@ -72,7 +73,7 @@ export default defineComponent({
   setup(props, context) {
     const textComment = ref('')
     const commentInput = ref(null)
-    const portal = inject('portal')
+    const umbracoApi = useUmbracoApi()
     const loading = ref(false)
 
     const comments = computed(() => props.modelValue
@@ -86,7 +87,7 @@ export default defineComponent({
       if (loading.value) return
       try {
         loading.value = true
-        await portal.postComment(pageId, text)
+        await umbracoApi.comment(pageId, text)
         context.emit('update:modelValue', [...props.modelValue, {
           UserId: props.user.userId,
           UserFullName: props.user.userFullName,

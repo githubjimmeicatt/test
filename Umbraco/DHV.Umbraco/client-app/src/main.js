@@ -1,6 +1,7 @@
 import IcattVueForms from 'icatt-vue-forms'
 import { createApp } from 'vue'
 import { createHead } from '@vueuse/head'
+import { IcattHeartcore } from 'icatt-heartcore'
 import App from './App.vue'
 import router from './router'
 
@@ -11,8 +12,13 @@ if (window && !('ResizeObserver' in window)) {
   })
 }
 
-createApp(App)
+const app = createApp(App)
   .use(IcattVueForms)
   .use(createHead())
   .use(router)
-  .mount('#app')
+
+IcattHeartcore.install(app, {
+  portal: window.UMBRACO_PORTAL,
+})
+
+app.mount('#app')

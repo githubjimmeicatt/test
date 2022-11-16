@@ -19,11 +19,10 @@ export default {
   setup() {
     const { layout, theme } = useLayout()
     const {
-      component, content, menu, portal, loading,
+      component, content, menu, loading,
     } = useUmbraco()
     provide('content', content)
     provide('menu', menu)
-    provide('portal', portal)
     provide('component', component)
     provide('loading', loading)
 
