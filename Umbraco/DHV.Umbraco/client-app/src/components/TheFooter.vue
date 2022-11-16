@@ -40,7 +40,7 @@
       class="footermenu"
     >
       <li
-        v-for="({ href, title, children }, key) in menu"
+        v-for="({ href, title, children }, key) in filteredMenu"
         :key="key"
       >
         <h2>
@@ -53,7 +53,7 @@
         </h2>
         <ul v-if="children?.length">
           <li
-            v-for="(child, childKey) in getSortedChildren(children, title)"
+            v-for="(child, childKey) in children"
             :key="`${key}_${childKey}`"
           >
             <router-link
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import SiteLogo from './SiteLogo.vue'
 import TheLink from './TheLink.vue'
 
@@ -85,38 +86,15 @@ export default {
       default: () => [],
     },
   },
-  setup() {
+  setup(props) {
+    const filteredMenu = computed(() => props.menu.filter((x) => x.showInMenu).map((x) => ({
+      ...x,
+      children: x.children.filter((c) => c.showInMenu),
+    })))
+
     return {
+      filteredMenu,
       copyright: `© ${window.UMBRACO_PORTAL?.footerName || ''} ${new Date().getFullYear()}`,
-      getSortedChildren: (children, title) => {
-        if (!title || title.toUpperCase() != 'NIEUWS') { return children }
-
-        if (!Array.isArray(children)) { return children }
-
-        return children.sort((a, b) => {
-          if (!a || !b) {
-            return 0
-          }
-
-          let compareDateA = Date.parse(a.updateDate)
-          if (isNaN(compareDateA)) {
-            compareDateA = Date.parse(a.createDate)
-          }
-          if (isNaN(compareDateA)) {
-            return 1
-          }
-
-          let compareDateB = Date.parse(b.updateDate)
-          if (isNaN(compareDateB)) {
-            compareDateB = Date.parse(b.createDate)
-          }
-          if (isNaN(compareDateB)) {
-            return -1
-          }
-
-          return compareDateB - compareDateA
-        })
-      },
     }
   },
 }
