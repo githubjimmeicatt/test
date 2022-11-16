@@ -35,7 +35,7 @@ function getList(menu, item) {
   if (!menu?.length || !item) return []
   const parent = menu.find((x) => x.children.some((c) => c === item))
   if (!parent) return []
-  return [...getList(parent), parent]
+  return [...getList(menu, parent), parent]
 }
 
 function getItems(menu, content, isMobile) {
@@ -58,7 +58,7 @@ export default {
   setup() {
     const menu = inject('menu')
     const content = inject('content')
-    const isMobile = useMediaQuery('(max-width: 500px)')
+    const isMobile = useMediaQuery('(max-width: 40rem)')
     const isEnabled = computed(() => content.value?._level > 1)
     const items = computed(() => getItems(menu.value, content.value, isMobile.value))
     return { items, isMobile, isEnabled }
