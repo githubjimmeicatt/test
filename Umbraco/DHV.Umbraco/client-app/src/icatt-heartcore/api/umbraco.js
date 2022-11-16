@@ -17,8 +17,12 @@ function cleanUrls(data, key = '', parentKey = '', portalPrefix = window.UMBRACO
       dataWithCustomUrls = dataWithCustomUrls.replace(/https:\/\/media\.umbraco\.io.*william-schrikker\//g, '/umbracomedia/')
     }
 
-    if (portalPrefix && dataWithCustomUrls.startsWith(portalPrefix) && (['url', 'href'].some((x) => key?.toLowerCase().includes(x)) || parentKey?.toLowerCase().includes('urls'))) {
-      dataWithCustomUrls = dataWithCustomUrls.replace(portalPrefix, '')
+    if (portalPrefix && dataWithCustomUrls.includes(portalPrefix)) {
+      if ((['url', 'href'].some((x) => key?.toLowerCase().includes(x)) || parentKey?.toLowerCase().includes('urls'))) {
+        dataWithCustomUrls = dataWithCustomUrls.replace(portalPrefix, '')
+      } else {
+        dataWithCustomUrls = dataWithCustomUrls.replaceAll(`href="${portalPrefix}/`, 'href="/')
+      }
     }
 
     return dataWithCustomUrls
