@@ -105,6 +105,7 @@ li {
 
     img {
       margin: auto;
+      min-width: 2rem;
     }
 
     span {

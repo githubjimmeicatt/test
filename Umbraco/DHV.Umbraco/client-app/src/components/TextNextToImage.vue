@@ -85,16 +85,13 @@ figure {
   }
 
   img {
-    // height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
-
-    // max-width: var(--card-width-large);
     max-height: 25rem;
 
     @include screen-fits-two-cards {
-       max-height: 100%;
+      max-height: 100%;
     }
   }
 }
