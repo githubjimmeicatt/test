@@ -77,7 +77,8 @@ export default function useUmbracoForm(form, confirmation) {
   const portal = inject('portal')
   const router = useRouter()
   // assure minimal model structure
-  if (!x || !Array.isArray(x.pages.value) || !Array.isArray(x.pages.value[0].fieldsets) || !x.pages.value[0].fieldsets[0] || !Array.isArray(x.pages.value[0].fieldsets[0].columns[0].fields)) {
+  if (!Array.isArray(x?.pages?.value?.[0]?.fieldsets?.[0]?.columns?.[0]?.fields)) {
+    x.pages = x.pages ?? {}
     x.pages.value = [{ fieldsets: [{ columns: [{ fields: [] }] }] }]
   }
 

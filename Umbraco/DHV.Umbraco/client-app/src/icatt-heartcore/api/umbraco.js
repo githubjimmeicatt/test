@@ -18,7 +18,7 @@ function cleanUrls(data, key = '', parentKey = '', portalPrefix = window.UMBRACO
     }
 
     if (portalPrefix && dataWithCustomUrls.includes(portalPrefix)) {
-      if ((['url', 'href'].some((x) => key?.toLowerCase().includes(x)) || parentKey?.toLowerCase().includes('urls'))) {
+      if ((['url', 'href'].some((x) => key?.toLowerCase().includes(x)) || parentKey?.toLowerCase().includes('urls')) && dataWithCustomUrls.startsWith(portalPrefix)) {
         dataWithCustomUrls = dataWithCustomUrls.replace(portalPrefix, '')
       } else {
         dataWithCustomUrls = dataWithCustomUrls.replaceAll(`href="${portalPrefix}/`, 'href="/')
