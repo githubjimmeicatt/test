@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import useUmbracoImage from '../composables/useUmbracoImage'
 import TheLink from './TheLink.vue'
 
@@ -100,16 +100,12 @@ export default {
 
     if (hasImage.value) {
       backgroundUrl = useUmbracoImage(() => props.backgroundImage, imageEl)
-
-      watch(backgroundUrl, () => {
-        loading.value = true
-      })
     } else if (hasVideo.value) {
       backgroundUrl = ref(props.backgroundImage._url)
       loading.value = false
     }
 
-    const transparent = computed(() => backgroundUrl.value && !loading.value)
+    const transparent = computed(() => backgroundUrl.value && loading.value)
 
     return {
       transparent,
@@ -130,30 +126,15 @@ export default {
 section {
   background-color: var(--color-base);
   position: relative;
-  transition: background-color 0ms;
 
-  .beeldmerk {
-    position: absolute;
-    transition: all 250ms ease-in;
-    width: 28rem;
-    transform: translate(-66.6%, -50%);
-    display: block;
-    opacity: 0;
-
-    @include screen-fits-three-cards {
-      opacity: 100%;
-      width: min(28rem, 28vw);
-    }
+  img {
+    opacity: 100;
+    transition: opacity 250ms ease-in;
   }
 
   &.transparent {
-    background-color: transparent;
-    transition: background-color 250ms ease-in;
-  }
-
-  &.hasImage, &.hasVideo {
-    .beeldmerk {
-      opacity: 100%;
+    img {
+      opacity: 0;
     }
   }
 

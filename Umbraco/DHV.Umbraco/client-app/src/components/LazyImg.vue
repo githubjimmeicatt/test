@@ -1,17 +1,15 @@
+<!-- eslint-disable vuejs-accessibility/alt-text -->
 <template>
   <img
     ref="target"
-    :class="{loading}"
     v-bind="attrs"
-    @load="loading = false"
   >
 </template>
 
 <script>
 import {
-  ref, watch, computed,
+  ref, computed,
 } from 'vue'
-import { useIntersectionObserver } from '@vueuse/core'
 import useUmbracoImage from '../composables/useUmbracoImage'
 
 export default {
@@ -22,47 +20,23 @@ export default {
       default: '',
     },
   },
-  setup(props, { attrs }) {
+  setup(props, context) {
     const target = ref(null)
-    const isVisible = ref(false)
-    const loading = ref(true)
-    useIntersectionObserver(
-      target,
-      ([{ isIntersecting }]) => {
-        isVisible.value = isIntersecting
-      },
-    )
-    const imageUrl = props.src && typeof props.src === 'object'
+
+    const src = props.src && typeof props.src === 'object'
       ? useUmbracoImage(() => props.src, target)
-      : computed(() => props.src)
+      : computed(() => props.src?.toString())
 
-    watch([isVisible, imageUrl], ([isVisibleVal, imageUrlVal]) => {
-      const { value } = target
-      if (!value || !isVisibleVal || !imageUrlVal) return
-      value.src = imageUrlVal
-    }, { immediate: true })
-
-    if ('src' in attrs) {
-      // eslint-disable-next-line no-param-reassign
-      delete attrs.src
-    }
+    const attrs = computed(() => ({
+      ...context.attrs,
+      src: src.value,
+      loading: 'lazy',
+    }))
 
     return {
       attrs,
       target,
-      loading,
     }
   },
 }
 </script>
-
-<style lang="scss" scoped>
-img {
-  opacity: 100%;
-  transition: opacity 0.25s ease-in;
-
-  &.loading {
-    opacity: 0;
-  }
-}
-</style>
