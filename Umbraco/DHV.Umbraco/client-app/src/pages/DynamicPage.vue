@@ -114,102 +114,103 @@ export default defineComponent({
 </script>
 
   <style lang="scss" scoped>
-    .aside-with-content {
+  .aside-with-content {
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-between;
     align-items: flex-start;
     gap: var(--space-small) var(--space-medium);
 
     > :first-child,
     > h1 + section {
-    width: min(100%, 40rem);
+      width: min(100%, 40rem);
 
-    p:first-child {
-    margin-block-start: 0;
-    }
+      p:first-child {
+        margin-block-start: 0;
+      }
     }
 
     aside {
-    width: min(100%, 24rem);
-    padding: 1.5rem;
-    background-color: var(--color-sph-accent-2);
-    border-radius: 1rem;
+      width: min(100%, 28rem);
+      padding: 1.5rem;
+      background-color: var(--color-sph-accent-2);
+      border-radius: 1rem;
 
-    :deep(h1) {
-    font-size: 1.5rem;
-    margin-block-end: var(--space-small);
-    }
+      :deep(h1) {
+        font-size: 1.5rem;
+        margin-block-end: var(--space-small);
+      }
 
-    :deep(.richtext img) {
-    padding: 0;
-    background-color: var(--color-sph-accent-2);
-    }
+      :deep(.richtext img) {
+        padding: 0;
+        background-color: var(--color-sph-accent-2);
+      }
     }
 
     .container {
-    padding: 0;
+      padding: 0;
     }
-    }
+  }
 
-    .pageheader {
+  .pageheader {
     overflow: hidden;
-    }
+  }
 
-    main > .container {
+  main > .container {
     --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 
     &:nth-child(4n+2), &:nth-child(4n+4) {
-    background-color: white;
+      background-color: white;
 
-    :deep(.card) {
-    box-shadow: var(--card-shadow);
-    }
+      :deep(.card) {
+        box-shadow: var(--card-shadow);
+      }
     }
 
     &:nth-child(4n+1) {
-    background-color: var(--color-background-1);
+      background-color: var(--color-background-1);
 
-    :deep(.card) {
-    box-shadow: none;
-    }
+      :deep(.card) {
+        box-shadow: none;
+      }
     }
 
     &:nth-child(4n+3) {
-    background-color: var(--color-background-2);
+      background-color: var(--color-background-2);
 
-    :deep(.card) {
-    box-shadow: none;
+      :deep(.card) {
+        box-shadow: none;
+      }
     }
-    }
-    }
+  }
 
-    .pageheader ~ .container {
+  .pageheader ~ .container {
     &:nth-child(4n+1), &:nth-child(4n+3) {
-    background-color: white;
+      background-color: white;
 
-    :deep(.card) {
-    box-shadow: var(--card-shadow);
-    }
+      :deep(.card) {
+        box-shadow: var(--card-shadow);
+      }
     }
 
     &:nth-child(4n+2) {
-    background-color: var(--color-background-1);
+      background-color: var(--color-background-1);
 
-    :deep(.card) {
-    box-shadow: none;
-    }
+      :deep(.card) {
+        box-shadow: none;
+      }
     }
 
     &:nth-child(4n+4) {
-    background-color: var(--color-background-2);
+      background-color: var(--color-background-2);
 
-    :deep(.card) {
-    box-shadow: none;
+      :deep(.card) {
+        box-shadow: none;
+      }
     }
-    }
-    }
+  }
 
-    .container section.container {
+  .container section.container {
     background: none;
-    }
+  }
   </style>
