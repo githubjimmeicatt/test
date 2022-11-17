@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container" v-if="form">
     <h1 v-if="title">
       {{ title }}
     </h1>
