@@ -115,7 +115,7 @@ article {
     object-position: center;
   }
 
-  img:first-child + * {
+  img + .subtitle, img + h1, img + p {
     margin-top: var(--space-largest);
   }
 }
