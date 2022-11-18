@@ -1,12 +1,27 @@
 import {
   ref, computed, watch,
 } from 'vue'
-import { useResizeObserver, debouncedWatch } from '@vueuse/core'
+import { useResizeObserver, debouncedWatch, type MaybeComputedElementRef } from '@vueuse/core'
 
 const crop = true
 
-export default function useUmbracoImage(umbracoImageFunc, el) {
-  const rect = ref(null)
+type UmbracoFile = {
+  focalPointUrlTemplate: string;
+}
+
+// backwards compatible
+type UmbracoImage = (UmbracoFile & { _url: string }) | {
+  umbracoFile: UmbracoFile
+} & { _url: string }
+
+type MaybeFunc<T> = T | (() => T)
+
+// eslint-disable-next-line import/prefer-default-export
+export function useUmbracoImage(
+  umbracoImageFunc: MaybeFunc<UmbracoImage>,
+  el: MaybeComputedElementRef,
+) {
+  const rect = ref<DOMRectReadOnly>()
   const umbracoImage = computed(typeof umbracoImageFunc === 'function'
     ? umbracoImageFunc
     : () => umbracoImageFunc)
@@ -28,15 +43,17 @@ export default function useUmbracoImage(umbracoImageFunc, el) {
     return imageUrl
   }
 
-  const getUrl = (rectangle) => {
-    // backwards compatible
-    const file = umbracoImage.value?.umbracoFile ? umbracoImage.value.umbracoFile : umbracoImage.value
-    const urlTemplate = file?.focalPointUrlTemplate
-    if (!rectangle || !urlTemplate) return null
-    const { width, height } = rectangle
+  const getUrl = (rectangle: DOMRectReadOnly | undefined) => {
+    const { width, height } = rectangle ?? {}
     if (!width || !height) return null
+
+    const { value } = umbracoImage
+    const file = value && 'umbracoFile' in value ? value.umbracoFile : value
+    const urlTemplate = file?.focalPointUrlTemplate
+    if (!urlTemplate) return null
+
     // if (!crop) return urlTemplate.replace('{width}', width).replace('&height={height}', '').replace('&mode=crop', '')
-    return urlTemplate.replace('{width}', width).replace('{height}', height)
+    return urlTemplate.replace('{width}', width.toString()).replace('{height}', height.toString())
   }
 
   // make sure we don't debounce the initial url

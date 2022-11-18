@@ -53,7 +53,7 @@
 
 <script>
 import { ref, computed } from 'vue'
-import useUmbracoImage from '../composables/useUmbracoImage'
+import { useUmbracoImage } from 'icatt-heartcore'
 import TheLink from './TheLink.vue'
 
 export default {

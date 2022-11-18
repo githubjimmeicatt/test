@@ -11,7 +11,7 @@
 import {
   ref, computed,
 } from 'vue'
-import useUmbracoImage from '../composables/useUmbracoImage'
+import { useUmbracoImage } from 'icatt-heartcore'
 
 export default {
   inheritAttrs: false,
