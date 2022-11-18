@@ -24,6 +24,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      'icatt-heartcore': fileURLToPath(new URL('./src/icatt-heartcore/entry.ts', import.meta.url)),
     },
   },
 })

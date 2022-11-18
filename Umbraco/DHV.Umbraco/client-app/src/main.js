@@ -13,12 +13,11 @@ if (window && !('ResizeObserver' in window)) {
 }
 
 const app = createApp(App)
+  .use(IcattHeartcore, {
+    portal: window.UMBRACO_PORTAL,
+  })
   .use(IcattVueForms)
   .use(createHead())
   .use(router)
-
-IcattHeartcore.install(app, {
-  portal: window.UMBRACO_PORTAL,
-})
 
 app.mount('#app')
