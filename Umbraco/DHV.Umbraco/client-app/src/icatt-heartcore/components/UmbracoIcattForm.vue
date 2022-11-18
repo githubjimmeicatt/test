@@ -29,6 +29,7 @@ import type { Form } from '@umbraco/headless-forms-react/types'
 import { useUmbracoForm } from '../composables/useUmbracoForm'
 
 export default defineComponent({
+  inheritAttrs: false,
   props: {
     confirmation: {
       type: String,
