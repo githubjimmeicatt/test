@@ -397,7 +397,11 @@ export default {
             }
           }
 
-          &.open{
+          &.open {
+            button > svg {
+              transform: rotate(180deg);
+            }
+
             ul {
               max-height: 100vh;
               box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

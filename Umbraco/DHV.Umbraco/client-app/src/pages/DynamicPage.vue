@@ -16,21 +16,23 @@
       v-if="i === 0 && aside.length"
       class="aside-with-content container"
     >
+      <h1 v-if="c.component === 'richtext'">
+        {{ content.name }}
+      </h1>
+
       <section
         v-if="c.component === 'richtext'"
         class="container"
       >
-        <h1 v-if="i === 0">
-          {{ content.name }}
-        </h1>
-
         <richtext :body="c.props.body" />
       </section>
+
       <component
         :is="c.component"
         v-else
         v-bind="c.props"
       />
+
       <aside>
         <template
           v-for="(a, j) in aside"
@@ -43,6 +45,7 @@
         </template>
       </aside>
     </div>
+
     <section
       v-else-if="c.component === 'richtext'"
       class="container"
@@ -53,6 +56,7 @@
 
       <richtext :body="c.props.body" />
     </section>
+
     <component
       :is="c.component"
       v-else
@@ -60,7 +64,9 @@
       class="container"
     />
   </template>
+
 </template>
+
 <script>
 import { inject, defineComponent, computed } from 'vue'
 import cleanGlobImport from '../helpers/cleanGlobImport'
@@ -107,81 +113,104 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-.aside-with-content {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  row-gap: var(--space-medium);
+  <style lang="scss" scoped>
+  .aside-with-content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-small) var(--space-medium);
 
-  > :first-child {
-    width: min(100%, 40rem);
-  }
+    > :first-child,
+    > h1 + section {
+      width: min(100%, 40rem);
 
-  .container {
-    padding: 0;
-  }
-}
+      p:first-child {
+        margin-block-start: 0;
+      }
+    }
 
-.pageheader {
-  overflow: hidden;
-}
+    aside {
+      width: min(100%, 28rem);
+      padding: 1.5rem;
+      background-color: var(--color-sph-accent-2);
+      border-radius: 1rem;
 
-main > .container {
-  --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+      :deep(h1) {
+        font-size: 1.5rem;
+        margin-block-end: var(--space-small);
+      }
 
-  &:nth-child(4n+2), &:nth-child(4n+4) {
-    background-color: white;
+      :deep(.richtext img) {
+        padding: 0;
+        background-color: var(--color-sph-accent-2);
+      }
+    }
 
-    :deep(.card) {
-      box-shadow: var(--card-shadow);
+    .container {
+      padding: 0;
     }
   }
 
-  &:nth-child(4n+1) {
-    background-color: var(--color-background-1);
+  .pageheader {
+    overflow: hidden;
+  }
 
-    :deep(.card) {
-      box-shadow: none;
+  main > .container {
+    --card-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+    &:nth-child(4n+2), &:nth-child(4n+4) {
+      background-color: white;
+
+      :deep(.card) {
+        box-shadow: var(--card-shadow);
+      }
+    }
+
+    &:nth-child(4n+1) {
+      background-color: var(--color-background-1);
+
+      :deep(.card) {
+        box-shadow: none;
+      }
+    }
+
+    &:nth-child(4n+3) {
+      background-color: var(--color-background-2);
+
+      :deep(.card) {
+        box-shadow: none;
+      }
     }
   }
 
-  &:nth-child(4n+3) {
-    background-color: var(--color-background-2);
+  .pageheader ~ .container {
+    &:nth-child(4n+1), &:nth-child(4n+3) {
+      background-color: white;
 
-    :deep(.card) {
-      box-shadow: none;
+      :deep(.card) {
+        box-shadow: var(--card-shadow);
+      }
+    }
+
+    &:nth-child(4n+2) {
+      background-color: var(--color-background-1);
+
+      :deep(.card) {
+        box-shadow: none;
+      }
+    }
+
+    &:nth-child(4n+4) {
+      background-color: var(--color-background-2);
+
+      :deep(.card) {
+        box-shadow: none;
+      }
     }
   }
-}
 
-.pageheader ~ .container {
-  &:nth-child(4n+1), &:nth-child(4n+3) {
-    background-color: white;
-
-    :deep(.card) {
-      box-shadow: var(--card-shadow);
-    }
+  .container section.container {
+    background: none;
   }
-
-  &:nth-child(4n+2) {
-    background-color: var(--color-background-1);
-
-    :deep(.card) {
-      box-shadow: none;
-    }
-  }
-
-  &:nth-child(4n+4) {
-    background-color: var(--color-background-2);
-
-    :deep(.card) {
-      box-shadow: none;
-    }
-  }
-}
-
-.container section.container {
-  background: none;
-}
-</style>
+  </style>

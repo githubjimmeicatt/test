@@ -4,7 +4,10 @@
       {{ title }}
     </h1>
 
-    <ul v-if="cards?.length">
+    <ul
+      v-if="cards?.length"
+      :class="[{ 3: 'three', 4: 'four', 5: 'five' }[Number(columnCount)]]"
+    >
       <li
         v-for="(card, i) in cards"
         :key="i"
@@ -52,18 +55,31 @@ export default {
 @import "../assets/scss/_mixins.scss";
 
 ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  display: grid;
+  row-gap: var(--space-smaller);
+
+  @include reset-list;
 
   @include screen-fits-two-cards {
-    display: flex;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include screen-fits-four-cards {
+    &.three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &.four {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &.five {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
 }
 
 li {
-  flex: 1;
-  margin-block: var(--space-smaller);
   background-color: var(--color-accent-1);
   border-radius: 1rem;
 
@@ -79,13 +95,17 @@ li {
     color: white;
     font-weight: 600;
     text-decoration: none;
+    outline-offset: -1px;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
       text-decoration: underline;
     }
 
     img {
       margin: auto;
+      min-width: 2rem;
     }
 
     span {
