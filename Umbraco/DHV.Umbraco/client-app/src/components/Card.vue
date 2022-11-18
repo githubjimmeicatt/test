@@ -2,13 +2,11 @@
   <article class="card">
     <lazy-img
       v-if="image"
-      class="img"
       height="100%"
       width="100%"
       :src="image"
       :alt="title ? `card ${title} banner` : 'card banner'"
     />
-    <div v-else class="img" />
 
     <h1 v-if="title">
       {{ title }}
