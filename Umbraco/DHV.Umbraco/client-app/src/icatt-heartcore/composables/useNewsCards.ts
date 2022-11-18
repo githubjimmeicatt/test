@@ -1,10 +1,10 @@
 import {
-  ref, watch, type Ref,
-  computed,
+  ref, watch, type Ref, computed,
 } from 'vue'
 
-import { api } from '@/icatt-heartcore/api/umbraco'
-import parseDate from '@/icatt-heartcore/api/parse-date'
+import { parseUmbracoDate } from '../api/parse-date'
+import type { UmbracoApi } from '../api/umbraco'
+import { useUmbracoApi } from '../plugin'
 
 const getChildrenTypeQuery = (id: string) => `{
   content(id: "${id}") {
@@ -17,24 +17,37 @@ const getChildrenTypeQuery = (id: string) => `{
   }
 }`
 
-const getChildrenTypeAndUrl = (id: string) => {
+const getChildrenTypeAndUrl = (
+  id: string,
+  api: UmbracoApi,
+): Promise<{
+  componentName?: string;
+  startsWithUrl?: string;
+}> => {
   const query = getChildrenTypeQuery(id)
-  return api.postGraphQlQuery(query, false).then((json) => {
+  return api.postGraphQlQuery(query, false).then((json: any) => {
     const { url, children } = json?.data?.content ?? {}
-    const componentName = Array.isArray(children?.items) ? children.items[0]?.contentTypeAlias : undefined
+    const componentName: string | undefined = Array.isArray(children?.items)
+      ? children.items[0]?.contentTypeAlias
+      : undefined
 
     return {
       componentName,
-      startsWithUrl: url,
+      startsWithUrl: url as string | undefined,
     }
   })
 }
 
-const getQueryName = (componentName?: string) => componentName && `all${componentName[0]?.toUpperCase()}${componentName.substring(1)}`
+const getQueryName = (componentName?: string) => componentName
+  && `all${componentName[0]?.toUpperCase()}${componentName.substring(1)}`
 
 const getNewsQuery = ({
-  queryName, cursor, pageSize, now, startsWithUrl,
-} : NewsParams) => {
+  queryName,
+  cursor,
+  pageSize,
+  now,
+  startsWithUrl,
+}: NewsParams) => {
   if (!queryName) return ''
   const cursorPart = cursor ? `, after: "${cursor}"` : ''
 
@@ -77,11 +90,11 @@ const getNewsQuery = ({
 }
 
 type NewsParams = {
-  queryName: string,
-  pageSize?: number,
-  cursor?: string,
-  now: Date
-  startsWithUrl: string
+  queryName: string;
+  pageSize?: number;
+  cursor?: string;
+  now: Date;
+  startsWithUrl: string;
 }
 
 export interface NewsCard {
@@ -96,12 +109,15 @@ export interface NewsCard {
 }
 
 interface PaginatedNewsCards {
-  items: NewsCard[]
+  items: NewsCard[];
   endCursor: string;
   hasNextPage: boolean;
 }
 
-async function getNewsCards(params: NewsParams): Promise<PaginatedNewsCards> {
+async function getNewsCards(
+  params: NewsParams,
+  api: UmbracoApi,
+): Promise<PaginatedNewsCards> {
   const json = await api.postGraphQlQuery(getNewsQuery(params))
 
   const result = json.data?.[params.queryName] ?? {}
@@ -114,9 +130,9 @@ async function getNewsCards(params: NewsParams): Promise<PaginatedNewsCards> {
     } = item
     return {
       ...item,
-      publishDate: parseDate(publishDate),
-      updateDate: parseDate(updateDate),
-      createDate: parseDate(createDate),
+      publishDate: parseUmbracoDate(publishDate),
+      updateDate: parseUmbracoDate(updateDate),
+      createDate: parseUmbracoDate(createDate),
       image: {
         ...image,
         // for backwards compatibility
@@ -133,9 +149,12 @@ async function getNewsCards(params: NewsParams): Promise<PaginatedNewsCards> {
   }
 }
 
-export default function useNewsCards(
+export function useNewsCards(
   id: Ref<string>,
-  params?: { pageSize?: Ref<number | undefined> | number, maxItems?: Ref<number | undefined> | number | undefined },
+  params?: {
+    pageSize?: Ref<number | undefined> | number;
+    maxItems?: Ref<number | undefined> | number | undefined;
+  },
 ) {
   const now = new Date()
   const urlRef = ref<string>()
@@ -146,6 +165,9 @@ export default function useNewsCards(
   const hasNextPageRef = ref(false)
   const isLoadingRef = ref(false)
   const errorRef = ref()
+
+  const api = useUmbracoApi()
+  if (!api) throw new Error('umbraco api not setup')
 
   const maxItemsRef = computed(() => {
     if (!params?.maxItems) return undefined
@@ -159,33 +181,43 @@ export default function useNewsCards(
     return params.pageSize.value
   })
 
-  const limtedPageSizeRef = computed(() => (maxItemsRef.value && (!pageSizeRef.value || maxItemsRef.value < pageSizeRef.value)
+  const limtedPageSizeRef = computed(() => (maxItemsRef.value
+    && (!pageSizeRef.value || maxItemsRef.value < pageSizeRef.value)
     ? maxItemsRef.value
     : pageSizeRef.value))
 
-  const limitedHasNextPage = computed(() => hasNextPageRef.value
-    && (!maxItemsRef.value || maxItemsRef.value > itemsRef.value.length))
+  const limitedHasNextPage = computed(
+    () => hasNextPageRef.value
+      && (!maxItemsRef.value || maxItemsRef.value > itemsRef.value.length),
+  )
 
   const limitedPage = computed(() => (maxItemsRef.value && maxItemsRef.value < itemsRef.value.length
     ? itemsRef.value.slice(0, maxItemsRef.value)
     : itemsRef.value))
 
-  watch(id, (i) => {
-    queryNameRef.value = ''
-    itemsRef.value = []
-    isLoadingRef.value = true
-    cursorRef.value = ''
-    if (i) {
-      getChildrenTypeAndUrl(i).then(({ componentName, startsWithUrl }) => {
-        queryNameRef.value = getQueryName(componentName)
-        urlRef.value = startsWithUrl
-      }).catch((e) => {
-        errorRef.value = e
-      }).finally(() => {
-        isLoadingRef.value = false
-      })
-    }
-  }, { immediate: true })
+  watch(
+    id,
+    (i) => {
+      queryNameRef.value = ''
+      itemsRef.value = []
+      isLoadingRef.value = true
+      cursorRef.value = ''
+      if (i) {
+        getChildrenTypeAndUrl(i, api)
+          .then(({ componentName, startsWithUrl }) => {
+            queryNameRef.value = getQueryName(componentName)
+            urlRef.value = startsWithUrl
+          })
+          .catch((e) => {
+            errorRef.value = e
+          })
+          .finally(() => {
+            isLoadingRef.value = false
+          })
+      }
+    },
+    { immediate: true },
+  )
 
   watch(
     [cursorRef, queryNameRef, limtedPageSizeRef, urlRef],
@@ -194,21 +226,27 @@ export default function useNewsCards(
 
       isLoadingRef.value = true
 
-      getNewsCards({
-        queryName,
-        startsWithUrl,
-        now,
-        cursor,
-        pageSize,
-      }).then(({ items, endCursor, hasNextPage }) => {
-        itemsRef.value = [...itemsRef.value, ...items]
-        hasNextPageRef.value = hasNextPage
-        nextCursorRef.value = endCursor
-      }).catch((e) => {
-        errorRef.value = e
-      }).finally(() => {
-        isLoadingRef.value = false
-      })
+      getNewsCards(
+        {
+          queryName,
+          startsWithUrl,
+          now,
+          cursor,
+          pageSize,
+        },
+        api,
+      )
+        .then(({ items, endCursor, hasNextPage }) => {
+          itemsRef.value = [...itemsRef.value, ...items]
+          hasNextPageRef.value = hasNextPage
+          nextCursorRef.value = endCursor
+        })
+        .catch((e) => {
+          errorRef.value = e
+        })
+        .finally(() => {
+          isLoadingRef.value = false
+        })
     },
   )
 

@@ -1,71 +1,42 @@
 <template>
-  <slot
-    v-if="error"
-    name="error"
-    :message="errorMessage"
-  >
+  <slot v-if="error" name="error" :message="errorMessage">
     <div class="error">
       {{ errorMessage }}
     </div>
   </slot>
 
-  <slot
-    v-else-if="success"
-    name="success"
-    :message="successMessage"
-  >
-    <article
-      class="richtext success"
-    >
-      <rich-text :body="successMessage?.value || successMessage" />
-    </article>
-  </slot>
+  <slot v-else-if="success" name="success" :message="successMessage" />
 
-  <slot
-    v-else-if="loading"
-    name="loading"
-  />
+  <slot v-else-if="loading" name="loading" />
 
-  <vue-form
-    v-else-if="icattVueForm"
-    :form="icattVueForm"
-    @submit="onSubmit"
-  >
+  <vue-form v-else-if="icattVueForm" :form="icattVueForm" @submit="onSubmit">
     <component
-      :is="getInputTemplateType(item.type)"
       v-for="item in displayableFormItems"
+      :is="getInputTemplateType(item.type)"
       :key="item.alias"
       v-bind="item.attributes"
       :form-element="item"
     />
-    <slot
-      name="submit"
-      :onSubmit="onSubmit"
-    >
-      <button
-        class="form-button is-submit"
-      >
-        Verzenden
-      </button>
+    <slot name="submit" :onSubmit="onSubmit">
+      <button class="form-button is-submit" type="submit">Verzenden</button>
     </slot>
   </vue-form>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, type PropType } from 'vue'
+import type { Form } from '@umbraco/headless-forms-react/types'
+import { useUmbracoForm } from '../composables/useUmbracoForm'
 
-import { computed } from 'vue'
-import useUmbracoForm from '../composables/useUmbracoForm'
-import RichText from '../../components/RichText.vue'
-
-export default {
-  components: { RichText },
+export default defineComponent({
+  inheritAttrs: false,
   props: {
     confirmation: {
       type: String,
       default: null,
     },
     form: {
-      type: Object,
+      type: Object as PropType<Form>,
       default: () => ({}),
     },
   },
@@ -81,7 +52,7 @@ export default {
       successMessage,
     } = useUmbracoForm(props.form, props.confirmation)
 
-    const getInputTemplateType = (questionType) => {
+    const getInputTemplateType = (questionType: string) => {
       let t = ''
 
       switch (questionType) {
@@ -132,11 +103,11 @@ export default {
     const onSubmit = () => submitHandler()
 
     const displayableFormItems = computed(() => {
-      const x = {}
+      const x: Record<string, any> = {}
       Object.entries(icattVueForm?.items).forEach((o) => {
         // als er een vraag 'website' is dan tonen we die niet op het scherm en vullen hem met de url van de website
         const k = o[0]
-        const v = o[1]
+        const v = o[1] as any
 
         if (k === 'website') {
           v.antwoord = window.location.hostname
@@ -161,7 +132,5 @@ export default {
       displayableFormItems,
     }
   },
-
-}
-
+})
 </script>

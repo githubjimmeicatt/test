@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import UmbracoIcattForm from '../icatt-heartcore/components/UmbracoIcattForm.vue'
+import { UmbracoIcattForm } from 'icatt-heartcore'
 import RichText from './RichText.vue'
 import Spinner from '../assets/spinner.svg'
 

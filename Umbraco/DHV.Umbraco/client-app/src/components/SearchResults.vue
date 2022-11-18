@@ -40,7 +40,7 @@
 import {
   ref, watch, computed,
 } from 'vue'
-import { Portal } from '@/icatt-heartcore/api/umbraco'
+import { useUmbracoApi } from 'icatt-heartcore'
 
 export default {
   props: {
@@ -57,6 +57,7 @@ export default {
     })
 
     const loading = ref(true)
+    const api = useUmbracoApi()
 
     const searchResults = computed(() => {
       const items = response.value?.content?.items
@@ -72,7 +73,8 @@ export default {
       try {
         if (val) {
           loading.value = true
-          response.value = await Portal.search(val)
+          const { data } = await api.search(val)
+          response.value = data
         }
       } finally {
         loading.value = false

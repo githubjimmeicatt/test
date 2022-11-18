@@ -15,9 +15,7 @@
 import Spinner from '@/assets/spinner.svg'
 import Cards from '@/components/Cards.vue'
 import { formatDate } from '@/helpers/formatDate'
-import EndlessScroll from '@/icatt-heartcore/components/EndlessScroll.vue'
-import type { NewsCard } from '@/icatt-heartcore/composables/useNewsCards'
-import useNewsCards from '@/icatt-heartcore/composables/useNewsCards'
+import { EndlessScroll, useNewsCards, type NewsCard } from 'icatt-heartcore'
 import { computed, inject } from 'vue'
 
 const props = defineProps<{

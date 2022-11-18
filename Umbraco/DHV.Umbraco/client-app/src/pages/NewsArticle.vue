@@ -28,7 +28,7 @@
 <script lang="ts">
 import { inject, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import useNewsCards, { type NewsCard } from '@/icatt-heartcore/composables/useNewsCards'
+import { useNewsCards, type NewsCard } from 'icatt-heartcore'
 import Cards from '@/components/Cards.vue'
 import Spinner from '@/assets/spinner.svg'
 import RichText from '@/components/RichText.vue'

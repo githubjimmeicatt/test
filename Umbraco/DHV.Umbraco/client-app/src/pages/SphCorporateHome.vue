@@ -51,7 +51,7 @@ import LatestNews from '@/components/LatestNews.vue'
 import LiveEventCards from '@/components/LiveEventCards.vue'
 import TextNextToImage from '@/components/TextNextToImage.vue'
 import FormElement from '@/components/FormElement.vue'
-import parseDate from '@/icatt-heartcore/api/parse-date'
+import { parseUmbracoDate } from 'icatt-heartcore'
 import { parseAndFormatPercentage } from '@/helpers/percentage'
 import TheLink from '@/components/TheLink.vue'
 import PageHeader from '../components/PageHeader.vue'
@@ -71,7 +71,7 @@ export default {
       if (!Array.isArray(content?.value?.dekkingsgraad?.data)) return undefined
       const ordered = content.value.dekkingsgraad.data.map((x) => ({
         ...x,
-        date: parseDate(x.date),
+        date: parseUmbracoDate(x.date),
       })).sort((a, b) => a.date - b.date)
       const first = ordered[0]?.actueel
       return first && parseAndFormatPercentage(first)

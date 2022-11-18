@@ -65,7 +65,7 @@ import { computed } from 'vue'
 import { shortDate, isoDate } from '@/helpers/formatDate'
 import { useMediaQuery } from '@vueuse/core'
 
-import parseDate from '@/icatt-heartcore/api/parse-date'
+import { parseUmbracoDate } from 'icatt-heartcore'
 import RichText from './RichText.vue'
 
 type LineChartData = TChartData<'line'>
@@ -105,7 +105,7 @@ const visualItems = computed<VisualItem[]>(() => {
   }
 })
 
-const getTime = (d: string) => parseDate(d)?.getTime() || 0
+const getTime = (d: string) => parseUmbracoDate(d)?.getTime() || 0
 const byDateAscending = (a: Data, b: Data) => getTime(a.date) - getTime(b.date)
 const byDateDescending = (a: Data, b: Data) => getTime(b.date) - getTime(a.date)
 
@@ -195,7 +195,7 @@ const chartData = computed<LineChartData>(() => ({
 }))
 
 const tableData = computed(() => descendingData.value.map(({ date, actueel, beleid }) => {
-  const dateTime = parseDate(date)
+  const dateTime = parseUmbracoDate(date)
   return {
     date: dateTime && {
       iso: isoDate(dateTime),

@@ -42,4 +42,9 @@ module.exports = {
     semi: 'off',
     '@typescript-eslint/semi': ['error', 'never'],
   },
+  settings: {
+    'import/resolver': {
+      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
+    },
+  },
 }

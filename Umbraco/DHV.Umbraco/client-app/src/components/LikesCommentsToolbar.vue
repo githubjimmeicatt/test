@@ -6,7 +6,7 @@
         class="button"
         :aria-label="iconLabel"
         :title="iconLabel"
-        :class="{loading}"
+        :class="{ loading }"
         @click="toggleLike"
       >
         <component
@@ -32,8 +32,9 @@
 
 <script>
 import {
-  ref, computed, inject,
+  ref, computed,
 } from 'vue'
+import { useUmbracoApi } from 'icatt-heartcore'
 import HeartRegular from '../assets/LikesComments/heart-regular.svg'
 import HeartSolid from '../assets/LikesComments/heart-solid.svg'
 import CommentSolid from '../assets/LikesComments/comment-solid.svg'
@@ -69,7 +70,7 @@ export default {
     },
   },
   setup(props) {
-    const portal = inject('portal')
+    const umbracoApi = useUmbracoApi()
     const likes = ref(props.likesArray?.map((x) => x.UserId) || [])
     const hasLiked = computed(() => likes.value?.includes(props.user.userId) || false)
     const iconComponent = computed(() => (hasLiked.value ? 'HeartSolid' : 'HeartRegular'))
@@ -80,7 +81,7 @@ export default {
       if (loading.value) return
       loading.value = true
       try {
-        await portal.postLike(props.pageId, !hasLiked.value)
+        await umbracoApi.like(props.pageId, !hasLiked.value)
         if (hasLiked.value) {
           likes.value.pop()
         } else {

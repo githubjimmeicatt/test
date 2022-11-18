@@ -1,8 +1,5 @@
 <template>
-  <span
-    ref="trackEl"
-    class="visually-hidden"
-  />
+  <span ref="trackEl" class="visually-hidden" />
 </template>
 
 <script lang="ts">
@@ -12,9 +9,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {
-  ref,
-} from 'vue'
+import { ref } from 'vue'
 import { useElementVisibility, whenever } from '@vueuse/core'
 
 const props = defineProps({
@@ -39,6 +34,5 @@ whenever(isVisible, () => props.getNextPage(), {
   font-size: 0;
   margin: 0;
   padding: 0;
-
 }
 </style>

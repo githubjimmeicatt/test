@@ -1,6 +1,7 @@
 import IcattVueForms from 'icatt-vue-forms'
 import { createApp } from 'vue'
 import { createHead } from '@vueuse/head'
+import { IcattHeartcore } from 'icatt-heartcore'
 import App from './App.vue'
 import router from './router'
 
@@ -12,6 +13,9 @@ if (window && !('ResizeObserver' in window)) {
 }
 
 createApp(App)
+  .use(IcattHeartcore, {
+    portal: window.UMBRACO_PORTAL,
+  })
   .use(IcattVueForms)
   .use(createHead())
   .use(router)
