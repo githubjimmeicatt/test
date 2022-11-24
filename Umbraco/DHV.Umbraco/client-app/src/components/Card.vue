@@ -1,7 +1,7 @@
 <template>
   <article class="card">
     <lazy-img
-      v-if="image"
+      v-if="image?._url || image?.url"
       height="100%"
       width="100%"
       :src="image"
