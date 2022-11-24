@@ -1,6 +1,6 @@
 <template>
   <pageheader
-    v-if="content.hero.title"
+    v-if="content.hero?.title || content.hero?.backgroundImage?._url"
     class="pageheader"
     v-bind="content.hero"
     :narrow="!content.heroBig"
