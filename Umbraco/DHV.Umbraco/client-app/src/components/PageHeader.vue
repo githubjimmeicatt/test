@@ -168,7 +168,7 @@ section {
 
       display: flex;
       flex-direction: column;
-      justify-content: end;
+      justify-content: flex-end;
       gap: 1rem;
 
       li {
