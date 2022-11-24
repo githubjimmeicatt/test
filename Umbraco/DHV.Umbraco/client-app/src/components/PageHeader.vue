@@ -124,37 +124,31 @@ export default {
 @import "../assets/scss/_mixins.scss";
 
 section {
-  background-color: var(--color-base);
   position: relative;
   min-height: 20rem;
-
-  img {
-    opacity: 100;
-    transition: opacity 250ms ease-in;
-  }
-
-  &.transparent {
-    img {
-      opacity: 0;
-    }
-  }
+  display: flex;
+  justify-content: flex-end;
+  padding-block: var(--space-medium);
+  padding-inline: var(--dynamic-spacing-large);
 
   .background {
-    display: block;
-    max-width: unset;
-    margin: unset;
-    z-index: -1;
-    width: 100%;
+    opacity: 100;
+    transition: opacity 250ms ease-in;
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
     object-fit: cover;
     object-position: center;
-
-    height: 100%;
-    position: absolute;
 
     &.hide {
       opacity: 0;
     }
   }
+
+  &.transparent .background {
+      opacity: 0;
+    }
 
   header {
     > * {
@@ -164,14 +158,8 @@ section {
 
     font-size: 0.875rem;
 
-    padding-block: var(--space-medium);
-    padding-inline: var(--dynamic-spacing-medium);
-    margin-block-start: var(--space-medium);
-
-    @include screen-fits-two-cards {
-      padding-left: calc(50vw - 1.75rem);
-      padding-right: var(--dynamic-spacing-large);
-    }
+    min-inline-size: min(28rem, 100%);
+    display: grid;
 
     ul {
       list-style: none;
@@ -180,6 +168,7 @@ section {
 
       display: flex;
       flex-direction: column;
+      justify-content: flex-end;
       gap: 1rem;
 
       li {
@@ -198,6 +187,7 @@ section {
           max-width: 22rem;
           padding-block: var(--space-small);
           background-color: rgba(255, 255, 255, 0.9);
+          margin-block-end: auto;
         }
 
         &.header-info::before {
@@ -239,12 +229,8 @@ section {
 
   &.narrow {
     @include screen-fits-two-cards {
-      border-left: solid var(--dynamic-spacing-large) white;
-      border-right: solid var(--dynamic-spacing-large) white;
-
-      header {
-        padding-inline-end: var(--space-medium);
-      }
+      margin-inline: var(--dynamic-spacing-large);
+      padding-inline: var(--space-small);
     }
   }
 }
