@@ -10,7 +10,7 @@ type UmbracoFile = {
 }
 
 // backwards compatible
-type UmbracoImage = (UmbracoFile & { _url: string }) | {
+type UmbracoImage = (UmbracoFile & { url: string }) | {
   umbracoFile: UmbracoFile
 } & { _url: string }
 
@@ -38,7 +38,7 @@ export function useUmbracoImage(
   if (!crop) {
     // crop is disabled manually, probably because the Umbraco CDN is broken again
     watch(umbracoImage, (val) => {
-      imageUrl.value = val?._url
+      imageUrl.value = val && 'url' in val ? val.url : val?._url
     }, { immediate: true })
     return imageUrl
   }

@@ -110,6 +110,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IUmbracoWebhookAuthorizer, UmbracoWebhookAuthorizer>();
 
             services.AddHttpClient<IMenuManager, MenuManager>(nameof(MenuManager), SetupGraphQl).LogAndAbsorbTimeout();
+            services.AddHttpClient<IFooterManager, FooterManager>(nameof(FooterManager), SetupGraphQl).LogAndAbsorbTimeout();
             services.AddHttpClient<ISitemapManager, SitemapManager>(nameof(SitemapManager), SetupGraphQl).LogAndAbsorbTimeout();
 
             return services;

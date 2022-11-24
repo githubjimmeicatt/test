@@ -2,7 +2,6 @@
 <template>
   <img
     ref="target"
-    v-if="attrs.src"
     v-bind="attrs"
   >
 </template>
