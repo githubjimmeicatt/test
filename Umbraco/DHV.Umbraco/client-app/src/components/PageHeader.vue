@@ -31,8 +31,8 @@
           <slot name="above" />
         </li>
 
-        <li class="header-info">
-          <span class="title">{{ title }}</span>
+        <li class="header-info" v-if="title || target?.url">
+          <span class="title" v-if="title">{{ title }}</span>
 
           <the-link
             v-if="target?.url"
@@ -126,6 +126,7 @@ export default {
 section {
   background-color: var(--color-base);
   position: relative;
+  min-height: 20rem;
 
   img {
     opacity: 100;
@@ -144,7 +145,6 @@ section {
     margin: unset;
     z-index: -1;
     width: 100%;
-    height: 16rem;
     object-fit: cover;
     object-position: center;
 
