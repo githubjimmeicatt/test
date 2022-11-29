@@ -21,7 +21,7 @@ namespace Icatt.Heartcore.Umbraco
     {
         private readonly IContentManagementService _contentManagement;
         private readonly IContentDeliveryService _contentDelivery;
-        private readonly IFileProvider _fileProvider;
+        private readonly IUmbracoSecureFileProvider _fileProvider;
         private readonly ILogger<HeartcoreMediaManager> _log;
         private readonly IPortalConfig _portalConfig;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -31,7 +31,7 @@ namespace Icatt.Heartcore.Umbraco
         public HeartcoreMediaManager(
             IContentManagementService contentManagement,
             IContentDeliveryService contenDelivery,
-            IWebHostEnvironment webHostEnvironment,
+            IUmbracoSecureFileProvider fileProvider,
             ILogger<HeartcoreMediaManager> log,
             IPortalConfig portalConfig,
             IHttpContextAccessor httpContextAccessor,
@@ -39,7 +39,7 @@ namespace Icatt.Heartcore.Umbraco
         {
             _contentManagement = contentManagement;
             _contentDelivery = contenDelivery;
-            _fileProvider = GetSecureDataProvider(webHostEnvironment);
+            _fileProvider = fileProvider;
             _log = log;
             _portalConfig = portalConfig;
             _httpContextAccessor = httpContextAccessor;
@@ -102,7 +102,7 @@ namespace Icatt.Heartcore.Umbraco
 
         private bool AlreadyProcessed(string path) => File.Exists(GetMarkerPath(path));
         private string GetMarkerPath(string path) => GetFullPath(path) + "_MARKER";
-        private string GetFullPath(string path) => Path.Combine(_fileProvider.GetFileInfo("/").PhysicalPath,path);
+        private string GetFullPath(string path) => Path.Combine(_fileProvider.GetRootPath(), path);
         private void CreateMarkerFile(string path) => File.Create(GetMarkerPath(path)).Dispose();
         private void DeleteMarkerFile(string path) => File.Delete(GetMarkerPath(path));
 
@@ -120,13 +120,6 @@ namespace Icatt.Heartcore.Umbraco
             }
             Directory.Delete(path, true);
             return true;
-        }
-
-        private static IFileProvider GetSecureDataProvider(IWebHostEnvironment environment)
-        {
-            var dataRoot = Path.Combine(Directory.GetParent(environment?.ContentRootPath).FullName, "Data");
-            Directory.CreateDirectory(dataRoot);
-            return new PhysicalFileProvider(dataRoot);
         }
 
         private async Task<string> DownloadFile(string url, string folder)
@@ -155,7 +148,7 @@ namespace Icatt.Heartcore.Umbraco
             //bedankt Umbraco!!! na uploaden in heartcore dev omgeving gewoon zelf de verkeerde media url teruggeven....
             if (alias != _umbracoHeartcoreConfig.UmbProjectAlias.ToLower())
             {
-                _log.LogError("{UmbracoMedia} heeft geen correcte umbracoalias ", media.Id); 
+                _log.LogError("{UmbracoMedia} heeft geen correcte umbracoalias ", media.Id);
             }
             var folder = parts[3];
             var path = GetPath(media);
@@ -214,7 +207,7 @@ namespace Icatt.Heartcore.Umbraco
             {
                 _log.LogInformation("{UmbracoMedia} is secured", updateResult.Id);
             }
-            
+
             return !hasError ? "Media secured" : "Media could not be secured";
         }
 

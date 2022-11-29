@@ -38,18 +38,10 @@ namespace Microsoft.Extensions.DependencyInjection
                         ctx.Context.Response.Body = Stream.Null;
                     }
                 },
-                FileProvider = GetSecureDataProvider(environment),
+                FileProvider = app.ApplicationServices.GetRequiredService<IUmbracoSecureFileProvider>(),
                 RequestPath = requestPath
             });
             return app;
-        }
-
-        public static IFileProvider GetSecureDataProvider(IWebHostEnvironment environment)
-        {
-            var parentFolder = Directory.GetParent(environment?.ContentRootPath.TrimEnd('\\')).FullName;
-            var dataRoot = Path.Combine(parentFolder, "Data");
-            Directory.CreateDirectory(dataRoot);
-            return new PhysicalFileProvider(dataRoot);
         }
 
         public static TransformBuilderContext AddUmbracoProxies(this TransformBuilderContext b, string umbracoContentClusterName = "UmbracoContent")
@@ -112,6 +104,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddHttpClient<IMenuManager, MenuManager>(nameof(MenuManager), SetupGraphQl).LogAndAbsorbTimeout();
             services.AddHttpClient<IFooterManager, FooterManager>(nameof(FooterManager), SetupGraphQl).LogAndAbsorbTimeout();
             services.AddHttpClient<ISitemapManager, SitemapManager>(nameof(SitemapManager), SetupGraphQl).LogAndAbsorbTimeout();
+
+            services.AddSingleton<IUmbracoSecureFileProvider, UmbracoSecureFileProvider>();
 
             return services;
         }
