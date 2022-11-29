@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useUmbracoImage } from 'icatt-heartcore'
 import TheLink from './TheLink.vue'
 
@@ -100,6 +100,10 @@ export default {
 
     if (hasImage.value) {
       backgroundUrl = useUmbracoImage(() => props.backgroundImage, imageEl)
+
+      watch(() => backgroundUrl.value?.split('?')?.[0], () => {
+        loading.value = true
+      })
     } else if (hasVideo.value) {
       backgroundUrl = ref(props.backgroundImage._url)
       loading.value = false

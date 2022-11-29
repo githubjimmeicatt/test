@@ -33,17 +33,21 @@ export function useUmbracoImage(
   let initialized = false
   let clearedInitialWatch = false
 
-  const imageUrl = ref('')
+  const originalUrl = computed(() => {
+    const val = umbracoImage.value
+    return val && 'url' in val ? val.url : val?._url
+  })
 
   if (!crop) {
     // crop is disabled manually, probably because the Umbraco CDN is broken again
-    watch(umbracoImage, (val) => {
-      imageUrl.value = val && 'url' in val ? val.url : val?._url
-    }, { immediate: true })
-    return imageUrl
+    return originalUrl
   }
 
+  const imageUrl = ref('')
+
   const getUrl = (rectangle: DOMRectReadOnly | undefined) => {
+    if (!originalUrl.value) return null
+    if (!originalUrl.value.includes('media.umbraco.io') || originalUrl.value.endsWith('.svg')) return originalUrl.value
     const { width, height } = rectangle ?? {}
     if (!width || !height) return null
 
