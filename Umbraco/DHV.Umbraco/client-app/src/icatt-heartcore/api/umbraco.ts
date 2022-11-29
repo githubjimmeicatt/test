@@ -21,9 +21,9 @@ function cleanUrls(data: any, config: Config, key = '', parentKey = ''): any {
   if (typeof data === 'string') {
     let dataWithCustomUrls = data
 
-    if (config.portal.isSecure && config.portal.prefix) {
-      const toReplace = `https://media.umbraco.io${config.portal.prefix}/`
-      dataWithCustomUrls = dataWithCustomUrls.replaceAll(
+    if (config.portal.isSecure && dataWithCustomUrls.includes('media.umbraco.io')) {
+      const toReplace = /https:\/\/media\.umbraco\.io\/[^/]+\//g
+      dataWithCustomUrls = dataWithCustomUrls.replace(
         toReplace,
         '/umbracomedia/',
       )
