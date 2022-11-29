@@ -33,7 +33,7 @@
           >
             <a
               :href="href || '#'"
-              @click.prevent="toggleHamburgerExpanded(navigate)"
+              @click.prevent="closeHamburger(navigate)"
             >{{ title }}</a>
 
             <template v-if="children?.length">
@@ -61,7 +61,7 @@
                   >
                     <a
                       :href="childItem.href || '#'"
-                      @click.prevent="toggleHamburgerExpanded(navigate)"
+                      @click.prevent="closeHamburger(navigate)"
                     > {{ childItem.title }}</a>
                   </li>
                 </router-link>
@@ -147,14 +147,17 @@ export default {
       children: x.children.filter((c) => c.showInMenu),
     })))
 
-    function toggleHamburgerExpanded(navigate) {
+    function toggleHamburgerExpanded() {
       const newVal = !hamburgerExpanded.value
       if (newVal) {
         searchExpanded.value = false
       }
       hamburgerExpanded.value = newVal
+    }
 
-      if (typeof navigate === 'function') {
+    function closeHamburger(navigate) {
+      hamburgerExpanded.value = false
+      if (navigate) {
         navigate()
       }
     }
@@ -226,6 +229,7 @@ export default {
       ulEl,
       hamburgerExpanded,
       toggleHamburgerExpanded,
+      closeHamburger,
       toggleSearchExpanded,
       searchBar,
       isOpen(i) {
