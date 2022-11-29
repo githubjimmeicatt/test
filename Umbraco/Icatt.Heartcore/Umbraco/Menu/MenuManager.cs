@@ -63,6 +63,7 @@ namespace Icatt.Heartcore.Umbraco.Menu
         }}
         createDate
         updateDate
+        contentTypeAlias
         {inner}
       }}
     }}";
@@ -83,8 +84,9 @@ namespace Icatt.Heartcore.Umbraco.Menu
 
             var createDate = jsonElement.GetProperty("createDate").GetString();
             var updateDate = jsonElement.GetProperty("updateDate").GetString();
+            var contentTypeAlias = jsonElement.GetProperty("contentTypeAlias").GetString();
 
-            return new MenuItem(id, showInMenu, href, title, children, createDate, updateDate);
+            return new MenuItem(id, showInMenu, href, title, children, createDate, updateDate, contentTypeAlias);
         }
     }
 }
