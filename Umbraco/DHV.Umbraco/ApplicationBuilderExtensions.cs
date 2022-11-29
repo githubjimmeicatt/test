@@ -52,7 +52,7 @@ namespace DHV.Umbraco
                     .ScriptSources(s => s.Self().StrictDynamic())
                     .FormActions(s => s.Self())
                     .FrameAncestors(s => s.Self())
-                    .FrameSources(s=> s.Self())
+                    .FrameSources(s=> s.Self().CustomSources("https://www.youtube.com", "https://www.youtube-nocookie.com"))
                     .ObjectSources(s => s.None())
                     .BaseUris(s => s.None())
                     .ReportUris(s =>
