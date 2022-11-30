@@ -2,12 +2,21 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 @model PageResponse
+
+@{
+	var portal = Model?.Head?.Portal;
+	var iconName = portal?.Logo ?? portal?.Theme ?? "favicon";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://media.umbraco.io" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="/@(iconName).svg" rel="icon" type="image/svg+xml" />
+  <link href="/@(iconName).ico" rel="shortcut icon" sizes="any" />
 
   @if (!string.IsNullOrWhiteSpace(Model.Head.Title))
   {

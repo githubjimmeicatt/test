@@ -40,13 +40,19 @@
       class="footermenu"
     >
       <li
-        v-for="({ href, title, children }, key) in filteredMenu"
+        v-for="({
+          href, title, children, contentTypeAlias,
+        }, key) in filteredMenu"
         :key="key"
       >
         <h2>
+          <span v-if="contentTypeAlias === 'contentGroup'">
+            {{ title || href }}
+          </span>
+
           <router-link
-            v-if="href"
-            :to="href || '#'"
+            v-else-if="href"
+            :to="href"
           >
             {{ title || href }}
           </router-link>
@@ -58,7 +64,7 @@
           >
             <router-link
               v-if="child?.href"
-              :to="child.href || '#'"
+              :to="child.href"
             >
               {{ child.title || child.href }}
             </router-link>
@@ -111,8 +117,12 @@ footer {
   color: white;
   padding: var(--space-medium) var(--dynamic-spacing-medium);
 
-  a {
+  a,
+  span {
     color: white;
+  }
+
+  a {
     text-decoration: none;
     &:hover {
       cursor: pointer;

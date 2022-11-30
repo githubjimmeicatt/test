@@ -11,7 +11,9 @@
         </li>
 
         <router-link
-          v-for="({ href, title, children }, key) in filteredMenu"
+          v-for="({
+            href, title, children, contentTypeAlias,
+          }, key) in filteredMenu"
           :key="key"
           v-slot="{ navigate, isActive, isExactActive }"
           :to="href || '#'"
@@ -27,13 +29,20 @@
               'has-submenu': (children && children.length > 0),
             }"
             @mouseenter="open(key)"
-            @focusin="open(key)"
+            @focusin="contentTypeAlias !== 'contentGroup' && open(key)"
             @mouseleave="close(key)"
-            @focusout="close(key)"
+            @focusout="contentTypeAlias !== 'contentGroup' && close(key)"
           >
             <a
+              v-if="contentTypeAlias === 'contentGroup'"
+              :href="'#'"
+              @click.prevent="toggleOpen(key)"
+            >{{ title }}</a>
+
+            <a
+              v-else
               :href="href || '#'"
-              @click.prevent="toggleHamburgerExpanded(navigate)"
+              @click.prevent="closeHamburger(navigate)"
             >{{ title }}</a>
 
             <template v-if="children?.length">
@@ -61,7 +70,7 @@
                   >
                     <a
                       :href="childItem.href || '#'"
-                      @click.prevent="toggleHamburgerExpanded(navigate)"
+                      @click.prevent="closeHamburger(navigate)"
                     > {{ childItem.title }}</a>
                   </li>
                 </router-link>
@@ -147,14 +156,17 @@ export default {
       children: x.children.filter((c) => c.showInMenu),
     })))
 
-    function toggleHamburgerExpanded(navigate) {
+    function toggleHamburgerExpanded() {
       const newVal = !hamburgerExpanded.value
       if (newVal) {
         searchExpanded.value = false
       }
       hamburgerExpanded.value = newVal
+    }
 
-      if (typeof navigate === 'function') {
+    function closeHamburger(navigate) {
+      hamburgerExpanded.value = false
+      if (navigate) {
         navigate()
       }
     }
@@ -226,6 +238,7 @@ export default {
       ulEl,
       hamburgerExpanded,
       toggleHamburgerExpanded,
+      closeHamburger,
       toggleSearchExpanded,
       searchBar,
       isOpen(i) {

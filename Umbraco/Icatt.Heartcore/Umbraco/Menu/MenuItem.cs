@@ -5,15 +5,16 @@ namespace Icatt.Heartcore.Umbraco.Menu
 {
     public class MenuItem
     {
-        public MenuItem(Guid id, bool showInMenu, string href, string title, IReadOnlyList<MenuItem> children, string createDate, string updateDate)
+        public MenuItem(Guid id, bool showInMenu, string href, string title, IReadOnlyList<MenuItem> children, string createDate, string updateDate, string contentTypeAlias)
         {
             Id = id;
             ShowInMenu = showInMenu;
             Href = href ?? throw new ArgumentNullException(nameof(href));
             Title = title ?? throw new ArgumentNullException(nameof(title));
-            Children = children ?? throw new ArgumentNullException(nameof(children));
+            Children = children ?? Array.Empty<MenuItem>();
             CreateDate = createDate;
             UpdateDate = updateDate;
+            ContentTypeAlias = contentTypeAlias;
         }
 
         public Guid Id { get; }
@@ -23,5 +24,6 @@ namespace Icatt.Heartcore.Umbraco.Menu
         public IReadOnlyList<MenuItem> Children { get; }
         public string CreateDate { get; }
         public string UpdateDate { get; }
+        public string ContentTypeAlias { get; }
     }
 }

@@ -129,7 +129,7 @@ export default {
 
 section {
   position: relative;
-  min-height: 20rem;
+  min-height: 18rem;
   display: flex;
   justify-content: flex-end;
   padding-block: var(--space-medium);
@@ -161,8 +161,6 @@ section {
     }
 
     font-size: 0.875rem;
-
-    min-inline-size: min(28rem, 100%);
     display: grid;
 
     ul {
@@ -177,6 +175,7 @@ section {
 
       li {
         position: relative;
+        max-width: 22rem;
         padding-block: var(--space-smaller);
         padding-inline: var(--space-medium);
         border-radius: 0.75rem;
@@ -188,10 +187,9 @@ section {
         }
 
         &.header-highlight {
-          max-width: 22rem;
           padding-block: var(--space-small);
           background-color: rgba(255, 255, 255, 0.9);
-          margin-block-end: auto;
+          margin-block-end: 0;
         }
 
         &.header-info::before {
