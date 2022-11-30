@@ -83,19 +83,7 @@ namespace DHV.Umbraco.Features.Renderer
                 }
             }
 
-            var list = (IList<IAsset>)cacheEntry ?? Array.Empty<IAsset>();
-            var iconName = _portalConfig.TryGetPortal(out var portal) ? portal.Logo ?? portal.Theme : "favicon";
-
-            return list.Append(new Link
-            {
-                Rel = "icon",
-                Href = "/" + iconName + ".svg",
-                Type = "image/svg+xml"
-            }).Append(new Link
-            {
-                Rel = "shortcut icon",
-                Href = "/" + iconName + ".ico"
-            }).ToList();
+            return (IReadOnlyCollection<IAsset>)cacheEntry ?? Array.Empty<IAsset>();
         }
     }
 
