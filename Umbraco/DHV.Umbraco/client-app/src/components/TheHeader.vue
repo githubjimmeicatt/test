@@ -29,14 +29,14 @@
               'has-submenu': (children && children.length > 0),
             }"
             @mouseenter="open(key)"
-            @focusin="open(key)"
+            @focusin="contentTypeAlias !== 'contentGroup' && open(key)"
             @mouseleave="close(key)"
-            @focusout="close(key)"
+            @focusout="contentTypeAlias !== 'contentGroup' && close(key)"
           >
             <a
               v-if="contentTypeAlias === 'contentGroup'"
               :href="'#'"
-              @click="toggleOpen(key)"
+              @click.prevent="toggleOpen(key)"
             >{{ title }}</a>
 
             <a
