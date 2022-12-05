@@ -86,7 +86,7 @@ figure {
    }
 }
 .profielfoto {
-  max-width: 10rem;
+  width: min(100%, 25rem);
 }
 
 ul {
