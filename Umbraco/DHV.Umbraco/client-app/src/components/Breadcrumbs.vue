@@ -4,12 +4,12 @@
     :class="{ isMobile }"
   >
     <li
-      v-for="({ href, title }, i) in items"
+      v-for="({ href, title, contentTypeAlias }, i) in items"
       :key="i"
       :class="{ 'gt-after': href && !isMobile, 'gt-before': href && isMobile }"
     >
       <router-link
-        v-if="href"
+        v-if="href && contentTypeAlias !== 'contentGroup'"
         class="link"
         :to="href"
       >
