@@ -224,8 +224,6 @@ h1:first-child, h2:first-child, section > h2  {
     height: unset;
     object-fit: contain;
     display: block;
-    background-color: #F7F7F7;
-    padding: 1rem;
     margin: 2rem 0;
     max-height: 25rem;
   }
