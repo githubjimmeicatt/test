@@ -5,16 +5,25 @@ import { useResizeObserver, debouncedWatch, type MaybeComputedElementRef } from 
 
 const crop = true
 
+type HasUrl = { url: string } | { src: string } | { _url: string }
+
 type UmbracoFile = {
   focalPointUrlTemplate: string;
 }
 
 // backwards compatible
-type UmbracoImage = (UmbracoFile & { url: string }) | {
+type UmbracoImage = (HasUrl & UmbracoFile) | (HasUrl & {
   umbracoFile: UmbracoFile
-} & { _url: string }
+})
 
 type MaybeFunc<T> = T | (() => T)
+
+function resolveUrl(val?: UmbracoImage): string {
+  if (!val) return ''
+  if ('url' in val) return val.url
+  if ('_url' in val) return val._url
+  return val.src
+}
 
 // eslint-disable-next-line import/prefer-default-export
 export function useUmbracoImage(
@@ -33,10 +42,7 @@ export function useUmbracoImage(
   let initialized = false
   let clearedInitialWatch = false
 
-  const originalUrl = computed(() => {
-    const val = umbracoImage.value
-    return val && 'url' in val ? val.url : val?._url
-  })
+  const originalUrl = computed(() => resolveUrl(umbracoImage.value))
 
   if (!crop) {
     // crop is disabled manually, probably because the Umbraco CDN is broken again
