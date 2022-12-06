@@ -88,10 +88,9 @@ export default {
 <style lang="scss">
 [data-embed-url], .embed, .Embed {
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: calc(.5625 * var(--max-text-width));
   margin-top: auto;
   margin-bottom: var(--space-medium);
-  max-width: unset !important;
 
   > iframe {
     position: absolute;
