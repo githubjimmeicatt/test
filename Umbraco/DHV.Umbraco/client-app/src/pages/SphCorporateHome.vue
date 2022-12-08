@@ -40,7 +40,6 @@
 
   <FormElement
     class="container"
-    v-if="content.formulier"
     v-bind="content.formulier"
   />
 
