@@ -47,7 +47,7 @@ export default {
     },
     form: {
       type: Object,
-      default: () => ({}),
+      default: null,
     },
   },
 }
