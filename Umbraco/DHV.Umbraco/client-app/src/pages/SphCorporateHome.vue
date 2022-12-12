@@ -72,7 +72,7 @@ export default {
       const ordered = content.value.dekkingsgraad.data.map((x) => ({
         ...x,
         date: parseUmbracoDate(x.date),
-      })).sort((a, b) => a.date - b.date)
+      })).sort((a, b) => b.date - a.date)
       const first = ordered[0]?.actueel
       return first && parseAndFormatPercentage(first)
     })
