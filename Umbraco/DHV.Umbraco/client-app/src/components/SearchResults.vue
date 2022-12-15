@@ -62,11 +62,13 @@ export default {
     const searchResults = computed(() => {
       const items = response.value?.content?.items
       if (!Array.isArray(items)) return []
-      return items.map((x) => ({
-        ...x,
-        _url: x.url,
-        ...x.properties,
-      }))
+      return items
+        .filter(({ contentTypeAlias }) => contentTypeAlias !== 'contentGroup')
+        .map((x) => ({
+          ...x,
+          _url: x.url,
+          ...x.properties,
+        }))
     })
 
     watch(() => props.searchQuery, async (val) => {
