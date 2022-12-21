@@ -82,13 +82,13 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Controllers
             {
                 //Goto login page
                 var statusMessage = response.Status.ToString();
-                return new RedirectResult($"/login?statuscode={HttpUtility.UrlEncode(statusMessage)}");              
+                return new RedirectResult($"/");
             }
 
 
             if (response.Status != Manager.Authentication.Contract.StatusCode.Success)
             {
-                return new RedirectResult($"/login");               
+                return new RedirectResult($"/");
             }
             else
             {
