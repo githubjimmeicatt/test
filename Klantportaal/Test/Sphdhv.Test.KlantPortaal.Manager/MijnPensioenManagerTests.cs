@@ -12,6 +12,7 @@ using Moq;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Interface;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Contract;
 using System.Threading.Tasks;
+using Sphdhv.KlantPortaal.Engine.Pensioen.Contract;
 
 namespace Sphdhv.Test.KlantPortaal.Manager
 {
@@ -72,9 +73,9 @@ namespace Sphdhv.Test.KlantPortaal.Manager
             Assert.AreEqual(engineProfiel.Bsn, managerProfiel.Bsn);
             Assert.AreEqual(engineProfiel.Nummer, managerProfiel.Nummer);
             Assert.AreEqual(engineProfiel.AchternaamVolledig, managerProfiel.AchternaamVolledig);
-            Assert.AreEqual(engineProfiel.Adressen, managerProfiel.Adressen);
+            Assert.AreEqual<object>(engineProfiel.Adressen, managerProfiel.Adressen);
             Assert.AreEqual(engineProfiel.Afdeling, managerProfiel.Afdeling);
-            Assert.AreEqual(engineProfiel.Bereikbaarheden, managerProfiel.Bereikbaarheden);
+            Assert.AreEqual<object>(engineProfiel.Bereikbaarheden, managerProfiel.Bereikbaarheden);
             Assert.AreEqual(engineProfiel.Burgerlijkestaat, managerProfiel.Burgerlijkestaat);
             Assert.AreEqual(engineProfiel.CrmId, managerProfiel.CrmId);
             Assert.AreEqual(engineProfiel.DatumGeboorte, managerProfiel.DatumGeboorte);
@@ -83,7 +84,7 @@ namespace Sphdhv.Test.KlantPortaal.Manager
             Assert.AreEqual(engineProfiel.Fonds, managerProfiel.Fonds);
             Assert.AreEqual(engineProfiel.Geboortenaam, managerProfiel.Geboortenaam);
             Assert.AreEqual(engineProfiel.Geslacht, managerProfiel.Geslacht);
-            Assert.AreEqual(engineProfiel.HuidigePartner, managerProfiel.HuidigePartner);
+            Assert.AreEqual<object>(engineProfiel.HuidigePartner, managerProfiel.HuidigePartner);
             Assert.AreEqual(engineProfiel.Id, managerProfiel.Id);
             Assert.AreEqual(engineProfiel.IdentificatieVerzekerde, managerProfiel.IdentificatieVerzekerde);
             Assert.AreEqual(engineProfiel.IsActief, managerProfiel.IsActief);
@@ -98,8 +99,8 @@ namespace Sphdhv.Test.KlantPortaal.Manager
         private void AssertAreEqual(EnginePolis enginePolis, ManagerPolis managerPolis)
         {
             Assert.AreEqual(enginePolis.DossierId, managerPolis.DossierId);
-            Assert.AreEqual(enginePolis.ArbeidsgegevensVariabel, managerPolis.ArbeidsgegevensVariabel);
-            Assert.AreEqual(enginePolis.ArbeidsgegevensVast, managerPolis.ArbeidsgegevensVast);
+            Assert.AreEqual<object>(enginePolis.ArbeidsgegevensVariabel, managerPolis.ArbeidsgegevensVariabel);
+            Assert.AreEqual<object>(enginePolis.ArbeidsgegevensVast, managerPolis.ArbeidsgegevensVast);
             Assert.AreEqual(enginePolis.BedragFranchise, managerPolis.BedragFranchise);
             Assert.AreEqual(enginePolis.CodeBasisReglement, managerPolis.CodeBasisReglement);
             Assert.AreEqual(enginePolis.CodeDeelnameAop, managerPolis.CodeDeelnameAop);
