@@ -12,6 +12,9 @@ Install these certificates:
 - \\pelican\Certificates\ICATT Root Certificate Authority (install in the trusted root certification authority store)
 - \\nas\devops\Certificates\SPHDHV\Aangeleverd door Piramide\DHVapi-a_Authentication (add full controll permissions to logged in user)
 
+nb. test digid accounts zijn te vinden in 1password, maar deze zijn regelmatig niet beschikbaar en daardoor niet meer gekoppeld aan dossiers in de pensioenwebservice.
+het resultaat is een 'UnknownDossier' status. Je wordt dan weer terug geleid naar de login pagin. Er wordt geen melding getoond. 
+
 2.	Software dependencies
 Add nuget package source http://nuget.icatt.local/nuget
 
