@@ -6,7 +6,6 @@ using Sphdhv.DeelnemerPortalApi.Contract;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using Sphdhv.KlantPortaal.Access.Correspondentie.Interface;
 using System.Data.Entity;
-using Sphdhv.KlantPortaal.Data.Pensioen.DbContext;
 using System.Linq;
 using Sphdhv.Test.KlantPortaal.Host;
 
@@ -18,32 +17,6 @@ namespace Sphdhv.Test.KlantPortaal.Access.Pensioen
 
 
         private static string LocalTestDbName { get { return typeof(PensioenAccessServiceTest_IT).FullName; } }
-
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
-        {
-
-            //Delete the database here to make sure it is recreated
-            if (Database.Exists(LocalTestDbName))
-            {
-                Database.Delete(LocalTestDbName);
-            }
-
-            //Create a localdb
-            using (var dbc = new PensioenDbContext(LocalTestDbName, PensioenDbContext.DatabaseInitializationMode.CreateIfNotExists))
-            {
-                var dossier = dbc.Dossiers.FirstOrDefault();
-                dbc.Dossiers.Add(new Klantportaal.Data.Pensioen.Entities.Dossier {
-                    Blocked = true,
-                    Nummer = "1234567",
-                    CreatedAtUtc = DateTime.UtcNow,
-                    ModifiedAtUtc = DateTime.UtcNow
-                    //State = Icatt.Data.Entity.
-                });
-                dbc.SaveChanges();
-            }
-        }
 
 
         [TestMethod]
