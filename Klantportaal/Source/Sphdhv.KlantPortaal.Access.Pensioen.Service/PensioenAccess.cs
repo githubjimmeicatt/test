@@ -10,7 +10,6 @@ using ArbeidVast = Sphdhv.KlantPortaal.Access.Pensioen.Contract.ArbeidVast;
 using Huidigepartner = Sphdhv.KlantPortaal.Access.Pensioen.Contract.Huidigepartner;
 using Pensioenrecht = Sphdhv.KlantPortaal.Access.Pensioen.Contract.Pensioenrecht;
 using Polis = Sphdhv.KlantPortaal.Access.Pensioen.Contract.Polis;
-using Sphdhv.KlantPortaal.Data.Pensioen.DbContext;
 
 namespace Sphdhv.KlantPortaal.Access.Pensioen.Service
 {
@@ -46,7 +45,6 @@ namespace Sphdhv.KlantPortaal.Access.Pensioen.Service
 
             //todo map polis en verzkerde to result
             var result = new ActueelPensioen();
-            result.IsBlocked = IsBlocked(dossierNummer);
             result.Polissen = new List<Polis>();
 
             if (polissen != null && polissen.Count > 0)
@@ -354,15 +352,6 @@ namespace Sphdhv.KlantPortaal.Access.Pensioen.Service
             var verzekerde = await proxy.Verzekerde(Context.DossierNummer);
 
             return verzekerde != null;
-        }
-
-        private bool IsBlocked(string dossierNummer)
-        {
-            using (var context = new PensioenDbContext(_connectionStringOrName))
-            {
-                var dossier = context.Dossiers.FirstOrDefault(d => d.Nummer == dossierNummer);
-                return (null != dossier) ? dossier.Blocked : false;
-            }
         }
     }
 }
