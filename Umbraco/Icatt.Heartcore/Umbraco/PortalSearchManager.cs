@@ -50,6 +50,7 @@ namespace Icatt.Heartcore.Umbraco
 
             var searchResultString = await _httpClient.GetStringAsync(url, cancellationToken: token);
 
+            // HACK!! Umbraco geeft als response twee regels tekst mee, waarvan de tweede valide json bevat en de eerste niet...
             var lastLine = searchResultString?.Split('\n')?.LastOrDefault();
 
             if (string.IsNullOrWhiteSpace(lastLine))
