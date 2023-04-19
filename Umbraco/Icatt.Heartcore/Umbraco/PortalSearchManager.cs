@@ -98,7 +98,9 @@ namespace Icatt.Heartcore.Umbraco
 
         private static IEnumerable<Guid> GetIds(JsonElement element)
         {
-            if (element.ValueKind != JsonValueKind.Object || !element.TryGetProperty("values", out var valuesProp) || valuesProp.ValueKind != JsonValueKind.Object || !valuesProp.TryGetProperty("__Key", out var keyProp) || keyProp.ValueKind != JsonValueKind.Array)
+            if (element.ValueKind != JsonValueKind.Object || 
+                !element.TryGetProperty("values", out var valuesProp) || valuesProp.ValueKind != JsonValueKind.Object || 
+                !valuesProp.TryGetProperty("__Key", out var keyProp) || keyProp.ValueKind != JsonValueKind.Array)
             {
                 yield break;
             }
