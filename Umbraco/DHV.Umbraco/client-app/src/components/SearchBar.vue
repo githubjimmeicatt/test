@@ -12,6 +12,7 @@
         type="search"
         placeholder="Waar ben je naar op zoek?"
         id="searchLabel"
+        minlength="4"
       >
 
       <button
