@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Icatt.Heartcore.Config;
@@ -23,6 +22,8 @@ namespace Icatt.Heartcore.Umbraco
 
     public class PortalSearchManager : IPortalSearchManager
     {
+        const string JsonHijackingPreventionPrefix = ")]}',\n";
+
         private readonly IContentDeliveryService _contentDelivery;
 
         private readonly IWebHostEnvironment _env;
@@ -50,15 +51,20 @@ namespace Icatt.Heartcore.Umbraco
 
             var searchResultString = await _httpClient.GetStringAsync(url, cancellationToken: token);
 
-            // HACK!! Umbraco geeft als response twee regels tekst mee, waarvan de tweede valide json bevat en de eerste niet...
-            var lastLine = searchResultString?.Split('\n')?.LastOrDefault();
+            // Umbraco geeft als response twee regels tekst mee, waarvan de tweede valide json bevat en de eerste niet.
+            // Dit was blijkbaar ooit gangbaar in Angular, wat ze gebruiken:
+            // https://docs.angularjs.org/guide/security#json-hijacking-protection
+            if (searchResultString != null & searchResultString.StartsWith(JsonHijackingPreventionPrefix))
+            {
+                searchResultString = searchResultString.Substring(JsonHijackingPreventionPrefix.Length);
+            }
 
-            if (string.IsNullOrWhiteSpace(lastLine))
+            if (string.IsNullOrWhiteSpace(searchResultString))
             {
                 return new PagedContent();
             }
 
-            using var searchResultJson = JsonDocument.Parse(lastLine);
+            using var searchResultJson = JsonDocument.Parse(searchResultString);
 
             if (!searchResultJson.RootElement.TryGetProperty("totalRecords", out var totalRecordsProp) || !totalRecordsProp.TryGetInt32(out var totalRecords) || totalRecords < 1 ||
                 !searchResultJson.RootElement.TryGetProperty("results", out var resultsProp) || resultsProp.ValueKind != JsonValueKind.Array
@@ -74,7 +80,7 @@ namespace Icatt.Heartcore.Umbraco
                 return new PagedContent();
             }
 
-            var tasks = ids.Select(x=> _contentDelivery.Content.GetById(x));
+            var tasks = ids.Select(x => _contentDelivery.Content.GetById(x));
             var contentItems = await Task.WhenAll(tasks);
 
             var result = new PagedContent
@@ -99,8 +105,8 @@ namespace Icatt.Heartcore.Umbraco
 
         private static IEnumerable<Guid> GetIds(JsonElement element)
         {
-            if (element.ValueKind != JsonValueKind.Object || 
-                !element.TryGetProperty("values", out var valuesProp) || valuesProp.ValueKind != JsonValueKind.Object || 
+            if (element.ValueKind != JsonValueKind.Object ||
+                !element.TryGetProperty("values", out var valuesProp) || valuesProp.ValueKind != JsonValueKind.Object ||
                 !valuesProp.TryGetProperty("__Key", out var keyProp) || keyProp.ValueKind != JsonValueKind.Array)
             {
                 yield break;
