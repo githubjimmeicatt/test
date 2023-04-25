@@ -98,8 +98,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IContentManagementService>((serviceProvider) => new ContentManagementService(heartcoreConfig.UmbProjectAlias, heartcoreConfig.ApiKey));
             services.AddScoped<IHeartcoreMediaManager, HeartcoreMediaManager>();
             services.AddScoped<ILikesCommentsManager, LikesCommentsManager>();
-            services.AddScoped<IPortalSearchManager, PortalSearchManager>();
             services.AddScoped<IUmbracoWebhookAuthorizer, UmbracoWebhookAuthorizer>();
+
+            services.AddHttpClient<IPortalSearchManager, PortalSearchManager>(nameof(PortalSearchManager), (c) =>
+            {
+                SetupHeaders(c, heartcoreConfig);
+                c.BaseAddress = new Uri(heartcoreConfig.BackofficeUrl);
+            });
 
             services.AddHttpClient<IMenuManager, MenuManager>(nameof(MenuManager), SetupGraphQl).LogAndAbsorbTimeout();
             services.AddHttpClient<IFooterManager, FooterManager>(nameof(FooterManager), SetupGraphQl).LogAndAbsorbTimeout();
@@ -110,12 +115,17 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        private static void SetupGraphQl(IServiceProvider s, HttpClient c)
+        private static void SetupHeaders(HttpClient c, UmbracoHeartcoreConfig heartcoreConfig)
         {
-            var heartcoreConfig = s.GetRequiredService<UmbracoHeartcoreConfig>();
             c.DefaultRequestHeaders.Add("Accept-Language", "en-US");
             c.DefaultRequestHeaders.Add("Umb-Project-Alias", heartcoreConfig.UmbProjectAlias);
             c.DefaultRequestHeaders.Add("Api-Key", heartcoreConfig.ApiKey);
+        }
+
+        private static void SetupGraphQl(IServiceProvider s, HttpClient c)
+        {
+            var heartcoreConfig = s.GetRequiredService<UmbracoHeartcoreConfig>();
+            SetupHeaders(c, heartcoreConfig);
             c.BaseAddress = new Uri("https://graphql.umbraco.io");
         }
     }
