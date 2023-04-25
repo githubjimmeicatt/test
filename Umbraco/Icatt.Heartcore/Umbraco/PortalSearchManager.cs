@@ -47,7 +47,7 @@ namespace Icatt.Heartcore.Umbraco
                 { "query", searchQuery.Term },
                 { "searcherName", "ExternalIndex" },
             };
-            var url = $"/umbraco/backoffice/UmbracoApi/ExamineManagement/GetSearchResults?{query.ToQueryString()}";
+            var url = $"/umbraco/backoffice/UmbracoApi/ExamineManagement/GetSearchResults{query.ToQueryString()}";
 
             var searchResultString = await _httpClient.GetStringAsync(url, cancellationToken: token);
 
