@@ -87,7 +87,7 @@ namespace Icatt.Heartcore.Umbraco
             {
                 Content = new ContentCollection<Content>
                 {
-                    Items = contentItems,
+                    Items = contentItems.Where(x=> x != null),
                 },
                 TotalItems = totalRecords,
                 PageSize = searchQuery.PageSize,
@@ -107,6 +107,7 @@ namespace Icatt.Heartcore.Umbraco
         {
             if (element.ValueKind != JsonValueKind.Object ||
                 !element.TryGetProperty("values", out var valuesProp) || valuesProp.ValueKind != JsonValueKind.Object ||
+                !valuesProp.TryGetProperty("__IndexType", out var indexTypeProp) || indexTypeProp.ValueKind != JsonValueKind.Array || !indexTypeProp.EnumerateArray().Any(x=> x.ValueEquals("content")) ||
                 !valuesProp.TryGetProperty("__Key", out var keyProp) || keyProp.ValueKind != JsonValueKind.Array)
             {
                 yield break;
