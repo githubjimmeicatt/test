@@ -22,7 +22,7 @@
             :alt="card.text?.name"
           >
 
-          <span v-if="card.text?.name">{{ card.text.name }} &gt;</span>
+          <span v-if="card.text?.name">{{ card.text.name }}</span>
         </the-link>
       </li>
     </ul>
@@ -56,7 +56,7 @@ export default {
 
 ul {
   display: grid;
-  row-gap: var(--space-smaller);
+  gap: var(--space-small);
 
   @include reset-list;
 
@@ -85,12 +85,11 @@ li {
 
   a {
     display: flex;
-    flex-direction: column;
     align-items: center;
     height: 100%;
     padding-inline: var(--space-smaller);
-    padding-block-start: var(--space-medium);
-    padding-block-end: var(--space-small);
+    padding-block: var(--space-small);
+    gap: var(--space-smaller);
 
     color: white;
     font-weight: 600;
@@ -104,12 +103,12 @@ li {
     }
 
     img {
-      margin: auto;
-      min-width: 2rem;
+      inline-size: 1rem;
     }
 
-    span {
-      margin-block-start: 1rem;
+    &::after {
+      content: '>';
+      margin-inline-start: auto;
     }
   }
 }
