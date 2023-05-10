@@ -117,7 +117,7 @@ html {
   --space-smallest: 0.25rem;
   --space-smaller: 0.5rem;
   --space-small: 1rem;
-  --space-medium: 2.5rem;
+  --space-medium: 2rem;
   --space-large: 4rem;
   --space-larger: 8rem;
   --space-largest: 11.5rem;

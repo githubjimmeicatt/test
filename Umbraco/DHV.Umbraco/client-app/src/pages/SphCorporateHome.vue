@@ -28,14 +28,14 @@
     v-bind="content.cards"
   />
 
-  <TextNextToImage
-    class="container"
-    v-bind="content.textNextToImage"
-  />
-
   <LatestNews
     class="container"
     v-bind="content.newsPicker"
+  />
+
+  <TextNextToImage
+    class="container"
+    v-bind="content.textNextToImage"
   />
 
   <FormElement
