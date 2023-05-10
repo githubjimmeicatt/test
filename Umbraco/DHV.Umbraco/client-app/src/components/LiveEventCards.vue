@@ -56,7 +56,8 @@ export default {
 
 ul {
   display: grid;
-  gap: var(--space-small);
+  column-gap: var(--space-medium);
+  row-gap: var(--space-small);
 
   @include reset-list;
 
@@ -87,7 +88,7 @@ li {
     display: flex;
     align-items: center;
     height: 100%;
-    padding-inline: var(--space-smaller);
+    padding-inline: var(--space-small);
     padding-block: var(--space-small);
     gap: var(--space-smaller);
 
