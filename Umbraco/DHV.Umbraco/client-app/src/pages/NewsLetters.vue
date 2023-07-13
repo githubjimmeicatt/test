@@ -11,10 +11,6 @@
     <article>
       <h1>{{ content.name }}</h1>
 
-      <p v-if="date" class="article-date">
-        {{ date }}
-      </p>
-
       <rich-text :body="content.body" />
 
       <a href="www.google.nl" class="cta"> Schrijf je in voor de nieuwsbrief</a>
@@ -166,7 +162,7 @@ export default {
       flex-wrap: wrap;
 
 }
-  .newsletters div h2, .newsletters div p{
+  .newsletters div h2, .newsletters div p {
 
     margin:0px;
   }

@@ -16,52 +16,19 @@
       </p>
 
       <rich-text :body="content.body" />
-
-      <a href="www.google.nl" class="cta"> Schrijf je in voor de nieuwsbrief</a>
     </article>
   </section>
 
-  <section class="newsletters">
-    <!-- article ipv div  -->
-    <article class="newslettercards">
-       <div>
-        <h2>Nieuwsbrief 2 - Maart 2023 </h2>
-        <p class="date">01-03-2023</p> 
-      </div>
+  <section class = "articletext">
 
-      <p>Een kleine intro over de nieuwsbrief van deze maand. Deze tekst maak ik wat langer om te kijken wat er gebeurt met de paragraaf. (werkt naar behoren)</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
+<p>Dekkingsgraad eind februari gestegen naar 131,8%<br>
+Sinds eind januari 2023 zagen we de actuele dekkingsgraad fors stijgen. Van 126,5% naar 131,8% eind februari. Deze stijging is voor een klein deel te danken aan de toename van de waarde van onze beleggingen, 
+maar vooral aan de stijging van de rente. We voorzien echter dat de dekkingsgraad eind maart weer gedaald zal zijn. De lange termijn rente fluctueert nogal en ook op de beurzen zien we deze maand een dalende lijn. 
+Per 1 april 2023 daalt de dekkingsgraad nog eens met ongeveer 8% vanwege de indexatie van de pensioenaanspraken en pensioenen per 1 april 2023.</p>
 
-    <article class="newslettercards">
-       <div>
-         <h2>Nieuwsbrief 1 - februari 2023 </h2>
-         <p class="date">01-02-2023</p>
-        </div>
-         <p>Een kleine intro over de nieuwsbrief van deze maand.</p>
-         <a href="www.google.nl"> Lees meer </a>
-    </article>
+<!-- Hier moet een afbeelding komen maar ik weet niet waar ik dat in moet zetten!-->
+</section>
 
-    <article class="newslettercards">
-      <div>
-        <h2>Nieuwsbrief 0 - januari 2023 </h2>
-        <p class="date">01-01-2023</p>
-      </div>
-
-      <p>Een kleine intro over de nieuwsbrief van deze maand.</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
-
-    <article class="newslettercards">
-      <div>
-      <h2>Nieuwsbrief 12 - december 2022 </h2>
-      <p class="date">01-12-2022</p>
-      </div>
-      <p>Een kleine intro over de nieuwsbrief van deze maand.</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
-
-  </section>
 
   <Spinner v-if="isLoading" class="spinner" />
 
@@ -140,10 +107,7 @@ export default {
 
 
 
-.newsletters {
-  background-color: var(--color-background-2);
-  display: flex;
-  flex-direction: column;
+.articletext {
   padding: var(--space-medium) var(--dynamic-spacing-large);
 
 }
