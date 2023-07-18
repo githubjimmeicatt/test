@@ -16,9 +16,8 @@
     </article>
   </section>
 
-  <section class="newsletters">
-    <!-- article ipv div  -->
-    <article class="newslettercards">
+  <section class="newsletter">
+    <article class ="dekkingsgraad">
        <div>
         <h2>Dekkingsgraad</h2>
       </div>
@@ -28,19 +27,20 @@
          maar vooral aan de stijging van de rente. We voorzien echter dat de dekkingsgraad eind maart weer gedaald zal zijn. De lange termijn rente fluctueert nogal en ook op de beurzen zien we deze maand een dalende lijn. 
          Per 1 april 2023 daalt de dekkingsgraad nog eens met ongeveer 8% vanwege de indexatie van de pensioenaanspraken en pensioenen per 1 april 2023.</p>
       <a href="www.google.nl"> Lees meer </a>
-      <!-- Hier moet een afbeelding komen maar ik weet niet waar ik dat in moet zetten!-->
+      <img class= "dekkingsgraadtabel" src= "https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/nbmnubc4/dekkingsgraad.jpg" />
 
     </article>
 
-    <article class="newslettercards">
-        <!-- Hier moet een afbeelding komen maar ik weet niet waar ik dat in moet zetten!-->
-
+    <article class="newslettercard">
+        <img src= "https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/vdhnpzk3/winkelkarretje.jpg" />
+    <div class = "newslettercontent">
        <div>
         <h2>Nieuwsbrief artikel 2</h2>
       </div>
 
       <p>Dit is een samenvatting van dit nieuwsbrief artikel. Deze wordt op artikelniveau geschreven, maar moet 1 niveau hoger zichtbaar worden.</p>
       <a href="www.google.nl"> Lees meer </a>
+    </div>
     </article>
 
 
@@ -123,7 +123,7 @@ export default {
 
 
 
-.newsletters {
+.newsletter {
   background-color: var(--color-background-2);
   display: flex;
   flex-direction: column;
@@ -131,7 +131,7 @@ export default {
 
 }
 
-.newslettercards {
+.dekkingsgraad {
 
   background-color: var(--card-background-color, white);
   padding: 1.5rem;
@@ -140,15 +140,42 @@ export default {
   margin-bottom: var(--space-small);
   margin-bottom: var(--space-small);
   border-radius: 0px 0px 12px 12px; 
+  border-left-style: solid;
+  border-color: var(--color-sph-accent-1);
+  border-left-width: 6px;
 
 }
 
-.newsletters div {
-  display: flex;     justify-content: space-between;
-    align-items: center;
+.newslettercard {
+
+  background-color: var(--card-background-color, white);
+  padding: 1.5rem;
+  min-width: 420px;
+  max-width: var(--max-text-width);
+  margin-bottom: var(--space-small);
+  margin-bottom: var(--space-small);
+  border-radius: 0px 0px 12px 12px; 
+  display: flex;
+  border-left-style: solid;
+  border-color: var(--color-sph-accent-1);
+  border-left-width: 6px;
+
+}
+
+
+
+.newsletter div {
+  display: flex;     
       flex-wrap: wrap;
 
 }
+
+.newslettercontent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
   .newsletters div h2 {
 
     margin:0px;
@@ -156,6 +183,10 @@ export default {
 
   div h2 {
     
+  }
+
+  .newslettercard img {
+    display: inline;
   }
 </style>
 
