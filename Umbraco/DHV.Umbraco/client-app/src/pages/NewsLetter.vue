@@ -1,8 +1,8 @@
 <template>
   <section class="container topimage">
     <lazy-img
-      v-if="content.image"
-      :src="content.image"
+      v-if="content.headerImage"
+      :src="content.headerImage.src"
     />
   </section>
   <breadcrumbs class="breadcrumbs" />
@@ -17,32 +17,33 @@
   </section>
 
   <section class="newsletter">
-    <article class ="dekkingsgraad">
-       <div>
+    <article class="dekkingsgraad">
+      <div>
         <h2>Dekkingsgraad</h2>
       </div>
 
       <h4>Dekkingsgraad eind februari gestegen naar 131,8%</h4>
-      <p>Sinds eind januari 2023 zagen we de actuele dekkingsgraad fors stijgen. Van 126,5% naar 131,8% eind februari. Deze stijging is voor een klein deel te danken aan de toename van de waarde van onze beleggingen, 
-         maar vooral aan de stijging van de rente. We voorzien echter dat de dekkingsgraad eind maart weer gedaald zal zijn. De lange termijn rente fluctueert nogal en ook op de beurzen zien we deze maand een dalende lijn. 
-         Per 1 april 2023 daalt de dekkingsgraad nog eens met ongeveer 8% vanwege de indexatie van de pensioenaanspraken en pensioenen per 1 april 2023.</p>
+      <p>Sinds eind januari 2023 zagen we de actuele dekkingsgraad fors stijgen. Van 126,5% naar 131,8% eind februari. Deze stijging is voor een klein deel te danken aan de toename van de waarde van onze beleggingen,
+        maar vooral aan de stijging van de rente. We voorzien echter dat de dekkingsgraad eind maart weer gedaald zal zijn. De lange termijn rente fluctueert nogal en ook op de beurzen zien we deze maand een dalende lijn.
+        Per 1 april 2023 daalt de dekkingsgraad nog eens met ongeveer 8% vanwege de indexatie van de pensioenaanspraken en pensioenen per 1 april 2023.</p>
       <a href="www.google.nl"> Lees meer </a>
-      <img class= "dekkingsgraadtabel" src= "https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/nbmnubc4/dekkingsgraad.jpg" />
+      <img class="dekkingsgraadtabel" src="https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/nbmnubc4/dekkingsgraad.jpg" />
 
     </article>
 
     <article class="newslettercard">
-        <img src= "https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/vdhnpzk3/winkelkarretje.jpg" />
-    <div class = "newslettercontent">
-       <div>
-        <h2>Nieuwsbrief artikel 2</h2>
+
+      <div class="newslettercontent">
+        <div>
+          <h2>Nieuwsbrief artikel 2</h2>
+        </div>
+        <div class="image-and-paragraph">
+          <img class="test-img" src="https://media.umbraco.io/dev-pensioenfonds-haskoningdhv/vdhnpzk3/winkelkarretje.jpg" />
+          <p>Dit is een samenvatting van dit nieuwsbrief artikel. Deze wordt op artikelniveau geschreven, maar moet 1 niveau hoger zichtbaar worden.</p>
+        </div>
+        <a href="www.google.nl"> Lees meer </a>
       </div>
-
-      <p>Dit is een samenvatting van dit nieuwsbrief artikel. Deze wordt op artikelniveau geschreven, maar moet 1 niveau hoger zichtbaar worden.</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </div>
     </article>
-
 
   </section>
 
@@ -102,6 +103,8 @@ export default {
       maxItems: maxItems + 1, // one more so we can exclude the current if necessary
     })
 
+    console.log(content, useNewsCards(parentId))
+
     const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems).map(mapNewsItem))
 
     return {
@@ -119,9 +122,29 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+.topimage {
+  padding-block: 0;
 
+  img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.test-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.iamge-and-paragraph {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
 .newsletter {
   background-color: var(--color-background-2);
@@ -139,7 +162,7 @@ export default {
   max-width: var(--max-text-width);
   margin-bottom: var(--space-small);
   margin-bottom: var(--space-small);
-  border-radius: 0px 0px 12px 12px; 
+  border-radius: 0px 0px 12px 12px;
   border-left-style: solid;
   border-color: var(--color-sph-accent-1);
   border-left-width: 6px;
@@ -154,7 +177,7 @@ export default {
   max-width: var(--max-text-width);
   margin-bottom: var(--space-small);
   margin-bottom: var(--space-small);
-  border-radius: 0px 0px 12px 12px; 
+  border-radius: 0px 0px 12px 12px;
   display: flex;
   border-left-style: solid;
   border-color: var(--color-sph-accent-1);
@@ -162,12 +185,8 @@ export default {
 
 }
 
-
-
 .newsletter div {
-  display: flex;     
-      flex-wrap: wrap;
-
+  display: flex;
 }
 
 .newslettercontent {
@@ -182,11 +201,10 @@ export default {
   }
 
   div h2 {
-    
+
   }
 
   .newslettercard img {
     display: inline;
   }
 </style>
-

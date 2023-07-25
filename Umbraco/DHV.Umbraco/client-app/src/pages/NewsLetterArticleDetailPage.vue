@@ -1,8 +1,8 @@
 <template>
   <section class="container topimage">
     <lazy-img
-      v-if="content.image"
-      :src="content.image"
+      v-if="content.afbeelding"
+      :src="content.afbeelding.src"
     />
   </section>
   <breadcrumbs class="breadcrumbs" />
@@ -19,16 +19,15 @@
     </article>
   </section>
 
-  <section class = "articletext">
+  <section class="articletext">
 
-<p>Dekkingsgraad eind februari gestegen naar 131,8%<br>
-Sinds eind januari 2023 zagen we de actuele dekkingsgraad fors stijgen. Van 126,5% naar 131,8% eind februari. Deze stijging is voor een klein deel te danken aan de toename van de waarde van onze beleggingen, 
-maar vooral aan de stijging van de rente. We voorzien echter dat de dekkingsgraad eind maart weer gedaald zal zijn. De lange termijn rente fluctueert nogal en ook op de beurzen zien we deze maand een dalende lijn. 
-Per 1 april 2023 daalt de dekkingsgraad nog eens met ongeveer 8% vanwege de indexatie van de pensioenaanspraken en pensioenen per 1 april 2023.</p>
+    <p>Dekkingsgraad eind februari gestegen naar 131,8%<br>
+      Sinds eind januari 2023 zagen we de actuele dekkingsgraad fors stijgen. Van 126,5% naar 131,8% eind februari. Deze stijging is voor een klein deel te danken aan de toename van de waarde van onze beleggingen,
+      maar vooral aan de stijging van de rente. We voorzien echter dat de dekkingsgraad eind maart weer gedaald zal zijn. De lange termijn rente fluctueert nogal en ook op de beurzen zien we deze maand een dalende lijn.
+      Per 1 april 2023 daalt de dekkingsgraad nog eens met ongeveer 8% vanwege de indexatie van de pensioenaanspraken en pensioenen per 1 april 2023.</p>
 
-<!-- Hier moet een afbeelding komen maar ik weet niet waar ik dat in moet zetten!-->
-</section>
-
+    <!-- Hier moet een afbeelding komen maar ik weet niet waar ik dat in moet zetten!-->
+  </section>
 
   <Spinner v-if="isLoading" class="spinner" />
 
@@ -105,8 +104,6 @@ export default {
 
 <style>
 
-
-
 .articletext {
   padding: var(--space-medium) var(--dynamic-spacing-large);
 
@@ -120,7 +117,7 @@ export default {
   max-width: var(--max-text-width);
   margin-bottom: var(--space-small);
   margin-bottom: var(--space-small);
-  border-radius: 0px 0px 12px 12px; 
+  border-radius: 0px 0px 12px 12px;
 
 }
 
@@ -136,6 +133,6 @@ export default {
   }
 
   div h2 {
-    
+
   }
 </style>

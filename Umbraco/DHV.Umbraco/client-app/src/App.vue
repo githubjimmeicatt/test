@@ -1,12 +1,14 @@
 <template>
-  <component
-    :is="layout"
-    :theme="theme"
-  >
-    <template #main>
-      <router-view />
-    </template>
-  </component>
+  <suspense>
+    <component
+      :is="layout"
+      :theme="theme"
+    >
+      <template #main>
+        <router-view />
+      </template>
+    </component>
+  </suspense>
 </template>
 
 <script>
