@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { inject, computed } from 'vue'
-import { useRoute } from 'vue-router'
 import { useNewsCards, type NewsCard } from 'icatt-heartcore'
 import Cards from '@/components/Cards.vue'
 import Spinner from '@/assets/spinner.svg'
@@ -49,16 +48,6 @@ function mapNewsItem({
   }
 }
 
-function upOneLevel(path: string) {
-  const upperPath = path.replace(/\/$/, '').split('/')
-
-  if (upperPath.length > 0) {
-    upperPath.splice(upperPath.length - 1)
-    return upperPath.join('/')
-  }
-  return path
-}
-
 const maxItems = 3
 
 export default {
@@ -66,8 +55,8 @@ export default {
     RichText, LazyImg, Cards, Spinner, Breadcrumbs,
   },
   setup() {
-    const route = useRoute()
-    const parentPath = computed(() => upOneLevel(route.path))
+    // const route = useRoute()
+    // const parentPath = computed(() => upOneLevel(route.path))
     const content = inject<any>('content')
     const parentId = computed(() => content.value?.parentId)
     const { currentPage, isLoading } = useNewsCards(parentId, {
@@ -78,7 +67,6 @@ export default {
 
     return {
       content,
-      parentPath,
       isLoading,
       otherNews,
       date: computed(() => {

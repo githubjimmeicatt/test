@@ -1,9 +1,9 @@
 <template>
-  <breadcrumbs class="breadcrumbs" />
+  <section class="breadcrumbsSection">
+    <breadcrumbs class="breadcrumbs" />
+  </section>
 
-  <pre>{{ items }}</pre>
-
-  <section class="container">
+  <section class="container newsContainer">
     <article>
       <h1>{{ content.name }}</h1>
 
@@ -14,47 +14,7 @@
   </section>
 
   <section class="newsletters">
-    <!-- article ipv div  -->
-    <NewsLetterIntro v-bind="content.NewsLetterIntro" />
-
-    <article class="newslettercards">
-      <div>
-        <h2>Nieuwsbrief 2 - Maart 2023 </h2>
-        <p class="date">01-03-2023</p>
-      </div>
-
-      <p>Een kleine intro over de nieuwsbrief van deze maand. Deze tekst maak ik wat langer om te kijken wat er gebeurt met de paragraaf. (werkt naar behoren)</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
-
-    <article class="newslettercards">
-      <div>
-        <h2>Nieuwsbrief 1 - februari 2023 </h2>
-        <p class="date">01-02-2023</p>
-      </div>
-      <p>Een kleine intro over de nieuwsbrief van deze maand.</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
-
-    <article class="newslettercards">
-      <div>
-        <h2>Nieuwsbrief 0 - januari 2023 </h2>
-        <p class="date">01-01-2023</p>
-      </div>
-
-      <p>Een kleine intro over de nieuwsbrief van deze maand.</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
-
-    <article class="newslettercards">
-      <div>
-        <h2>Nieuwsbrief 12 - december 2022 </h2>
-        <p class="date">01-12-2022</p>
-      </div>
-      <p>Een kleine intro over de nieuwsbrief van deze maand.</p>
-      <a href="www.google.nl"> Lees meer </a>
-    </article>
-
+    <news-letter-intro :items="items" />
   </section>
 
   <Spinner v-if="isLoading" class="spinner" />
@@ -70,7 +30,6 @@ import { useNewsCards, type NewsCard, useUmbracoApi } from 'icatt-heartcore'
 import Cards from '@/components/Cards.vue'
 import Spinner from '@/assets/spinner.svg'
 import RichText from '@/components/RichText.vue'
-import LazyImg from '@/components/LazyImg.vue'
 import { formatDate } from '@/helpers/formatDate'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import NewsLetterIntro from '@/components/NewsLetterIntro.vue'
@@ -102,7 +61,7 @@ const maxItems = 3
 
 export default {
   components: {
-    RichText, LazyImg, Cards, Spinner, Breadcrumbs, NewsLetterIntro,
+    RichText, Cards, Spinner, Breadcrumbs, NewsLetterIntro,
   },
 
   async setup() {
@@ -114,19 +73,12 @@ export default {
       maxItems: maxItems + 1, // one more so we can exclude the current if necessary
     })
 
-    /// ////////////////////////////////////////////
     const des = ref({})
-    // loading.value = true
-    // content.value = null
-    // try {
 
     const q = `{
   allNewsletter(
- orderBy: [publishDate_DESC], 
-    first: 15
-    where: { 
-   
-url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/"  }
+  orderBy: [publishDate_DESC], 
+    where: { url_contains: "${route.fullPath}" }
   ) {
     items {
       id
@@ -145,12 +97,11 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/"  }
         }
       }
      children {
-      
        items
       {
-         ... on NewsLetterArticleDetailPage {
-        id
-        url
+          ... on NewsLetterArticleDetailPage {
+          id
+          url
           samenvatting
         }
       }
@@ -167,11 +118,12 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/"  }
 
     const api = useUmbracoApi()
 
+    if (!api) {
+      throw new Error('umbraco api not setup')
+    }
     const json = await api.postGraphQlQuery(q)
 
     const result = json.data?.allNewsletter ?? {}
-
-    const { pageInfo } = result
 
     const items = (result.items ?? []).map((item: any) => {
       const {
@@ -179,62 +131,10 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/"  }
       } = item
       return {
         ...item,
-      // publishDate: parseUmbracoDate(publishDate),
-      // updateDate: parseUmbracoDate(updateDate),
-      // createDate: parseUmbracoDate(createDate),
-      // image: {
-      //   ...image,
-      //   // for backwards compatibility
-      //   umbracoFile: {
-      //     ...image,
-      //   },
-      // },
       }
     })
 
-    const alvastdequeryvoordenieuwsbrief = `{
-  allNewsLetterArticleDetailPage(
- 
-    first: 15
-    where: { 
-   
-url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/nieuwsbrief-1-januari-2023/"  }
-  ) {
-    items {
-      id
-      name
-      url
-  
- artikel
-       
-     
-    }
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-  }
-}`
-
-    //   const umbracoApi = useUmbracoApi()
-    //   if (umbracoApi) {
-    //     const { data: result } = await umbracoApi.url(content._links.descendants)
-    //     // if (result?.redirect?._url) {
-    //     //  window.UMBRACO_INITIAL_STATE = result.redirect
-    //     //  router.push(result.redirect._url)
-    //     //  return
-    //     // }
-    //     des.value = result
-    //   }
-    // } catch (error) {
-    // //  errorCode.value = error
-    // } finally {
-    // //  loading.value = false
-    // }
-
-    /// ////////////////////////////////////////////
+    console.log(items)
 
     const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems).map(mapNewsItem))
 
@@ -243,6 +143,7 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/nieuwsbrief-1-januar
       parentPath,
       isLoading,
       otherNews,
+      items,
       date: computed(() => {
         const { publishDate, _createDate } = content.value ?? {}
         return formatDate(publishDate) || formatDate(_createDate)
@@ -254,7 +155,11 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/nieuwsbrief-1-januar
 
 </script>
 
-<style>
+<style lang="scss">
+
+.breadcrumbsSection {
+  padding-top: 32px;
+}
 
 .newsletters {
   background-color: var(--color-background-2);
@@ -265,7 +170,6 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/nieuwsbrief-1-januar
 }
 
 .newslettercards {
-
   background-color: var(--card-background-color, white);
   padding: 1.5rem;
   min-width: 200px;
@@ -273,7 +177,6 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/nieuwsbrief-1-januar
   margin-bottom: var(--space-small);
   margin-bottom: var(--space-small);
   border-radius: 0px 0px 12px 12px;
-
 }
 
 .newsletters div {
@@ -282,12 +185,12 @@ url_starts_with: "/pensioenfonds-haskoningdhv/nieuwsbrieven/nieuwsbrief-1-januar
       flex-wrap: wrap;
 
 }
-  .newsletters div h2, .newsletters div p {
 
-    margin:0px;
-  }
+.newsletters div h2, .newsletters div p {
+  margin:0px;
+}
 
-  div h2 {
-
-  }
+.newsContainer {
+  padding-bottom: 5em;
+}
 </style>

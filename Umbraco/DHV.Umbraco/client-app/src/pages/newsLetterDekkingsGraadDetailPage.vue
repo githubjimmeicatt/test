@@ -81,6 +81,7 @@ export default {
       maxItems: maxItems + 1, // one more so we can exclude the current if necessary
     })
 
+    console.log(content)
     const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems).map(mapNewsItem))
     console.log(content)
     return {
@@ -105,28 +106,16 @@ export default {
 
 }
 
-.article-name h1 {
-  margin-bottom: 4px;
-}
-
-.article-date {
-  margin-top: 0;
-}
-
-.intro-container {
-  padding-bottom: 0;
+::v-deep.articletext > div p > img {
+    max-width: 50em;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 ::v-deep > p {
   max-width: 50em;
   line-height: 1.5em;
-}
-
-::v-deep.articletext > div p > img {
-    max-width: 50rem;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
 }
 
 .topimage {
@@ -138,6 +127,18 @@ export default {
     object-fit: cover;
     object-position: center;
   }
+}
+
+.article-name h1 {
+  margin-bottom: 4px;
+}
+
+.article-date {
+  margin-top: 0;
+}
+
+.intro-container {
+  padding-bottom: 0;
 }
 
 </style>

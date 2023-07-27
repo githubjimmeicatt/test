@@ -76,7 +76,7 @@ export default {
       const first = ordered[0]?.actueel
       return first && parseAndFormatPercentage(first)
     })
-    console.log('hallo')
+    console.log(content)
     return {
       content,
       latestDekkingsgraad,
