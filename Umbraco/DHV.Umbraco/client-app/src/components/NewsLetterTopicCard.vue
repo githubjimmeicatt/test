@@ -4,7 +4,7 @@
       <div>
         <h2>{{ item.name }}</h2>
       </div>
-      <div class="image-and-paragraph" :class="{ 'mobile-view': isMobile }">
+      <div class="image-and-paragraph">
         <div class="image">
           <img class="img" :src="item.afbeelding.url" />
         </div>
@@ -12,7 +12,6 @@
           <p v-html="item.samenvatting" />
           <a :href="item.url"> Lees meer > </a>
         </div>
-
       </div>
 
     </div>
@@ -33,18 +32,7 @@ export default {
       isMobile: false,
     }
   },
-  methods: {
-    updateMobileStatus() {
-      this.isMobile = window.innerWidth <= 768
-    },
-  },
-  mounted() {
-    this.isMobile = window.innerWidth <= 768
-    window.addEventListener('resize', this.updateMobileStatus)
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.updateMobileStatus)
-  },
+
 }
 </script>
 <style lang="scss" scoped>
