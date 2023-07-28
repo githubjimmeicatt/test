@@ -11,16 +11,8 @@
 </template>
 
 <script lang="ts">
-import Cards from '@/components/Cards.vue'
-import Spinner from '@/assets/spinner.svg'
-import RichText from '@/components/RichText.vue'
-import LazyImg from '@/components/LazyImg.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
-
 export default {
-  components: {
-    RichText, LazyImg, Cards, Spinner, Breadcrumbs,
-  },
+
   props: {
     items: {
       type: Array,

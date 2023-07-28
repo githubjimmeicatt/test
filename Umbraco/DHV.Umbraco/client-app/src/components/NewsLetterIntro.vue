@@ -27,3 +27,22 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.newslettercards {
+  background-color: var(--card-background-color, white);
+  padding: 1.5rem;
+  min-width: 200px;
+  max-width: var(--max-text-width);
+  margin-bottom: var(--space-small);
+  margin-bottom: var(--space-small);
+  border-radius: 0px 0px 12px 12px;
+}
+
+.newslettercards div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+</style>

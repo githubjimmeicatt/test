@@ -157,8 +157,6 @@ export default {
       })),
     }
 
-    console.log(items)
-
     const otherNews = computed(() => currentPage.value.filter(({ id }) => id !== content.value?._id).slice(0, maxItems).map(mapNewsItem))
 
     return {
