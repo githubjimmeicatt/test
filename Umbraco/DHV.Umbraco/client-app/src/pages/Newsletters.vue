@@ -1,43 +1,43 @@
 <template>
-    <section class="breadcrumbsSection">
-        <breadcrumbs class="breadcrumbs" />
-    </section>
+  <section class="breadcrumbsSection">
+    <breadcrumbs class="breadcrumbs" />
+  </section>
 
-    <section class="container newsContainer">
-        <article>
-            <h1>{{ content.name }}</h1>
+  <section class="container newsContainer">
+    <article>
+      <h1>{{ content.name }}</h1>
 
-            <rich-text :body="content.body" />
+      <rich-text :body="content.body" />
 
-            <a :href="content.callToAction.url" class="cta"> {{ content.callToAction.name }}</a>
-        </article>
-    </section>
+      <a :href="content.callToAction.url" class="cta"> {{ content.callToAction.name }}</a>
+    </article>
+  </section>
 
-    <section class="newsletters">
-        <news-letter-intro :items="items" />
-    </section>
+  <section class="newsletters">
+    <newsletter-intro :items="items" />
+  </section>
 
 </template>
 
 <script lang="ts">
-    import { inject } from 'vue'
+import { inject } from 'vue'
 
-    import { useRoute } from 'vue-router'
-    import { useUmbracoApi } from 'icatt-heartcore'
-    import RichText from '@/components/RichText.vue'
-    import Breadcrumbs from '@/components/Breadcrumbs.vue'
-    import NewsLetterIntro from '@/components/NewsLetterIntro.vue'
+import { useRoute } from 'vue-router'
+import { useUmbracoApi } from 'icatt-heartcore'
+import RichText from '@/components/RichText.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import NewsletterIntro from '@/components/NewsletterIntro.vue'
 
-    export default {
-        components: {
-            RichText, Breadcrumbs, NewsLetterIntro,
-        },
+export default {
+  components: {
+    RichText, Breadcrumbs, NewsletterIntro,
+  },
 
-        async setup() {
-            const route = useRoute()
-            const content = inject<any>('content')
+  async setup() {
+    const route = useRoute()
+    const content = inject<any>('content')
 
-            const newsLetterQuery = `{
+    const newsLetterQuery = `{
   allNewsletter(
   orderBy: [publishDate_DESC],
     where: { url_contains: "${route.fullPath}" }
@@ -78,25 +78,25 @@
   }
 }`
 
-            const api = useUmbracoApi()
+    const api = useUmbracoApi()
 
-            if (!api) {
-                throw new Error('umbraco api not setup')
-            }
-            const json = await api.postGraphQlQuery(newsLetterQuery)
-
-            const result = json.data?.allNewsletter ?? {}
-
-            const items = (result.items ?? []).map((item: any) => ({
-                ...item,
-            }))
-
-            return {
-                content,
-                items,
-            }
-        },
+    if (!api) {
+      throw new Error('umbraco api not setup')
     }
+    const json = await api.postGraphQlQuery(newsLetterQuery)
+
+    const result = json.data?.allNewsletter ?? {}
+
+    const items = (result.items ?? []).map((item: any) => ({
+      ...item,
+    }))
+
+    return {
+      content,
+      items,
+    }
+  },
+}
 
 </script>
 
