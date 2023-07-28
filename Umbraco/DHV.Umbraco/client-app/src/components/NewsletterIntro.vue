@@ -1,99 +1,48 @@
 <template>
-  <ol
-    v-show="isEnabled"
-    :class="{ isMobile }"
-  >
-    <li
-      v-for="({ href, title, contentTypeAlias }, i) in items"
-      :key="i"
-      :class="{ 'gt-after': href && !isMobile, 'gt-before': href && isMobile }"
-    >
-      <router-link
-        v-if="href && contentTypeAlias !== 'contentGroup'"
-        class="link"
-        :to="href"
-      >
-        {{ title }}
-      </router-link>
-      <span v-else>
-        {{ title }}
-      </span>
-    </li>
-  </ol>
+    <article class="newslettercards" v-for="item in items" :key="item.id">
+        <div>
+            <h2>{{ item.name }} </h2>
+            <p class="date">{{ shortDate(item.publishDate) }}</p>
+        </div>
+        <p v-html="item.body" />
+        <a :href="item.url"> Lees Meer ></a>
+    </article>
 </template>
 
-<script>
-import { computed, inject } from 'vue'
-import { useMediaQuery } from '@vueuse/core'
+<script lang="ts">
 
-function flatten(menu) {
-  if (!menu?.length) return []
-  return menu.flatMap((x) => [x, ...flatten(x?.children)])
-}
+    import { shortDate } from '@/helpers/formatDate'
 
-function getList(menu, item) {
-  if (!menu?.length || !item) return []
-  const parent = menu.find((x) => x.children.some((c) => c === item))
-  if (!parent) return []
-  return [...getList(menu, parent), parent]
-}
-
-function getItems(menu, content, isMobile) {
-  const home = { href: '/', title: 'Home' }
-  if (!menu?.length || !content?._id) return [home]
-  const flat = flatten(menu)
-  const self = flat.find((x) => x.id === content._id)
-  if (isMobile) {
-    const parent = flat.find((x) => x.children.some((c) => c === self))
-    if (!parent) return [home]
-    return [parent]
-  }
-  if (!self) return [home]
-  return [home, ...getList(flat, self), {
-    title: self.title,
-  }]
-}
-
-export default {
-  setup() {
-    const menu = inject('menu')
-    const content = inject('content')
-    const isMobile = useMediaQuery('(max-width: 40rem)')
-    const isEnabled = computed(() => content.value?._level > 1)
-    const items = computed(() => getItems(menu.value, content.value, isMobile.value))
-    return { items, isMobile, isEnabled }
-  },
-}
+    export default {
+        props: {
+            items: {
+                type: Array,
+                default: () => [],
+            },
+        },
+        setup() {
+            return {
+                shortDate,
+            }
+        },
+    }
 </script>
 
 <style lang="scss" scoped>
-ol {
-  display: flex;
-  width: 100%;
-  margin: 0;
-  padding: var(--space-smaller) var(--dynamic-spacing-large);
-  gap: var(--space-smaller);
-  font-size: .875rem;
-}
+    .newslettercards {
+        background-color: var(--card-background-color, white);
+        padding: 1.5rem;
+        min-width: 200px;
+        max-width: var(--max-text-width);
+        margin-bottom: var(--space-small);
+        margin-bottom: var(--space-small);
+        border-radius: 0px 0px 12px 12px;
+    }
 
-li {
-  display: block;
-
-  &.gt-after::after,
-  &.gt-before::before {
-    content: ">";
-  }
-
-  &.gt-before::before {
-    margin-inline-end: var(--space-smaller);
-  }
-
-  &.gt-after::after {
-    margin-inline-start: var(--space-smaller);
-  }
-}
-
-.link {
-  color: inherit;
-}
+    .newslettercards div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 </style>
