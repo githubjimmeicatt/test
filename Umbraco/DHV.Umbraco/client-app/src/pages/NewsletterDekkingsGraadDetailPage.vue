@@ -1,140 +1,138 @@
 <template>
-  <section class="container topimage">
 
-    <lazy-img
-      v-if="content.headerImage"
-      :src="content.headerImage.src" />
-  </section>
-  <breadcrumbs class="breadcrumbs" />
+    <section class="container topimage">
 
-  <section class="container">
-    <article>
-      <h1>{{ content.name }}</h1>
+        <lazy-img v-if="content.afbeelding"
+                  :src="content.afbeelding.src" />
 
-      <rich-text :body="content.body" />
+    </section>
 
-    </article>
-  </section>
+    <breadcrumbs class="breadcrumbs" />
 
-  <section class="newsletter">
 
-    <newsletter-topic-cards-dekkingsgraad :items="items.DekkingsgraadItems" />
 
-    <newsletter-topic-cards :items="items.newsItems" />
+    <section class="intro-container container">
 
-  </section>
+        <article class="article-name">
+
+            <h1>{{ content.name }}</h1>
+
+
+
+            <p v-if="date" class="article-date">
+
+                {{ date }}
+
+            </p>
+
+
+
+            <rich-text :body="content.body" />
+
+        </article>
+
+    </section>
+
+
+
+    <section class="articletext">
+
+
+
+        <div v-html="content.artikel" />
+
+
+
+    </section>
 
 </template>
 
+
+
 <script lang="ts">
-import { inject } from 'vue'
 
-import { useRoute } from 'vue-router'
-import { useUmbracoApi } from 'icatt-heartcore'
-import RichText from '@/components/RichText.vue'
-import LazyImg from '@/components/LazyImg.vue'
-import NewsletterTopicCards from '@/components/NewsletterTopicCards.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
-import NewsletterTopicCardsDekkingsgraad from '@/components/NewsletterTopicCardsDekkingsgraad.vue'
+    import { inject, computed } from 'vue'
 
-export default {
-  components: {
-    RichText, LazyImg, Breadcrumbs, NewsletterTopicCards, NewsletterTopicCardsDekkingsgraad,
-  },
+    import RichText from '@/components/RichText.vue'
 
-  async setup() {
-    const route = useRoute()
-    const content = inject<any>('content')
+    import LazyImg from '@/components/LazyImg.vue'
 
-    const newsLetterQuery = `{
-  allNewsLetterArticleDetailPage(
-    where: {
-    url_contains: "${route.fullPath}"
-    }) {
-    items {
-      id
-      name
-      url
-      artikel
-      samenvatting
-      afbeelding {
-        url
-        cropUrl
-      }
-    }
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-  }
-}`
+    import { formatDate } from '@/helpers/formatDate'
 
-    const dekkingsgraadQuery = `{
-  allNewsLetterDekkingsgraadDetailPage(
-    where: {
-    url_contains: "${route.fullPath}"
-    }) {
-    items {
-      id
-      name
-      url
-      artikel
-      samenvatting
-      afbeelding {
-        url
-        cropUrl
-      }
-    }
+    import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-  }
-}
-`
 
-    const api = useUmbracoApi()
 
-    if (!api) {
-      throw new Error('umbraco api not setup')
-    }
-    const newsJson = await api.postGraphQlQuery(newsLetterQuery)
-    const dekkingsgraadJson = await api.postGraphQlQuery(dekkingsgraadQuery)
+    export default {
 
-    const newsResult = newsJson.data?.allNewsLetterArticleDetailPage ?? {}
-    const dekkingsgraadResult = dekkingsgraadJson.data?.allNewsLetterDekkingsgraadDetailPage ?? {}
-    const combinedItems = {
-      newsItems: [...(newsResult.items ?? [])],
-      DekkingsgraadItems: [...(dekkingsgraadResult.items ?? [])],
-    }
-    const items = {
-      newsItems: combinedItems.newsItems.map((item: any) => ({
-        ...item,
-      })),
-      DekkingsgraadItems: combinedItems.DekkingsgraadItems.map((item: any) => ({
-        ...item,
-      })),
-    }
+        components: {
 
-    return {
-      content,
-      items,
+            RichText, LazyImg, Breadcrumbs,
+
+        },
+
+
+
+        setup() {
+
+            const content = inject<any>('content')
+
+
+
+            return {
+
+                content,
+
+                date: computed(() => {
+
+                    const { publishDate, _createDate } = content.value ?? {}
+
+                    return formatDate(publishDate) || formatDate(_createDate)
+
+                }),
+
+            }
+
+        },
 
     }
-  },
-}
+
+
 
 </script>
 
-<style lang="scss" scoped>
+
+
+<style scoped lang="scss">
+
+
+
+    .articletext {
+        padding: var(--space-medium) var(--dynamic-spacing-large);
+    }
+
+
+
+    ::v-deep.articletext > div p > img {
+        max-width: 50em;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+
+
+    ::v-deep > p {
+        max-width: 50em;
+        line-height: 1.5em;
+    }
+
+
 
     .topimage {
         padding-block: 0;
+
+
 
         img {
             width: 100%;
@@ -144,14 +142,21 @@ export default {
         }
     }
 
-    .newsletter {
-        background-color: var(--color-background-2);
-        display: flex;
-        flex-direction: column;
-        padding: var(--space-medium) var(--dynamic-spacing-large);
+
+
+    .article-name h1 {
+        margin-bottom: 4px;
     }
 
-    .newsletter div {
-        display: flex;
+
+
+    .article-date {
+        margin-top: 0;
+    }
+
+
+
+    .intro-container {
+        padding-bottom: 0;
     }
 </style>
