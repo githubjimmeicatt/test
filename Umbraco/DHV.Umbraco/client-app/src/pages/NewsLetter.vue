@@ -18,9 +18,9 @@
 
   <section class="newsletter">
 
-    <dekkingsgraad-topic-card :items="items.DekkingsgraadItems" />
+    <news-letter-topic-card-dekkingsgraad :items="items.DekkingsgraadItems" />
 
-    <news-letter-topic-card :items="items.newsItems" />
+    <news-letter-topic-cards :items="items.newsItems" />
 
   </section>
 
@@ -38,8 +38,8 @@ import Cards from '@/components/Cards.vue'
 import Spinner from '@/assets/spinner.svg'
 import RichText from '@/components/RichText.vue'
 import LazyImg from '@/components/LazyImg.vue'
-import NewsLetterTopicCard from '@/components/NewsLetterTopicCard.vue'
-import DekkingsgraadTopicCard from '@/components/DekkingsgraadTopicCard.vue'
+import NewsLetterTopicCards from '@/components/NewsLetterTopicCards.vue'
+import NewsLetterTopicCardDekkingsgraad from '@/components/NewsLetterTopicCardDekkingsgraad.vue'
 import { formatDate } from '@/helpers/formatDate'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
@@ -70,7 +70,7 @@ const maxItems = 3
 
 export default {
   components: {
-    RichText, LazyImg, Cards, Spinner, Breadcrumbs, NewsLetterTopicCard, DekkingsgraadTopicCard,
+    RichText, LazyImg, Cards, Spinner, Breadcrumbs, NewsLetterTopicCards, NewsLetterTopicCardDekkingsgraad,
   },
 
   async setup() {
