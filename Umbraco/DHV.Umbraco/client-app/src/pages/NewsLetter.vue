@@ -18,9 +18,9 @@
 
   <section class="newsletter">
 
-    <news-letter-topic-card-dekkingsgraad :items="items.DekkingsgraadItems" />
+    <newsletter-topic-cards-dekkingsgraad :items="items.DekkingsgraadItems" />
 
-    <news-letter-topic-cards :items="items.newsItems" />
+    <newsletter-topic-cards :items="items.newsItems" />
 
   </section>
 
@@ -33,20 +33,20 @@ import { useRoute } from 'vue-router'
 import { useUmbracoApi } from 'icatt-heartcore'
 import RichText from '@/components/RichText.vue'
 import LazyImg from '@/components/LazyImg.vue'
-import NewsLetterTopicCards from '@/components/NewsLetterTopicCards.vue'
-import NewsLetterTopicCardDekkingsgraad from '@/components/NewsLetterTopicCardDekkingsgraad.vue'
+import NewsletterTopicCards from '@/components/NewsletterTopicCards.vue'
+import NewsletterTopicCardsDekkingsgraad from '@/components/NewsletterTopicCardsDekkingsgraad.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   components: {
-    RichText, LazyImg, Breadcrumbs, NewsLetterTopicCards, NewsLetterTopicCardDekkingsgraad,
+    RichText, LazyImg, Breadcrumbs, NewsletterTopicCards, NewsletterTopicCardsDekkingsgraad,
   },
 
   async setup() {
     const route = useRoute()
     const content = inject<any>('content')
 
-    const newsLetterQuery = `{
+    const newsletterQuery = `{
   allNewsLetterArticleDetailPage(
     where: {  
     url_contains: "${route.fullPath}"
@@ -103,7 +103,7 @@ export default {
     if (!api) {
       throw new Error('umbraco api not setup')
     }
-    const newsJson = await api.postGraphQlQuery(newsLetterQuery)
+    const newsJson = await api.postGraphQlQuery(newsletterQuery)
     const dekkingsgraadJson = await api.postGraphQlQuery(dekkingsgraadQuery)
 
     const newsResult = newsJson.data?.allNewsLetterArticleDetailPage ?? {}

@@ -1,11 +1,11 @@
 <template>
-  <article class="newsLetterTopicCard" v-for="item in items" :key="item.id">
+  <article class="newsletterTopicCard" v-for="item in items" :key="item.id">
     <div>
       <h2>{{ item.name }}</h2>
     </div>
     <div v-html="item.samenvatting" />
     <a :href="item.url"> Lees meer > </a>
-    <img class="dekkingsgraadtabel" :src="item.afbeelding.url" />
+    <img class="dekkingsgraadTabel" :src="item.afbeelding.url" />
 
   </article>
 </template>
@@ -23,7 +23,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-.newsLetterTopicCard {
+.newsletterTopicCard {
   background-color: var(--card-background-color, white);
   padding: 1.5rem;
   min-width: 200px;
@@ -36,12 +36,12 @@ export default {
   border-left-width: 6px;
 }
 
-::v-deep .newsLetterTopicCard img {
+::v-deep .newsletterTopicCard img {
     max-width: 100%;
     max-height: 100%;
 }
 
-.dekkingsgraadtabel {
+.dekkingsgraadTabel {
     max-height: 100%;
     max-width: 100%;
     padding-top: 1.5em

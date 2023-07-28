@@ -14,7 +14,7 @@
   </section>
 
   <section class="newsletters">
-    <news-letter-intro :items="items" />
+    <newsletter-intro :items="items" />
   </section>
 
 </template>
@@ -26,18 +26,18 @@ import { useRoute } from 'vue-router'
 import { useUmbracoApi } from 'icatt-heartcore'
 import RichText from '@/components/RichText.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
-import NewsLetterIntro from '@/components/NewsLetterIntro.vue'
+import NewsletterIntro from '@/components/NewsletterIntro.vue'
 
 export default {
   components: {
-    RichText, Breadcrumbs, NewsLetterIntro,
+    RichText, Breadcrumbs, NewsletterIntro,
   },
 
   async setup() {
     const route = useRoute()
     const content = inject<any>('content')
 
-    const newsLetterQuery = `{
+    const newsletterQuery = `{
   allNewsletter(
   orderBy: [publishDate_DESC], 
     where: { url_contains: "${route.fullPath}" }
@@ -83,7 +83,7 @@ export default {
     if (!api) {
       throw new Error('umbraco api not setup')
     }
-    const json = await api.postGraphQlQuery(newsLetterQuery)
+    const json = await api.postGraphQlQuery(newsletterQuery)
 
     const result = json.data?.allNewsletter ?? {}
 
