@@ -1,3 +1,5 @@
+newsletterS:
+
 <template>
   <section class="breadcrumbsSection">
     <breadcrumbs class="breadcrumbs" />
@@ -20,8 +22,7 @@
 </template>
 
 <script lang="ts">
-import { inject } from 'vue'
-
+import { inject, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUmbracoApi } from 'icatt-heartcore'
 import RichText from '@/components/RichText.vue'
@@ -33,63 +34,62 @@ export default {
     RichText, Breadcrumbs, NewsletterIntro,
   },
 
-  async setup() {
+  setup() {
     const route = useRoute()
     const content = inject<any>('content')
+    const items = ref<any[]>([])
 
-    const newsLetterQuery = `{
-  allNewsletter(
-  orderBy: [publishDate_DESC],
-    where: { url_contains: "${route.fullPath}" }
-  ) {
-    items {
-      id
-      name
-      url
-      publishDate
-      body
-      headerImage {
-        url
-        ... on MediaWithCrops {
-          focalPoint {
-            left
-            top
+    onMounted(async () => {
+      const newsLetterQuery = `{
+        allNewsletter(
+          orderBy: [publishDate_DESC],
+          where: { url_contains: "${route.fullPath}" }
+        ) {
+          items {
+            id
+            name
+            url
+            publishDate
+            body
+            headerImage {
+              url
+              ... on MediaWithCrops {
+                focalPoint {
+                  left
+                  top
+                }
+                focalPointUrlTemplate
+              }
+            }
+            children {
+              items {
+                ... on NewsLetterArticleDetailPage {
+                  id
+                  url
+                  samenvatting
+                }
+              }
+            }
           }
-          focalPointUrlTemplate
+          pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+          }
         }
+      }`
+
+      const api = useUmbracoApi()
+
+      if (!api) {
+        throw new Error('umbraco api not setup')
       }
-     children {
-       items
-      {
-          ... on NewsLetterArticleDetailPage {
-          id
-          url
-          samenvatting
-        }
-      }
-    }
-    }
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-  }
-}`
 
-    const api = useUmbracoApi()
-
-    if (!api) {
-      throw new Error('umbraco api not setup')
-    }
-    const json = await api.postGraphQlQuery(newsLetterQuery)
-
-    const result = json.data?.allNewsletter ?? {}
-
-    const items = (result.items ?? []).map((item: any) => ({
-      ...item,
-    }))
+      const json = await api.postGraphQlQuery(newsLetterQuery)
+      const result = json.data?.allNewsletter ?? {}
+      items.value = (result.items ?? []).map((item: any) => ({ ...item }))
+    })
 
     return {
       content,
@@ -111,17 +111,6 @@ export default {
         display: flex;
         flex-direction: column;
         padding: var(--space-medium) var(--dynamic-spacing-large);
-    }
-
-    .newsletters div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .newsletters div h2, .newsletters div p {
-        margin: 0px;
     }
 
     .newsContainer {

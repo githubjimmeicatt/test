@@ -1,3 +1,4 @@
+newsletter:
 <template>
   <section class="container topimage">
 
@@ -27,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { inject } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 
 import { useRoute } from 'vue-router'
 import { useUmbracoApi } from 'icatt-heartcore'
@@ -42,89 +43,95 @@ export default {
     RichText, LazyImg, Breadcrumbs, NewsletterTopicCards, NewsletterTopicCardsDekkingsgraad,
   },
 
-  async setup() {
+  setup() {
     const route = useRoute()
     const content = inject<any>('content')
+    // let items = { newsItems: [], DekkingsgraadItems: [] }
+    const items = ref<any>({ newsItems: [], DekkingsgraadItems: [] })
 
-    const newsLetterQuery = `{
-  allNewsLetterArticleDetailPage(
-    where: {
-    url_contains: "${route.fullPath}"
-    }) {
-    items {
-      id
-      name
-      url
-      artikel
-      samenvatting
-      afbeelding {
-        url
-        cropUrl
+    onMounted(async () => {
+      const newsLetterQuery = `{
+        allNewsLetterArticleDetailPage(
+          where: {
+            url_contains: "${route.fullPath}"
+          }) {
+          items {
+            id
+            name
+            url
+            artikel
+            samenvatting
+            afbeelding {
+              url
+              cropUrl
+            }
+          }
+          pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+          }
+        }
+      }`
+
+      const dekkingsgraadQuery = `{
+        allNewsLetterDekkingsgraadDetailPage(
+          where: {
+            url_contains: "${route.fullPath}"
+          }) {
+          items {
+            id
+            name
+            url
+            artikel
+            samenvatting
+            afbeelding {
+              url
+              cropUrl
+            }
+          }
+          pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+          }
+        }
+      }`
+
+      const api = useUmbracoApi()
+
+      if (!api) {
+        throw new Error('umbraco api not setup')
       }
-    }
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-  }
-}`
 
-    const dekkingsgraadQuery = `{
-  allNewsLetterDekkingsgraadDetailPage(
-    where: {
-    url_contains: "${route.fullPath}"
-    }) {
-    items {
-      id
-      name
-      url
-      artikel
-      samenvatting
-      afbeelding {
-        url
-        cropUrl
+      const [newsJson, dekkingsgraadJson] = await Promise.all([
+        api.postGraphQlQuery(newsLetterQuery),
+        api.postGraphQlQuery(dekkingsgraadQuery),
+      ])
+
+      const newsResult = newsJson.data?.allNewsLetterArticleDetailPage ?? {}
+      const dekkingsgraadResult = dekkingsgraadJson.data?.allNewsLetterDekkingsgraadDetailPage ?? {}
+
+      const combinedItems = {
+        newsItems: [...(newsResult.items ?? [])],
+        DekkingsgraadItems: [...(dekkingsgraadResult.items ?? [])],
       }
-    }
 
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-  }
-}
-`
-
-    const api = useUmbracoApi()
-
-    if (!api) {
-      throw new Error('umbraco api not setup')
-    }
-    const newsJson = await api.postGraphQlQuery(newsLetterQuery)
-    const dekkingsgraadJson = await api.postGraphQlQuery(dekkingsgraadQuery)
-
-    const newsResult = newsJson.data?.allNewsLetterArticleDetailPage ?? {}
-    const dekkingsgraadResult = dekkingsgraadJson.data?.allNewsLetterDekkingsgraadDetailPage ?? {}
-    const combinedItems = {
-      newsItems: [...(newsResult.items ?? [])],
-      DekkingsgraadItems: [...(dekkingsgraadResult.items ?? [])],
-    }
-    const items = {
-      newsItems: combinedItems.newsItems.map((item: any) => ({
-        ...item,
-      })),
-      DekkingsgraadItems: combinedItems.DekkingsgraadItems.map((item: any) => ({
-        ...item,
-      })),
-    }
+      items.value = {
+        newsItems: combinedItems.newsItems.map((item: any) => ({
+          ...item,
+        })),
+        DekkingsgraadItems: combinedItems.DekkingsgraadItems.map((item: any) => ({
+          ...item,
+        })),
+      }
+    })
 
     return {
       content,
       items,
-
     }
   },
 }
