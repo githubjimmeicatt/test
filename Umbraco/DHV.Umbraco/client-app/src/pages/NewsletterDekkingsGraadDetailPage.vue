@@ -81,7 +81,6 @@ export default {
       // Assign the publishDate to a reactive variable directly.
         content.value.publishDate = result[0].parent?.publishDate || null
       }
-      console.log(content.value.publishDate)
     })
 
     return {

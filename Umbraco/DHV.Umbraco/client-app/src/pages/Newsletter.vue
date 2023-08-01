@@ -130,7 +130,6 @@ export default {
           ...item,
         })),
       }
-      console.log(items)
     })
 
     return {
