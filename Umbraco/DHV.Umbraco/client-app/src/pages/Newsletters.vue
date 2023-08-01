@@ -1,5 +1,3 @@
-newsletterS:
-
 <template>
   <section class="breadcrumbsSection">
     <breadcrumbs class="breadcrumbs" />

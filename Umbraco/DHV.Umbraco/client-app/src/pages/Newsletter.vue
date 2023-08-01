@@ -1,4 +1,3 @@
-newsletter:
 <template>
   <section class="container topimage">
 
@@ -46,7 +45,6 @@ export default {
   setup() {
     const route = useRoute()
     const content = inject<any>('content')
-    // let items = { newsItems: [], DekkingsgraadItems: [] }
     const items = ref<any>({ newsItems: [], DekkingsgraadItems: [] })
 
     onMounted(async () => {
@@ -64,6 +62,11 @@ export default {
             afbeelding {
               url
               cropUrl
+            }
+             parent{
+              ... on Newsletter {
+                publishDate
+              }
             }
           }
           pageInfo {

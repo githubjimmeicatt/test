@@ -1,162 +1,136 @@
 <template>
 
-    <section class="container topimage">
+  <section class="container topimage">
+    <lazy-img
+      v-if="content.afbeelding"
+      :src="content.afbeelding.src" />
+  </section>
 
-        <lazy-img v-if="content.afbeelding"
-                  :src="content.afbeelding.src" />
+  <breadcrumbs class="breadcrumbs" />
 
-    </section>
+  <section class="intro-container container">
+    <article class="article-name">
+      <h1>{{ content.name }}</h1>
+      <p v-if="content.publishDate" class="article-date">
+        {{ formatMonthYear(content.publishDate) }}
+      </p>
+      <rich-text :body="content.body" />
+    </article>
+  </section>
 
-    <breadcrumbs class="breadcrumbs" />
-
-
-
-    <section class="intro-container container">
-
-        <article class="article-name">
-
-            <h1>{{ content.name }}</h1>
-
-
-
-            <p v-if="date" class="article-date">
-
-                {{ date }}
-
-            </p>
-
-
-
-            <rich-text :body="content.body" />
-
-        </article>
-
-    </section>
-
-
-
-    <section class="articletext">
-
-
-
-        <div v-html="content.artikel" />
-
-
-
-    </section>
-
+  <section class="articletext">
+    <div v-html="content.artikel" />
+  </section>
 </template>
 
-
-
 <script lang="ts">
+import {
+  inject, onMounted, type Ref,
+} from 'vue'
+import { useRoute } from 'vue-router'
+import RichText from '@/components/RichText.vue'
+import LazyImg from '@/components/LazyImg.vue'
+import { formatMonthYear } from '@/helpers/formatDate'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import { useUmbracoApi } from 'icatt-heartcore'
 
-    import { inject, computed } from 'vue'
+export default {
 
-    import RichText from '@/components/RichText.vue'
+  components: {
+    RichText, LazyImg, Breadcrumbs,
+  },
 
-    import LazyImg from '@/components/LazyImg.vue'
+  setup() {
+    const content = inject <Ref<any>>('content')
+    if (!content) {
+      throw new Error('')
+    }
+    const route = useRoute()
 
-    import { formatDate } from '@/helpers/formatDate'
+    const api = useUmbracoApi()
 
-    import Breadcrumbs from '@/components/Breadcrumbs.vue'
-
-
-
-    export default {
-
-        components: {
-
-            RichText, LazyImg, Breadcrumbs,
-
-        },
-
-
-
-        setup() {
-
-            const content = inject<any>('content')
-
-
-
-            return {
-
-                content,
-
-                date: computed(() => {
-
-                    const { publishDate, _createDate } = content.value ?? {}
-
-                    return formatDate(publishDate) || formatDate(_createDate)
-
-                }),
-
-            }
-
-        },
-
+    if (!api) {
+      throw new Error('Umbraco api not setup')
     }
 
+    onMounted(async () => {
+      const getDekkingsGraadDateFromNewsletterQuery = `{
+        allNewsLetterDekkingsgraadDetailPage(
+          where: {
+            url_contains: "${route.fullPath}"
+          }) {
+          items {
+            parent{
+              ... on Newsletter {
+                publishDate
+              }
+            }
+          }
+          pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+          }
+        }
+      }`
 
+      const json = await api.postGraphQlQuery(getDekkingsGraadDateFromNewsletterQuery)
+      const result = json.data?.allNewsLetterDekkingsgraadDetailPage?.items
+      if (result && result.length > 0) {
+      // Assign the publishDate to a reactive variable directly.
+        content.value.publishDate = result[0].parent?.publishDate || null
+      }
+    })
+
+    return {
+      content,
+      formatMonthYear,
+    }
+  },
+
+}
 
 </script>
 
-
-
 <style scoped lang="scss">
 
+.articletext {
+    padding: var(--space-medium) var(--dynamic-spacing-large);
+}
 
+::v-deep.articletext > div p > img {
+    max-width: 50em;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 
-    .articletext {
-        padding: var(--space-medium) var(--dynamic-spacing-large);
-    }
+::v-deep > p {
+    max-width: 50em;
+    line-height: 1.5em;
+}
 
+.topimage {
+    padding-block: 0;
 
-
-    ::v-deep.articletext > div p > img {
-        max-width: 50em;
+    img {
         width: 100%;
+        height: 20rem;
         object-fit: cover;
         object-position: center;
     }
+}
 
+.article-name h1 {
+    margin-bottom: 4px;
+}
 
+.article-date {
+    margin-top: 0;
+}
 
-    ::v-deep > p {
-        max-width: 50em;
-        line-height: 1.5em;
-    }
-
-
-
-    .topimage {
-        padding-block: 0;
-
-
-
-        img {
-            width: 100%;
-            height: 20rem;
-            object-fit: cover;
-            object-position: center;
-        }
-    }
-
-
-
-    .article-name h1 {
-        margin-bottom: 4px;
-    }
-
-
-
-    .article-date {
-        margin-top: 0;
-    }
-
-
-
-    .intro-container {
-        padding-bottom: 0;
-    }
+.intro-container {
+    padding-bottom: 0;
+}
 </style>
