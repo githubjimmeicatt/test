@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import {
-  inject, onMounted, ref, type Ref,
+  inject, onMounted, type Ref,
 } from 'vue'
 import { useRoute } from 'vue-router'
 import RichText from '@/components/RichText.vue'
@@ -46,7 +46,12 @@ export default {
       throw new Error('')
     }
     const route = useRoute()
-    content.value.publishDate = ref<string | null>(null)
+
+    const api = useUmbracoApi()
+
+    if (!api) {
+      throw new Error('Umbraco api not setup')
+    }
 
     onMounted(async () => {
       const getDekkingsGraadDateFromNewsletterQuery = `{
@@ -69,12 +74,6 @@ export default {
           }
         }
       }`
-
-      const api = useUmbracoApi()
-
-      if (!api) {
-        throw new Error('Umbraco api not setup')
-      }
 
       const json = await api.postGraphQlQuery(getDekkingsGraadDateFromNewsletterQuery)
       const result = json.data?.allNewsLetterDekkingsgraadDetailPage?.items

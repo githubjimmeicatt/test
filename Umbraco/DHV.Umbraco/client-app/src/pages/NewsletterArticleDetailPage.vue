@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import {
-  inject, onMounted, ref, type Ref,
+  inject, onMounted, type Ref,
 } from 'vue'
 import RichText from '@/components/RichText.vue'
 import LazyImg from '@/components/LazyImg.vue'
@@ -47,7 +47,12 @@ export default {
       throw new Error('')
     }
     const route = useRoute()
-    content.value.publishDate = ref<string | null>(null)
+
+    const api = useUmbracoApi()
+
+    if (!api) {
+      throw new Error('Umbraco api not setup')
+    }
 
     onMounted(async () => {
       const getDateFromNewsletterQuery = `{
@@ -70,12 +75,6 @@ export default {
           }
         }
       }`
-
-      const api = useUmbracoApi()
-
-      if (!api) {
-        throw new Error('Umbraco api not setup')
-      }
 
       const json = await api.postGraphQlQuery(getDateFromNewsletterQuery)
       const result = json.data?.allNewsLetterArticleDetailPage?.items
