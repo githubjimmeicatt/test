@@ -1,53 +1,96 @@
 <template>
-    <section class="container topimage">
-        <lazy-img v-if="content.afbeelding"
-                  :src="content.afbeelding.src" />
-    </section>
-    <breadcrumbs class="breadcrumbs" />
+  <section class="container topimage">
+    <lazy-img
+      v-if="content.afbeelding"
+      :src="content.afbeelding.src" />
+  </section>
+  <breadcrumbs class="breadcrumbs" />
 
-    <section class="intro-container container">
-        <article class="article-name">
-            <h1>{{ content.name }}</h1>
+  <section class="intro-container container">
+    <article class="article-name">
+      <h1>{{ content.name }}</h1>
 
-            <p v-if="date" class="article-date">
-                {{ date }}
-            </p>
+      <p v-if="content.publishDate" class="article-date">
+        {{ formatMonthYear(content.publishDate) }}
+      </p>
 
-            <rich-text :body="content.body" />
-        </article>
-    </section>
+      <rich-text :body="content.body" />
+    </article>
+  </section>
 
-    <section class="articletext">
+  <section class="articletext">
 
-        <div v-html="content.artikel" />
+    <div v-html="content.artikel" />
 
-    </section>
+  </section>
 </template>
 
 <script lang="ts">
-    import { inject, computed } from 'vue'
-    import RichText from '@/components/RichText.vue'
-    import LazyImg from '@/components/LazyImg.vue'
-    import { formatDate } from '@/helpers/formatDate'
-    import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import {
+  inject, onMounted, ref, type Ref,
+} from 'vue'
+import RichText from '@/components/RichText.vue'
+import LazyImg from '@/components/LazyImg.vue'
+import { formatMonthYear } from '@/helpers/formatDate'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import { useRoute } from 'vue-router'
+import { useUmbracoApi } from 'icatt-heartcore'
 
-    export default {
-        components: {
-            RichText, LazyImg, Breadcrumbs,
-        },
+export default {
+  components: {
+    RichText, LazyImg, Breadcrumbs,
+  },
 
-        setup() {
-            const content = inject < any > ('content')
-
-            return {
-                content,
-                date: computed(() => {
-                    const { publishDate, _createDate } = content.value ?? {}
-                    return formatDate(publishDate) || formatDate(_createDate)
-                }),
-            }
-        },
+  setup() {
+    const content = inject <Ref<any>>('content')
+    if (!content) {
+      throw new Error('')
     }
+    const route = useRoute()
+    content.value.publishDate = ref<string | null>(null)
+
+    onMounted(async () => {
+      const getDateFromNewsletterQuery = `{
+        allNewsLetterArticleDetailPage(
+          where: {
+            url_contains: "${route.fullPath}"
+          }) {
+          items {
+            parent{
+              ... on Newsletter {
+                publishDate
+              }
+            }
+          }
+          pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+          }
+        }
+      }`
+
+      const api = useUmbracoApi()
+
+      if (!api) {
+        throw new Error('Umbraco api not setup')
+      }
+
+      const json = await api.postGraphQlQuery(getDateFromNewsletterQuery)
+      const result = json.data?.allNewsLetterArticleDetailPage?.items
+      if (result && result.length > 0) {
+      // Assign the publishDate to a reactive variable directly.
+        content.value.publishDate = result[0].parent?.publishDate || null
+      }
+    })
+
+    return {
+      content,
+      formatMonthYear,
+    }
+  },
+}
 
 </script>
 
