@@ -8,8 +8,8 @@
       <h1>{{ content.name }}</h1>
 
       <rich-text :body="content.body" />
-
-      <a :href="content.callToAction.url" class="cta"> {{ content.callToAction.name }}</a>
+      <!-- moet later weer aangezet worden -->
+      <!-- <a :href="content.callToAction.url" class="cta"> {{ content.callToAction.name }}</a> -->
     </article>
   </section>
 
