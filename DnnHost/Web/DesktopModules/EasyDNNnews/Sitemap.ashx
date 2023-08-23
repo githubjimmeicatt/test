@@ -1,1 +1,0 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Sitemap.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNNews.SitemapHandler" %>

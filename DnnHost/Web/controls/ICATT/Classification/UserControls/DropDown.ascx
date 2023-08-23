@@ -1,2 +1,0 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="DropDown.ascx.vb" Inherits="Icatt.DotNetNuke.Classification.UI.UserControls.DropDown" %>
-<asp:DropDownList runat="server" ID="ddlClassification" DataTextField="ClassificationName" DataValueField="ClassificationId" ></asp:DropDownList>

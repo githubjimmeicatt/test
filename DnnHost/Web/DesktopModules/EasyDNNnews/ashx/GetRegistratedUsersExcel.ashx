@@ -1,1 +1,0 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="GetRegistratedUsersExcel.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNNews.Events.Services.GetRegistratedUsersExcel" %>
