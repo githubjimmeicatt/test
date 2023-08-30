@@ -1,1 +1,0 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="iCalendar.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNNews.iCalendar" %>

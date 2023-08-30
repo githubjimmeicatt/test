@@ -1,5 +1,0 @@
-﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNNewsRSSFeedImport' and column_name = 'UpdateICalEvents')
-BEGIN
-	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNNewsRSSFeedImport] ADD UpdateICalEvents BIT CONSTRAINT DF_{objectQualifier}EasyDNNNewsRSSFeedImport_UpdateICalEvents DEFAULT (0) NOT NULL
-END
-GO

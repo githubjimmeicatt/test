@@ -1,1 +1,0 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="ChameleonGalleryService.ashx.cs" Class="EasyDNNSolutions.Modules.EasyDNNNews.ChameleonData" %>

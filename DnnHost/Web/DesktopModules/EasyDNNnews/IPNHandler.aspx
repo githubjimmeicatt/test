@@ -1,1 +1,0 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="EasyDNNSolutions.Modules.EasyDNNNews.IPNHandler, App_Web_ipnhandler.aspx.d988a5ac" viewStateEncryptionMode="Always" %>

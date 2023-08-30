@@ -1,5 +1,0 @@
-﻿IF NOT EXISTS (select * from INFORMATION_SCHEMA.columns where table_name = '{objectQualifier}EasyDNNnewsContentBlocksSettings' and column_name = 'ShowAllCategoriesButton')
-BEGIN
-	ALTER TABLE {databaseOwner}[{objectQualifier}EasyDNNnewsContentBlocksSettings] ADD ShowAllCategoriesButton BIT CONSTRAINT DF_{objectQualifier}EasyDNNnewsContentBlocksSettings_ShowAllCategoriesButton DEFAULT (1) NOT NULL
-END
-GO

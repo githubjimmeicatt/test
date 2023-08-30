@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[38],{XTni:function(n,e,t){"use strict";t.r(e),t.d(e,"DevRestEntryComponent",(function(){return r}));var c=t("EM62"),o=t("sEIs"),r=function(){function n(){}return n.\u0275fac=function(e){return new(e||n)},n.\u0275cmp=c.Gb({type:n,selectors:[["app-dev-rest-entry"]],decls:1,vars:0,template:function(n,e){1&n&&c.Nb(0,"router-outlet")},directives:[o.h],encapsulation:2,changeDetection:0}),n}()}}]);
-//# sourceMappingURL=https://sources.2sxc.org/11.22.00/ng-edit/entry-entry-component.744422b6ffb457293149.js.map
