@@ -6,7 +6,7 @@
             </div>
             <div class="image-and-paragraph">
                 <div class="image">
-                    <img class="img" :src="item.afbeelding.url" />
+                    <img v-if="item.afbeelding?.url" class="img" :src="item.afbeelding.url" />
                 </div>
                 <div class="paragraph">
                     <p v-html="item.samenvatting" />
