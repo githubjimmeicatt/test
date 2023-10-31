@@ -5,7 +5,7 @@
     </div>
     <div v-html="item.samenvatting" />
     <a :href="item.url"> Lees meer > </a>
-    <img class="dekkingsgraadTabel" :src="item.afbeelding.url" />
+    <img class="dekkingsgraadTabel" v-if="item.afbeelding?.url" :src="item.afbeelding.url" />
 
   </article>
 </template>
