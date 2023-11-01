@@ -3,6 +3,8 @@ using Icatt.Data.Entity;
 
 namespace Sphdhv.KlantPortaal.Data.Deelnemer.Entities
 {
+
+    //nite meer in gebruik. tabel kan tzt weg
     public class Deelnemer : IObjectWithState
     {
         public int Id { get; set; }

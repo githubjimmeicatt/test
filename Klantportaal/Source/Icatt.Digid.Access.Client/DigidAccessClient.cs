@@ -230,7 +230,7 @@ namespace Icatt.Digid.Access.Client
             using (var store = new X509Store(storeName, storeLocation))
             {
                 store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
-                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, true);
+                var find = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, subjectDistinguishedName, false);
                 var certEnum = find.OfType<X509Certificate2>();
 
                 //Kies het langst geldige certificaat dat nu geldig is.

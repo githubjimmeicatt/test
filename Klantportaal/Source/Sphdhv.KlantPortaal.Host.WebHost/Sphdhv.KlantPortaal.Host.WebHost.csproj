@@ -363,7 +363,6 @@
     <Compile Include="Controllers\CorrespondentieController.cs" />
     <Compile Include="Controllers\DigidController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\DeelnemerController.cs" />
     <Compile Include="Controllers\MijnPensioenController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
@@ -530,18 +529,6 @@
       <Project>{CA9157A6-3DE8-4846-B0F5-DA7F5425A1D9}</Project>
       <Name>Sphdhv.KlantPortaal.Access.Correspondentie.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.KlantPortaal.Access.Deelnemer.Contract\Sphdhv.KlantPortaal.Access.Deelnemer.Contract.csproj">
-      <Project>{E0EFC39E-CC62-48E5-A7B8-F6EB9FD40E6F}</Project>
-      <Name>Sphdhv.KlantPortaal.Access.Deelnemer.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.KlantPortaal.Access.Deelnemer.Proxy\Sphdhv.KlantPortaal.Access.Deelnemer.Proxy.csproj">
-      <Project>{96614DFD-EF90-4552-967F-F682EA2FBD7D}</Project>
-      <Name>Sphdhv.KlantPortaal.Access.Deelnemer.Proxy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.KlantPortaal.Access.Deelnemer.Service\Sphdhv.KlantPortaal.Access.Deelnemer.Service.csproj">
-      <Project>{3A51724B-36C3-4670-B482-183887E8ABE3}</Project>
-      <Name>Sphdhv.KlantPortaal.Access.Deelnemer.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sphdhv.KlantPortaal.Access.Pensioen.Contract\Sphdhv.KlantPortaal.Access.Pensioen.Contract.csproj">
       <Project>{4bc516dd-8163-4068-8612-8c9dbc77e0ac}</Project>
       <Name>Sphdhv.KlantPortaal.Access.Pensioen.Contract</Name>
@@ -617,18 +604,6 @@
     <ProjectReference Include="..\Sphdhv.KlantPortaal.Manager.Authentication.Service\Sphdhv.KlantPortaal.Manager.Authentication.Service.csproj">
       <Project>{A4611B04-0575-439B-9753-7572271EDF77}</Project>
       <Name>Sphdhv.KlantPortaal.Manager.Authentication.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.Klantportaal.Manager.Deelnemer.Proxy\Sphdhv.Klantportaal.Manager.Deelnemer.Proxy.csproj">
-      <Project>{434a254b-3ac6-41b0-8aba-23290eb2f343}</Project>
-      <Name>Sphdhv.Klantportaal.Manager.Deelnemer.Proxy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.Klantportaal.Manager.Deelnemer.Service\Sphdhv.Klantportaal.Manager.Deelnemer.Service.csproj">
-      <Project>{E2AA3708-C185-43AC-B16E-3DD07BB6D94A}</Project>
-      <Name>Sphdhv.Klantportaal.Manager.Deelnemer.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sphdhv.Klantportaal.Manager.DeelnemerAdmin.Contract\Sphdhv.Klantportaal.Manager.Deelnemer.Contract.csproj">
-      <Project>{968b6690-9f05-44f9-883e-5a904f27618f}</Project>
-      <Name>Sphdhv.Klantportaal.Manager.Deelnemer.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract\Sphdhv.KlantPortaal.Manager.MijnPensioen.Contract.csproj">
       <Project>{46D4204E-5C1F-4E0A-9AC7-FBD9BFA9921A}</Project>
@@ -736,7 +711,74 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <None Include="client-app\.gitignore" />
+    <None Include="client-app\babel.config.js" />
+    <None Include="client-app\dist\favicon.ico" />
+    <None Include="client-app\dist\img\arrow-left.0474d718.svg" />
+    <None Include="client-app\dist\img\chevron-right.040a1567.svg" />
+    <None Include="client-app\dist\img\digid.f543c42e.png" />
+    <None Include="client-app\dist\img\document.10cfdf02.svg" />
+    <None Include="client-app\dist\img\download.ccb02f37.svg" />
+    <None Include="client-app\dist\img\exit.66b468be.svg" />
+    <None Include="client-app\dist\img\location.c1cfddcf.svg" />
+    <None Include="client-app\dist\img\logo-large.08dc4e10.svg" />
+    <None Include="client-app\dist\img\logo-small.0040e035.svg" />
+    <None Include="client-app\dist\img\mail.4f6d80b7.svg" />
+    <None Include="client-app\dist\img\mijnpensioenoverzicht.d0227847.png" />
+    <None Include="client-app\dist\img\phone.45440b41.svg" />
+    <None Include="client-app\dist\img\piggy-bank.cb3ea3e2.svg" />
+    <None Include="client-app\dist\img\user.b1bbd82e.svg" />
+    <None Include="client-app\dist\index.html" />
+    <None Include="client-app\dist\js\app.js" />
+    <None Include="client-app\dist\js\chunk-vendors.js" />
+    <None Include="client-app\package-lock.json" />
+    <None Include="client-app\package.json" />
+    <None Include="client-app\public\favicon.ico" />
+    <None Include="client-app\public\index.html" />
+    <None Include="client-app\README.md" />
+    <None Include="client-app\src\App.vue" />
+    <None Include="client-app\src\assets\digid.png" />
+    <None Include="client-app\src\assets\icons\arrow-left.svg" />
+    <None Include="client-app\src\assets\icons\chevron-right.svg" />
+    <None Include="client-app\src\assets\icons\document.svg" />
+    <None Include="client-app\src\assets\icons\download.svg" />
+    <None Include="client-app\src\assets\icons\exit.svg" />
+    <None Include="client-app\src\assets\icons\location.svg" />
+    <None Include="client-app\src\assets\icons\mail.svg" />
+    <None Include="client-app\src\assets\icons\phone.svg" />
+    <None Include="client-app\src\assets\icons\piggy-bank.svg" />
+    <None Include="client-app\src\assets\icons\user.svg" />
+    <None Include="client-app\src\assets\logo-large.svg" />
+    <None Include="client-app\src\assets\logo-small.svg" />
+    <None Include="client-app\src\assets\mijnpensioenoverzicht.png" />
+    <None Include="client-app\src\assets\pensioenpod.svg" />
+    <None Include="client-app\src\components\Footer.vue" />
+    <None Include="client-app\src\components\generic\KeyValueList.vue" />
+    <None Include="client-app\src\components\generic\SvgIcon.vue" />
+    <None Include="client-app\src\components\Masthead.vue" />
+    <None Include="client-app\src\main.js" />
+    <None Include="client-app\src\router\index.js" />
+    <None Include="client-app\src\store\index.js" />
+    <None Include="client-app\src\styles\components\_digid.scss" />
+    <None Include="client-app\src\styles\components\_footer.scss" />
+    <None Include="client-app\src\styles\components\_keyvaluelist.scss" />
+    <None Include="client-app\src\styles\components\_linklist.scss" />
+    <None Include="client-app\src\styles\components\_masthead.scss" />
+    <None Include="client-app\src\styles\components\_spinner.scss" />
+    <None Include="client-app\src\styles\components\_table.scss" />
+    <None Include="client-app\src\styles\config\_functions.scss" />
+    <None Include="client-app\src\styles\config\_vars.scss" />
+    <None Include="client-app\src\styles\main.scss" />
+    <None Include="client-app\src\styles\_content.scss" />
+    <None Include="client-app\src\styles\_generic.scss" />
+    <None Include="client-app\src\views\Documenten.vue" />
+    <None Include="client-app\src\views\Email.vue" />
+    <None Include="client-app\src\views\Emailverificatie.vue" />
+    <None Include="client-app\src\views\Login.vue" />
+    <None Include="client-app\src\views\PageNotFound.vue" />
+    <None Include="client-app\src\views\Pensioen.vue" />
+    <None Include="client-app\src\views\Profiel.vue" />
+    <None Include="client-app\vue.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\SecurityCodeScan.VS2019.5.6.7\analyzers\dotnet\SecurityCodeScan.VS2019.dll" />
