@@ -12,7 +12,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -124,15 +124,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/Deelnemer/VerifyEmail")]
-        public string EmailVerificatieEndpoint {
-            get {
-                return ((string)(this["EmailVerificatieEndpoint"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool StubDhvDocumentWebApi {
             get {
@@ -151,46 +142,10 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4bb4eb36-fb4a-4a83-b7e7-e502c07fb84b")]
-        public string KeyVaultApplicationId {
-            get {
-                return ((string)(this["KeyVaultApplicationId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("67a674bd68a281d117648e1db4a19fcafae61972")]
-        public string KeyVaultCertificateThumbprint {
-            get {
-                return ((string)(this["KeyVaultCertificateThumbprint"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("db6ebc6098355941e2b741fe54b647a32cca4c63")]
         public string DigidCertificateSubjectDistinguishedName {
             get {
                 return ((string)(this["DigidCertificateSubjectDistinguishedName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2d653730-33a8-4ee4-8be6-65b9addac6df")]
-        public string KeyVaultTenantId {
-            get {
-                return ((string)(this["KeyVaultTenantId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://sphdhvdeelnemerdev.vault.azure.net/")]
-        public string KeyVaultUrl {
-            get {
-                return ((string)(this["KeyVaultUrl"]));
             }
         }
         

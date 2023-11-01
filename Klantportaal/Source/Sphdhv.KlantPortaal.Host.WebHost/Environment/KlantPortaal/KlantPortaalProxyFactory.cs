@@ -270,16 +270,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                 var x = new LoggingRepositoryFactory("AuditDatabase");
                 var loggingRepo = x.Create();
                 return loggingRepo as IService;
-            }
-            if (type == typeof(IKeyVault))
-            {
-                var applicationId = Settings.Default.KeyVaultApplicationId; //client/application id van de app registration
-                var tenantId = Settings.Default.KeyVaultTenantId; //tenant id van de app registration
-                var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
-                string url = Settings.Default.KeyVaultUrl;
-
-                return new KeyVault(certificateThumbprint, applicationId, tenantId, url) as IService;
-            }
+            }          
             #endregion
 
 
