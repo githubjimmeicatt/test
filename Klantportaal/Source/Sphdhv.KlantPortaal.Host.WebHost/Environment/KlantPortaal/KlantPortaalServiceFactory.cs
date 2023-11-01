@@ -30,10 +30,6 @@ using Icatt.Membership.Access.User.Contract.Interface;
 using System.Collections.Generic;
 using Icatt.Security.Engine.Cryptographer.Interface;
 using Icatt.Security.Engine.Cryptographer.Service;
-using Sphdhv.Klantportaal.Manager.Deelnemer.Interface;
-using Sphdhv.Klantportaal.Manager.Deelnemer.Service;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Service;
 using Sphdhv.KlantPortaal.Engine.Notification.Interface;
 using Icatt.Auditing.Access.AuditTrail.Interface;
 using Icatt.Auditing.Access.AuditTrail.Service;
@@ -138,14 +134,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             if (type == typeof(IAspNetIdentityManager))
             {
                 return new AspNetIdentityManagerService<TContext>(context, FactoryContainer) as IService;
-            }
-            if (type == typeof(IDeelnemerManager))
-            {
-                return new DeelnemerManager<TContext>(context, FactoryContainer,Properties.Settings.Default.EmailVerificatieEndpoint) as IService;
-            }
-            if (type == typeof(IDeelnemerAccess))
-            {
-                return new DeelnemerAccessService<TContext>(context, FactoryContainer) as IService;
             }
             if (type == typeof(INotification))
             {

@@ -6,8 +6,6 @@ import Profiel from '../views/Profiel.vue';
 import Pensioen from '../views/Pensioen.vue';
 import Documenten from '../views/Documenten.vue';
 import Login from '../views/Login.vue';
-import Email from '../views/Email.vue';
-import Emailverificatie from '../views/Emailverificatie.vue'
 import PageNotFound from '../views/PageNotFound.vue';
 
 Vue.use(VueRouter)
@@ -45,22 +43,7 @@ const routes = [
       requiresAuth: false
     }
   },
-  {
-    path: '/email',
-    name: 'Email',
-    component: Email,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/emailverificatie/:id',
-    name: 'Emailverificatie',
-    component: Emailverificatie,
-    meta: {
-      requiresAuth: true
-    }
-  },
+ 
   {
     path: '*',
     name: 'PageNotFound',
@@ -84,13 +67,7 @@ router.beforeEach(async (to, from, next) => {
 
   const { requiresAuth } = to?.meta || {};
 
-  if (isLoggedIn && !$store.state.aanvullingenGecontroleerd) {
-    await $store.dispatch('fetchAanvullingVragen')
-  }
-
-  if (isLoggedIn && requiresAuth && $store.state.aanvullingenGecontroleerd && $store.state.aanvullingVragen && to.name !== "Email") {
-    next({ name: 'Email' })
-  } else if (requiresAuth === true && !isLoggedIn) {
+  if (requiresAuth === true && !isLoggedIn) {
     next({ name: 'Login' })
   } else {
     next();

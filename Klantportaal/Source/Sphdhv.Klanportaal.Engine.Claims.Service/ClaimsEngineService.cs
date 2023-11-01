@@ -27,6 +27,7 @@ namespace Sphdhv.KlantPortaal.Engine.Claims.Service
             new object[] {"digid1", "900132218", 279618013, "0000307950", "??"},
             new object[] {"digid1", "900132231", 70704703, "0000308222", "??"},
             new object[] {"digid1", "900132243", 237648829, "0000307943", "icatttest+sphdhv.digid5@gmail.com"},
+            new object[] {"digid1", "900228003", 178424912, "0000307944", ""},
             };
 
         private static readonly ThreadSafeRandomizer Rand = new ThreadSafeRandomizer();

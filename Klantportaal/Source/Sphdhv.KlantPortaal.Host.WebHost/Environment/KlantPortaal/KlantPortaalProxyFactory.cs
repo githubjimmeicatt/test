@@ -29,10 +29,6 @@ using Sphdhv.KlantPortaal.Manager.MijnPensioen.Proxy;
 using System.Collections.Generic;
 using Icatt.Security.Engine.Cryptographer.Interface;
 using Icatt.Security.Engine.Cryptographer.Proxy;
-using Sphdhv.Klantportaal.Manager.Deelnemer.Interface;
-using Sphdhv.Klantportaal.Manager.Deelnemer.Proxy;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Proxy;
 using Icatt.Infrastructure;
 using Icatt.Web.Infrastructure;
 using Sphdhv.KlantPortaal.Engine.Notification.Interface;
@@ -123,19 +119,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                 proxy.NoAuth();
                 LogExceptions(proxy, false);
             }
-            else if (type == typeof(IDeelnemerManager))
-            {
-                proxy = new DeelnemerManagerProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
-
-                proxy.OnAuthenticate += (_, __) =>
-                {
-                    var authContainer = new AuthenticationFactoryContainer<KlantPortaalContext>();
-                    var p = authContainer.ProxyFactory.CreateProxy<IAuthenticationManager>(context);
-                    return p.AuthenticateUser();
-                };
-                proxy.NoAuthorization();
-                LogExceptions(proxy, false);
-            }
+           
             else if (type == typeof(IAuditTrailWriter))
             {
                 proxy = new  AuditTrailWriterProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
@@ -207,12 +191,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
             else if (type == typeof(ISessionMarkerAccess))
             {
                 proxy = new TerminatedSessionAccessProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
-                proxy.NoAuth();
-                LogExceptions(proxy, false);
-            }
-            else if (type == typeof(IDeelnemerAccess))
-            {
-                proxy = new DeelnemerAccessProxy<KlantPortaalContext>(context, FactoryContainer) as ProxyBase<IService, KlantPortaalContext>;
                 proxy.NoAuth();
                 LogExceptions(proxy, false);
             }
@@ -292,16 +270,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal
                 var x = new LoggingRepositoryFactory("AuditDatabase");
                 var loggingRepo = x.Create();
                 return loggingRepo as IService;
-            }
-            if (type == typeof(IKeyVault))
-            {
-                var applicationId = Settings.Default.KeyVaultApplicationId; //client/application id van de app registration
-                var tenantId = Settings.Default.KeyVaultTenantId; //tenant id van de app registration
-                var certificateThumbprint = Settings.Default.KeyVaultCertificateThumbprint; //thumbprint van het certificaat geupload bij de app registration
-                string url = Settings.Default.KeyVaultUrl;
-
-                return new KeyVault(certificateThumbprint, applicationId, tenantId, url) as IService;
-            }
+            }          
             #endregion
 
 

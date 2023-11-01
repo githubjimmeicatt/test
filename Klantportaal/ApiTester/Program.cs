@@ -1,5 +1,4 @@
 ﻿using Sphdhv.DeelnemerPortalApi.Interface;
-using Sphdhv.KlantPortaal.Access.Deelnemer.Interface;
 using Sphdhv.KlantPortaal.Host.WebHost.Environment.KlantPortaal;
 using System;
 using System.Collections.Generic;
