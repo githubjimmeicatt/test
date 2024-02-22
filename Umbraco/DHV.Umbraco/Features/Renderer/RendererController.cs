@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace DHV.Umbraco.Features.Renderer
 {
@@ -15,12 +17,14 @@ namespace DHV.Umbraco.Features.Renderer
         private readonly GetAssets _getAssets;
         private readonly IUmbracoClient _umbracoClient;
         private readonly IWebHostEnvironment _env;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
-        public RendererController(GetAssets getAssets, IUmbracoClient umbracoClient, IWebHostEnvironment env)
+        public RendererController(GetAssets getAssets, IUmbracoClient umbracoClient, IWebHostEnvironment env, IConfiguration configuration)
         {
             _getAssets = getAssets;
             _umbracoClient = umbracoClient;
             _env = env;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -28,6 +32,7 @@ namespace DHV.Umbraco.Features.Renderer
         {
             var baseUri = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
             var head = await _umbracoClient.GetHeadAsync(baseUri, Request.Path, token);
+            var piwikId = _configuration.GetValue<string>("PiwikId");
 
             if (head == null)
             {
@@ -45,7 +50,8 @@ namespace DHV.Umbraco.Features.Renderer
             return View("/Features/Renderer/View.cshtml", new PageResponse
             {
                 Assets = assets,
-                Head = head
+                Head = head,
+                PiwikId = piwikId 
             });
         }
     }
@@ -54,5 +60,6 @@ namespace DHV.Umbraco.Features.Renderer
     {
         public IReadOnlyCollection<IAsset> Assets { get; set; }
         public Head Head { get; internal set; }
+        public string PiwikId { get; internal set; }
     }
 }

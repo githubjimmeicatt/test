@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using static System.Net.WebRequestMethods;
 
 namespace DHV.Umbraco
 {
@@ -24,6 +25,8 @@ namespace DHV.Umbraco
                 "https://cdn.umbraco.io",
                 "www.google-analytics.com",
                 "region1.google-analytics.com",
+                "pensioenfondshaskoningdhv.containers.piwik.pro",
+                "pensioenfondshaskoningdhv.piwik.pro",
             };
 
 
