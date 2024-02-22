@@ -60,6 +60,6 @@ namespace DHV.Umbraco.Features.Renderer
     {
         public IReadOnlyCollection<IAsset> Assets { get; set; }
         public Head Head { get; internal set; }
-        public object PiwikId { get; internal set; }
+        public string PiwikId { get; internal set; }
     }
 }
