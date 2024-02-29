@@ -2,8 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import cookies from 'vue-cookies'
 
-Vue.use(require('vue-cookies'))
+Vue.use(cookies)
 Vue.config.productionTip = false
 
 new Vue({

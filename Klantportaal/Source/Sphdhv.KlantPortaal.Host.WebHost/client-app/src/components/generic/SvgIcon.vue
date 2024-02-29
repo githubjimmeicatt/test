@@ -4,8 +4,13 @@
 </template>
 
 <script>
-let cache = new Map();
-
+const glob = import.meta.glob('../../assets/icons/*.svg', {
+    query: '?url',
+    eager: true,
+    import: 'default'
+})
+const entries = Object.entries(glob).map(([key,value]) => [key.split('/').at(-1)?.split('.')[0],fetch(value).then(r => r.text())])
+const icons = new Map(entries)
 export default {
     props: {
         icon: {
@@ -21,21 +26,13 @@ export default {
     computed: {
         src() {
             const { icon } = this;
-            return require(`@/assets/icons/${icon}.svg`);
+            return icons.get(icon)
         }
     },
     async mounted() {
         const { src } = this;
-
-        if (!cache.has(src)) {
-            try {
-                cache.set(src, fetch(src).then(r => r.text()));
-            } catch (e) {
-                cache.delete(src);
-            }
-        }
-        if (cache.has(src)) {
-            this.svg = await cache.get(src);
+        if(src) {
+            this.svg = await src;
         }
     }
 }

@@ -1,17 +1,17 @@
 //
 // Functions
 //
-
+@use "sass:math";
 //
 // Em conversion
 
 @function em($s, $d: 16) {
-    @return $s / $d + 0em;
+    @return math.div($s, $d) + 0em;
 }
 
 //
 // Rem conversion
 
 @function rem($s) {
-    @return $s / 16 + 0rem;
+    @return math.div($s, 16) + 0rem;
 }

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import KeyValueList from '@/components/generic/KeyValueList';
+    import KeyValueList from '@/components/generic/KeyValueList.vue';
 
     export default {
         name: 'Profiel',

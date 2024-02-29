@@ -6,7 +6,7 @@
             <p>U kunt uw pensioenoverzicht bekijken op <a target="_blank" href="//www.mijnpensioenoverzicht.nl">mijnpensioenoverzicht.nl</a>.</p>
 
             <a class="logo-link" target="_blank" href="//www.mijnpensioenoverzicht.nl">
-                <img :src="require('../assets/mijnpensioenoverzicht.png')" />
+                <img src="@/assets/mijnpensioenoverzicht.png" />
             </a>
 
             <article>
