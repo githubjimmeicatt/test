@@ -1,10 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import {createStore} from 'vuex'
 import axios from 'axios'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+const _createStore = (cookies) => createStore({
   state: {
     user: null,
     pension: null,
@@ -20,10 +17,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setUnauthorized: (state, user) => {
+    setUnauthorized: (state) => {
       state.user = null;
       state.pension = null;
-      Vue.$cookies.set('KP_CSRF_CLIENT', '');
+      cookies.set('KP_CSRF_CLIENT', '');
     },
     setUser: (state, user) => {
       state.user = user;
@@ -41,7 +38,7 @@ export default new Vuex.Store({
   },
   actions: {
     fetchPension: async ({ commit }) => {
-      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      const csrfToken = cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
 
@@ -64,7 +61,7 @@ export default new Vuex.Store({
       });
     },
     fetchUser: async ({ commit }) => {
-      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      const csrfToken = cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
 
@@ -87,7 +84,7 @@ export default new Vuex.Store({
       });
     },
     fetchDocuments: async ({ commit }) => {
-      const csrfToken = Vue.$cookies.get('KP_CSRF_CLIENT');
+      const csrfToken = cookies.get('KP_CSRF_CLIENT');
       if (!csrfToken)
         return false;
 
@@ -115,3 +112,5 @@ export default new Vuex.Store({
   modules: {
   }
 })
+
+export default _createStore
