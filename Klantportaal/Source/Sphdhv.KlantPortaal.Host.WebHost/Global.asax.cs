@@ -52,11 +52,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
             JsonpParameterName = "callback";
         }
 
-        public JsonpFormatter(HttpRequestMessage request):this()
-        {
-            JsonpCallbackFunction = GetJsonCallbackFunction(request);
-        }
-
+       
         /// <summary>
         ///  Name of the query string parameter to look for
         ///  the jsonp function name
@@ -84,10 +80,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
         /// <returns></returns>
         public override MediaTypeFormatter GetPerRequestFormatterInstance(Type type, HttpRequestMessage request, MediaTypeHeaderValue mediaType)
         {
-            var formatter = new JsonpFormatter()
-            {
-                JsonpCallbackFunction = GetJsonCallbackFunction(request)
-            };
+            var formatter = new JsonpFormatter();            
 
             // this doesn't work unfortunately
             //formatter.SerializerSettings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
@@ -95,7 +88,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
             // You have to reapply any JSON.NET default serializer Customizations here    
             formatter.SerializerSettings.Converters.Add(new StringEnumConverter());
             formatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-
 
             return formatter;
         }
@@ -157,24 +149,6 @@ namespace Sphdhv.KlantPortaal.Host.WebHost
                         }, TaskContinuationOptions.ExecuteSynchronously)
                         .Unwrap();
         }
-
-        /// <summary>
-        /// Retrieves the Jsonp Callback function
-        /// from the query string
-        /// </summary>
-        /// <returns></returns>
-        private string GetJsonCallbackFunction(HttpRequestMessage request)
-        {
-            if (request.Method != HttpMethod.Get)
-                return null;
-
-            var query = HttpUtility.ParseQueryString(request.RequestUri.Query);
-            var queryVal = query[JsonpParameterName];
-
-            if (string.IsNullOrEmpty(queryVal))
-                return null;
-
-            return queryVal;
-        }
+                
     }
 }

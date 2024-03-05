@@ -19,7 +19,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
                 {
                     Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
                     new ResponseModel<ActueelPensioenModel>(400, ex.InnerException.Message),
-                    new JsonpFormatter(context.Request))
+                    new JsonpFormatter())
                 };
             }
             base.OnException(context);

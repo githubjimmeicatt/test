@@ -30,7 +30,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
                 {
                     Content = new ObjectContent<ResponseModel<string>>(
                         new ResponseModel<string>(500, "Request processing failed."),
-                        new JsonpFormatter(context.Request)
+                        new JsonpFormatter()
                     )
                 };
 

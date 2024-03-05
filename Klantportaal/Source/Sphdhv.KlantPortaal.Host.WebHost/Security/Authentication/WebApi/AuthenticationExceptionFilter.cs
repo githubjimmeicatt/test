@@ -41,7 +41,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.Authentication.WebApi
                 context.Response.Headers.AddCookies(new List<CookieHeaderValue>() { expireFormsCookie });
                 context.Response.Content = new ObjectContent<ResponseModel<ActueelPensioenModel>>(
                     new ResponseModel<ActueelPensioenModel>(401, "Authentication/Authorization failed."),
-                    new JsonpFormatter(context.Request)
+                    new JsonpFormatter()
                 );
 
             }
