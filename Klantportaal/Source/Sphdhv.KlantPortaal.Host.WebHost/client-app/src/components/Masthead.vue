@@ -11,8 +11,8 @@
         <div class="Masthead--main">
             <div class="container">
                 <div aria-label="Pensieonfonds HaskoningDHV">
-                    <img alt="" class="logo-large" src="../assets/logo-large.svg"/>
-                    <img alt="" class="logo-small" src="../assets/logo-small.svg"/>
+                    <img alt="" class="logo-large" src="@/assets/logo-large.svg"/>
+                    <img alt="" class="logo-small" src="@/assets/logo-small.svg"/>
                 </div>
                 <div v-if="$store.getters.isAuthenticated">
                     <a href="/authentication/logoff">
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import SvgIcon from '@/components/generic/SvgIcon';
+import SvgIcon from '@/components/generic/SvgIcon.vue';
 
 export default {
     components: {

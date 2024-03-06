@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import SvgIcon from '@/components/generic/SvgIcon';
+import SvgIcon from '@/components/generic/SvgIcon.vue';
 
 export default {
     components: {

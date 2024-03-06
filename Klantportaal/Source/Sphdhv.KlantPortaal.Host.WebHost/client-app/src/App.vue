@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Masthead from '@/components/Masthead'
-import Footer from '@/components/Footer'
+import Masthead from '@/components/Masthead.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   components: { Masthead, Footer }
