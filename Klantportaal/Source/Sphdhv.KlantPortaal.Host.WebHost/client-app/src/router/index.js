@@ -1,6 +1,4 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import $store from '../store/index';
+import {createRouter, createWebHistory} from 'vue-router'
 
 import Profiel from '../views/Profiel.vue';
 import Pensioen from '../views/Pensioen.vue';
@@ -8,71 +6,74 @@ import Documenten from '../views/Documenten.vue';
 import Login from '../views/Login.vue';
 import PageNotFound from '../views/PageNotFound.vue';
 
-Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'Profiel',
-    component: Profiel,
-    meta: {
-      requiresAuth: true
+const _createRouter = (store) => {
+  const routes = [
+    {
+      path: '/',
+      name: 'Profiel',
+      component: Profiel,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/documenten',
+      name: 'Documenten',
+      component: Documenten,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/pensioen',
+      name: 'Pensioen',
+      component: Pensioen,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      meta: {
+        requiresAuth: false
+      }
+    },
+   
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'PageNotFound',
+      component: PageNotFound,
+      meta: {
+        requiresAuth: false
+      }
+    },
+  ]
+  
+  const router = createRouter({
+    history: createWebHistory(),
+    routes
+  })
+  
+  router.beforeEach(async (to, from, next) => {
+  
+    let isLoggedIn = !!store.state.user;
+    isLoggedIn = isLoggedIn || await store.dispatch('fetchUser');
+  
+    const { requiresAuth } = to?.meta || {};
+  
+    if (requiresAuth === true && !isLoggedIn) {
+      next({ name: 'Login' })
+    } else {
+      next();
     }
-  },
-  {
-    path: '/documenten',
-    name: 'Documenten',
-    component: Documenten,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/pensioen',
-    name: 'Pensioen',
-    component: Pensioen,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      requiresAuth: false
-    }
-  },
- 
-  {
-    path: '*',
-    name: 'PageNotFound',
-    component: PageNotFound,
-    meta: {
-      requiresAuth: false
-    }
-  },
-]
+  
+  });
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
+  return router
+}
 
-router.beforeEach(async (to, from, next) => {
 
-  let isLoggedIn = !!$store.state.user;
-  isLoggedIn = isLoggedIn || await $store.dispatch('fetchUser');
 
-  const { requiresAuth } = to?.meta || {};
-
-  if (requiresAuth === true && !isLoggedIn) {
-    next({ name: 'Login' })
-  } else {
-    next();
-  }
-
-});
-
-export default router
+export default _createRouter
