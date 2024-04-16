@@ -1,13 +1,20 @@
 <template>
   <article class="card">
-    <!-- <pre>{{ image }}</pre> -->
+
     <img
-      v-if="image?.media?._url"
+      v-if="image?.media?._url "
 
       :alt="image?.media?.name ? `card ${image?.media?.name} banner` : 'card banner'"
 
-      :src="image.media._url"
+      :src="image.media._url "
       loading="lazy">
+
+    <img
+      v-else-if="image?.url"
+      alt="card banner"
+      :src="image?.url"
+      loading="lazy">
+
     <div class="article-inner">
       <h1 v-if="title">
         {{ title }}
@@ -87,21 +94,21 @@ article {
 
  img{
     width: 100%;
-    height: 217px;
+    // height: 217px;
 
-    @include mobile {
-        .strip {
-          height: 130px;
-        }
-      }
+    // @include mobile {
+    //     .strip {
+    //       height: 130px;
+    //     }
+    //   }
 
-    @include screen-fits-two-cards {
-      height: 188px;
-    }
+    // @include screen-fits-two-cards {
+    //   height: 188px;
+    // }
 
-    @include screen-fits-three-cards {
-      height: 122px;
-     }
+    // @include screen-fits-three-cards {
+    //   height: 122px;
+    //  }
 
     object-position: center;
     object-fit: cover;
