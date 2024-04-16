@@ -114,10 +114,54 @@ p {
 
  .strip {
     grid-template-columns: 651px;
+
+     :deep(img) {
+      height: 217px;
+     }
+
+    @include mobile {
+        :deep(img) {
+          height: 130px;
+        }
+      }
+
+    @include screen-fits-two-cards {
+       :deep(img) { height: 188px;
+       }
+    }
+
+    @include screen-fits-three-cards {
+      :deep(img) {  height: 122px;
+      }
+     }
+ }
+
+ .two .strip {
+    grid-template-columns: 651px;
+
+     :deep(img) {
+      height: 217px;
+     }
+
+    @include mobile {
+        :deep(img) {
+          height: 130px;
+        }
+      }
+
+    @include screen-fits-two-cards {
+       :deep(img) { height: 188px;
+       }
+    }
+
+    @include screen-fits-three-cards {
+      :deep(img) {  height: 188px;
+      }
+     }
  }
 
 @include screen-fits-two-cards {
-    .strip {
+   .two .strip, .strip {
       grid-template-columns: 564px 564px;
     }
   }
