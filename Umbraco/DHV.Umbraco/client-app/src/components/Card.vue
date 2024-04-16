@@ -87,7 +87,21 @@ article {
 
  img{
     width: 100%;
-    height: 160px;
+    height: 217px;
+
+    @include mobile {
+        .strip {
+          height: 130px;
+        }
+      }
+
+    @include screen-fits-two-cards {
+      height: 188px;
+    }
+
+    @include screen-fits-three-cards {
+      height: 122px;
+     }
 
     object-position: center;
     object-fit: cover;
