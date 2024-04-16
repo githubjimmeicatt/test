@@ -52,10 +52,16 @@ namespace DHV.Umbraco
                         "www.google-analytics.com"
                     ))
                     .MediaSources(s => s.Self())
-                    .ScriptSources(s => s.Self().StrictDynamic())
+                    .ScriptSources(s => 
+                    {
+                        if (!env.IsDevelopment())
+                        {
+                            s.Self().StrictDynamic();
+                        }
+                    })
                     .FormActions(s => s.Self())
                     .FrameAncestors(s => s.Self())
-                    .FrameSources(s=> s.Self().CustomSources("https://www.youtube.com", "https://www.youtube-nocookie.com"))
+                    .FrameSources(s => s.Self().CustomSources("https://www.youtube.com", "https://www.youtube-nocookie.com"))
                     .ObjectSources(s => s.None())
                     .BaseUris(s => s.None())
                     .ReportUris(s =>

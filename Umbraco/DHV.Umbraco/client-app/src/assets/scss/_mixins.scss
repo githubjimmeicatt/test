@@ -11,7 +11,7 @@ $card-four-width: calc(#{$card-width-small} * 4 + #{$gap-medium} * 3 + #{$card-b
 $arrow-icon: url("/assets/arrow.svg");
 
 @mixin screen-fits-two-cards {
-    @media only screen and (min-width: $card-two-width) {
+    @media only screen and (min-width: calc((#{$card-width-small} * 2 + #{$gap-medium} + #{$card-border} * 2)/1)) {
         @content;
     }
 }

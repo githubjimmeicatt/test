@@ -1,40 +1,35 @@
 <template>
   <article class="card">
-    <lazy-img
-      v-if="image?._url || image?.url"
-      height="100%"
-      width="100%"
-      :src="image"
-      :alt="title ? `card ${title} banner` : 'card banner'"
-    />
+    <!-- <pre>{{ image }}</pre> -->
+    <img
+      v-if="image?.media?._url"
 
-    <h1 v-if="title">
-      {{ title }}
-    </h1>
+      :alt="image?.media?.name ? `card ${image?.media?.name} banner` : 'card banner'"
 
-    <p
-      v-if="subtitle"
-      class="subtitle"
-    >
-      {{ subtitle }}
-    </p>
+      :src="image.media._url"
+      loading="lazy">
+    <div class="article-inner">
+      <h1 v-if="title">
+        {{ title }}
+      </h1>
 
-    <slot>
-      <rich-text
-        v-if="body"
-        :body="body"
-      />
-    </slot>
+      <slot>
+        <rich-text
+          v-if="body"
+          :body="body"
+        />
+      </slot>
 
-    <the-link
-      v-if="target?.url"
-      :href="target.url"
-      :target="target.target"
-    >
-      {{ target.name || target.url }} &gt;
-    </the-link>
+      <the-link
+        v-if="target?.url"
+        :href="target.url"
+        :target="target.target"
+      >
+        {{ target.name || target.url }} &gt;
+      </the-link>
 
-    <slot name="postlink" />
+      <slot name="postlink" />
+    </div>
   </article>
 </template>
 
@@ -81,7 +76,6 @@ export default {
 
 article {
   position: relative;
-  padding: 1.5rem;
   background-color: var(--card-background-color, white);
   color: black;
   display: flex;
@@ -91,8 +85,12 @@ article {
   border-radius: 0 0 0.75rem 0.75rem;
   box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.25);
 
-  @include screen-fits-two-cards {
-    padding: 2rem;
+ img{
+    width: 100%;
+    height: 160px;
+
+    object-position: center;
+    object-fit: cover;
   }
 
   ::v-deep(h1) {
@@ -105,18 +103,9 @@ article {
     margin-block: var(--space-smaller);
   }
 
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 12rem;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  img + .subtitle, img + h1, img + p {
-    margin-top: var(--space-largest);
+  .article-inner{
+    padding: 1.5rem;
   }
 }
+
 </style>
