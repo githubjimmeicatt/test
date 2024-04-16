@@ -112,25 +112,28 @@ p {
   margin-top: var(--card-gap);
 }
 
+ .strip {
+    grid-template-columns: 651px;
+ }
+
 @include screen-fits-two-cards {
     .strip {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 564px 564px;
     }
   }
 
   @include screen-fits-three-cards {
-      .three, .four {
-        .strip {
-          grid-template-columns: repeat(3, 1fr);
-        }
+    .three, .four {
+      .strip {
+        grid-template-columns: 366px 366px 366px;
       }
+    }
   }
 
-  @include screen-fits-four-cards {
-      .four {
-          .strip {
-            grid-template-columns: repeat(4, 1fr);
-          }
-      }
+  @include mobile {
+    .strip {
+     grid-template-columns: 390px;
+    }
   }
+
 </style>
