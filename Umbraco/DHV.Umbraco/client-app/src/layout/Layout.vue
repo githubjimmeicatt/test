@@ -163,6 +163,10 @@ html {
 
   --color-error: rgb(210,21,21);
   --color-background-default:   rgb(232,246,246);
+  --color-background-standout:   rgb(255, 247, 218);
+  --border-radius-small: 0.5rem;
+  --border-radius-medium: 1rem;
+  --border-radius-large: 2rem;
 }
 
 .SPH {
