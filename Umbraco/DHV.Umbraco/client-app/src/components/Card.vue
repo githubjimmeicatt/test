@@ -83,7 +83,7 @@ article {
   position: relative;
   padding: 1.5rem;
   background-color: var(--card-background-color, white);
-  color: black;
+
   display: flex;
   flex-direction: column;
   overflow: hidden;

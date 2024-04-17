@@ -20,8 +20,6 @@
         {{ content.name }}
       </h1>
 
-      <quote />
-
       <section
         v-if="c.component === 'richtext'"
         class="container"

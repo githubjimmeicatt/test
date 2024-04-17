@@ -84,6 +84,7 @@ html, body {
 body {
   max-width: 100vw;
   font-family: 'Open Sans', sans-serif;
+  color:#444444;
 }
 
 textarea {
