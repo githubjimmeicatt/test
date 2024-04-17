@@ -81,6 +81,10 @@ article {
     display: flex;
     width: 100%;
     gap: var(--space-medium);
+        @include mobile {
+gap: var(--space-small);
+     }
+
     margin-block: var(--space-smaller);
 
 }
@@ -91,6 +95,16 @@ svg{
     position: absolute;
     top:-20px;
     left:40px;
+
+        @include mobile {
+
+           height: 30px;
+    width:30px;;
+
+    top:-10px;
+    left:20px;
+
+        }
 }
 
 article>div {
@@ -102,7 +116,10 @@ article>div {
     border-radius: var(--border-radius-medium);
     ;
     padding: var(--space-medium);
-    padding-inline-start: var(--space-larger);
+    padding-inline-start: 7rem;
+        @include mobile {
+padding-inline-start: 2rem;
+     }
 
     display: flex;
     flex-direction: column;
@@ -119,6 +136,10 @@ article>div {
         display: flex;
         justify-content: space-between;
         flex-direction: row;
+   @include mobile {
+ flex-direction: column;
+ gap:var(--space-smaller);
+     }
 
         padding: 0px;
 
@@ -135,7 +156,16 @@ img {
     margin-block-start: var(--space-smaller);
     object-position: center;
     object-fit: cover;
-      flex: 0 0 144px;
+    flex: 0 0 144px;
+
+      @include mobile {
+
+          width: 80px;
+          height: 80px;
+          flex: 0 0 80px;
+
+      }
+
 }
 
 ::v-deep(h1) {
