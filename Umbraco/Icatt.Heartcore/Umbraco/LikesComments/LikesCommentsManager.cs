@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Ganss.XSS;
+using Ganss.Xss;
 using Icatt.Heartcore.Umbraco.Shared;
 using Umbraco.Headless.Client.Net.Management;
 
@@ -12,7 +12,7 @@ namespace Icatt.Heartcore.Umbraco.LikesComments
         private const string CommentsProp = "comments";
         private const string LikesProp = "likes";
 
-        private static readonly HtmlSanitizer s_sanitizer = new HtmlSanitizer(Enumerable.Empty<string>(), Enumerable.Empty<string>(), Enumerable.Empty<string>(), Enumerable.Empty<string>(), Enumerable.Empty<string>());
+        private static readonly HtmlSanitizer s_sanitizer = new HtmlSanitizer( new HtmlSanitizerOptions() );
         private readonly IContentManagementService _contentManagement;
 
         public LikesCommentsManager(IContentManagementService contentManagement)

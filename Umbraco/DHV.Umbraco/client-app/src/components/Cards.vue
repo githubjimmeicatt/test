@@ -112,25 +112,72 @@ p {
   margin-top: var(--card-gap);
 }
 
+ .strip {
+    grid-template-columns: 651px;
+
+     :deep(img) {
+      height: 217px;
+     }
+
+    @include mobile {
+        :deep(img) {
+          height: 130px;
+        }
+      }
+
+    @include screen-fits-two-cards {
+       :deep(img) { height: 188px;
+       }
+    }
+
+    @include screen-fits-three-cards {
+      :deep(img) {  height: 122px;
+      }
+     }
+ }
+
+ .two .strip {
+    grid-template-columns: 651px;
+
+     :deep(img) {
+      height: 217px;
+     }
+
+    @include mobile {
+        :deep(img) {
+          height: 130px;
+        }
+      }
+
+    @include screen-fits-two-cards {
+       :deep(img) { height: 188px;
+       }
+    }
+
+    @include screen-fits-three-cards {
+      :deep(img) {  height: 188px;
+      }
+     }
+ }
+
 @include screen-fits-two-cards {
-    .strip {
-      grid-template-columns: repeat(2, 1fr);
+   .two .strip, .strip {
+      grid-template-columns: 564px 564px;
     }
   }
 
   @include screen-fits-three-cards {
-      .three, .four {
-        .strip {
-          grid-template-columns: repeat(3, 1fr);
-        }
+    .three, .four {
+      .strip {
+        grid-template-columns: 366px 366px 366px;
       }
+    }
   }
 
-  @include screen-fits-four-cards {
-      .four {
-          .strip {
-            grid-template-columns: repeat(4, 1fr);
-          }
-      }
+  @include mobile {
+    .strip {
+     grid-template-columns: 390px;
+    }
   }
+
 </style>

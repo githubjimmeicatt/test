@@ -10,10 +10,15 @@ $card-four-width: calc(#{$card-width-small} * 4 + #{$gap-medium} * 3 + #{$card-b
 
 $arrow-icon: url("/assets/arrow.svg");
 
+@mixin mobile {
+    @media only screen and (max-width: 431px) {
+        @content;
+    }
+}
 
 
 @mixin screen-fits-two-cards {
-    @media only screen and (min-width: $card-two-width) {
+    @media only screen and (min-width: 76rem) {
         @content;
     }
 }
