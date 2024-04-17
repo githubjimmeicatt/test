@@ -15,7 +15,10 @@
         </svg>
         <p>{{quote}}
         </p>
-        <div><span v-if="auteur">- {{ auteur }}</span><a v-if="link && link.url" :href="link.url">{{link.name ? link.name : "lees meer" }} ></a></div>
+        <div>
+          <span v-if="auteur">- {{ auteur }}</span>
+          <a v-if="link && link.url" :href="linkWithHttpFix" :target="linkTarget">{{link.name ? link.name : "lees meer" }} ></a>
+        </div>
       </div>
 
     </article>
@@ -48,6 +51,25 @@ export default {
       default: null,
     },
 
+  },
+  computed: {
+    linkWithHttpFix() {
+      if (!this.link || !this.link.url) {
+        return ''
+      }
+      if (this.link.url.startsWith('https://') || this.link.url.startsWith('http://')) {
+        return this.link.url
+      }
+
+      if (this.link.type === 'EXTERNAL') {
+        return `https://${this.link.url}`
+      }
+
+      return 'mmmm'
+    },
+    linkTarget() {
+      return this.link.type === 'EXTERNAL' ? '_blank' : '_self'
+    },
   },
 }
 </script>
