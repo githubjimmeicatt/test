@@ -129,7 +129,10 @@ export default {
 
 section {
   position: relative;
-  min-height: 18rem;
+  //min-height: 368px;
+
+    aspect-ratio: 3/1;
+
   display: flex;
   justify-content: flex-end;
   padding-block: var(--space-medium);

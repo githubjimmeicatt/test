@@ -204,4 +204,9 @@ main > .container {
     display: block;
   }
 }
+
+section[contenttypealias="pageHeader"] {
+   min-height:18rem;
+  aspect-ratio:unset;
+}
 </style>
