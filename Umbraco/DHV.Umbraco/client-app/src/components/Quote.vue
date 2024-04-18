@@ -80,13 +80,11 @@ export default {
 article {
     display: flex;
     width: 100%;
-    gap: var(--space-medium);
-        @include mobile {
-gap: var(--space-small);
-     }
-
     margin-block: var(--space-smaller);
-
+    gap: var(--space-medium);
+    @include mobile {
+      gap: var(--space-small);
+    }
 }
 
 svg{
@@ -95,36 +93,31 @@ svg{
     position: absolute;
     top:-20px;
     left:40px;
-
-        @include mobile {
-
-           height: 30px;
-    width:30px;;
-
-    top:-10px;
-    left:20px;
-
-        }
+    @include mobile {
+      height: 30px;
+      width:30px;;
+      top:-10px;
+      left:20px;
+    }
 }
 
 article>div {
     position: relative;
     border-bottom: 3px solid #dcd7d7;
     box-shadow: 0 2px 0.3rem rgb(0 0 0 / 9%);
-
     background-color: var(--color-background-standout);
     border-radius: var(--border-radius-medium);
-    ;
     padding: var(--space-medium);
-    padding-inline-start: 7rem;
-        @include mobile {
-padding-inline-start: 2rem;
-     }
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: var(--space-medium);
+    width:100%;
+
+    padding-inline-start: 7rem;
+    @include mobile {
+      padding-inline-start: 2rem;
+    }
 
     p {
         padding: 0px;
@@ -136,15 +129,12 @@ padding-inline-start: 2rem;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
-   @include mobile {
- flex-direction: column;
- gap:var(--space-smaller);
-     }
-
+        @include mobile {
+          flex-direction: column;
+          gap:var(--space-smaller);
+          }
         padding: 0px;
-
     }
-
 }
 
 img {
@@ -159,11 +149,9 @@ img {
     flex: 0 0 144px;
 
       @include mobile {
-
           width: 80px;
           height: 80px;
           flex: 0 0 80px;
-
       }
 
 }
