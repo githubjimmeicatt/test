@@ -101,6 +101,7 @@ type NewsParams = {
 export interface NewsCard {
   id: string;
   summary: string;
+  body: string;
   name: string;
   url: string;
   createDate: Date;
