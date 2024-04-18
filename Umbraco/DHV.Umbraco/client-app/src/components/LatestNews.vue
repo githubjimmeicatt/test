@@ -1,4 +1,5 @@
 <template>
+
   <cards
     v-bind="$attrs"
     :cards="currentPage.map(mapNewsItem)"
@@ -37,14 +38,16 @@ const extraUrls = computed(() => (props.newsParent._id === content?.value?._id
   : [{ url: props.newsParent._url, name: 'Bekijk al het nieuws' }]))
 
 function mapNewsItem({
-  summary, name, publishDate, url, image,
+  summary, name, publishDate, url, image, body,
 }: NewsCard) {
+  const target = body ? { url, name: 'Lees meer' } : null
+
   return {
     body: summary,
     title: name,
     date: publishDate,
     subtitle: formatDate(publishDate),
-    target: { url, name: 'Lees meer' },
+    target,
     image,
     hasNextPage,
     getNextPage,
