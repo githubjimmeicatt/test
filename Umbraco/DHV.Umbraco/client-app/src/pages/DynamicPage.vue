@@ -73,7 +73,6 @@
 
 <script>
 import { inject, defineComponent, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import cleanGlobImport from '../helpers/cleanGlobImport'
 
 const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
@@ -106,9 +105,6 @@ function mapComponent(props) {
 export default defineComponent({
   components,
   setup() {
-    // const api = useUmbracoApi()
-    const router = useRouter()
-    const route = useRoute()
     const content = inject('content')
     const main = computed(() => (Array.isArray(content.value?.main) ? content.value.main.map(mapComponent) : []))
     const aside = computed(() => (Array.isArray(content.value?.sidebar) ? content.value.sidebar.map(mapComponent) : []))
@@ -116,22 +112,9 @@ export default defineComponent({
       main,
       aside,
       content,
-      router,
-      route,
     }
   },
-  methods: {
-    async toggleLanguage() {
-      if (this.isEnglishPage) {
-        this.router.push(this.route.path.substring(3))
-      } else {
-        this.router.push(`/en${this.route.path}`)
-      }
-    },
-  },
-  computed: {
-    isEnglishPage() { return this.route.path.startsWith('/en') },
-  },
+
 })
 </script>
 
