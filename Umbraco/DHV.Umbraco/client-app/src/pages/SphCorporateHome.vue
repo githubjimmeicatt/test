@@ -28,14 +28,21 @@
     v-bind="content.cards"
   />
 
+  <TextNextToImage
+    v-if="content.textNextToImageUitgelicht && content.textNextToImageUitgelicht.length === 1"
+    class="container"
+    v-bind="content.textNextToImageUitgelicht[0]"
+  />
+
   <LatestNews
     class="container"
     v-bind="content.newsPicker"
   />
 
   <TextNextToImage
+    v-if="content.textNextToImage && content.textNextToImage.length === 1"
     class="container"
-    v-bind="content.textNextToImage"
+    v-bind="content.textNextToImage[0]"
   />
 
   <FormElement
