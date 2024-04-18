@@ -1,9 +1,13 @@
 <template>
-  <section class="container topimage">
+  <!-- <section class="container topimage">
     <lazy-img
       v-if="content.image"
       :src="content.image.src"
     />
+  </section> -->
+
+  <section class="narrow hasImage pageheader">
+    <img class="background" :src="content.image.src" alt="Hero">
   </section>
 
   <breadcrumbs class="breadcrumbs" />
@@ -48,21 +52,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/_mixins.scss";
 
-.topimage {
-  padding-block: 0;
+section {
+  position: relative;
+  aspect-ratio: 3/1;
 
-  img {
-    width: 100%;
-    height: 20rem;
-    object-fit: cover;
-    object-position: center;
+  .background {
+
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+
+  }
+
+  &.narrow {
+    @include screen-fits-two-cards {
+      margin-inline: var(--dynamic-spacing-large);
+      padding-inline: var(--space-small);
+    }
   }
 }
-
-.article-date {
-  text-transform: capitalize;
-  margin-block-start: -1rem;
-}
-
 </style>
