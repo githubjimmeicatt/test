@@ -6,7 +6,19 @@
     :narrow="!content.heroBig"
   />
 
-  <breadcrumbs class="breadcrumbs" />
+  <div class="secondaryNav">
+    <breadcrumbs class="breadcrumbs" />
+    <!-- <pre>{{ content }}</pre> -->
+    <nav v-if="content._urls && content._urls['nl']">
+      <template v-if="isEnglishPage">
+        <a href="#" @click="toggleLanguage()">Nederlands</a>
+      </template>
+      <template v-else>
+        <a href="#" @click="toggleLanguage()">Switch to English</a>
+      </template>
+    </nav>
+
+  </div>
 
   <template
     v-for="(c, i) in main"
@@ -68,7 +80,9 @@
 </template>
 
 <script>
+// import { useUmbracoApi } from 'icatt-heartcore'
 import { inject, defineComponent, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import cleanGlobImport from '../helpers/cleanGlobImport'
 
 const components = cleanGlobImport(import.meta.glob('../components/*.vue'))
@@ -101,6 +115,9 @@ function mapComponent(props) {
 export default defineComponent({
   components,
   setup() {
+    // const api = useUmbracoApi()
+    const router = useRouter()
+    const route = useRoute()
     const content = inject('content')
     const main = computed(() => (Array.isArray(content.value?.main) ? content.value.main.map(mapComponent) : []))
     const aside = computed(() => (Array.isArray(content.value?.sidebar) ? content.value.sidebar.map(mapComponent) : []))
@@ -108,7 +125,21 @@ export default defineComponent({
       main,
       aside,
       content,
+      router,
+      route,
     }
+  },
+  methods: {
+    async toggleLanguage() {
+      if (this.isEnglishPage) {
+        this.router.push(this.route.path.substring(3))
+      } else {
+        this.router.push(`/en${this.route.path}`)
+      }
+    },
+  },
+  computed: {
+    isEnglishPage() { return this.route.path.startsWith('/en') },
   },
 })
 </script>
@@ -212,5 +243,17 @@ export default defineComponent({
 
   .container section.container {
     background: none;
+  }
+
+  .secondaryNav{
+    display: flex;
+    justify-content: space-between;
+      padding: var(--space-medium) var(--dynamic-spacing-large);
+
+      .breadcrumbs{
+      padding: 0px;;
+      width: unset;
+      }
+
   }
   </style>

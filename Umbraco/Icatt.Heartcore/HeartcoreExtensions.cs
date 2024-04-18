@@ -68,7 +68,21 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     if (transformContext.Query.Collection.TryGetValue("url", out var urlQuery))
                     {
+                        var enPath = "/en/";
                         var url = urlQuery[0].TrimEnd('/');
+
+                        transformContext.ProxyRequest.Headers.Remove("Accept-Language");
+                        
+                        if (urlQuery[0].StartsWith(enPath))
+                        {
+                            url = url.Remove(0, enPath.Length - 1);
+                            transformContext.ProxyRequest.Headers.Add("Accept-Language", "nl");
+                        }
+                        else
+                        {
+                            transformContext.ProxyRequest.Headers.Add("Accept-Language", "en-US");
+                        }
+
                         if (portalConfig.TryGetPortal(out var portal) && !string.IsNullOrWhiteSpace(portal.Prefix))
                         {
                             url = portal.Prefix + url;
