@@ -1,5 +1,6 @@
 <template>
-  <article class="card">
+
+  <article class="card" :class="{ clickable: linkOfTarget?.url }" @click="followLink">
 
     <img
       v-if="image?.media?._url "
@@ -28,19 +29,21 @@
       </slot>
 
       <the-link
-        v-if="target?.url"
-        :href="target.url"
-        :target="target.target"
+        v-if="linkOfTarget?.url"
+        :href="linkOfTarget.url"
+        :target="linkOfTarget.target"
       >
-        {{ target.name || target.url }} &gt;
+        {{ linkOfTarget.name || linkOfTarget.url }} &gt;
       </the-link>
 
       <slot name="postlink" />
     </div>
   </article>
+
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
 import LazyImg from './LazyImg.vue'
 import RichText from './RichText.vue'
 import TheLink from './TheLink.vue'
@@ -74,12 +77,47 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    link: {
+      type: Object,
+      default: () => {},
+    },
+  },
+
+  setup() {
+    const router = useRouter()
+
+    return {
+      router,
+
+    }
+  },
+
+  computed: {
+    linkOfTarget() {
+      const x = this.target || this.link
+      if (!x) {
+        return null
+      }
+      if (!x.target) {
+        x.target = '_self'
+      }
+      return x
+    },
+  },
+  methods: {
+    followLink() {
+      this.router.push(this.linkOfTarget.url)
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/scss/_mixins.scss";
+
+.clickable{
+ cursor: pointer;
+}
 
 article {
   position: relative;

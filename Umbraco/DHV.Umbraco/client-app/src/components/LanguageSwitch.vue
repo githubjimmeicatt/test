@@ -1,12 +1,11 @@
 <template>
   <nav
     v-if="urls && urls['nl']">
-    <SearchIcon />
     <template v-if="isEnglishPage">
-      <a href="#" @click="toggleLanguage()" class="nl"><img src="../assets/nederlands.png" alt="nederlands"></a>
+      <a href="#" @click="toggleLanguage()" class="nl"><img src="@/assets/nederlands.png" alt="nederlands"></a>
     </template>
     <template v-else>
-      <a href="#" @click="toggleLanguage()" class="en"><img src="../assets/engels.png" alt="engels"></a>
+      <a href="#" @click="toggleLanguage()" class="en"><img src="@/assets/engels.png" alt="engels"></a>
     </template>
   </nav>
 </template>

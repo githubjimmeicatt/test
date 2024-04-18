@@ -1,5 +1,5 @@
 <template>
-  <article class="richtext">
+  <article>
     <h1 v-if="title">
       {{ title }}
     </h1>
