@@ -64,6 +64,7 @@ const getNewsQuery = ({
       id
       name
       summary
+      body
       url
       createDate
       updateDate
