@@ -49,7 +49,8 @@ namespace DHV.Umbraco
                     .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com/"))
                     .ImageSources(s => s.Self().CustomSources(
                         "https://media.umbraco.io",
-                        "www.google-analytics.com"
+                        "www.google-analytics.com",
+                        "data:"
                     ))
                     .MediaSources(s => s.Self())
                     .ScriptSources(s => 
