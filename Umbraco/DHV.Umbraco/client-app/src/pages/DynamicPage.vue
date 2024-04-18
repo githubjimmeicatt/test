@@ -6,7 +6,11 @@
     :narrow="!content.heroBig"
   />
 
-  <breadcrumbs class="breadcrumbs" />
+  <div class="secondaryNav">
+    <breadcrumbs class="breadcrumbs" />
+    <languageswitch :urls="content._urls" />
+
+  </div>
 
   <template
     v-for="(c, i) in main"
@@ -110,6 +114,7 @@ export default defineComponent({
       content,
     }
   },
+
 })
 </script>
 
@@ -212,5 +217,17 @@ export default defineComponent({
 
   .container section.container {
     background: none;
+  }
+
+  .secondaryNav{
+    display: flex;
+    justify-content: space-between;
+      padding: var(--space-medium) var(--dynamic-spacing-large);
+
+      .breadcrumbs{
+      padding: 0px;;
+      width: unset;
+      }
+
   }
   </style>

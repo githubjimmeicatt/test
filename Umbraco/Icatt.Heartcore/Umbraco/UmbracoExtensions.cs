@@ -118,7 +118,14 @@ namespace Icatt.Heartcore.Umbraco
 
             foreach (var content in pages.Content.Items.Where(x => x?.Name?.Count > 0))
             {
-                var pageNames = content.Name.Select(x => ToKebabNotation(x.Value)).ToList();
+                var pageNames = content.Name.Select(x =>
+                {
+                    if (x.Value != null)
+                    {
+                        return ToKebabNotation(x.Value);
+                    }
+                    return null;
+                }).ToList();
                 list.AddRange(pageNames);
 
                 if (content.HasChildren)
