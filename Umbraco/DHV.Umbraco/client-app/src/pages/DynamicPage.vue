@@ -8,15 +8,7 @@
 
   <div class="secondaryNav">
     <breadcrumbs class="breadcrumbs" />
-    <!-- <pre>{{ content }}</pre> -->
-    <nav v-if="content._urls && content._urls['nl']">
-      <template v-if="isEnglishPage">
-        <a href="#" @click="toggleLanguage()">Nederlands</a>
-      </template>
-      <template v-else>
-        <a href="#" @click="toggleLanguage()">Switch to English</a>
-      </template>
-    </nav>
+    <languageswitch :urls="content._urls" />
 
   </div>
 
@@ -80,7 +72,6 @@
 </template>
 
 <script>
-// import { useUmbracoApi } from 'icatt-heartcore'
 import { inject, defineComponent, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import cleanGlobImport from '../helpers/cleanGlobImport'
