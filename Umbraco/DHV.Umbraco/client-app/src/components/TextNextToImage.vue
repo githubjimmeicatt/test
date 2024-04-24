@@ -18,11 +18,12 @@
       />
 
       <the-link
-        :href="button?.url || '#'"
+        v-if="button?.url"
+        :href="button.url"
         class="cta"
         data-gtm-button-type="cta"
       >
-        Meer informatie
+        {{buttonText}}
       </the-link>
     </div>
   </section>
@@ -56,6 +57,12 @@ export default {
       default: () => {},
     },
   },
+
+  computed: {
+    buttonText() {
+      return this.button?.name ?? 'Meer informatie'
+    },
+  },
 }
 </script>
 
@@ -76,8 +83,6 @@ section {
 }
 
 figure {
-  display: flex;
-  justify-content: center;
   margin: 0;
 
   .align-right & {
@@ -85,9 +90,8 @@ figure {
   }
 
   img {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: var(--max-text-width);
+    margin-top:0px;
     max-height: 25rem;
 
     @include screen-fits-two-cards {
