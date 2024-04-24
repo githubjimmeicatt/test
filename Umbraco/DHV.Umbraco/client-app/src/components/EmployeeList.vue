@@ -1,13 +1,13 @@
 <template>
-  <cards
-    nr-of-columns="4"
-    :title="title"
-    :cards="employees"
-  >
-    <template #card="{ card }">
-      <employee v-bind="card" />
-    </template>
-  </cards>
+  <section class="container">
+    <h1 v-if="title">{{ title }}</h1>
+    <ul
+
+    >
+      <li v-for="(employee, index) in employees " :key="index">
+        <employee v-bind="employee" />
+      </li>
+    </ul></section>
 </template>
 
 <script>
@@ -34,9 +34,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  padding-block: 0 var(--space-medium);
-  background-color: white !important;
+ul{
+ display: flex;
+ flex-wrap: wrap;
+ padding-left:0;
+ margin-left:0;
+ gap: var(--space-medium);
+ justify-content: space-between;
+}
+li{
+list-style: none;
 }
 
 :deep(article) {
@@ -47,5 +54,9 @@ export default {
 :deep(h1) {
   font-size: 1.25rem;
   margin-block-end: var(--space-small);
+}
+
+:deep(.article-inner) {
+ padding: 0px !important;
 }
 </style>

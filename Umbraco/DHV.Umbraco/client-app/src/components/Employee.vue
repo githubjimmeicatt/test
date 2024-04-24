@@ -1,10 +1,11 @@
 <template>
   <card>
     <figure>
-      <lazy-img
+      <img
         v-if="photo"
         class="profielfoto"
         :src="photo.src"
+        alt="profielfoto"
       />
 
       <figcaption v-if="fullName">
@@ -84,9 +85,14 @@ figure {
     font-weight: 600;
     padding-block: var(--space-smallest);
    }
+   img{
+    width: 100%;
+    max-height: 150px;
+
+   }
 }
 .profielfoto {
-  width: min(100%, 25rem);
+  //width: min(100%, 25rem);
 }
 
 ul {
