@@ -34,14 +34,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/_mixins.scss";
+
 ul{
  display: flex;
  flex-wrap: wrap;
  padding-left:0;
  margin-left:0;
  gap: var(--space-medium);
- justify-content: space-between;
+ justify-content: flex-start;
+  @include mobile {
+       justify-content: center;
+      }
 }
+
 li{
 list-style: none;
 }
