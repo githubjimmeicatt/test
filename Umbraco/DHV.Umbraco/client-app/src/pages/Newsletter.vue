@@ -1,6 +1,7 @@
 <template>
-  <section class="container topimage">
+  <section class="container pageheader topimage">
     <img
+      class="background"
       v-if="content.headerImage"
       :src="content.headerImage.src + immageRequestSuffix"
       :alt="content.name" />

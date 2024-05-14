@@ -1,5 +1,5 @@
 <template>
-  <section class="narrow hasImage pageheader">
+  <section class="narrow hasImage pageheader topimage">
     <img class="background" :src="content.image.src + immageRequestSuffix" :alt="content.name">
   </section>
 
