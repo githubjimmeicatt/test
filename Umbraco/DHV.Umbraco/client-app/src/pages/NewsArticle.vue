@@ -1,13 +1,6 @@
 <template>
-  <!-- <section class="container topimage">
-    <lazy-img
-      v-if="content.image"
-      :src="content.image.src"
-    />
-  </section> -->
-
   <section class="narrow hasImage pageheader">
-    <img class="background" :src="content.image.src" alt="Hero">
+    <img class="background" :src="content.image.src + immageRequestSuffix" :alt="content.name">
   </section>
 
   <breadcrumbs class="breadcrumbs" />
@@ -39,13 +32,14 @@ export default {
   },
   setup() {
     const content = inject<any>('content')
-
+    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
     return {
       content,
       date: computed(() => {
         const { publishDate, _createDate } = content.value ?? {}
         return formatDate(publishDate) || formatDate(_createDate)
       }),
+      immageRequestSuffix: imageSuffix.large,
     }
   },
 }

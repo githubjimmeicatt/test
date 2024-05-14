@@ -25,6 +25,7 @@ export default {
     provide('menu', menu)
     provide('component', component)
     provide('loading', loading)
+    provide('umbracoImageUrlMaxWidthSuffix', { small: '?width=651', large: '?width=1160' })
 
     const { isLoading } = useNProgress()
 

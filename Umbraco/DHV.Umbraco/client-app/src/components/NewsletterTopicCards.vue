@@ -1,39 +1,44 @@
 <template>
-    <article class="newslettercard" v-for="item in items" :key="item.id">
-        <div class="newslettercontent">
-            <div>
-                <h2>{{ item.name }}</h2>
-            </div>
-            <div class="image-and-paragraph">
-                <div class="image">
-                    <img v-if="item.afbeelding?.url" class="img" :src="item.afbeelding.url" />
-                </div>
-                <div class="paragraph">
-                    <p v-html="item.samenvatting" />
-                    <a :href="item.url"> Lees meer > </a>
-                </div>
-            </div>
-
+  <article class="newslettercard" v-for="item in items" :key="item.id">
+    <div class="newslettercontent">
+      <div>
+        <h2>{{ item.name }}</h2>
+      </div>
+      <div class="image-and-paragraph">
+        <div class="image">
+          <img v-if="item.afbeelding?.url" class="img" :src="item.afbeelding.url + immageRequestSuffix" :alt="item.name" />
         </div>
-    </article>
+        <div class="paragraph">
+          <p v-html="item.samenvatting" />
+          <a :href="item.url" v-if="item.artikel"> Lees meer > </a>
+        </div>
+      </div>
+
+    </div>
+  </article>
 </template>
 
 <script lang="ts">
-    export default {
+import { inject } from 'vue'
 
-        props: {
-            items: {
-                type: Array,
-                default: () => [],
-            },
-        },
-        data() {
-            return {
-                isMobile: false,
-            }
-        },
+export default {
 
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  data() {
+    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
+
+    return {
+      isMobile: false,
+      immageRequestSuffix: imageSuffix.small,
     }
+  },
+
+}
 </script>
 <style lang="scss" scoped>
     .newslettercard {
@@ -88,6 +93,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        width:100%;
     }
 
     .newslettercard img {

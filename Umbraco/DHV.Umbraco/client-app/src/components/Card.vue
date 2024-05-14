@@ -7,13 +7,13 @@
 
       :alt="image?.media?.name ? `card ${image?.media?.name} banner` : 'card banner'"
 
-      :src="image.media._url "
+      :src="image.media._url + immageRequestSuffix "
       loading="lazy">
 
     <img
       v-else-if="image?.url"
       alt="card banner"
-      :src="image?.url"
+      :src="image?.url + immageRequestSuffix"
       loading="lazy">
 
     <div class="article-inner">
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { inject } from 'vue'
 import { useRouter } from 'vue-router'
 import LazyImg from './LazyImg.vue'
 import RichText from './RichText.vue'
@@ -85,10 +86,10 @@ export default {
 
   setup() {
     const router = useRouter()
-
+    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
     return {
       router,
-
+      immageRequestSuffix: imageSuffix.small,
     }
   },
 

@@ -1,8 +1,9 @@
 <template>
   <section class="container topimage">
-    <lazy-img
+    <img
       v-if="content.afbeelding"
-      :src="content.afbeelding.src" />
+      :src="content.afbeelding.src + immageRequestSuffix"
+      :alt="content.name" />
   </section>
   <breadcrumbs class="breadcrumbs" />
 
@@ -30,7 +31,6 @@ import {
   inject, onMounted, type Ref,
 } from 'vue'
 import RichText from '@/components/RichText.vue'
-import LazyImg from '@/components/LazyImg.vue'
 import { formatMonthYear } from '@/helpers/formatDate'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import { useRoute } from 'vue-router'
@@ -38,11 +38,12 @@ import { useUmbracoApi } from 'icatt-heartcore'
 
 export default {
   components: {
-    RichText, LazyImg, Breadcrumbs,
+    RichText, Breadcrumbs,
   },
 
   setup() {
     const content = inject <Ref<any>>('content')
+    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
     if (!content) {
       throw new Error('')
     }
@@ -87,6 +88,7 @@ export default {
     return {
       content,
       formatMonthYear,
+      immageRequestSuffix: imageSuffix.large,
     }
   },
 }
