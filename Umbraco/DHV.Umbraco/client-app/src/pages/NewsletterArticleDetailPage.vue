@@ -104,7 +104,6 @@ export default {
 
     ::v-deep.articletext > div p > img {
         max-width: 50em;
-        width: 100%;
         object-fit: cover;
         object-position: center;
     }
