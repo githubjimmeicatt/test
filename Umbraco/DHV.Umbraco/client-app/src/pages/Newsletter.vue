@@ -1,9 +1,9 @@
 <template>
   <section class="container topimage">
-
-    <lazy-img
+    <img
       v-if="content.headerImage"
-      :src="content.headerImage.src" />
+      :src="content.headerImage.src + immageRequestSuffix"
+      :alt="content.name" />
   </section>
   <breadcrumbs class="breadcrumbs" />
 
@@ -46,6 +46,7 @@ export default {
     const route = useRoute()
     const content = inject<any>('content')
     const items = ref<any>({ newsItems: [], DekkingsgraadItems: [] })
+    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
 
     onMounted(async () => {
       const newsLetterQuery = `{
@@ -135,6 +136,7 @@ export default {
     return {
       content,
       items,
+      immageRequestSuffix: imageSuffix.large,
     }
   },
 }
