@@ -86,7 +86,7 @@ export default {
 
   setup() {
     const router = useRouter()
-    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
+    const imageSuffix = inject('umbracoImageUrlMaxWidthSuffix')
     return {
       router,
       immageRequestSuffix: imageSuffix.small,

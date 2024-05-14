@@ -1,9 +1,12 @@
 <template>
 
-  <section class="container topimage">
-    <lazy-img
+  <section class="container topimage pageheader">
+
+    <img
+      class="background"
       v-if="content.afbeelding"
-      :src="content.afbeelding.src" />
+      :src="content.afbeelding.src + immageRequestSuffix"
+      :alt="content.name" />
   </section>
 
   <breadcrumbs class="breadcrumbs" />
@@ -42,6 +45,7 @@ export default {
 
   setup() {
     const content = inject <Ref<any>>('content')
+    const imageSuffix = inject<any>('umbracoImageUrlMaxWidthSuffix')
     if (!content) {
       throw new Error('')
     }
@@ -86,6 +90,7 @@ export default {
     return {
       content,
       formatMonthYear,
+      immageRequestSuffix: imageSuffix.large,
     }
   },
 
