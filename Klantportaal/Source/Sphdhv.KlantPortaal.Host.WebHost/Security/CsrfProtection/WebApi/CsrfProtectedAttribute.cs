@@ -37,7 +37,7 @@ namespace Sphdhv.KlantPortaal.Host.WebHost.Security.CsrfProtection.WebApi
             {
                 Content = new ObjectContent<ResponseMessage>(
                     CsrfResponses.ViolationResponse,
-                    new JsonpFormatter(filterContext.Request)
+                    new JsonpFormatter()
                 )
             };
         }
